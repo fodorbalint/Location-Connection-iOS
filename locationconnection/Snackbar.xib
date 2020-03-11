@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Snackbar">
+            <connections>
+                <outlet property="MainView" destination="1" id="name-outlet-1"/>
+                <outlet property="Snack_Text" destination="SnackText" id="name-outlet-Snack-Text"/>
+                <outlet property="Snack_Button" destination="SnackButton" id="name-outlet-Snack-Button"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="400" verticalHuggingPriority="400" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" text="SnackText" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SnackText">
+                    <rect key="frame" x="0.0" y="359.5" width="352" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                </label>
+                <button contentMode="center" horizontalHuggingPriority="401" verticalHuggingPriority="400" horizontalCompressionResistancePriority="501" verticalCompressionResistancePriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SnackButton">
+                    <rect key="frame" x="362" y="350.5" width="52" height="35"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <inset key="contentEdgeInsets" minX="16" minY="9" maxX="16" maxY="9"/>
+                    <state key="normal" title="OK">
+                        <color key="titleColor" colorSpace="custom" customColorSpace="sRGB" red="0.3255" green="0.8157" blue="0.5686" alpha="1"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="color_ffffff_20.png"/>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="top" relation="lessThanOrEqual" secondItem="SnackText" secondAttribute="top" constant="-9" priority="301" id="SnackText2"/>
+                <constraint firstAttribute="top" secondItem="SnackText" secondAttribute="top" constant="-9" priority="300" id="SnackText3"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SnackText" secondAttribute="bottom" constant="22" priority="301" id="SnackText4"/>
+                <constraint firstAttribute="bottom" secondItem="SnackText" secondAttribute="bottom" constant="22" priority="300" id="SnackText5"/>
+                <constraint firstAttribute="leading" secondItem="SnackText" secondAttribute="leading" constant="-16" id="SnackText6"/>
+                <constraint firstAttribute="top" relation="lessThanOrEqual" secondItem="SnackButton" secondAttribute="top" constant="-9" priority="301" id="SnackButton2"/>
+                <constraint firstAttribute="top" secondItem="SnackButton" secondAttribute="top" constant="-9" priority="300" id="SnackButton3"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SnackButton" secondAttribute="bottom" constant="22" priority="301" id="SnackButton4"/>
+                <constraint firstAttribute="bottom" secondItem="SnackButton" secondAttribute="bottom" constant="22" priority="300" id="SnackButton5"/>
+                <constraint firstItem="SnackButton" firstAttribute="centerY" secondItem="SnackText" secondAttribute="centerY" id="SnackButton6"/>
+                <constraint firstItem="SnackButton" firstAttribute="leading" secondItem="SnackText" secondAttribute="trailing" constant="10" id="SnackButton7"/>
+                <constraint firstAttribute="trailing" secondItem="SnackButton" secondAttribute="trailing" constant="16" id="SnackButton8"/>
+            </constraints>
+            <!-- Layyout margins cannot be used when the snackbar goes into the rounded bottom area. View will be stretched from 53 to 121 pt -->
+            <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.196078431372549" alpha="1"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="color_ffffff_20.png" width="1" height="1"/>
+    </resources>
+</document>
