@@ -74,17 +74,9 @@ namespace LocationConnection
             {
                 int inAppLocationRate;
 
-                if (context.c.IsLoggedIn())
+                if (Session.InAppLocationRate != null) //if logged in, sometimes this is still null. Might be the delay between setting SessionID and other fields
                 {
-                    try
-                    {
-                        inAppLocationRate = (int)Session.InAppLocationRate; //nullable object must have a value error sometimes
-                    }
-                    catch (Exception ex)
-                    {
-                        context.c.ReportErrorSilent("Error at LocMgr_LocationsUpdated: " + ex.Message + context.c.ShowClass<Session>() + Environment.NewLine + " Session.InAppLocationRate " + Session.InAppLocationRate);
-                        inAppLocationRate = (int)Settings.InAppLocationRate;
-                    }
+                    inAppLocationRate = (int)Session.InAppLocationRate;
                 }
                 else
                 {

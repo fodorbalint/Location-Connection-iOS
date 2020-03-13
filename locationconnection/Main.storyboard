@@ -1693,10 +1693,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Footer" misplaced="YES" ambiguous="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     </view>
-                                    <textView text="" borderStyle="none" scrollEnabled="NO" clipsSubviews="NO" multipleTouchEnabled="NO" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewDescription" misplaced="YES" ambiguous="YES">
-                                        <rect key="frame" x="10" y="498" width="355" height="33"/>
+                                    <label opaque="NO" text="" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewDescription" misplaced="YES" ambiguous="YES" numberOfLines="0">
+                                        <rect key="frame" x="10" y="498" width="355" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    </textView>
+                                    </label>
                                     <label opaque="NO" text="" horizontalHuggingPriority="250" horizontalCompressionResistancePriority="750" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LocationTime" customClass="InsetLabel" misplaced="YES" ambiguous="YES">
                                         <rect key="frame" x="10" y="0.0" width="262.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1981,7 +1981,7 @@
                             <constraint firstItem="BottomSpacerRight" firstAttribute="width" secondItem="BottomSpacerLeft" secondAttribute="width" id="BottomSpacerRight3"/>
                             <constraint firstItem="NextButton" firstAttribute="bottom" secondItem="RoundBottom4" secondAttribute="top" id="NextButton2"/>
                             <constraint firstItem="NextButton" firstAttribute="leading" secondItem="BottomSpacerRight" secondAttribute="trailing" constant="10" id="NextButton3"/>
-                            <constraint firstItem="NextButton" firstAttribute="trailing" secondItem="SafeArea4" secondAttribute="trailing" constant="-6" id="NextButton4"/>
+                            <constraint firstItem="NextButton" firstAttribute="trailing" secondItem="SafeArea4" secondAttribute="trailing" id="NextButton4"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom4" secondAttribute="top" id="RoundBottom42"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom4" secondAttribute="bottom" id="RoundBottom43"/>
                             <constraint firstItem="RoundBottom4" firstAttribute="leading" secondItem="SafeArea4" secondAttribute="leading" id="RoundBottom44"/>
@@ -2043,16 +2043,21 @@
                     <view key="view" contentMode="scaleToFill" id="113666">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
+                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                         <viewLayoutGuide key="safeArea" id="SafeArea5"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChatListBackground">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.55" alpha="1"/>
+                            </view>
                             <label opaque="NO" text="NoMatch" translatesAutoresizingMaskIntoConstraints="NO" id="NoMatch">
                                 <rect key="frame" x="158" y="30" width="59" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ChatUserList" translatesAutoresizingMaskIntoConstraints="NO">
-                                <rect key="frame" x="0.0" y="20" width="375" height="0.0"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ChatUserList" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="0.0" y="20" width="375" height="618"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatUserListCell" id="115371" customClass="ChatUserListCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -2086,7 +2091,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItems" ambiguous="YES">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItems" ambiguous="YES" misplaced="YES">
                                                     <rect key="frame" x="100" y="25.5" width="275" height="18.5"/>
                                                     <subviews>
                                                         <label opaque="NO" adjustsFontSizeToFit="NO" lineBreakMode="tailTruncation" contentMode="scaleToFill" customClass="InsetLabel" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItem1" ambiguous="YES">
@@ -2103,7 +2108,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" adjustsFontSizeToFit="NO" lineBreakMode="tailTruncation" contentMode="scaleToFill" customClass="InsetLabel" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItem2" ambiguous="YES">
+                                                        <label opaque="NO" adjustsFontSizeToFit="NO" lineBreakMode="tailTruncation" contentMode="scaleToFill" customClass="InsetLabel" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItem2" ambiguous="YES" misplaced="YES">
                                                             <rect key="frame" x="0.0" y="6" width="275" height="6.5"/>
                                                             <userDefinedRuntimeAttribute type="float" keyPath="LeftInset" value="6">
                                                                 <real key="value" value="6"/>
@@ -2117,7 +2122,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" adjustsFontSizeToFit="NO" lineBreakMode="tailTruncation" contentMode="scaleToFill" customClass="InsetLabel" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItem3" ambiguous="YES">
+                                                        <label opaque="NO" adjustsFontSizeToFit="NO" lineBreakMode="tailTruncation" contentMode="scaleToFill" customClass="InsetLabel" translatesAutoresizingMaskIntoConstraints="NO" id="ChatItem3" ambiguous="YES" misplaced="YES">
                                                             <rect key="frame" x="0.0" y="12.5" width="275" height="6"/>
                                                             <userDefinedRuntimeAttribute type="float" keyPath="LeftInset" value="6">
                                                                 <real key="value" value="6"/>
@@ -2147,6 +2152,13 @@
                                                         <constraint firstAttribute="bottom" secondItem="ChatItem3" secondAttribute="bottom" id="ChatItem35"/>
                                                     </constraints>-
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChatListSeparator">
+                                                    <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.75" alpha="1"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="ChatListSeparator0"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="top" secondItem="ChatUserListImage" secondAttribute="top" id="ChatUserListImage2"/>
@@ -2155,9 +2167,12 @@
                                                 <constraint firstItem="ChatUserListName" firstAttribute="leading" secondItem="ChatUserListImage" secondAttribute="trailing" id="ChatUserListName3"/>
                                                 <constraint firstAttribute="trailing" secondItem="ChatUserListName" secondAttribute="trailing" id="ChatUserListName4"/>
                                                 <constraint firstItem="ChatItems" firstAttribute="top" secondItem="ChatUserListName" secondAttribute="bottom" id="ChatItems2"/>
-                                                <constraint firstAttribute="bottom" secondItem="ChatItems" secondAttribute="bottom" id="ChatItems3"/>
                                                 <constraint firstItem="ChatItems" firstAttribute="leading" secondItem="ChatUserListImage" secondAttribute="trailing" id="ChatItems4"/>
                                                 <constraint firstAttribute="trailing" secondItem="ChatItems" secondAttribute="trailing" id="ChatItems5"/>
+                                                <constraint firstItem="ChatListSeparator" firstAttribute="top" secondItem="ChatItems" secondAttribute="bottom" id="ChatListSeparator2"/>
+                                                <constraint firstAttribute="bottom" secondItem="ChatListSeparator" secondAttribute="bottom" id="ChatListSeparator3"/>
+                                                <constraint firstAttribute="leading" secondItem="ChatListSeparator" secondAttribute="leading" id="ChatListSeparator4"/>
+                                                <constraint firstAttribute="trailing" secondItem="ChatListSeparator" secondAttribute="trailing" id="ChatListSeparator5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -2167,16 +2182,13 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0" priority="999" id="ChatUserList0"/>
-                                </constraints>
                             </tableView>
-                            <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ChatListTopSeparator">
+                            <!--<imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ChatListTopSeparator">
                                 <rect key="frame" x="0.0" y="20" width="375" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="ChatListTopSeparator0"/>
                                 </constraints>
-                            </imageView>
+                            </imageView>-->
                             <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ChatListBottomSeparator">
                                 <rect key="frame" x="0.0" y="636" width="313" height="2"/>
                                 <constraints>
@@ -2231,15 +2243,19 @@
                             </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="ChatListBackground" firstAttribute="top" secondItem="SafeArea5" secondAttribute="top" id="ChatListBackground2"/>
+                            <constraint firstItem="ChatListBackground" firstAttribute="bottom" secondItem="SafeArea5" secondAttribute="bottom" id="ChatListBackground3"/>
+                            <constraint firstItem="ChatListBackground" firstAttribute="leading" secondItem="SafeArea5" secondAttribute="leading" id="ChatListBackground4"/>
+                            <constraint firstItem="ChatListBackground" firstAttribute="trailing" secondItem="SafeArea5" secondAttribute="trailing" id="ChatListBackground5"/>
                             <constraint firstItem="NoMatch" firstAttribute="top" secondItem="SafeArea5" secondAttribute="top" constant="10" id="NoMatch2"/>
                             <constraint firstItem="NoMatch" firstAttribute="centerX" secondItem="SafeArea5" secondAttribute="centerX" id="NoMatch3"/>
                             <constraint firstItem="ChatUserList" firstAttribute="top" secondItem="SafeArea5" secondAttribute="top" id="ChatUserList2"/>
-                            <constraint firstItem="ChatUserList" firstAttribute="bottom" secondItem="NoofMatches" secondAttribute="top" relation="lessThanOrEqual" constant="0" priority="1000" id="ChatUserList3"/>
+                            <constraint firstItem="ChatUserList" firstAttribute="bottom" secondItem="NoofMatches" secondAttribute="top" id="ChatUserList3"/>
                             <constraint firstItem="ChatUserList" firstAttribute="leading" secondItem="SafeArea5" secondAttribute="leading" id="ChatUserList4"/>
                             <constraint firstItem="ChatUserList" firstAttribute="trailing" secondItem="SafeArea5" secondAttribute="trailing" id="ChatUserList5"/>
-                            <constraint firstItem="ChatListTopSeparator" firstAttribute="top" secondItem="ChatUserList" secondAttribute="bottom" id="ChatListTopSeparator2"/>
+                            <!--<constraint firstItem="ChatListTopSeparator" firstAttribute="top" secondItem="ChatUserList" secondAttribute="bottom" id="ChatListTopSeparator2"/>
                             <constraint firstItem="ChatListTopSeparator" firstAttribute="leading" secondItem="SafeArea5" secondAttribute="leading" id="ChatListTopSeparator3"/>
-                            <constraint firstItem="ChatListTopSeparator" firstAttribute="trailing" secondItem="SafeArea5" secondAttribute="trailing" id="ChatListTopSeparator4"/>
+                            <constraint firstItem="ChatListTopSeparator" firstAttribute="trailing" secondItem="SafeArea5" secondAttribute="trailing" id="ChatListTopSeparator4"/>-->
                             <constraint firstItem="ChatListBottomSeparator" firstAttribute="bottom" secondItem="NoofMatches" secondAttribute="top" id="ChatListBottomSeparator2"/>
                             <constraint firstItem="ChatListBottomSeparator" firstAttribute="leading" secondItem="SafeArea5" secondAttribute="leading" id="ChatListBottomSeparator3"/>
                             <constraint firstItem="ChatListBottomSeparator" firstAttribute="trailing" secondItem="MenuListBg" secondAttribute="leading" id="ChatListBottomSeparator4"/>
@@ -2291,7 +2307,7 @@
                     <view key="view" contentMode="scaleToFill" id="113672">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
+                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                         <viewLayoutGuide key="safeArea" id="SafeArea6"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChatOneActionBar">

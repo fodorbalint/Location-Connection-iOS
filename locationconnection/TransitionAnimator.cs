@@ -14,15 +14,13 @@ namespace LocationConnection
         public override void AnimateTransition(IUIViewControllerContextTransitioning transitionContext)
         {
             var inView = transitionContext.ContainerView;
-            var toVC = transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);
+            BaseActivity toVC = (BaseActivity)transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);
             var toView = toVC.View;
 
             inView.AddSubview(toView);
 
             var frame = toView.Frame;
             toView.Frame = new CGRect(frame.Width, 0, frame.Width, frame.Height);
-
-            Console.WriteLine("RightToLeftTransitionAnimator start");
 
             UIView.Animate(TransitionDuration(transitionContext), () => {
                 toView.Frame = new CGRect(0, 0, frame.Width, frame.Height);
@@ -50,16 +48,14 @@ namespace LocationConnection
         {
             var inView = transitionContext.ContainerView;
             var fromVC = transitionContext.GetViewControllerForKey(UITransitionContext.FromViewControllerKey);
-            var toVC = transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);            
+            BaseActivity toVC = (BaseActivity)transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);            
             var fromView = fromVC.View;
-            var toView = toVC.View;
+            var toView = toVC.View;            
 
             inView.InsertSubview(toView, 0);
 
             var frame = toView.Frame;
             toView.Frame = new CGRect(0, 0, frame.Width, frame.Height);
-
-            Console.WriteLine("LeftToRightTransitionAnimator start");
 
             UIView.Animate(TransitionDuration(transitionContext), () => {
                 fromView.Frame = new CGRect(frame.Width, 0, frame.Width, frame.Height);
@@ -87,12 +83,12 @@ namespace LocationConnection
         {
             var inView = transitionContext.ContainerView;
             var fromVC = transitionContext.GetViewControllerForKey(UITransitionContext.FromViewControllerKey);
-            var toVC = transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);
+            BaseActivity toVC = (BaseActivity)transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);
             var fromView = fromVC.View;
             var toView = toVC.View;
 
             inView.AddSubview(toView);
-
+                       
             var frame = toView.Frame;
             toView.Frame = new CGRect(frame.Width, 0, frame.Width, frame.Height);
 
@@ -123,7 +119,7 @@ namespace LocationConnection
         {
             var inView = transitionContext.ContainerView;
             var fromVC = transitionContext.GetViewControllerForKey(UITransitionContext.FromViewControllerKey);
-            var toVC = transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);
+            BaseActivity toVC = (BaseActivity)transitionContext.GetViewControllerForKey(UITransitionContext.ToViewControllerKey);
             var fromView = fromVC.View;
             var toView = toVC.View;
 

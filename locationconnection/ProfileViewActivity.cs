@@ -7,7 +7,6 @@ using CoreLocation;
 using MapKit;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Reflection;
 using System.Globalization;
 using System.Timers;
 using CoreAnimation;
@@ -29,8 +28,10 @@ namespace LocationConnection
 		int imageIndex;
 		UIView pressTarget;
 
-		Timer refreshTimer;
+        System.Timers.Timer refreshTimer;
 		int refreshFrequency = 1000;
+		Task imageLoading;
+        System.Threading.CancellationTokenSource cts;
 
 		public ProfileViewActivity (IntPtr handle) : base (handle)
         {
@@ -47,7 +48,6 @@ namespace LocationConnection
 			    EditSelf.SetTitle(LangEnglish.EditSelf, UIControlState.Normal);
 			    ProfileImageScroll.Delegate = this;
 
-			    ProfileViewDescription.TextContainerInset = new UIEdgeInsets(0, -5, 0, 0);
 			    EditSelf.Layer.MasksToBounds = true;
 
 			    var tap = new UITapGestureRecognizer();
@@ -406,6 +406,7 @@ namespace LocationConnection
 			}
 			else if (responseString.Substring(0, 6) == "ERROR_")
 			{
+				c.CW("Profile View User not found");
 				Session.SnackMessage = c.GetLang(responseString.Substring(6));
 				BackButton_Click(null, null);
 			}
@@ -452,13 +453,15 @@ namespace LocationConnection
 
 				AddCircles(Session.Pictures.Length);
 
-				Task.Run(() =>
+				cts = new System.Threading.CancellationTokenSource();
+				imageLoading = Task.Run(() =>
 				{
 					for (int i = 0; i < Session.Pictures.Length; i++)
 					{
 						LoadPicture(Session.ID.ToString(), Session.Pictures[i], i);
 					}
-				});
+				}, cts.Token);
+
 			}
 			catch (Exception ex)
 			{
@@ -550,19 +553,22 @@ namespace LocationConnection
 
 				AddCircles(displayUser.Pictures.Length);
 
-				Task.Run(() =>
-				{
+				cts = new System.Threading.CancellationTokenSource();
+				imageLoading = Task.Run(() =>
+				{                    
 					for (int i = 0; i < displayUser.Pictures.Length; i++)
 					{
 						LoadPicture(displayUser.ID.ToString(), displayUser.Pictures[i], i);
 					}
-				});
+				}, cts.Token);
+
+				c.CW("token: " + cts.Token);
 			}
 			catch (Exception ex)
 			{
 				c.ReportErrorSilent(ex.Message + Environment.NewLine + ex.StackTrace);
 			}
-		}
+		}		
 
 		private void SetPercentProgress(float responseRate)
 		{
@@ -789,10 +795,11 @@ namespace LocationConnection
 
 		private void LoadPicture(string folder, string picture, int index)
 		{
+			c.CW("LoadPicture " + folder + " " + picture + " " + index);
 			try {
 				UIImageView ProfileImage = null;
 				InvokeOnMainThread(() => {
-					ProfileImage = (UIImageView)ProfileImageScroll.Subviews[index];
+					ProfileImage = (UIImageView)ProfileImageScroll.Subviews[index]; //index out of range exception
 				});
 
 			    string url;
@@ -892,6 +899,12 @@ namespace LocationConnection
 			ListActivity.viewIndex--;
 			ListActivity.absoluteIndex--;
 
+
+			if (!imageLoading.IsCompleted)
+			{
+				cts.Cancel();
+			}
+			c.CW("PreviousButton_Click viewIndex: " + ListActivity.viewIndex + " viewProfiles.Count: " + ListActivity.viewProfiles.Count + " imageLoading completed " + imageLoading.IsCompleted);
 			if (ListActivity.viewIndex >= 0)
 			{
 				PrevLoadAction();
@@ -914,7 +927,12 @@ namespace LocationConnection
 			ListActivity.viewIndex++;
 			ListActivity.absoluteIndex++;
 
-			c.CW("NextButton_Click viewIndex: " + ListActivity.viewIndex + " viewProfiles.Count: " + ListActivity.viewProfiles.Count);
+            if (!imageLoading.IsCompleted)
+            {
+				cts.Cancel();
+            }
+			c.CW("NextButton_Click viewIndex: " + ListActivity.viewIndex + " viewProfiles.Count: " + ListActivity.viewProfiles.Count + " imageLoading completed " + imageLoading.IsCompleted);
+
 			if (ListActivity.viewIndex < ListActivity.viewProfiles.Count)
 			{
 				NextLoadAction();

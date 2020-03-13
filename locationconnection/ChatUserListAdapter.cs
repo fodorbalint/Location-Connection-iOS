@@ -9,7 +9,7 @@ namespace LocationConnection
     public class ChatUserListAdapter : UITableViewSource
     {
         private List<MatchItem> items;
-        int rowHeight = 100;
+        int rowHeight = 101;
 
         public ChatUserListAdapter(List<MatchItem> items)
         {

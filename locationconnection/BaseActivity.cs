@@ -56,6 +56,8 @@ namespace LocationConnection
 
 		public bool rippleRunning;
 		public float tweenTime = 0.2f;
+		public bool active; //Set in ViewWilAppear, and changes when calling OpenPage, used for preventing a Snack to appear on a disappearing page.
+		public bool appeared; //Set in ViewDidAppear, and used in autologin to decide whether to show a snack now.
 
 		public BaseActivity(IntPtr handle) : base(handle)
 		{
@@ -67,71 +69,34 @@ namespace LocationConnection
 
 			c = new CommonMethods(this);
 
-			if (c.IsLoggedIn())
-			{
-				CheckIntent();
-			}
+            //implement notification handling if user is logged in
 
             if (!(this is ProfileViewActivity) && !(this is LocationActivity) && !(this is ChatListActivity))
             {
 				var tap0 = new UITapGestureRecognizer(); //If CancelsTouchesInView is set to false, the buttons won't work at first click 
 				tap0.AddTarget(() => DismissKeyboard(tap0));
 				View.AddGestureRecognizer(tap0);
-			}			
+			}
 
-			c.LogActivity("ViewDidLoad " + Class.Name);
-			c.CW("ViewDidLoad " + Class.Name);
-
+			c.CW(Class.Name + " ViewDidLoad");
+			c.LogActivity(Class.Name + " ViewDidLoad");
 		}
 
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
-			c.CW("ViewWillAppear " + this.Class.Name);
-			ResizeWindowOnKeyboard();
+			active = true;
 
-			/* On ProfileView, Snackbar is shown and hid instantly. No solution found.
-            
-			For testing in ShowSnack:
-            Stopwatch stw = new Stopwatch();
-			stw.Start();
-			CW("ShowSnack start tweentime " + context.tweenTime);
+			c.CW(Class.Name + " ViewWillAppear");
+			c.LogActivity(Class.Name + " ViewWillAppear");
 
-            stw.Stop(); CW("ShowSnack end " + stw.ElapsedMilliseconds);
-            */
-			if (!(Session.SnackMessage is null))
-			{
-				if (this is ChatOneActivity)
-				{
-					c.Snack(Session.SnackMessage.Replace("[name]", Session.CurrentMatch.TargetName));
-				}
-				else
-				{
-					c.Snack(Session.SnackMessage);
-				}
-				Session.SnackMessage = null;
-			}
-		}
-
-		public override void ViewWillDisappear(bool animated)
-		{
-			c.CW("ViewWillDisappear " + this.Class.Name);
-			base.ViewWillDisappear(animated);
-
-			if (frameChangeNotification != null)
-			{
-				frameChangeNotification.Dispose();
-				hideNotification.Dispose();
-			}
+			ResizeWindowOnKeyboard();			
 		}
 
 		public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
-
-            //c.LogActivity("ViewDidLayoutSubviews " + Class.Name);
-			//c.CW("ViewDidLayoutSubviews " + Class.Name);
 
 			if (!layoutSet)
 			{
@@ -154,7 +119,7 @@ namespace LocationConnection
                     else
                     {
 						BottomConstraintConstant = uselessHeight;
-                        if (this is RegisterActivity || this is ProfileEditActivity || this is SettingsActivity)
+						if (this is RegisterActivity || this is ProfileEditActivity || this is SettingsActivity)
                         {
 							ScrollBottomConstraintConstant = 10 + uselessHeight - roundBottomHeight; //scrollbar will scroll more, but full scroll is truncated.
 						}
@@ -187,12 +152,71 @@ namespace LocationConnection
                 {
 					ScrollBottomConstraint_Base.Constant = ScrollBottomConstraintConstant;
 				}
-			}
 
-			layoutSet = true;
+				layoutSet = true;
+			}
 		}
 
-        public void ResizeWindowOnKeyboard()
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+			c.CW(Class.Name + " ViewDidAppear");
+			c.LogActivity(Class.Name + " ViewDidAppear");
+
+			appeared = true;
+
+			/* On ProfileView, Snackbar is shown and hid instantly. No solution found.
+            
+			For testing in ShowSnack:
+            Stopwatch stw = new Stopwatch();
+			stw.Start();
+			CW("ShowSnack start tweentime " + context.tweenTime);
+
+            stw.Stop(); CW("ShowSnack end " + stw.ElapsedMilliseconds);
+            */
+			if (active)
+			{
+				if (!(Session.SnackMessage is null))
+				{
+					if (this is ChatOneActivity)
+					{
+						c.Snack(Session.SnackMessage.Replace("[name]", Session.CurrentMatch.TargetName));
+					}
+					else
+					{
+						if (Session.SnackPermanent)
+						{
+							c.SnackIndef(Session.SnackMessage);
+						}
+						else
+						{
+							c.Snack(Session.SnackMessage);
+						}
+					}
+					Session.SnackMessage = null;
+				}
+				Session.SnackPermanent = false;
+			}
+		}
+
+		public override void ViewWillDisappear(bool animated)
+		{
+			base.ViewWillDisappear(animated);
+
+			c.CW(Class.Name + " ViewWillDisappear");
+			c.LogActivity(Class.Name + " ViewWillDisappear");
+
+			appeared = false;
+
+			if (frameChangeNotification != null)
+			{
+				frameChangeNotification.Dispose();
+				hideNotification.Dispose();
+			}
+		}
+
+		public void ResizeWindowOnKeyboard()
         {
 			frameChangeNotification = UIKeyboard.Notifications.ObserveWillChangeFrame((sender, args) => {
 				if (SnackBottomConstraint_Base != null && SnackTopConstraint_Base != null)
@@ -271,52 +295,6 @@ namespace LocationConnection
 			View.EndEditing(true);
 		}
 
-        protected void CheckIntent()
-		{
-			/*
-			Key: google.delivered_priority, Value: high
-			Key: google.sent_time, Value: 
-			Key: google.ttl, Value: 
-			Key: google.original_priority, Value: high
-			Key: from, Value: 205197408276
-			Key: google.message_id, Value: 0:1575318929834966%e37d5f25e37d5f25
-			Key: content, Value: 33|6|1575318929|0|0|
-			Key: collapse_key, Value: balintfodor.locationconnection
-			*/
-			/*-----
-			if (c.IsLoggedIn())
-			{
-				if (!(Intent.Extras is null) && !(Intent.Extras.GetString("google.message_id") is null))
-				{
-					int sep1Pos;
-					int senderID = 0;
-
-					string type = Intent.Extras.GetString("type");
-					string content = Intent.Extras.GetString("content");
-					c.LogActivity("Intent received: " + type);
-					switch (type)
-					{
-						case "sendMessage":
-							sep1Pos = content.IndexOf('|');
-							int sep2Pos = content.IndexOf('|', sep1Pos + 1);
-							senderID = int.Parse(content.Substring(sep1Pos + 1, sep2Pos - sep1Pos - 1));
-							break;
-						case "matchProfile":
-						case "rematchProfile":
-						case "unmatchProfile":
-							sep1Pos = content.IndexOf('|');
-							senderID = int.Parse(content.Substring(0, sep1Pos));
-							break;
-					}
-
-					Intent i = new Intent(this, typeof(ChatOneActivity));
-					i.SetFlags(ActivityFlags.ReorderToFront);
-					IntentData.senderID = senderID;
-					StartActivity(i);
-				}
-			}
-			*/
-		}
 		public void GetScreenMetrics()
 		{
 			screenWidth = (float)UIScreen.MainScreen.NativeBounds.Width;
@@ -330,33 +308,34 @@ namespace LocationConnection
 
 		public void TruncateLocationLog()
 		{
-            try
-            {
-				long unixTimestamp = c.Now();
-				string[] lines = File.ReadAllLines(c.locationLogFile);
-				string firstLine = lines[0];
-				int sep1Pos = firstLine.IndexOf("|");
-				long locationTime = long.Parse(firstLine.Substring(0, sep1Pos));
-				if (locationTime < unixTimestamp - Constants.LocationKeepTime)
+			long unixTimestamp = c.Now();
+			string[] lines = File.ReadAllLines(c.locationLogFile);			
+			string firstLine = lines[0];
+			int sep1Pos = firstLine.IndexOf("|");
+			long locationTime = long.Parse(firstLine.Substring(0, sep1Pos));
+			if (locationTime < unixTimestamp - Constants.LocationKeepTime)
+			{
+				List<string> newLines = new List<string>();
+				for (int i = 1; i < lines.Length; i++)
 				{
-					List<string> newLines = new List<string>();
-					for (int i = 1; i < lines.Length; i++)
+					string line = lines[i];
+					sep1Pos = line.IndexOf("|");
+					locationTime = long.Parse(line.Substring(0, sep1Pos));
+					if (locationTime >= unixTimestamp - Constants.LocationKeepTime)
 					{
-						string line = lines[i];
-						sep1Pos = line.IndexOf("|");
-						locationTime = long.Parse(line.Substring(0, sep1Pos));
-						if (locationTime >= unixTimestamp - Constants.LocationKeepTime)
-						{
-							newLines.Add(line);
-						}
+						newLines.Add(line);
 					}
+				}
+
+                if (newLines.Count != 0)
+                {
 					File.WriteAllLines(c.locationLogFile, newLines);
 				}
-			}
-            catch (Exception ex)
-            {
-				c.ReportErrorSilent(ex.Message + " " + ex.StackTrace + " " + File.ReadAllText(c.locationLogFile));
-            }			
+                else //it would write an empty string into the file, and lines[0] would throw an error
+                {
+					File.Delete(c.locationLogFile);
+                }
+			}			
 		}
 
 		public void TruncateSystemLog()

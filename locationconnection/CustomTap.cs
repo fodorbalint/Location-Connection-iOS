@@ -30,13 +30,17 @@ namespace LocationConnection
             var location = LocationInView(table);
             var indexPath = table.IndexPathForRowAtPoint(location);
 
-            if (!ChatListActivity.chatListScrolling)
+            if (indexPath != null && !ChatListActivity.chatListScrolling)
             {
                 selectedCell = (ChatUserListCell)table.CellAt(indexPath);
                 startTimer = new Timer();
                 startTimer.Interval = timerMs;
                 startTimer.Elapsed += StartTimer_Elapsed;
                 startTimer.Start();
+            }
+            else
+            {
+                selectedCell = null;
             }
         }
 
@@ -92,35 +96,42 @@ namespace LocationConnection
 
         private void SetHighlighted ()
         {
-            UIView view = selectedCell.ContentView;
-            bool active = selectedCell.activeCell;
+            if (selectedCell != null)
+            {
+                UIView view = selectedCell.ContentView;
+                bool active = selectedCell.activeCell;
 
-            if (active)
-            {
-                view.BackgroundColor = UIColor.FromRGB(179, 146, 107);
+                if (active)
+                {
+                    view.BackgroundColor = UIColor.FromRGB(179, 146, 107);
+                }
+                else
+                {
+                    view.BackgroundColor = UIColor.FromRGB(179, 127, 135);
+                }
+                pressed = true;
             }
-            else
-            {
-                view.BackgroundColor = UIColor.FromRGB(179, 127, 135);
-            }
-            pressed = true;
         }
 
         public void SetNormal ()
         {
-            UIView view = selectedCell.ContentView;
-            bool active = selectedCell.activeCell;
-
-            if (active)
+            if (selectedCell != null)
             {
-                view.BackgroundColor = UIColor.FromRGB(246, 226, 187);
 
+                UIView view = selectedCell.ContentView;
+                bool active = selectedCell.activeCell;
+
+                if (active)
+                {
+                    view.BackgroundColor = UIColor.FromRGB(246, 226, 187);
+
+                }
+                else
+                {
+                    view.BackgroundColor = UIColor.FromRGB(255, 179, 190);
+                }
+                pressed = false;
             }
-            else
-            {
-                view.BackgroundColor = UIColor.FromRGB(255, 179, 190);
-            }
-            pressed = false;
         }
     }
 }

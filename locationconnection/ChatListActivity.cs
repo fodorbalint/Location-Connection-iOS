@@ -63,7 +63,6 @@ namespace LocationConnection
                         adapter = new ChatUserListAdapter(matchList);
                         ChatUserList.Source = adapter;
                         NoofMatches.Text = (matchList.Count == 1) ? "1 " + LangEnglish.ChatListMatch : matchList.Count + " " + LangEnglish.ChatListMatches;
-                        c.SetHeight(ChatUserList, matchList.Count * 100);
                     }
                     else
                     {
@@ -71,12 +70,11 @@ namespace LocationConnection
                         ChatUserList.Source = adapter;
                         NoMatch.Hidden = false;
                         NoofMatches.Text = "";
-                        c.SetHeight(ChatUserList, 0);
                     }
                     ChatUserList.ReloadData();
                 }
 
-                ChatUserList.RowHeight = 100; //If the delegate is set before setting the Source, row height is gotten from the adapter allright. Otherwise the first row is about 20, and the subsequent rows are about 70.
+                ChatUserList.RowHeight = 101; //If the delegate is set before setting the Source, row height is gotten from the adapter allright. Otherwise the first row is about 20, and the subsequent rows are about 70.
                 ChatUserList.Delegate = this; //must be called after setting the Source, otherwise the Scrolled event is not fired.
             }
             catch (Exception ex)
@@ -130,9 +128,8 @@ namespace LocationConnection
             matchList.Insert(0, item);
             ChatUserListAdapter adapter = new ChatUserListAdapter(matchList);
             ChatUserList.Source = adapter;
-            c.SetHeight(ChatUserList, matchList.Count * 100);
             ChatUserList.ReloadData();
-            ChatUserList.RowHeight = 100;
+            ChatUserList.RowHeight = 101;
             ChatUserList.Delegate = this;
         }
 
@@ -156,7 +153,7 @@ namespace LocationConnection
         {
             chatListScrolling = true;
 
-            if (tap.startTimer.Enabled)
+            if (tap.startTimer != null && tap.startTimer.Enabled)
             {
                 tap.startTimer.Stop();
             }
@@ -170,7 +167,7 @@ namespace LocationConnection
         [Export("scrollViewDidEndDragging:willDecelerate:")]
         public void DraggingEnded(UIScrollView scrollView, bool willDecelerate)
         {
-            if (tap.startTimer.Enabled)
+            if (tap.startTimer != null && tap.startTimer.Enabled)
             {
                 tap.startTimer.Stop();
             }
@@ -186,7 +183,7 @@ namespace LocationConnection
         {
             chatListScrolling = false;
 
-            if (tap.startTimer.Enabled)
+            if (tap.startTimer != null && tap.startTimer.Enabled)
             {
                 tap.startTimer.Stop();
             }            

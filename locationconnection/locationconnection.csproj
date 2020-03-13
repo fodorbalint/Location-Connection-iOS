@@ -83,7 +83,6 @@
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="Main.storyboard" />
-        <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
         <InterfaceDefinition Include="UploadedItem.xib" />
         <InterfaceDefinition Include="Snackbar.xib" />
         <InterfaceDefinition Include="MessageItemView.xib" />

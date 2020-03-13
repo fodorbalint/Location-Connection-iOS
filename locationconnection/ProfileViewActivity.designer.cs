@@ -108,7 +108,7 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView ProfileViewDescription { get; set; }
+        UIKit.UILabel ProfileViewDescription { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]

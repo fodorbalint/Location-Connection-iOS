@@ -1128,7 +1128,8 @@ namespace LocationConnection
 
 		public static void OpenPage(string target, byte anim)
         {
-			var currentContext =  GetCurrentViewController(); //LocationManager's context is either ListActivity or ProfileEditActivity, but in case of authorization error, we need to open a new viewcontroller.
+			BaseActivity currentContext =  GetCurrentViewController(); //LocationManager's context is either ListActivity or ProfileEditActivity, but in case of authorization error, we need to open a new viewcontroller.
+			currentContext.active = false;
 			LogActivityStatic("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
 			Console.WriteLine("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
 			if (transitionRunning)

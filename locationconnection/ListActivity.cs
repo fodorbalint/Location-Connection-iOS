@@ -18,20 +18,23 @@ interval 5 min, accuracy 1000m
 (right off charger)
 4:32 100%
 
+map region is larger than normal when switching from chat list to list. Same in profileView
+
 Medium importance
 
+Verify that truncatelocationlog works
+
+Crash once at Profile View index out of range
 Dark mode support
-When snackbar is disappearing, a new snack will not be visible for long.
 Once pin and current location markers appeared on iphone at the same time
 Overlapping pictures on map may flicker
-Disable in-app purchases from provisioning profile (must not be shown in App Store)
 
 Not important / can't solve
 
 Background notifications do not work
 Implement match not found error message on server
 Restart backgroud location on reboot, worth it?
-null error sometimes in locationmanager and customannotationview, error in truncatelocationlog, when no location was acquired in 24 hours, and in UserSearchList. (caught)
+null error sometimes in Customannotationview and in UserSearchList. (caught)
 ProfileView: Edit update successful snack does not animate when disappearing, same with in-app notifications
 Does backgroud location always work even if permission is only authorizedWhenInUse? Otherwise permission need to be requested twice. / Dialog appearing every 3 days about background location being used when permission is AuthorizedAlways. (Feb 22 11:00, Feb 26. 23:03)
 Native crash when pressing Cancel from RegisterActivity into ListActivity. Has something to do with SetCollectionViewLayout, seems to only occur in simulator.
@@ -113,6 +116,7 @@ DistanceSource_Click on current location when uselocation is off (but pm on) sho
 disable all buttons that performs a network request when clicked
 Remove onlocationresult logs
 Link to source code in About alert
+On tablet, distance limit circle is larger than the map
 
 Admin:
 selected cell gets edited by pressing esc after exiting editing mode
@@ -336,7 +340,8 @@ namespace LocationConnection
 
                 if (autoLogin)
                 {
-                    c.LogActivity("Autologin");
+                    c.CW("Autologin start");
+                    c.LogActivity("Autologin start");
                     Task.Run(async () =>
                     {
                         Session.LastDataRefresh = null;
@@ -344,6 +349,8 @@ namespace LocationConnection
 
                         string str = File.ReadAllText(loginSessionFile);
                         string[] strarr = str.Split(";");
+
+                        
 
                         string url = "action=loginsession&ID=" + strarr[0] + "&SessionID=" + strarr[1];
 
@@ -354,6 +361,11 @@ namespace LocationConnection
                                 url += "&token=" + File.ReadAllText(deviceTokenFile) + "&ios=1";
                             }
                         }
+
+                        InvokeOnMainThread(() => {
+                            ResultSet.Hidden = false;
+                            ResultSet.Text = LangEnglish.LoggingIn;
+                        });
 
                         string responseString = c.MakeRequestSync(url);
                         if (responseString.Substring(0, 2) == "OK")
@@ -374,7 +386,7 @@ namespace LocationConnection
                                 c.LogActivity("Autologin logged in views set");
                             });
 
-                            CheckIntent();
+                            //implement notification handling
 
                             c.CW("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
                             c.LogActivity("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
@@ -425,10 +437,17 @@ namespace LocationConnection
                                     c.CW("Autologin LocationDisabledButUsingLocation");
                                     c.LogActivity("Autologin LocationDisabledButUsingLocation");
 
-                                    InvokeOnMainThread(() =>
+                                    if (appeared)
                                     {
-                                        c.SnackIndef(LangEnglish.LocationDisabledButUsingLocation);
-                                    });
+                                        InvokeOnMainThread(() =>
+                                        {
+                                            c.SnackIndef(LangEnglish.LocationDisabledButUsingLocation);
+                                        });
+                                    }
+                                    else
+                                    {
+                                        Session.SnackMessage = LangEnglish.LocationDisabledButUsingLocation;
+                                    }
 
                                     recenterMap = true;
                                     if (Session.LastSearchType == Constants.SearchType_Filter)
@@ -651,8 +670,6 @@ namespace LocationConnection
 
                 //c.CW("Stopwatch " + stw.ElapsedMilliseconds + " ViewWillAppear");
 
-                
-
                 if (File.Exists(c.locationLogFile))
                 {
                     TruncateLocationLog();
@@ -727,9 +744,6 @@ namespace LocationConnection
                     UserSearchList.ReloadData();
                     UserSearchList.LayoutIfNeeded();
                     c.SetHeight(UserSearchList, UserSearchList.ContentSize.Height);
-                    /*Task.Run(() => {
-                        LoadImages();
-                    });*/
                 }
                 else
                 {
@@ -746,7 +760,8 @@ namespace LocationConnection
                     {
                         c.CW("ViewWillAppear LocationDisabledButUsingLocation " + Session.UseLocation + " " + c.IsLocationEnabled());
                         c.LogActivity("ViewWillAppear LocationDisabledButUsingLocation " + Session.UseLocation + " " + c.IsLocationEnabled());
-                        c.SnackIndef(LangEnglish.LocationDisabledButUsingLocation);
+                        Session.SnackMessage = LangEnglish.LocationDisabledButUsingLocation;
+                        Session.SnackPermanent = true;
                     }
                 }
                 else
@@ -788,6 +803,8 @@ namespace LocationConnection
                         ListView_Click(null, null);
                     }
                 }
+
+                //after logging in, ViewDidLayoutSubviews is not called, therefore the bottom is not set.
 
                 c.CW("ViewWillAppear end");
                 c.LogActivity("ViewWillAppear end");
@@ -2518,6 +2535,9 @@ namespace LocationConnection
                         MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance(mapCenter, (int)Session.DistanceLimit * 1000 * 2, (int)Session.DistanceLimit * 1000 * 2);
                         ListViewMap.CenterCoordinate = mapCenter;
                         ListViewMap.Region = mapRegion;
+                            c.CW("Region: " + (int)Session.DistanceLimit * 1000 * 2 + " " + ListViewMap.Region.Span.LatitudeDelta + " " + ListViewMap.Region.Span.LongitudeDelta);
+                        //20000 0.20912796568598 0.317953289884542
+                        //20000 0.179636395490881 0.566293030628998
 
                         if ((bool)Session.GeoFilter)
                         {

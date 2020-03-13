@@ -24,10 +24,6 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView ChatListTopSeparator { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITableView ChatUserList { get; set; }
 
         [Outlet]
@@ -76,11 +72,6 @@ namespace LocationConnection
             if (ChatListBottomSeparator != null) {
                 ChatListBottomSeparator.Dispose ();
                 ChatListBottomSeparator = null;
-            }
-
-            if (ChatListTopSeparator != null) {
-                ChatListTopSeparator.Dispose ();
-                ChatListTopSeparator = null;
             }
 
             if (ChatUserList != null) {
