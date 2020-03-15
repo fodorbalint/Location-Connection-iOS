@@ -15,6 +15,7 @@ namespace LocationConnection
         private string checkFormMessage;
 
         public ImageFrameLayout ImagesUploaded { get { return EditImagesUploaded; } }
+        public TouchScrollView ProfileEditScroll { get { return ProfileEdit_Scroll; } }
 
         public ProfileEditActivity (IntPtr handle) : base (handle)
         {
@@ -129,6 +130,7 @@ namespace LocationConnection
                 SnackTopConstraint_Base = SnackTopConstraint;
                 SnackBottomConstraint_Base = SnackBottomConstraint;
                 ScrollBottomConstraint_Base = ScrollBottomConstraint;
+                ScrollBottomOuterConstraint_Base = ScrollBottomOuterConstraint;
             }
             catch (Exception ex)
             {
@@ -290,8 +292,6 @@ namespace LocationConnection
                 UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
 
                 c.ScrollToBottom(ProfileEditScroll);
-
-
             }
             else
             {

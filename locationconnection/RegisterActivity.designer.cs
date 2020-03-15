@@ -176,15 +176,15 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        LocationConnection.TouchScrollView Register_Scroll { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton RegisterCancel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         LocationConnection.ImageFrameLayout RegisterImagesUploaded { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        LocationConnection.TouchScrollView RegisterScroll { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -197,6 +197,10 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint ScrollBottomConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint ScrollBottomOuterConstraint { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -436,6 +440,11 @@ namespace LocationConnection
                 Register = null;
             }
 
+            if (Register_Scroll != null) {
+                Register_Scroll.Dispose ();
+                Register_Scroll = null;
+            }
+
             if (RegisterCancel != null) {
                 RegisterCancel.Dispose ();
                 RegisterCancel = null;
@@ -444,11 +453,6 @@ namespace LocationConnection
             if (RegisterImagesUploaded != null) {
                 RegisterImagesUploaded.Dispose ();
                 RegisterImagesUploaded = null;
-            }
-
-            if (RegisterScroll != null) {
-                RegisterScroll.Dispose ();
-                RegisterScroll = null;
             }
 
             if (Reset != null) {
@@ -464,6 +468,11 @@ namespace LocationConnection
             if (ScrollBottomConstraint != null) {
                 ScrollBottomConstraint.Dispose ();
                 ScrollBottomConstraint = null;
+            }
+
+            if (ScrollBottomOuterConstraint != null) {
+                ScrollBottomOuterConstraint.Dispose ();
+                ScrollBottomOuterConstraint = null;
             }
 
             if (Sex != null) {

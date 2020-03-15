@@ -24,6 +24,7 @@ namespace LocationConnection
         private bool registerCompleted;
 
         public ImageFrameLayout ImagesUploaded { get { return RegisterImagesUploaded; } }
+        public TouchScrollView RegisterScroll { get { return Register_Scroll; } }
 
         public RegisterActivity(IntPtr handle) : base(handle)
         {
@@ -123,6 +124,7 @@ namespace LocationConnection
                 SnackTopConstraint_Base = SnackTopConstraint;
                 SnackBottomConstraint_Base = SnackBottomConstraint;
                 ScrollBottomConstraint_Base = ScrollBottomConstraint;
+                ScrollBottomOuterConstraint_Base = ScrollBottomOuterConstraint;
             }
             catch (Exception ex)
             {

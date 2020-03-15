@@ -256,7 +256,7 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        LocationConnection.TouchScrollView ProfileEditScroll { get; set; }
+        LocationConnection.TouchScrollView ProfileEdit_Scroll { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -265,6 +265,10 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint ScrollBottomConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint ScrollBottomOuterConstraint { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -588,9 +592,9 @@ namespace LocationConnection
                 MenLabel = null;
             }
 
-            if (ProfileEditScroll != null) {
-                ProfileEditScroll.Dispose ();
-                ProfileEditScroll = null;
+            if (ProfileEdit_Scroll != null) {
+                ProfileEdit_Scroll.Dispose ();
+                ProfileEdit_Scroll = null;
             }
 
             if (RoundBottom != null) {
@@ -601,6 +605,11 @@ namespace LocationConnection
             if (ScrollBottomConstraint != null) {
                 ScrollBottomConstraint.Dispose ();
                 ScrollBottomConstraint = null;
+            }
+
+            if (ScrollBottomOuterConstraint != null) {
+                ScrollBottomOuterConstraint.Dispose ();
+                ScrollBottomOuterConstraint = null;
             }
 
             if (Snackbar != null) {

@@ -151,32 +151,21 @@ namespace LocationConnection
 					case "messageDelivered":
 					case "loadMessages":
 					case "loadMessageList":
-						if (context is ChatOneActivity)
+						if (context is ChatOneActivity && senderID == Session.CurrentMatch.TargetID)
 						{
 							string[] updateItems = meta.Substring(1, meta.Length - 2).Split("}{");
 							foreach (string item in updateItems)
 							{
-								sep1Pos = meta.IndexOf('|');
-								sep2Pos = meta.IndexOf('|', sep1Pos + 1);
-
-								if (senderID == Session.CurrentMatch.TargetID)
-								{
-									((ChatOneActivity)context).UpdateMessageItem(item);
-								}								
+								((ChatOneActivity)context).UpdateMessageItem(item);
 							}
 						}
 						break;
 
 					case "matchProfile":
-						if (inApp)
+						if (inApp) ////it is impossible to stand in that chat if wasn't previously a match
 						{
 							title = remoteMessage.AppData["title"].ToString();
-
-                            if (context is ChatOneActivity && Session.CurrentMatch.TargetID == senderID)
-                            {
-								context.c.SnackAction(title, null, null);
-							}
-                            else if (context is ChatOneActivity)
+                            if (context is ChatOneActivity)
                             {
 								context.c.SnackAction(title, LangEnglish.ShowReceived, new Action(delegate () { GoToChatNoOpen(senderID); }));
 							}
@@ -216,7 +205,7 @@ namespace LocationConnection
 							title = remoteMessage.AppData["title"].ToString();
 							if (context is ChatOneActivity && Session.CurrentMatch.TargetID == senderID)
 							{
-								context.c.SnackAction(title, null, null);
+								context.c.Snack(title);
 							}
 							else if (context is ChatOneActivity)
 							{
@@ -264,7 +253,7 @@ namespace LocationConnection
 							title = remoteMessage.AppData["title"].ToString();
 							if (context is ChatOneActivity && Session.CurrentMatch.TargetID == senderID)
 							{
-								context.c.SnackAction(title, null, null);
+								context.c.Snack(title);
 							}
 							else if (context is ChatOneActivity)
 							{

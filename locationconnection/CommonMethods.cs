@@ -507,7 +507,6 @@ namespace LocationConnection
 			SnackText.Text = message;
 			CollapseButton();
 			MainLayout.LayoutIfNeeded();
-			ShowSnack();
 
             if (snackVisible)
             {
@@ -533,6 +532,41 @@ namespace LocationConnection
 				snackTimer.Interval += snackDuration;
 				snackTimer.Start();
 			}			
+		}
+
+		public void SnackAction(string message, string actionText, Action action)
+		{
+			SnackText.Text = message;
+			ExpandButton();
+			SnackButton.SetTitle(actionText, UIControlState.Normal);
+            MainLayout.LayoutIfNeeded();
+			
+			snackButtonAction = action;
+
+			if (snackVisible)
+			{
+				if (!(snackTimer is null))
+				{
+					snackTimer.Stop();
+					snackTimer.Start();
+				}
+				else
+				{
+					snackTimer = new Timer();
+					snackTimer.Elapsed += Timer_Elapsed;
+					snackTimer.Interval += snackDuration;
+					snackTimer.Start();
+				}
+			}
+			else
+			{
+				ShowSnack();
+
+				snackTimer = new Timer();
+				snackTimer.Elapsed += Timer_Elapsed;
+				snackTimer.Interval += snackDuration;
+				snackTimer.Start();
+			}
 		}
 
 		public void SnackIndef(string message)
@@ -610,49 +644,6 @@ namespace LocationConnection
 				}
 				MainLayout.LayoutIfNeeded();
 			}, completion: () => { if (!snackVisible) this.SnackBar.Hidden = true; }); //a new snackbar could have appeared during animation
-		}
-
-		public void SnackAction(string message, string actionText, Action action)
-		{
-			SnackText.Text = message;
-            if (!(actionText is null))
-            {
-				ExpandButton();
-				SnackButton.SetTitle(actionText, UIControlState.Normal);
-			}
-            else
-            {
-				CollapseButton();
-            }			
-			
-            MainLayout.LayoutIfNeeded();
-			
-			snackButtonAction = action;
-
-			if (snackVisible)
-			{
-				if (!(snackTimer is null))
-				{
-					snackTimer.Stop();
-					snackTimer.Start();
-				}
-				else
-				{
-					snackTimer = new Timer();
-					snackTimer.Elapsed += Timer_Elapsed;
-					snackTimer.Interval += snackDuration;
-					snackTimer.Start();
-				}
-			}
-			else
-			{
-				ShowSnack();
-
-				snackTimer = new Timer();
-				snackTimer.Elapsed += Timer_Elapsed;
-				snackTimer.Interval += snackDuration;
-				snackTimer.Start();
-			}
 		}
 
 		public void DisplayCustomDialog(string dialogTitle, string dialogMessage, string dialogPositiveBtnLabel, string dialogNegativeBtnLabel, Action<UIAlertAction> actionPositive, Action<UIAlertAction> actionNegative)
@@ -1273,12 +1264,13 @@ namespace LocationConnection
         {
 			context.View.LayoutIfNeeded();
 
-			if (scroll.ContentSize.Height > scroll.Bounds.Size.Height)
+			if (scroll.ContentSize.Height + context.uselessHeight > scroll.Bounds.Size.Height)
 			{
 				CGPoint bottomOffset = new CGPoint(0, scroll.ContentSize.Height - scroll.Bounds.Size.Height);
-				if (context is ProfileEditActivity && context.roundBottomHeight > 0)
+
+				if ((context is RegisterActivity || context is ProfileEditActivity || context is SettingsActivity) && context.roundBottomHeight > 0 && context.keyboardHeight == 0)
                 {
-					bottomOffset = new CGPoint(0, scroll.ContentSize.Height - scroll.Bounds.Size.Height + context.roundBottomHeight - context.uselessHeight);
+					bottomOffset = new CGPoint(0, scroll.ContentSize.Height - scroll.Bounds.Size.Height + context.roundBottomHeight);
 				}
 				UIView.Animate(context.tweenTime, () => { scroll.ContentOffset = bottomOffset; }, () => { });
 				

@@ -45,6 +45,7 @@ namespace LocationConnection
 		public NSLayoutConstraint SnackTopConstraint_Base { get; set; } //used when ResizeWindowOnKeyboard() is used
 		public NSLayoutConstraint SnackBottomConstraint_Base { get; set; }
 		public NSLayoutConstraint ScrollBottomConstraint_Base { get; set; }
+		public NSLayoutConstraint ScrollBottomOuterConstraint_Base { get; set; }
 		public NSLayoutConstraint LoaderCircleLeftConstraint_Base { get; set; }
 		public NSLayoutConstraint ChatOneLeftConstraint_Base { get; set; }
 		public NSLayoutConstraint ChatOneRightConstraint_Base { get; set; }
@@ -101,10 +102,11 @@ namespace LocationConnection
 			if (!layoutSet)
 			{
 				roundBottomHeight = View.Frame.Height - (View.SafeAreaLayoutGuide.LayoutFrame.Y + View.SafeAreaLayoutGuide.LayoutFrame.Height);
-				uselessHeight = 13;
 
 				if (roundBottomHeight > 0)
 				{
+					uselessHeight = 13;
+
 					if (this is ProfileViewActivity)
 					{
 						BottomConstraintConstant = 10 + uselessHeight;
@@ -132,6 +134,8 @@ namespace LocationConnection
 				}
                 else
                 {
+					uselessHeight = 0;
+
                     if (this is ProfileViewActivity)
                     {
 						ScrollBottomConstraintConstant = 0;
@@ -141,16 +145,17 @@ namespace LocationConnection
 						ScrollBottomConstraintConstant = 10;
 					}
 					BottomConstraintConstant = 0;
-					SnackBottomConstraintConstant = -uselessHeight; //Snackbar is extra padded at the bottom
+					SnackBottomConstraintConstant = -13; //Snackbar is extra padded at the bottom
 				}
 
-				//c.CW("ViewDidLayoutSubviews roundBottomHeight " + BottomConstraint_Base + " " + roundBottomHeight + " " + BottomConstraintConstant + " " + SnackBottomConstraintConstant + " " + ScrollBottomConstraintConstant);
+				//c.CW("ViewDidLayoutSubviews roundBottomHeight " + roundBottomHeight + " " + BottomConstraintConstant + " " + SnackBottomConstraintConstant + " " + ScrollBottomConstraintConstant);
 
 				BottomConstraint_Base.Constant = BottomConstraintConstant;
 				SnackBottomConstraint_Base.Constant = SnackBottomConstraintConstant;
                 if (ScrollBottomConstraint_Base != null)
                 {
 					ScrollBottomConstraint_Base.Constant = ScrollBottomConstraintConstant;
+                    //On iPad Pro 12.9 3th gen, setting it below 10 results in the buttons being below microphone line, and page is not scrollable
 				}
 
 				layoutSet = true;
@@ -222,7 +227,6 @@ namespace LocationConnection
 				if (SnackBottomConstraint_Base != null && SnackTopConstraint_Base != null)
 				{
 					nfloat newKeyboardHeight = ((NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey))).RectangleFValue.Size.Height; //changes from 320 to 265 when in Settings, I click on See log while keyboard is open. Framechangenotification is also called when keyboard is closed, having its height for opened state.
-
 					if (keyboardHeight != newKeyboardHeight)
                     {
 						nfloat diff = 0;
@@ -241,9 +245,15 @@ namespace LocationConnection
 						{
 							ScrollBottomConstraint_Base.Constant = 10;
 						}
+						if (ScrollBottomOuterConstraint_Base != null)
+						{
+							ScrollBottomOuterConstraint_Base.Constant = newKeyboardHeight;
+						}
 
 						NSNumber duration = (NSNumber)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.AnimationDurationUserInfoKey));
 						UIView.Animate(duration.DoubleValue, () => { View.LayoutIfNeeded(); }, null);
+
+						keyboardHeight = newKeyboardHeight;
 
 						if (this is ChatOneActivity)
 						{
@@ -265,7 +275,7 @@ namespace LocationConnection
 							c.ScrollToBottom(((SettingsActivity)this).SettingsScroll);
 						}
 
-						keyboardHeight = newKeyboardHeight;
+						
 					}					
 				}
 			});
@@ -273,15 +283,69 @@ namespace LocationConnection
 			hideNotification = UIKeyboard.Notifications.ObserveWillHide((sender, args) => {
                 if (SnackBottomConstraint_Base != null && SnackTopConstraint_Base != null) //can become null when opening a new page while keyboard is open
 				{
+					
+
+					bool isBottom = false;
+					nfloat offsetY = 0;
+					UIScrollView scroll = null;
+
+					if (this is SettingsActivity)
+                    {
+						scroll = ((SettingsActivity)this).SettingsScroll;
+						offsetY = scroll.ContentOffset.Y;
+						if (offsetY >= scroll.ContentSize.Height + uselessHeight - (scroll.Bounds.Size.Height + keyboardHeight))
+						{
+							isBottom = true;
+                        }
+                    }
+                    else if (this is ProfileEditActivity)
+					{
+						scroll = ((ProfileEditActivity)this).ProfileEditScroll;
+						offsetY = scroll.ContentOffset.Y;
+						if (offsetY >= scroll.ContentSize.Height + uselessHeight - (scroll.Bounds.Size.Height + keyboardHeight))
+						{
+							isBottom = true;
+						}
+					}
+					else if (this is RegisterActivity)
+					{
+						scroll = ((RegisterActivity)this).RegisterScroll;
+						offsetY = scroll.ContentOffset.Y;
+						if (offsetY>= scroll.ContentSize.Height + uselessHeight - (scroll.Bounds.Size.Height + keyboardHeight))
+						{
+							isBottom = true;
+						}
+					}
+
 					keyboardHeight = 0;
 
 					BottomConstraint_Base.Constant = BottomConstraintConstant;
 					SnackBottomConstraint_Base.Constant = SnackBottomConstraintConstant;
 					SnackTopConstraint_Base.Constant = 0;
+
 					if (ScrollBottomConstraint_Base != null)
 					{
 						ScrollBottomConstraint_Base.Constant = ScrollBottomConstraintConstant;
 					}
+					if (ScrollBottomOuterConstraint_Base != null)
+					{
+						ScrollBottomOuterConstraint_Base.Constant = 0;
+					}
+
+                    if (this is SettingsActivity || this is ProfileEditActivity || this is RegisterActivity)
+                    {
+						if (isBottom)
+						{
+							c.CW("scrolling to bottom");
+							c.ScrollToBottom(scroll);
+						}
+						else //scroll position would not remain if bottom was between bottom - 10 and bottom - uselessheight - 10
+						{
+							View.LayoutIfNeeded();
+							scroll.ContentOffset = new CGPoint(0, offsetY);
+						}
+					}
+                    
 
 					NSNumber duration = (NSNumber)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.AnimationDurationUserInfoKey));
 					UIView.Animate(duration.DoubleValue, () => { View.LayoutIfNeeded(); }, null);

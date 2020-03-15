@@ -22,8 +22,6 @@ map region is larger than normal when switching from chat list to list. Same in 
 
 Medium importance
 
-Verify that truncatelocationlog works
-
 Crash once at Profile View index out of range
 Dark mode support
 Once pin and current location markers appeared on iphone at the same time
@@ -40,7 +38,7 @@ Does backgroud location always work even if permission is only authorizedWhenInU
 Native crash when pressing Cancel from RegisterActivity into ListActivity. Has something to do with SetCollectionViewLayout, seems to only occur in simulator.
 
 Android:
-Important: chat get updated from other person's conversation
+profile view does not scroll
 gray map circle line instead of black
 remove profiles when map circle radius changes.
 do we need paddigTop, paddingBottom on ImagesProgressText
@@ -120,7 +118,6 @@ On tablet, distance limit circle is larger than the map
 
 Admin:
 selected cell gets edited by pressing esc after exiting editing mode
-data too long for column error when editing boolean field
 editable table headers
 
 ----------

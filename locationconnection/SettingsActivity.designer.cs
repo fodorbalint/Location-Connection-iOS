@@ -180,6 +180,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint ScrollBottomOuterConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIScrollView Settings_Scroll { get; set; }
 
         [Outlet]
@@ -411,6 +415,11 @@ namespace LocationConnection
             if (ScrollBottomConstraint != null) {
                 ScrollBottomConstraint.Dispose ();
                 ScrollBottomConstraint = null;
+            }
+
+            if (ScrollBottomOuterConstraint != null) {
+                ScrollBottomOuterConstraint.Dispose ();
+                ScrollBottomOuterConstraint = null;
             }
 
             if (Settings_Scroll != null) {

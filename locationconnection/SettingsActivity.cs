@@ -27,6 +27,7 @@ namespace LocationConnection
                 SnackTopConstraint_Base = SnackTopConstraint;
                 SnackBottomConstraint_Base = SnackBottomConstraint;
                 ScrollBottomConstraint_Base = ScrollBottomConstraint;
+                ScrollBottomOuterConstraint_Base = ScrollBottomOuterConstraint;
 
                 SettingsHeaderText.Text = LangEnglish.MenuSettings;
                 NotificationsLabel.Text = LangEnglish.NotificationsText;
