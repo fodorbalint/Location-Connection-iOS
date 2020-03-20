@@ -123,9 +123,7 @@ namespace LocationConnection
 
 							if (senderID != Session.ID && senderID == Session.CurrentMatch.TargetID) //for tests, you can use 2 accounts from the same device, and a sent message would appear duplicate.
 							{
-								((ChatOneActivity)context).No_Messages.Hidden = true;
 								((ChatOneActivity)context).AddMessageItemOne(meta + body);
-								((ChatOneActivity)context).ScrollToBottom(true);
 								((ChatOneActivity)context).c.MakeRequest("action=messagedelivered&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + Session.CurrentMatch.MatchID + "&MessageID=" + messageID + "&Status=Read");
 							}
                             else if (inApp && senderID != Session.ID)
@@ -399,6 +397,7 @@ namespace LocationConnection
 						{
 							ListActivity.viewProfiles[i].UserRelation = 2;
 						}
+						break;
 					}
 				}
 			}			

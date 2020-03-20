@@ -289,14 +289,14 @@ namespace LocationConnection
                 c.CollapseY(EditChangePasswordSection);
                 c.CollapseY(EditLocationSettingsSection);
 
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
 
                 c.ScrollToBottom(ProfileEditScroll);
             }
             else
             {
                 c.CollapseY(EditMoreOptionsSection);
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
             }
         }
 
@@ -398,6 +398,17 @@ namespace LocationConnection
                                 Session.Latitude = null;
                                 Session.Longitude = null;
                                 Session.LocationTime = null;
+
+                                if (Constants.SafeLocationMode)
+                                {
+                                    Session.SafeLatitude = null;
+                                    Session.SafeLongitude = null;
+                                    Session.SafeLocationTime = null;
+
+                                    Session.LatestLatitude = null;
+                                    Session.LatestLongitude = null;
+                                    Session.LatestLocationTime = null;
+                                }
                             }
                         }
                         Session.SnackMessage = LangEnglish.SettingsUpdated;

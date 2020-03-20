@@ -90,15 +90,36 @@ namespace LocationConnection
                     var longitude = Session.Longitude;
                     var locationTime = Session.LocationTime;
 
-                    c.LogActivity("Clearing user, locationtime: " + locationTime);
-                    c.ClearCurrentUser();
+                    if (!Constants.SafeLocationMode)
+                    {
+                        c.LogActivity("Clearing user");
+                        c.ClearCurrentUser();
+                    }
+                    else
+                    {
+                        var safeLatitude = Session.SafeLatitude;
+                        var safeLongitude = Session.SafeLongitude;
+                        var safeLocationTime = Session.SafeLocationTime;
 
-                    //Session.CurrentViewController = this;
+                        var latestLatitude = Session.LatestLatitude;
+                        var latestLongitude = Session.LatestLongitude;
+                        var latestLocationTime = Session.LatestLocationTime;
+
+                        c.LogActivity("Clearing user");
+                        c.ClearCurrentUser();
+
+                        Session.SafeLatitude = safeLatitude;
+                        Session.SafeLongitude = safeLongitude;
+                        Session.SafeLocationTime = safeLocationTime;
+
+                        Session.LatestLatitude = latestLatitude;
+                        Session.LatestLongitude = latestLongitude;
+                        Session.LatestLocationTime = latestLocationTime;
+                    }
+
                     Session.Latitude = latitude;
                     Session.Longitude = longitude;
                     Session.LocationTime = locationTime;
-
-                    c.LogActivity("Session.LocationTime: " + Session.LocationTime);
 
                     if (!string.IsNullOrEmpty(locationUpdatesTo))
                     {
@@ -226,13 +247,13 @@ namespace LocationConnection
 
                 c.ExpandY(ResetSection);
                 resetSectionVisible = true;
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
             }
             else
             {
                 c.CollapseY(ResetSection);
                 resetSectionVisible = false;
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
             }
         }
 

@@ -60,6 +60,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MenuBlock { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView MenuContainer { get; set; }
 
         [Outlet]
@@ -77,6 +81,10 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton MenuLocationUpdates { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MenuReport { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -167,6 +175,11 @@ namespace LocationConnection
                 MatchDate = null;
             }
 
+            if (MenuBlock != null) {
+                MenuBlock.Dispose ();
+                MenuBlock = null;
+            }
+
             if (MenuContainer != null) {
                 MenuContainer.Dispose ();
                 MenuContainer = null;
@@ -190,6 +203,11 @@ namespace LocationConnection
             if (MenuLocationUpdates != null) {
                 MenuLocationUpdates.Dispose ();
                 MenuLocationUpdates = null;
+            }
+
+            if (MenuReport != null) {
+                MenuReport.Dispose ();
+                MenuReport = null;
             }
 
             if (MenuUnmatch != null) {

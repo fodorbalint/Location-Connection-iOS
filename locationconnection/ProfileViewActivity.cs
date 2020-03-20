@@ -44,11 +44,18 @@ namespace LocationConnection
 
                 c.AddViews(Snackbar, Snackbar.SnackText, Snackbar.SnackButton);
 
-                ProfileViewScroll.Scrolled += ProfileViewScroll_Scrolled;
-			    EditSelf.SetTitle(LangEnglish.EditSelf, UIControlState.Normal);
-			    ProfileImageScroll.Delegate = this;
+				MenuBlock.SetTitle(LangEnglish.MenuBlock, UIControlState.Normal);
+				MenuReport.SetTitle(LangEnglish.MenuReport, UIControlState.Normal);
 
-			    EditSelf.Layer.MasksToBounds = true;
+				c.HideMenu(MenuLayer, MenuContainer, false);
+
+				ProfileViewScroll.Scrolled += ProfileViewScroll_Scrolled;
+			    EditSelf.SetTitle(LangEnglish.EditSelf, UIControlState.Normal);
+				SendLocation.SetTitle(LangEnglish.SendLocation, UIControlState.Normal);
+				ProfileImageScroll.Delegate = this;
+
+				SendLocation.Layer.MasksToBounds = true;
+				EditSelf.Layer.MasksToBounds = true;
 
 			    var tap = new UITapGestureRecognizer();
 			    tap.AddTarget(() => ProfileImageScroll_Click(tap));
@@ -73,6 +80,7 @@ namespace LocationConnection
 			    MapSatellite.TouchUpInside += MapSatellite_Click;
 
                 EditSelfBack.TouchUpInside += EditSelfBack_Click;
+                SendLocation.TouchUpInside += SendLocation_Click;
                 EditSelf.TouchUpInside += EditSelf_Click;
                 BackButton.TouchUpInside += BackButton_Click;
 
@@ -88,7 +96,13 @@ namespace LocationConnection
 			    LikeButton.TouchDown += Button_Touch;
 			    HideButton.TouchDown += Button_Touch;
 
-			    RoundBottom_Base = RoundBottom;
+				MenuIcon.TouchUpInside += MenuIcon_Click;
+				MenuLayer.TouchDown += MenuLayer_TouchDown;
+
+				MenuReport.TouchUpInside += MenuReport_Click;
+				MenuBlock.TouchUpInside += MenuBlock_Click;
+
+				RoundBottom_Base = RoundBottom;
 			    Snackbar_Base = Snackbar;
 			    BottomConstraint_Base = BottomConstraint;
 			    SnackBottomConstraint_Base = SnackBottomConstraint; 
@@ -103,6 +117,8 @@ namespace LocationConnection
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
+
+			c.SetShadow(MenuContainer, 0, 0, 10);
 
 			SetOvalShadow(PreviousButton, 0, 6);
 			SetOvalShadow(HideButton, 0, 6);
@@ -134,6 +150,7 @@ namespace LocationConnection
 				switch (pageType)
 				{
 					case "self":
+						c.Collapse(MenuIcon);
 
 						if ((bool)Session.UseLocation && c.IsLocationEnabled() && !(locMgr is null))
 						{
@@ -144,7 +161,20 @@ namespace LocationConnection
 
 						EditSelfHeader.Hidden = false;
 						EditSelfBack.Hidden = false;
-						EditSelf.Hidden = false;
+						SendLocation.Hidden = false;
+                        EditSelf.Hidden = false;
+
+                        if ((bool)Session.UseLocation && c.IsLocationEnabled())
+                        {
+							SendLocation.Enabled = true;
+							SendLocation.Alpha = 1;
+                        }
+                        else
+                        {
+							SendLocation.Enabled = false;
+							SendLocation.Alpha = 0.5f;
+                        }
+
 
 						BackButton.Hidden = true;
 
@@ -164,11 +194,20 @@ namespace LocationConnection
 						break;
 
 					case "list":
+                        if (c.IsLoggedIn())
+                        {
+							c.Expand(MenuIcon);
+						}
+                        else
+                        {
+							c.Collapse(MenuIcon);
+                        }
 
 						HideEditSpacer();
 
 						EditSelfHeader.Hidden = true;
 						EditSelfBack.Hidden = true;
+						SendLocation.Hidden = true;
 						EditSelf.Hidden = true;
 
 						BackButton.Hidden = false;
@@ -205,6 +244,7 @@ namespace LocationConnection
 						break;
 
 					case "standalone": //coming from chat, we already know this is a match, Userrelation=3.
+						c.Expand(MenuIcon);
 
 						if (!(IntentData.targetID is null)) //when pressing back button from ChatOne, IntentData.targetID is null.
 						{
@@ -380,6 +420,7 @@ namespace LocationConnection
 
 			EditSelfHeader.Hidden = true;
 			EditSelfBack.Hidden = true;
+			SendLocation.Hidden = true;
 			EditSelf.Hidden = true;
 
 			BackButton.Hidden = false;
@@ -392,8 +433,19 @@ namespace LocationConnection
 			c.CollapseX(HideButton);
 			c.ExpandX(LikeButton);
 
-			string latitudeStr = (Session.Latitude is null) ? "" : ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture);
-			string longitudeStr = (Session.Longitude is null) ? "" : ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture);
+			string latitudeStr;
+			string longitudeStr;
+
+			if (!Constants.SafeLocationMode)
+			{
+				latitudeStr = (Session.Latitude is null) ? "" : ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture);
+				longitudeStr = (Session.Longitude is null) ? "" : ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture);
+			}
+			else
+			{
+				latitudeStr = (Session.LatestLatitude is null) ? "" : ((double)Session.LatestLatitude).ToString(CultureInfo.InvariantCulture);
+				longitudeStr = (Session.LatestLongitude is null) ? "" : ((double)Session.LatestLongitude).ToString(CultureInfo.InvariantCulture);
+			}
 
 			string responseString = c.MakeRequestSync("action=getuserdata&ID=" + Session.ID + "&target=" + targetID
 		+ "&SessionID=" + Session.SessionID + "&Latitude=" + latitudeStr + "&Longitude=" + longitudeStr); //if we used await c.MakeRequest here, the OnResume would return, and the map would set to world view before user data is loaded.
@@ -561,8 +613,6 @@ namespace LocationConnection
 						LoadPicture(displayUser.ID.ToString(), displayUser.Pictures[i], i);
 					}
 				}, cts.Token);
-
-				c.CW("token: " + cts.Token);
 			}
 			catch (Exception ex)
 			{
@@ -795,7 +845,7 @@ namespace LocationConnection
 
 		private void LoadPicture(string folder, string picture, int index)
 		{
-			c.CW("LoadPicture " + folder + " " + picture + " " + index);
+			//c.CW("LoadPicture " + folder + " " + picture + " " + index);
 			try {
 				UIImageView ProfileImage = null;
 				InvokeOnMainThread(() => {
@@ -873,38 +923,61 @@ namespace LocationConnection
 		private void BackButton_Click(object sender, EventArgs e)
 		{
 			CommonMethods.OpenPage(null, 0);
-            /*if (IntentData.profileViewPageType == "standalone")
-            {
-				IntentData.chatOnePageType = "chatList";
-				CommonMethods.OpenPage("ChatOneActivity", 0);
-            }
-            else
-            {
-				CommonMethods.OpenPage("ListActivity", 0);
-            }*/
 		}
 
 		private void EditSelfBack_Click(object sender, EventArgs e)
 		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
 			BackButton_Click(null, null);
+		}
+
+		private async void SendLocation_Click(object sender, EventArgs e)
+		{
+            if (Session.LatestLatitude != null && Session.LatestLongitude != null)
+            {
+				if (await c.UpdateLocationSync(false))
+				{
+					Session.Latitude = Session.LatestLatitude;
+					Session.Longitude = Session.LatestLongitude;
+					Session.LocationTime = Session.LatestLocationTime;
+
+					c.LogLocation(Session.LocationTime + "|" + ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture) + "|" + ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture) + "|2");
+
+					UpdateLocationSelf();
+
+					//c.Snack(LangEnglish.LocationUpdated);
+				}
+				else
+				{
+					c.Snack(LangEnglish.LocationNotUpdated);
+				}
+			}
+            else
+            {
+				c.Snack(LangEnglish.LocationNotAcquired);
+            }
 		}
 
 		private void EditSelf_Click(object sender, EventArgs e)
 		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
 			CommonMethods.OpenPage("ProfileEditActivity", 1);
 		}
 
 		private void PreviousButton_Click(object sender, EventArgs e)
 		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
 			ListActivity.viewIndex--;
 			ListActivity.absoluteIndex--;
-
 
 			if (!imageLoading.IsCompleted)
 			{
 				cts.Cancel();
 			}
-			c.CW("PreviousButton_Click viewIndex: " + ListActivity.viewIndex + " viewProfiles.Count: " + ListActivity.viewProfiles.Count + " imageLoading completed " + imageLoading.IsCompleted);
+			c.CW("PreviousButton_Click viewIndex " + ListActivity.viewIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 			if (ListActivity.viewIndex >= 0)
 			{
 				PrevLoadAction();
@@ -924,6 +997,8 @@ namespace LocationConnection
 
 		private void NextButton_Click(object sender, EventArgs e)
 		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
 			ListActivity.viewIndex++;
 			ListActivity.absoluteIndex++;
 
@@ -931,7 +1006,7 @@ namespace LocationConnection
             {
 				cts.Cancel();
             }
-			c.CW("NextButton_Click viewIndex: " + ListActivity.viewIndex + " viewProfiles.Count: " + ListActivity.viewProfiles.Count + " imageLoading completed " + imageLoading.IsCompleted);
+			c.CW("NextButton_Click viewIndex " + ListActivity.viewIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 
 			if (ListActivity.viewIndex < ListActivity.viewProfiles.Count)
 			{
@@ -995,6 +1070,8 @@ namespace LocationConnection
 
 		private async void LikeButton_Click(object sender, EventArgs e)
 		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
 			if (pageType == "standalone")
 			{
 				IntentData.senderID = displayUser.ID; //we could have gotten on this profile page from another chat by clicking on a notification.
@@ -1083,6 +1160,8 @@ namespace LocationConnection
 
 		private async void HideButton_Click(object sender, EventArgs e)
 		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
 			long unixTimestamp = c.Now();
 			if (displayUser.UserRelation == 0 || displayUser.UserRelation == 2)
 			{
@@ -1098,10 +1177,18 @@ namespace LocationConnection
 
 					if (Session.ListType != "hid")
 					{
-						ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex);
+						ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex); //will also remove the user from listProfiles
+                        if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
+                        {
+							ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
+                        }
 						ListActivity.viewIndex--;
 						NextButton_Click(null, null);
 					}
+                    else
+                    {
+						Session.LastDataRefresh = null;
+                    }
 				}
 				else if (responseString.Substring(0, 6) == "ERROR_") //IsAMatch
 				{
@@ -1125,13 +1212,69 @@ namespace LocationConnection
 					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
 					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
 
-					Session.LastDataRefresh = null; //remove item from the hidden people list, list will refresh with the new data.
+                    //Session.ListType = hid
+					if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
+					{
+						ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
+					}
 				}
 				else
 				{
 					c.ReportError(responseString);
 				}
 			}
+		}
+
+		private void MenuIcon_Click(object sender, EventArgs e)
+		{
+			c.ShowMenu(MenuLayer, MenuContainer);
+		}
+
+		private void MenuLayer_TouchDown(object sender, EventArgs e)
+		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+		}
+
+		private void MenuReport_Click(object sender, EventArgs e)
+		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
+			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.ReportDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
+			{
+				string responseString = await c.MakeRequest("action=reportprofileview&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + displayUser.ID);
+				if (responseString.Substring(0, 2) == "OK")
+				{
+					c.Snack(LangEnglish.UserReported);
+				}
+				else
+				{
+					c.ReportError(responseString);
+				}
+			}, null);			
+		}
+
+		private void MenuBlock_Click(object sender, EventArgs e)
+		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
+			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.BlockDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
+			{
+				string responseString = await c.MakeRequest("action=blockprofileview&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + displayUser.ID);
+				if (responseString.Substring(0, 2) == "OK")
+				{
+					ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex);
+					if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
+					{
+						ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
+					}
+					ListActivity.viewIndex--;
+					NextButton_Click(null, null);
+				}
+				else
+				{
+					c.ReportError(responseString);
+				}
+			}, null);
 		}
 
 		public void AddNewMatch(int senderID, MatchItem item)
@@ -1232,7 +1375,16 @@ namespace LocationConnection
 
 				if (!(displayUser.Distance is null))
 				{
-					float distance = CalculateDistance((double)Session.Latitude, (double)Session.Longitude, latitude, longitude);
+					float distance;
+                    if (!Constants.SafeLocationMode)
+                    {
+						distance = CalculateDistance((double)Session.Latitude, (double)Session.Longitude, latitude, longitude);
+					}
+                    else
+                    {
+						distance = CalculateDistance((double)Session.LatestLatitude, (double)Session.LatestLongitude, latitude, longitude);
+					}
+					
 					displayUser.Distance = distance;
 					DistanceText.Text = distance + " km " + LangEnglish.ProfileViewAway;
 				}
@@ -1241,19 +1393,17 @@ namespace LocationConnection
 
 		private void LocMgr_LocationUpdated(object sender, LocationUpdatedEventArgs e)
 		{
-			UpdateLocationSelf((long)Session.LocationTime, (double)Session.Latitude, (double)Session.Longitude);
+			if (!Constants.SafeLocationMode)
+			{
+				UpdateLocationSelf();
+			}
 		}
 
-		public void UpdateLocationSelf(long time, double latitude, double longitude)
+		public void UpdateLocationSelf()
 		{
-			Session.LastActiveDate = time;
-			Session.Latitude = latitude;
-			Session.Longitude = longitude;
-			Session.LocationTime = time;
+			LastActiveDate.Text = c.GetTimeDiffStr(Session.LastActiveDate, true);
 
-			LastActiveDate.Text = c.GetTimeDiffStr(time, true);
-
-			CLLocationCoordinate2D location = new CLLocationCoordinate2D(latitude, longitude);
+			CLLocationCoordinate2D location = new CLLocationCoordinate2D((double)Session.Latitude, (double)Session.Longitude);
 			ProfileViewMap.CenterCoordinate = location;
 
 			if (!(thisMarker is null))
@@ -1264,7 +1414,14 @@ namespace LocationConnection
 			thisMarker = new MKPointAnnotation() { Title = "Center", Coordinate = location };
 			ProfileViewMap.AddAnnotation(thisMarker);
 
-			LocationTime.Text = LangEnglish.ProfileViewLocation + " " + c.GetTimeDiffStr(Session.LocationTime, false);
+			if (ProfileViewMap.Frame.Height == 0) //if this is the first location registered, display map
+			{
+				SetMap();
+			}
+            else
+            {
+				LocationTime.Text = LangEnglish.ProfileViewLocation + " " + c.GetTimeDiffStr(Session.LocationTime, false);
+			}
 			c.Expand(LocationTime);
 		}
 

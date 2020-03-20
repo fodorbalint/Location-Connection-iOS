@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class Constants
 	{
-		public const int LocationTimeout = 5000;
+		//public const int LocationTimeout = 5000;
 		public const int DistanceLimitMax = 100;
 		public const int RequestTimeout = 10000;
 		public const int MaxNumPictures = 9;
@@ -46,10 +46,12 @@ namespace LocationConnection
 		public static int BackgroundLocationRateMax = 3600;
 		public const int LocationKeepTime = 60 * 60 * 24;
 		public const int SystemLogKeepTime = 60 * 5;
+		public const float tweenTime = 0.2f;
 
 		public const string TestDB = "&testDB";
 		public const string UploadFolderTest = "userimagestest";
 		public const string TempUploadFolderTest = "userimagestesttemp";
 		public const string HostName = "https://locationconnection.appspot.com/";
+		public const bool SafeLocationMode = true; //App Store restriction: Location cannot be updated automatically. Disabling it also requires background location set in Info.plist, otherwise LocationManager throws an exception. 
 	}
 }

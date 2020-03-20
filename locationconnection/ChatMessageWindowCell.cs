@@ -6,7 +6,7 @@ namespace LocationConnection
 {
     public partial class ChatMessageWindowCell : UITableViewCell
     {
-        public UITextView MessageText { get { return Message_Text; } }
+        public UILabel MessageText { get { return Message_Text; } }
         public UILabel TimeText { get { return Time_Text; } }
         public NSLayoutConstraint MainViewTopConstraint { get { return MainView_TopConstraint; } }
         public NSLayoutConstraint MainViewBottomConstraint { get { return MainView_BottomConstraint; } }
@@ -17,7 +17,8 @@ namespace LocationConnection
 
         public void Construct()
         {
-            MessageText.TextContainerInset = new UIEdgeInsets(10, 5, 10, 10);
+            //MessageText.TextContainerInset = new UIEdgeInsets(10, 5, 10, 10);
+            MessageText.Layer.MasksToBounds = true;
             MessageText.Layer.CornerRadius = 5;
         }
 

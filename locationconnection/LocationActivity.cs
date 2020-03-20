@@ -47,7 +47,7 @@ namespace LocationConnection
                         if (currentController is LocationActivity)
                         {
                             ((LocationActivity)currentController).LoadList();
-                            ((LocationActivity)currentController).SetMap2();
+                            ((LocationActivity)currentController).AddLinesToMap();
                             ((LocationActivity)currentController).MapStreet.SetTitle(LangEnglish.MapSatellite, UIControlState.Normal);
                         }                        
                     });
@@ -104,13 +104,7 @@ namespace LocationConnection
                     locMgr.LocationUpdated += LocMgr_LocationUpdated;
                 }
 
-                Stopwatch stw = new Stopwatch();
-                stw.Start();
-                if (File.Exists(c.locationLogFile))
-                {
-                    SetMap2();
-                }
-                stw.Stop();
+                AddLinesToMap();
                 //List count: 3569 time to draw: 3018. All lines appear at the end, drawing piece by piece is not working even if LayoutIfNeeded is called. Realistically, with 1 h daily use and a 15 s refresh interval, it would need 200 ms.
             }
             catch (Exception ex)
@@ -150,7 +144,7 @@ namespace LocationConnection
 
         private void LoadList()
         {
-            locationList = null;
+            locationList = new List<LocationItem>();
             if (lines != null)
             {
                 LocationHistoryMap.RemoveOverlays(lines.ToArray());
@@ -159,9 +153,6 @@ namespace LocationConnection
 
             if (File.Exists(c.locationLogFile))
             {
-                string backgroundIndexes = "";
-
-                locationList = new List<LocationItem>();
                 string[] fileLines = File.ReadAllLines(c.locationLogFile);
 
                 for (int i = fileLines.Length - 1; i >= 0; i--)
@@ -178,10 +169,21 @@ namespace LocationConnection
                         item.time = long.Parse(line.Substring(0, sep1Pos));
                         item.latitude = double.Parse(line.Substring(sep1Pos + 1, sep2Pos - sep1Pos - 1), CultureInfo.InvariantCulture);
                         item.longitude = double.Parse(line.Substring(sep2Pos + 1, sep3Pos - sep2Pos - 1), CultureInfo.InvariantCulture);
-                        item.inApp = (line.Substring(sep3Pos + 1) == "0") ? false : true;
-                        if (!item.inApp)
+                        string status = line.Substring(sep3Pos + 1);
+                        switch (status)
                         {
-                            backgroundIndexes += i + " ";
+                            case "0":
+                                item.inApp = false;
+                                item.sent = false;
+                                break;
+                            case "1":
+                                item.inApp = true;
+                                item.sent = false;
+                                break;
+                            case "2":
+                                item.inApp = true;
+                                item.sent = true;
+                                break;
                         }
                         item.isSelected = false;
                         locationList.Add(item);
@@ -194,7 +196,7 @@ namespace LocationConnection
                 LocationHistoryList.ReloadData();
                 LocationHistoryList.Delegate = this;
 
-                SetMap1();
+                SetMap();
             }
             else
             {
@@ -202,7 +204,7 @@ namespace LocationConnection
             }
         }
 
-        public void SetMap1()
+        public void SetMap()
         {
             double latitude = locationList[0].latitude;
             double longitude = locationList[0].longitude;
@@ -213,7 +215,7 @@ namespace LocationConnection
             AddCircle(location);
         }
 
-        public void SetMap2()
+        public void AddLinesToMap()
         {
             for(int i = locationList.Count -1; i > 0; i--)
             {
@@ -312,6 +314,10 @@ namespace LocationConnection
                 else
                 {
                     locationList[selectedPos].isSelected = false;
+                    if (!(circle is null))
+                    {
+                        LocationHistoryMap.RemoveAnnotation(circle);
+                    }
                 }
             }
             LocationHistoryList.ReloadData();
@@ -319,16 +325,31 @@ namespace LocationConnection
 
         private void LocMgr_LocationUpdated(object sender, LocationUpdatedEventArgs e)
         {
-            AddItem((long)Session.LocationTime, (double)Session.Latitude, (double)Session.Longitude);
+            AddItem();
         }
 
-        public void AddItem(long time, double latitude, double longitude)
+        public void AddItem()
         {
-            CLLocationCoordinate2D location = new CLLocationCoordinate2D(latitude, longitude);
             LocationItem item = new LocationItem();
-            item.time = time;
-            item.latitude = latitude;
-            item.longitude = longitude;
+            CLLocationCoordinate2D location;
+
+            if (!Constants.SafeLocationMode)
+            {
+                item.time = (long)Session.LocationTime;
+                item.latitude = (double)Session.Latitude;
+                item.longitude = (double)Session.Longitude;
+
+                location = new CLLocationCoordinate2D((double)Session.Latitude, (double)Session.Longitude);
+            }
+            else
+            {
+                item.time = (long)Session.SafeLocationTime;
+                item.latitude = (double)Session.SafeLatitude;
+                item.longitude = (double)Session.SafeLongitude;
+
+                location = new CLLocationCoordinate2D((double)Session.SafeLatitude, (double)Session.SafeLongitude);
+            }
+            
             item.inApp = true;
 
             if (selectedPos == 0)

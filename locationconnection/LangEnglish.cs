@@ -23,6 +23,13 @@ namespace LocationConnection
         public static string LocationUpdatesFromStart = "is now sending you location updates every";
         public static string LocationUpdatesFromEnd = "has stopped the location updates.";
 
+        public const string MenuReport = "Report...";
+        public const string MenuBlock = "Block...";
+        public const string UserReported = "User reported.";
+
+        public const string BlockDialogText = "This will permanently hide the user while you are logged in to your account.\nThey will not show up in search lists, nor can you find them on the list of hidden people.\nThis action cannot be undone.\nAre you sure you want to continue?";
+        public const string ReportDialogText = "This will send a nofitication to the developer, who will review it, and take action if necessary.\nAre you sure you want to continue?";
+
         // Main
 
         public const string LogoText = "Location Connection";
@@ -56,7 +63,7 @@ namespace LocationConnection
         public const string Images = "Select images";
         public const string Description = "Introduction:";
         public const string UseLocation = "Use location";
-        public const string LocationExplanation = "Location enables you to find people in your area.";
+        public const string LocationExplanation = "Location enables you to find people in your area.\nWhen sharing your location with others, you will have to manually update it on your profile page every time you want to make changes.\nThese settings can be changed later on your profile edit page.";
 
         public const string LocationShare = "Share my location with:";
         public const string LocationShareAll = "Everyone";
@@ -71,6 +78,9 @@ namespace LocationConnection
         public const string DistanceShareMatch = "People I matched with";
         public const string DistanceShareFriend = "My friends";
         public const string DistanceShareNone = "No one";
+
+        public const string EulaLabel = "By registering, I agree to the Terms of Use below:";
+        public const string EulaText = "Loading...";
 
         public const string Register = "Register";
         public const string Reset = "Reset";
@@ -232,6 +242,7 @@ namespace LocationConnection
 
         // Profile View
 
+        public static string SendLocation = "Update location";
         public static string EditSelf = "Edit profile";
         public static string ShortSecond = "sec";
         public static string ShortSeconds = "sec";
@@ -252,6 +263,11 @@ namespace LocationConnection
         public static string ProfileViewLocation = "Location";
         public static string ProfileViewDistance = "Distance";
         public static string ProfileViewAway = "away";
+
+        public static string LocationUpdated = "Location updated.";
+        public static string LocationNotUpdated = "Location could not be updated.";
+        public static string LocationNotAcquired = "Location is not yet acquired.";
+
         public static string IsAMatch = "To hide [name], unmatch [sex] first.";
         public static string SexHim = "him";
         public static string SexHer = "her";
@@ -328,6 +344,7 @@ namespace LocationConnection
         public static string LocationText = "Location";
         public static string BackgroundLocation = "Update in background";
         public static string InAppLocationRate = "In-app refresh frequency";
+        public static string InAppLocationRateExplanation = "Used for your device's location history, and determines the frequency for sending location updates to a match.";
         public static string BackgroundLocationRate = "Background refresh frequency";
 
         public static string LocationHistory = "See your 24-hour location history";

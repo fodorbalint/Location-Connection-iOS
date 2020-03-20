@@ -18,27 +18,41 @@ interval 5 min, accuracy 1000m
 (right off charger)
 4:32 100%
 
-map region is larger than normal when switching from chat list to list. Same in profileView
+unselecting a location item should remove the circle
 
-Medium importance
+Helpcenter:
+- Android / iOS differences
+- explain location colors
+- that backgrounding the app stops the location updates
+Implement match not found error message on server
+Implement block and report
+new screenshots of Settings and Profile View self to send to Apple
+Imlement updatelocationmatch
+EULA: remove info about duplicate accounts
 
-Crash once at Profile View index out of range
-Dark mode support
-Once pin and current location markers appeared on iphone at the same time
-Overlapping pictures on map may flicker
+Sending location updates does not work yet
 
 Not important / can't solve
 
+Crash once at Profile View index out of range
+Once pin and current location markers appeared on iphone at the same time
+Overlapping pictures on map may flicker
+Dark mode support
+Map region is larger than normal when switching from chat list to list. Same in profileView
 Background notifications do not work
-Implement match not found error message on server
 Restart backgroud location on reboot, worth it?
 null error sometimes in Customannotationview and in UserSearchList. (caught)
-ProfileView: Edit update successful snack does not animate when disappearing, same with in-app notifications
 Does backgroud location always work even if permission is only authorizedWhenInUse? Otherwise permission need to be requested twice. / Dialog appearing every 3 days about background location being used when permission is AuthorizedAlways. (Feb 22 11:00, Feb 26. 23:03)
 Native crash when pressing Cancel from RegisterActivity into ListActivity. Has something to do with SetCollectionViewLayout, seems to only occur in simulator.
 
 Android:
-profile view does not scroll
+Register: label below use location switch, "These settings can be changed later on your profile edit page"
+introduce updatelocationmatch
+location updates needs to be greater than or equal user defined rate, not greater
+hide login failed snack after logging in
+Location Activity: create empty list even if file does not exist.
+use Unescape all in ChatOne adapter
+login falied message still visible after logging in
 gray map circle line instead of black
 remove profiles when map circle radius changes.
 do we need paddigTop, paddingBottom on ImagesProgressText
@@ -245,8 +259,6 @@ namespace LocationConnection
         private float loaderAnimTime = 1.3f;
         //private bool animPulldown;
 
-        private bool animRunning; //for menu
-
         private UIRefreshControl refresh;
 
         private bool distanceLimitChangedByCode;
@@ -347,8 +359,6 @@ namespace LocationConnection
                         string str = File.ReadAllText(loginSessionFile);
                         string[] strarr = str.Split(";");
 
-                        
-
                         string url = "action=loginsession&ID=" + strarr[0] + "&SessionID=" + strarr[1];
 
                         if (File.Exists(deviceTokenFile))
@@ -393,6 +403,7 @@ namespace LocationConnection
                             {
                                 if (c.IsLocationEnabled())
                                 {
+                                    
                                     if ((bool)Session.BackgroundLocation)
                                     {
                                         locMgr.RestartLocationUpdates();
@@ -400,17 +411,20 @@ namespace LocationConnection
 
                                     if (!(localLatitude is null) && !(localLongitude is null) && !(localLocationTime is null)) //this has to be more recent than the loaded data
                                     {
-                                        c.CW("Autologin updating location");
-                                        c.LogActivity("Autologin updating location");
-
-                                        if (Session.LocationTime is null || c.Now() - Session.LocationTime > Session.InAppLocationRate) //a location update could have happened just after login. 12 ms between views set and this point.
+                                        if (!Constants.SafeLocationMode)
                                         {
-                                            Session.Latitude = localLatitude;
-                                            Session.Longitude = localLongitude;
-                                            Session.LocationTime = localLocationTime;
+                                            c.CW("Autologin updating location");
+                                            c.LogActivity("Autologin updating location");
 
-                                            await c.UpdateLocationSync();
-                                        }                                      
+                                            if (Session.LocationTime is null || c.Now() - Session.LocationTime > Session.InAppLocationRate) //a location update could have happened just after login. 12 ms between views set and this point.
+                                            {
+                                                Session.Latitude = localLatitude;
+                                                Session.Longitude = localLongitude;
+                                                Session.LocationTime = localLocationTime;
+
+                                                await c.UpdateLocationSync(false);
+                                            }
+                                        }
 
                                         recenterMap = true;
                                         if (Session.LastSearchType == Constants.SearchType_Filter)
@@ -567,7 +581,7 @@ namespace LocationConnection
                 MenuHelpCenter.SetTitle(LangEnglish.MenuHelpCenter, UIControlState.Normal);
                 MenuAbout.SetTitle(LangEnglish.MenuAbout, UIControlState.Normal);
 
-                HideMenu(false);
+                c.HideMenu(MenuLayer, MenuContainer, false);
 
                 MapStreet.SetTitle(LangEnglish.MapStreet, UIControlState.Normal);
                 MapSatellite.SetTitle(LangEnglish.MapSatellite, UIControlState.Normal);
@@ -591,16 +605,6 @@ namespace LocationConnection
                 OpenSearch.TouchUpInside += OpenSearch_Click;
                 ListView.TouchUpInside += ListView_Click;
                 MapView.TouchUpInside += MapView_Click;
-                MenuIcon.TouchUpInside += MenuIcon_Click;
-                MenuLayer.TouchDown += MenuLayer_TouchDown;
-
-                MenuLogOut.TouchUpInside += MenuLogOut_Click;
-                MenuLogIn.TouchUpInside += MenuLogIn_Click;
-                MenuRegister.TouchUpInside += MenuRegister_Click;
-                MenuSettings.TouchUpInside += MenuSettings_Click;
-                MenuLocation.TouchUpInside += MenuLocation_Click;
-                MenuHelpCenter.TouchUpInside += MenuHelpCenter_Click;
-                MenuAbout.TouchUpInside += MenuAbout_Click;
 
                 SearchTerm.Delegate = this;
                 SortBy_LastActiveDate.TouchUpInside += SortBy_LastActiveDate_Click;
@@ -645,6 +649,17 @@ namespace LocationConnection
 
                 MenuChatList.TouchUpInside += MenuChatList_Click;
                 MenuChatList.TouchDown += MenuChatList_Touch;
+
+                MenuIcon.TouchUpInside += MenuIcon_Click;
+                MenuLayer.TouchDown += MenuLayer_TouchDown;
+
+                MenuLogOut.TouchUpInside += MenuLogOut_Click;
+                MenuLogIn.TouchUpInside += MenuLogIn_Click;
+                MenuRegister.TouchUpInside += MenuRegister_Click;
+                MenuSettings.TouchUpInside += MenuSettings_Click;
+                MenuLocation.TouchUpInside += MenuLocation_Click;
+                MenuHelpCenter.TouchUpInside += MenuHelpCenter_Click;
+                MenuAbout.TouchUpInside += MenuAbout_Click;
 
                 RoundBottom_Base = RoundBottom;
                 Snackbar_Base = Snackbar;
@@ -736,6 +751,8 @@ namespace LocationConnection
 
                 if (!(listProfiles is null))
                 {
+                    c.CW(" listProfiles.Count " + listProfiles.Count);
+
                     adapter.items = listProfiles;
 
                     UserSearchList.ReloadData();
@@ -818,17 +835,37 @@ namespace LocationConnection
 
             if (autoLogin)
             {
-                c.CW("LoadListStartup autologin, locationUpdating " + locationUpdating + ", locationtime: " + Session.LocationTime);
-                c.LogActivity("LoadListStartup autologin, locationUpdating " + locationUpdating + ", locationtime: " + Session.LocationTime);
+                if (!Constants.SafeLocationMode)
+                {
+                    c.CW("LoadListStartup autologin, locationUpdating " + locationUpdating + ", locationtime: " + Session.LocationTime);
+                    c.LogActivity("LoadListStartup autologin, locationUpdating " + locationUpdating + ", locationtime: " + Session.LocationTime);
 
-                localLatitude = Session.Latitude;
-                localLongitude = Session.Longitude;
-                localLocationTime = Session.LocationTime;
+                    localLatitude = Session.Latitude;
+                    localLongitude = Session.Longitude;
+                    localLocationTime = Session.LocationTime;
+                }
+                else
+                {
+                    c.CW("LoadListStartup autologin, locationUpdating " + locationUpdating + ", locationtime: " + Session.LatestLocationTime);
+                    c.LogActivity("LoadListStartup autologin, locationUpdating " + locationUpdating + ", locationtime: " + Session.LatestLocationTime);
+
+                    localLatitude = Session.LatestLatitude;
+                    localLongitude = Session.LatestLongitude;
+                    localLocationTime = Session.LatestLocationTime;
+                }
             }
             else
             {
-                c.CW("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
-                c.LogActivity("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
+                if (!Constants.SafeLocationMode)
+                {
+                    c.CW("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
+                    c.LogActivity("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
+                }
+                else
+                {
+                    c.CW("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LatestLocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
+                    c.LogActivity("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LatestLocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
+                }
 
                 if (Session.LastDataRefresh is null || Session.LastDataRefresh < unixTimestamp - Constants.DataRefreshInterval)
                 {
@@ -1163,7 +1200,7 @@ namespace LocationConnection
                 }
                 else
                 {
-                    UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                    UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 }
                 filtersOpen = true;
                 Settings.FiltersOpen = true;
@@ -1180,7 +1217,7 @@ namespace LocationConnection
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters"), UIControlState.Normal);
                 c.CollapseY(FilterLayout);
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 filtersOpen = false;
                 Settings.FiltersOpen = false;
             }
@@ -1201,7 +1238,7 @@ namespace LocationConnection
                 }
                 else
                 {
-                    UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                    UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 }
                 
                 searchOpen = true;
@@ -1220,7 +1257,7 @@ namespace LocationConnection
             {
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search.png"), UIControlState.Normal);
                 c.CollapseY(SearchLayout);
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 searchOpen = false;
                 Settings.SearchOpen = false;
             }
@@ -1352,12 +1389,8 @@ namespace LocationConnection
                     Session.UseLocation = true;
                     Session.LocationTime = null;
 
-                    //OnResume will be called which starts location updates and refreshing the list
-
                     if (distanceSourceCurrentClicked)
                     {
-                        //it resets to address by itself
-                        Session.LocationTime = null; //making sure, last location will be requested in OnResume (even if PM was off, a last location value could have existed, if PM was on before.) 
                         DistanceSourceCurrent.Checked = true;
                         DistanceSourceAddress.Checked = false;
                         Session.GeoSourceOther = Settings.GeoSourceOther = false;
@@ -1377,7 +1410,7 @@ namespace LocationConnection
                 }
                 locMgr.StartLocationUpdates(); //will load the list or only set the map
             }
-            else if (e.Status != CLAuthorizationStatus.NotDetermined)
+            else if (e.Status == CLAuthorizationStatus.Denied)
             {
                 mapToSet = false;
                 Session.UseLocation = false;
@@ -1435,99 +1468,55 @@ namespace LocationConnection
 
         private void MenuIcon_Click(object sender, EventArgs e)
         {
-            ShowMenu();
+            c.ShowMenu(MenuLayer, MenuContainer);
         }
 
         private void MenuLayer_TouchDown(object sender, EventArgs e)
         {
-            HideMenu(true);
-        }
-
-        private void ShowMenu()
-        {
-            if (!animRunning)
-            {
-                animRunning = true;
-
-                MenuLayer.Hidden = false;
-                c.Expand(MenuContainer);
-                UIView.Animate(tweenTime, () => {
-                    View.LayoutIfNeeded();
-                }, () => {
-                    MenuContainer.UserInteractionEnabled = true;
-                    animRunning = false;
-                });
-            }
-        }
-
-        private void HideMenu(bool presented)
-        {
-            MenuContainer.UserInteractionEnabled = false;
-            
-            if (presented)
-            {
-                if (!animRunning)
-                {
-                    animRunning = true;
-
-                    UIView.Animate(tweenTime, () => {
-                        MenuContainer.Alpha = 0;
-                    }, () => {
-                        MenuLayer.Hidden = true;
-                        c.Collapse(MenuContainer);
-                        MenuContainer.Alpha = 1;
-                        animRunning = false;
-                    });
-                }
-            }
-            else
-            {
-                MenuLayer.Hidden = true;
-                c.Collapse(MenuContainer);
-            }
+            c.HideMenu(MenuLayer, MenuContainer, true);
         }
 
         private void MenuLogOut_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             IntentData.logout = true;
             CommonMethods.OpenPage("MainActivity", 1);
         }
 
         private void MenuLogIn_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             CommonMethods.OpenPage("MainActivity", 1);
         }
 
         private void MenuRegister_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             CommonMethods.OpenPage("RegisterActivity", 1);
         }
 
         private void MenuSettings_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             CommonMethods.OpenPage("SettingsActivity", 1);
         }
 
         private void MenuLocation_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             //c.LogLocationAlert();
             CommonMethods.OpenPage("LocationActivity", 1);
         }
 
         private void MenuHelpCenter_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             CommonMethods.OpenPage("HelpCenterActivity", 1);
         }
 
         private void MenuAbout_Click(object sender, EventArgs e)
         {
-            HideMenu(true);
+            c.HideMenu(MenuLayer, MenuContainer, true);
             c.AlertLinks(LangEnglish.versionInfo);
         }
 
@@ -1707,7 +1696,7 @@ namespace LocationConnection
             if (!distanceFiltersOpen)
             {
                 c.ExpandY(DistanceFilters);
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 distanceFiltersOpen = true;
                 Settings.GeoFiltersOpen = true;
                 DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("ic_collapse.png"), UIControlState.Normal);
@@ -1716,7 +1705,7 @@ namespace LocationConnection
             else
             {
                 c.CollapseY(DistanceFilters);
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 distanceFiltersOpen = false;
                 Settings.GeoFiltersOpen = false;
                 DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("ic_expand.png"), UIControlState.Normal);
@@ -2143,7 +2132,7 @@ namespace LocationConnection
             }
             else
             {
-                UIView.Animate(duration: tweenTime, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
+                UIView.Animate(duration: Constants.tweenTime, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
                 {
                 ReloadPulldown.Center = new CGPoint(ReloadPulldown.Center.X, -loaderHeight / 2);
                     ReloadPulldown.Alpha = 0;
@@ -2248,8 +2237,20 @@ namespace LocationConnection
 
                 Session.LastSearchType = Constants.SearchType_Filter;
 
-                string latitudeStr = (Session.Latitude is null) ? "" : ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture);
-                string longitudeStr = (Session.Longitude is null) ? "" : ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture);
+                string latitudeStr;
+                string longitudeStr;
+
+                if (!Constants.SafeLocationMode)
+                {
+                    latitudeStr = (Session.Latitude is null) ? "" : ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture);
+                    longitudeStr = (Session.Longitude is null) ? "" : ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    latitudeStr = (Session.LatestLatitude is null) ? "" : ((double)Session.LatestLatitude).ToString(CultureInfo.InvariantCulture);
+                    longitudeStr = (Session.LatestLongitude is null) ? "" : ((double)Session.LatestLongitude).ToString(CultureInfo.InvariantCulture);
+                }
+                
                 string otherLatitudeStr = (Session.OtherLatitude is null) ? "" : ((double)Session.OtherLatitude).ToString(CultureInfo.InvariantCulture);
                 string otherLongitudeStr = (Session.OtherLongitude is null) ? "" : ((double)Session.OtherLongitude).ToString(CultureInfo.InvariantCulture);
 
@@ -2296,8 +2297,19 @@ namespace LocationConnection
 
                 Session.LastSearchType = Constants.SearchType_Search;
 
-                string latitudeStr = (Session.Latitude is null) ? "" : ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture);
-                string longitudeStr = (Session.Longitude is null) ? "" : ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture);
+                string latitudeStr;
+                string longitudeStr;
+
+                if (!Constants.SafeLocationMode)
+                {
+                    latitudeStr = (Session.Latitude is null) ? "" : ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture);
+                    longitudeStr = (Session.Longitude is null) ? "" : ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    latitudeStr = (Session.LatestLatitude is null) ? "" : ((double)Session.LatestLatitude).ToString(CultureInfo.InvariantCulture);
+                    longitudeStr = (Session.LatestLongitude is null) ? "" : ((double)Session.LatestLongitude).ToString(CultureInfo.InvariantCulture);
+                }
 
                 LoadResults("action=listsearch&ID=" + Session.ID + "&SessionID=" + Session.SessionID
                     + "&Latitude=" + latitudeStr + "&Longitude=" + longitudeStr + "&ListType=" + Session.ListType
@@ -2342,7 +2354,8 @@ namespace LocationConnection
                     }
                     else
                     {
-                        viewProfiles = listProfiles = parser.returnCollection;
+                        listProfiles = parser.returnCollection;
+                        viewProfiles = new List<Profile>(listProfiles);
                         adapter.items = listProfiles;
                         absoluteFirstIndex = absoluteStartIndex = (int)Session.ResultsFrom - 1;
                         //c.LogActivity("LoadResults list loading absoluteFirstIndex " + absoluteFirstIndex);
@@ -2449,7 +2462,14 @@ namespace LocationConnection
             }
             else
             {
-                result = MoveMap(Session.Latitude, Session.Longitude);
+                if (!Constants.SafeLocationMode)
+                {
+                    result = MoveMap(Session.Latitude, Session.Longitude);
+                }
+                else
+                {
+                    result = MoveMap(Session.LatestLatitude, Session.LatestLongitude);
+                }
             }
             if (!result)
             {
@@ -2684,7 +2704,7 @@ namespace LocationConnection
         /*
         private void HidePulldown()
         {
-            UIView.Animate(duration: tweenTime, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
+            UIView.Animate(duration: Constants.tweenTime, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
             {
                 ReloadPulldown.Alpha = 0;
             }, completion: () => { });

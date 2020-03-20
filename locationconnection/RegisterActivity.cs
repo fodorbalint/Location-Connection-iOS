@@ -75,6 +75,10 @@ namespace LocationConnection
 
                 Sex.Model = new DropDownList(LangEnglish.SexEntries, "Sex", 120, this);
                 c.DrawBorder(DescriptionText);
+                c.DrawBorder(EulaText);
+
+                EulaLabel.Text = LangEnglish.EulaLabel;
+                EulaText.Text = LangEnglish.EulaText;
 
                 LoaderCircle.Hidden = true;
 
@@ -132,7 +136,7 @@ namespace LocationConnection
             }
         }
 
-        public override void ViewWillAppear(bool animated)
+        public async override void ViewWillAppear(bool animated)
         {
             try
             {
@@ -211,6 +215,19 @@ namespace LocationConnection
                 else //in case we are stepping back from a successful registration
                 {
                     ResetForm();
+                }
+
+                string responseString = await c.MakeRequest("action=eula"); //deleting images from server
+                if (responseString.Substring(0, 2) == "OK")
+                {
+                    NSError error = null;
+                    string s = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: 12px\">" + responseString.Substring(3) + "</span>";
+                    var htmlString = new NSAttributedString(s, new NSAttributedStringDocumentAttributes { DocumentType = NSDocumentType.HTML }, ref error);
+                    EulaText.AttributedText = htmlString;
+                }
+                else
+                {
+                    c.ReportError(responseString);
                 }
             }
             catch (Exception ex)
@@ -402,7 +419,7 @@ namespace LocationConnection
                     if (File.Exists(regSaveFile))
                     {
                         File.Delete(regSaveFile);
-                    }
+                    }   
                     ResetForm();
                 }
                 else

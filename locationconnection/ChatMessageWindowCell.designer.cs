@@ -36,7 +36,7 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView Message_Text { get; set; }
+        LocationConnection.InsetLabel Message_Text { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]

@@ -27,14 +27,21 @@ namespace LocationConnection
 
                 if (context.c.IsLoggedIn() && (bool)Session.BackgroundLocation)
                 {
-                    locMgr.AllowsBackgroundLocationUpdates = true;
+                    if (!Constants.SafeLocationMode)
+                    {
+                        locMgr.AllowsBackgroundLocationUpdates = true; 
+                    }
+                    else
+                    {
+                        locMgr.AllowsBackgroundLocationUpdates = false;
+                    }
                 }
                 else
                 {
                     locMgr.AllowsBackgroundLocationUpdates = false;
                 }                
 
-                locMgr.DesiredAccuracy = 1000; //accuracy is enough, and if set to 10, if would use a lot of battery. (1% per h on ipad)
+                locMgr.DesiredAccuracy = 1000; //accuracy is enough, and if set to 10, if would use a lot of battery. (1% per h on ipad). When set to 100 or above, update frequency is 15s. When set to 10 or below, it may be 1s.
 
                 locMgr.LocationsUpdated += LocMgr_LocationsUpdated;
 
@@ -66,13 +73,62 @@ namespace LocationConnection
 
         private async void LocMgr_LocationsUpdated(object sender, CLLocationsUpdatedEventArgs e)
         {
+            int inAppLocationRate;
             long unixTimestamp = context.c.Now();
 
             CLLocation location = e.Locations[e.Locations.Length - 1];
 
-            if (BaseActivity.isAppForeground)
+            if (!Constants.SafeLocationMode)
             {
-                int inAppLocationRate;
+                if (BaseActivity.isAppForeground)
+                {
+                    if (Session.InAppLocationRate != null) //if logged in, sometimes this is still null. Might be the delay between setting SessionID and other fields
+                    {
+                        inAppLocationRate = (int)Session.InAppLocationRate;
+                    }
+                    else
+                    {
+                        inAppLocationRate = (int)Settings.InAppLocationRate;
+                    }
+
+                    if (Session.LocationTime is null || unixTimestamp - Session.LocationTime >= inAppLocationRate)
+                    {
+                        Session.Latitude = location.Coordinate.Latitude;
+                        Session.Longitude = location.Coordinate.Longitude;
+                        Session.LocationTime = unixTimestamp;
+
+                        LocationUpdated(this, new LocationUpdatedEventArgs(e.Locations[e.Locations.Length - 1]));
+
+                        if (context.c.IsLoggedIn())
+                        {
+                            Session.LastActiveDate = unixTimestamp;
+                            await context.c.UpdateLocationSync(false);
+                        }
+                        context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|1");
+                    }
+                }
+                else
+                {
+                    //even if AllowsBackgroundLocationUpdates is false, a few location updates might occur when entering foreground and background
+
+                    if (context.c.IsLoggedIn() && (bool)Session.BackgroundLocation && (Session.LocationTime is null || unixTimestamp - Session.LocationTime >= Session.BackgroundLocationRate))
+                    {
+                        Session.Latitude = location.Coordinate.Latitude;
+                        Session.Longitude = location.Coordinate.Longitude;
+                        Session.LocationTime = unixTimestamp;
+
+                        Session.LastActiveDate = unixTimestamp;
+                        await context.c.UpdateLocationSync(false);
+
+                        context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|0");
+                    }
+                }
+            }
+            else //foreground updates only
+            {
+                Session.LatestLatitude = location.Coordinate.Latitude;
+                Session.LatestLongitude = location.Coordinate.Longitude;
+                Session.LatestLocationTime = unixTimestamp;
 
                 if (Session.InAppLocationRate != null) //if logged in, sometimes this is still null. Might be the delay between setting SessionID and other fields
                 {
@@ -83,38 +139,20 @@ namespace LocationConnection
                     inAppLocationRate = (int)Settings.InAppLocationRate;
                 }
 
-                if (Session.LocationTime is null || unixTimestamp - Session.LocationTime > inAppLocationRate)
+                if (Session.SafeLocationTime is null || unixTimestamp - Session.SafeLocationTime >= inAppLocationRate)
                 {
-                    Session.Latitude = location.Coordinate.Latitude;
-                    Session.Longitude = location.Coordinate.Longitude;
-                    Session.LocationTime = unixTimestamp;
+                    Session.SafeLatitude = location.Coordinate.Latitude;
+                    Session.SafeLongitude = location.Coordinate.Longitude;
+                    Session.SafeLocationTime = unixTimestamp;
 
                     LocationUpdated(this, new LocationUpdatedEventArgs(e.Locations[e.Locations.Length - 1]));
 
                     if (context.c.IsLoggedIn())
                     {
-                        Session.LastActiveDate = unixTimestamp;
-                        await context.c.UpdateLocationSync();
+                        await context.c.UpdateLocationSync(true);
                     }
-                    context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|" + (BaseActivity.isAppForeground ? 1 : 0));
-                }
-            }
-            else
-            {
-                //even if AllowsBackgroundLocationUpdates is false, a few location updates might occur when entering foreground and background
-                //context.c.LogLocation(unixTimestamp + "|Background location update, " + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + " " + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture));
 
-                if (context.c.IsLoggedIn() && (bool)Session.BackgroundLocation && (Session.LocationTime is null || unixTimestamp - Session.LocationTime > Session.BackgroundLocationRate))
-                {
-                    Session.Latitude = location.Coordinate.Latitude;
-                    Session.Longitude = location.Coordinate.Longitude;
-                    Session.LocationTime = unixTimestamp;
-
-                    Session.LastActiveDate = unixTimestamp;
-                    await context.c.UpdateLocationSync();
-
-                    //updatedStr = " x ";
-                    context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|" + (BaseActivity.isAppForeground ? 1 : 0));
+                    context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|1");
                 }
             }
 

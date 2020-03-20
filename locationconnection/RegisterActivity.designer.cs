@@ -92,6 +92,14 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel EulaLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextView EulaText { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton Images { get; set; }
 
         [Outlet]
@@ -333,6 +341,16 @@ namespace LocationConnection
             if (EmailLabel != null) {
                 EmailLabel.Dispose ();
                 EmailLabel = null;
+            }
+
+            if (EulaLabel != null) {
+                EulaLabel.Dispose ();
+                EulaLabel = null;
+            }
+
+            if (EulaText != null) {
+                EulaText.Dispose ();
+                EulaText = null;
             }
 
             if (Images != null) {

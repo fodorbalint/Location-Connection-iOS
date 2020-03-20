@@ -6,6 +6,7 @@
 		public double latitude;
 		public double longitude;
 		public bool inApp;
+		public bool sent;
 		public bool isSelected;
 	}
 }

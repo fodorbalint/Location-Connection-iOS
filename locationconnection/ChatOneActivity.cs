@@ -19,7 +19,6 @@ namespace LocationConnection
 		string earlyDelivery;
 		bool dataLoadStarted;
 		CustomTapNoDelay tap;
-		private bool animRunning;
 
 		private string notificationRequestFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "notificationrequest.txt");
 
@@ -65,9 +64,10 @@ namespace LocationConnection
 				c.AddViews(Snackbar, Snackbar.SnackText, Snackbar.SnackButton);
 
 				MenuUnmatch.SetTitle(LangEnglish.MenuUnmatch, UIControlState.Normal);
+				MenuBlock.SetTitle(LangEnglish.MenuBlock, UIControlState.Normal);
+				MenuReport.SetTitle(LangEnglish.MenuReport, UIControlState.Normal);
 
-
-				HideMenu(false);
+				c.HideMenu(MenuLayer, MenuContainer, false);
 				SetMenu();
 
 				ChatMessageWindow.RowHeight = UITableView.AutomaticDimension;
@@ -75,11 +75,15 @@ namespace LocationConnection
 
 				ChatOneBack.TouchUpInside += ChatOneBack_Click;
 				ChatSendMessage.TouchUpInside += ChatSendMessage_Click;
-				MenuIcon.TouchUpInside += MenuIcon_Click;
+
+                MenuIcon.TouchUpInside += MenuIcon_Click;
 				MenuLayer.TouchDown += MenuLayer_TouchDown;
+
 				MenuLocationUpdates.TouchUpInside += MenuLocationUpdates_Click;
 				MenuFriend.TouchUpInside += MenuFriend_Click;
 				MenuUnmatch.TouchUpInside += MenuUnmatch_Click;
+                MenuReport.TouchUpInside += MenuReport_Click;
+				MenuBlock.TouchUpInside += MenuBlock_Click;
 
 				RoundBottom_Base = RoundBottom;
 				Snackbar_Base = Snackbar;
@@ -255,9 +259,19 @@ namespace LocationConnection
 			}
 		}
 
+		private void MenuIcon_Click(object sender, EventArgs e)
+		{
+			c.ShowMenu(MenuLayer, MenuContainer);
+		}
+
+		private void MenuLayer_TouchDown(object sender, EventArgs e)
+		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+		}
+
 		private void MenuLocationUpdates_Click(object sender, EventArgs e)
 		{
-			HideMenu(true);
+			c.HideMenu(MenuLayer, MenuContainer, true);
 			if (IsUpdatingTo((int)Session.CurrentMatch.TargetID))
 			{
 				StopRealTimeLocation();
@@ -270,14 +284,14 @@ namespace LocationConnection
 				}
 				else
 				{
-				    StartRealTimeLocation();
+					StartRealTimeLocation();
 				}
 			}
 		}
 
 		private void MenuFriend_Click(object sender, EventArgs e)
 		{
-			HideMenu(true);
+			c.HideMenu(MenuLayer, MenuContainer, true);
 			if (!(Session.CurrentMatch is null) && !(Session.CurrentMatch.Friend is null))
 			{
 				AddFriend();
@@ -290,7 +304,7 @@ namespace LocationConnection
 
 		private void MenuUnmatch_Click(object sender, EventArgs e)
 		{
-			HideMenu(true);
+			c.HideMenu(MenuLayer, MenuContainer, true);
 			if (!(Session.CurrentMatch is null) && !(Session.CurrentMatch.Friend is null))
 			{
 				Unmatch();
@@ -301,58 +315,64 @@ namespace LocationConnection
 			}
 		}
 
-		private void MenuIcon_Click(object sender, EventArgs e)
+		private void MenuReport_Click(object sender, EventArgs e)
 		{
-			ShowMenu();
-		}
+			c.HideMenu(MenuLayer, MenuContainer, true);
 
-		private void MenuLayer_TouchDown(object sender, EventArgs e)
-		{
-			HideMenu(true);
-		}
-
-		private void ShowMenu()
-		{
-			if (!animRunning)
+			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.ReportDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				animRunning = true;
-
-				MenuLayer.Hidden = false;
-				c.Expand(MenuContainer);
-				UIView.Animate(tweenTime, () => {
-					View.LayoutIfNeeded();
-				}, () => {
-					MenuContainer.UserInteractionEnabled = true;
-					animRunning = false;
-				});
-			}
-		}
-
-		private void HideMenu(bool presented)
-		{
-			MenuContainer.UserInteractionEnabled = false;
-
-			if (presented)
-			{
-				if (!animRunning)
+				string responseString = await c.MakeRequest("action=reportchatone" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + Session.CurrentMatch.TargetID + "&MatchID=" + Session.CurrentMatch.MatchID);
+				if (responseString.Substring(0, 2) == "OK")
 				{
-					animRunning = true;
-
-					UIView.Animate(tweenTime, () => {
-						MenuContainer.Alpha = 0;
-					}, () => {
-						MenuLayer.Hidden = true;
-						c.Collapse(MenuContainer);
-						MenuContainer.Alpha = 1;
-						animRunning = false;
-					});
+					c.Snack(LangEnglish.UserReported);
 				}
-			}
-			else
+				else
+				{
+					c.ReportError(responseString);
+				}
+			}, null);
+		}
+
+		private void MenuBlock_Click(object sender, EventArgs e)
+		{
+			c.HideMenu(MenuLayer, MenuContainer, true);
+
+			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.BlockDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				MenuLayer.Hidden = true;
-				c.Collapse(MenuContainer);
-			}
+				string responseString = await c.MakeRequest("action=blockchatone&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + Session.CurrentMatch.TargetID + "&MatchID=" + Session.CurrentMatch.MatchID);
+				if (responseString.Substring(0, 2) == "OK")
+				{
+
+					if (!(ListActivity.listProfiles is null))
+					{
+						for (int i = 0; i < ListActivity.listProfiles.Count; i++)
+						{
+							if (ListActivity.listProfiles[i].ID == Session.CurrentMatch.TargetID)
+							{
+								ListActivity.listProfiles.RemoveAt(i);
+								break;
+							}
+						}
+					}
+					if (!(ListActivity.viewProfiles is null))
+					{
+						for (int i = 0; i < ListActivity.viewProfiles.Count; i++)
+						{
+							if (ListActivity.viewProfiles[i].ID == Session.CurrentMatch.TargetID)
+							{
+								ListActivity.viewProfiles.RemoveAt(i);
+								break;
+							}
+						}
+					}
+
+					CommonMethods.OpenPage(null, 0);
+				}
+				else
+				{
+					c.ReportError(responseString);
+				}
+			}, null);
 		}
 
 		private void LoadHeader()
@@ -446,7 +466,6 @@ namespace LocationConnection
 			if (Session.CurrentMatch.Chat.Length != 0)
 			{
 				NoMessages.Hidden = true;
-
 				foreach (string messageItem in Session.CurrentMatch.Chat)
 				{
 					AddMessageItem(messageItem);
@@ -462,15 +481,6 @@ namespace LocationConnection
 			{
 				NoMessages.Hidden = false;
 			}
-		}
-
-		public void AddMessageItemOne(string messageItem)
-		{
-			AddMessageItem(messageItem);
-
-			ChatMessageWindowAdapter adapter = new ChatMessageWindowAdapter(messageItems);
-			ChatMessageWindow.Source = adapter;
-			ChatMessageWindow.ReloadData();
 		}
 
 		private void  AddMessageItem(string messageItem)
@@ -491,6 +501,18 @@ namespace LocationConnection
 				Content = c.UnescapeBraces(messageItem.Substring(sep5Pos + 1))
 			};
 			messageItems.Add(item);
+		}
+
+		public void AddMessageItemOne(string messageItem)
+		{
+			NoMessages.Hidden = true;
+			AddMessageItem(messageItem);
+
+			ChatMessageWindowAdapter adapter = new ChatMessageWindowAdapter(messageItems);
+			ChatMessageWindow.Source = adapter;
+			ChatMessageWindow.ReloadData();
+
+			ScrollToBottom(true);
 		}
 
 		public void UpdateMessageItem(string meta) // MessageID|SentTime|SeenTime|ReadTime 
@@ -577,12 +599,6 @@ namespace LocationConnection
 			}
 		}
 
-		private void ChatOneBack_Click(object sender, EventArgs e)
-		{
-			c.CW("Back Content height " + ChatMessageWindow.ContentSize.Height + " Window height " + ChatMessageWindow.Bounds.Size.Height + " chatWindowNewHeight ");
-			CommonMethods.OpenPage(null, 0);
-		}
-
 		private async void ChatSendMessage_Click(object sender, EventArgs e)
 		{
 			string message = ChatEditMessage.Text;
@@ -618,11 +634,7 @@ namespace LocationConnection
 						earlyDelivery = null;
 					}
 
-					NoMessages.Hidden = true;
-
                     AddMessageItemOne(messageItem);
-
-					ScrollToBottom(true); //will work, when only one item is added.
 				}
 				else if (responseString.Substring(0, 6) == "ERROR_")
 				{
@@ -635,6 +647,11 @@ namespace LocationConnection
 				ChatSendMessage.Enabled = true;
 				ChatSendMessage.Alpha = 1f;
 			}
+		}
+
+		private void ChatOneBack_Click(object sender, EventArgs e)
+		{
+			CommonMethods.OpenPage(null, 0);
 		}
 
         public void ScrollToBottom(bool animated)

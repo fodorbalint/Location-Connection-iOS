@@ -53,12 +53,34 @@ namespace LocationConnection
                 MapRatio.MaxValue = Constants.MapRatioMax;
 
                 LocationLabel.Text = LangEnglish.LocationText;
-                BackgroundLocationLabel.Text = LangEnglish.BackgroundLocation;
+                
                 InAppLocationRateLabel.Text = LangEnglish.InAppLocationRate;
-                BackgroundLocationRateLabel.Text = LangEnglish.BackgroundLocationRate;
-
                 InAppLocationRate.MinValue = Constants.InAppLocationRateMin;
                 InAppLocationRate.MaxValue = Constants.InAppLocationRateMax;
+
+                if (Constants.SafeLocationMode)
+                {
+                    c.CollapseY(BackgroundLocationLabel);
+                    c.CollapseY(BackgroundLocation);
+                    BackgroundLocation.Hidden = true;
+                    c.CollapseY(BackgroundLocationRateLabel);
+                    c.CollapseY(BackgroundLocationRate);
+                    BackgroundLocationRate.Hidden = true;   
+                    c.CollapseY(BackgroundLocationRateValue);
+
+                    InAppLocationRateLabelConstraint.Constant = 0;
+                    LocationHistoryButtonConstraint.Constant = -5;
+
+                    InAppLocationRateExplanation.Text = LangEnglish.InAppLocationRateExplanation;
+                }
+                else
+                {
+                    c.CollapseY(InAppLocationRateExplanation);
+                    BackgroundLocationRateLabelConstraint.Constant = 0;
+
+                    BackgroundLocationLabel.Text = LangEnglish.BackgroundLocation;
+                    BackgroundLocationRateLabel.Text = LangEnglish.BackgroundLocationRate;
+                }
 
                 BackgroundLocationRate.MinValue = Constants.BackgroundLocationRateMin;
                 BackgroundLocationRate.MaxValue = Constants.BackgroundLocationRateMax;
@@ -359,7 +381,7 @@ namespace LocationConnection
             if (MessageContainer.Frame.Height == 0)
             {
                 c.ExpandY(MessageContainer);              
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
 
                 //c.ScrollToBottom(SettingsScroll);
                 MessageEdit.BecomeFirstResponder();
@@ -367,7 +389,7 @@ namespace LocationConnection
             else
             {
                 c.CollapseY(MessageContainer);
-                UIView.Animate(tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
+                UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 View.EndEditing(true);
             }
         }

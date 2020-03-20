@@ -32,6 +32,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint BackgroundLocationRateLabelConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel BackgroundLocationRateValue { get; set; }
 
         [Outlet]
@@ -80,7 +84,15 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel InAppLocationRateExplanation { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel InAppLocationRateLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint InAppLocationRateLabelConstraint { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -89,6 +101,10 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton LocationHistoryButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint LocationHistoryButtonConstraint { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -232,6 +248,11 @@ namespace LocationConnection
                 BackgroundLocationRateLabel = null;
             }
 
+            if (BackgroundLocationRateLabelConstraint != null) {
+                BackgroundLocationRateLabelConstraint.Dispose ();
+                BackgroundLocationRateLabelConstraint = null;
+            }
+
             if (BackgroundLocationRateValue != null) {
                 BackgroundLocationRateValue.Dispose ();
                 BackgroundLocationRateValue = null;
@@ -292,9 +313,19 @@ namespace LocationConnection
                 InAppLocationRate = null;
             }
 
+            if (InAppLocationRateExplanation != null) {
+                InAppLocationRateExplanation.Dispose ();
+                InAppLocationRateExplanation = null;
+            }
+
             if (InAppLocationRateLabel != null) {
                 InAppLocationRateLabel.Dispose ();
                 InAppLocationRateLabel = null;
+            }
+
+            if (InAppLocationRateLabelConstraint != null) {
+                InAppLocationRateLabelConstraint.Dispose ();
+                InAppLocationRateLabelConstraint = null;
             }
 
             if (InAppLocationRateValue != null) {
@@ -305,6 +336,11 @@ namespace LocationConnection
             if (LocationHistoryButton != null) {
                 LocationHistoryButton.Dispose ();
                 LocationHistoryButton = null;
+            }
+
+            if (LocationHistoryButtonConstraint != null) {
+                LocationHistoryButtonConstraint.Dispose ();
+                LocationHistoryButtonConstraint = null;
             }
 
             if (LocationLabel != null) {

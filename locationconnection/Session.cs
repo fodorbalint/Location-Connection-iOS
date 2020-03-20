@@ -30,6 +30,16 @@ namespace LocationConnection
 		public static double? Longitude;
 		public static long? LocationTime;
 
+        //for safe mode use, updates in same intervals as fields above. Used only for display in location history
+		public static double? SafeLatitude;
+		public static double? SafeLongitude;
+		public static long? SafeLocationTime;
+
+        //is updated every second or so according to LocatonManager, and used when sending location
+		public static double? LatestLatitude;
+		public static double? LatestLongitude;
+		public static long? LatestLocationTime;
+
 		public static byte? SexChoice;
 		public static bool? UseLocation;
 		public static bool? BackgroundLocation;

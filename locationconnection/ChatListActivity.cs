@@ -66,7 +66,8 @@ namespace LocationConnection
                     }
                     else
                     {
-                        adapter = new ChatUserListAdapter(new List<MatchItem>());
+                        matchList = new List<MatchItem>();
+                        adapter = new ChatUserListAdapter(matchList);
                         ChatUserList.Source = adapter;
                         NoMatch.Hidden = false;
                         NoofMatches.Text = "";
@@ -131,6 +132,9 @@ namespace LocationConnection
             ChatUserList.ReloadData();
             ChatUserList.RowHeight = 101;
             ChatUserList.Delegate = this;
+
+            NoMatch.Hidden = true;
+            NoofMatches.Text = (matchList.Count == 1) ? "1 " + LangEnglish.ChatListMatch : matchList.Count + " " + LangEnglish.ChatListMatches;
         }
 
         public void UpdateMatchItem(int matchID, bool active, long? unmatchDate)

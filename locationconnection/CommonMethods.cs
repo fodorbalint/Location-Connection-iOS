@@ -37,6 +37,7 @@ namespace LocationConnection
 		private UIButton SnackButton;
 		private Timer snackTimer;
 		private int snackDuration = 4000;
+		private bool animRunning;
         	
 		public CommonMethods(BaseActivity context)
 		{
@@ -330,7 +331,14 @@ namespace LocationConnection
 
 		public bool IsOwnLocationAvailable()
 		{
-			return Session.Latitude != null && Session.Longitude != null;
+            if (!Constants.SafeLocationMode)
+            {
+				return Session.Latitude != null && Session.Longitude != null;
+			}
+            else
+            {
+				return Session.LatestLatitude != null && Session.LatestLongitude != null;
+			}
 		}
 
 		public bool IsOtherLocationAvailable()
@@ -338,20 +346,40 @@ namespace LocationConnection
 			return Session.OtherLatitude != null && Session.OtherLongitude != null;
 		}
 
-		public async Task<bool> UpdateLocationSync()
+		public async Task<bool> UpdateLocationSync(bool toMatch)
 		{
-			string url = "action=updatelocation&ID=" + Session.ID + "&SessionID=" + Session.SessionID
-						+ "&Latitude=" + ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture) + "&Longitude=" + ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture) + "&LocationTime=" + Session.LocationTime + "&Background=" + !BaseActivity.isAppForeground;
-			if (!string.IsNullOrEmpty(BaseActivity.locationUpdatesTo))
-			{
-				url += "&LocationUpdates=" + BaseActivity.locationUpdatesTo + "&Frequency=" + Session.InAppLocationRate;
-				/*if (Session.InAppLocationRate == 0)
-				{
-					LogActivity("Error: location update rate is 0.");
-				}*/
-			}
+			string url, urlAdd, action;
 
-			string responseString = await MakeRequest(url);
+			if (toMatch)
+			{
+				if (!string.IsNullOrEmpty(BaseActivity.locationUpdatesTo))
+				{
+					urlAdd = "&LocationUpdates=" + BaseActivity.locationUpdatesTo + "&Frequency=" + Session.InAppLocationRate;
+				}
+				else
+				{
+					return false;
+				}
+				action = "updatelocationmatch";
+			}
+            else
+            {
+				urlAdd = "";
+				action = "updatelocation";
+            }
+
+            if (!Constants.SafeLocationMode)
+            {
+				url = "action=" + action + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID
+						+ "&Latitude=" + ((double)Session.Latitude).ToString(CultureInfo.InvariantCulture) + "&Longitude=" + ((double)Session.Longitude).ToString(CultureInfo.InvariantCulture) + "&LocationTime=" + Session.LocationTime + "&Background=" + !BaseActivity.isAppForeground;
+			}
+            else
+            {
+				url = "action=" + action + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID
+						+ "&Latitude=" + ((double)Session.LatestLatitude).ToString(CultureInfo.InvariantCulture) + "&Longitude=" + ((double)Session.LatestLongitude).ToString(CultureInfo.InvariantCulture) + "&LocationTime=" + Session.LatestLocationTime + "&Background=False";
+			}
+			
+			string responseString = await MakeRequest(url + urlAdd);
 			if (responseString == "OK")
 			{
 				return true;
@@ -615,7 +643,7 @@ namespace LocationConnection
 			this.SnackBar.Hidden = false;
 			snackVisible = true;
 
-			UIView.Animate(duration: context.tweenTime * 2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
+			UIView.Animate(duration: Constants.tweenTime * 2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
 			{
 				foreach (NSLayoutConstraint constraint in MainLayout.Constraints)
 				{
@@ -633,7 +661,7 @@ namespace LocationConnection
 			snackVisible = false;
 			snackPermanentText = "";
 
-			UIView.Animate(duration: context.tweenTime * 2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
+			UIView.Animate(duration: Constants.tweenTime * 2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
 			{
 				foreach (NSLayoutConstraint constraint in MainLayout.Constraints)
 				{
@@ -894,6 +922,8 @@ namespace LocationConnection
 			}
 			else
 			{
+				Session.SnackMessage = error;
+
 				string url = "action=reporterror&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
 				string content = "Content=" + UrlEncode(error + Environment.NewLine
 					+ "Version: " + UIDevice.CurrentDevice.SystemName + " " + UIDevice.CurrentDevice.SystemVersion + " " + Environment.NewLine + UIDevice.CurrentDevice.Model + Environment.NewLine + File.ReadAllText(logFile));
@@ -1230,7 +1260,7 @@ namespace LocationConnection
 				view.Alpha = 1;
 				context.rippleRunning = true;
 
-				UIView.Animate(context.tweenTime, () => {
+				UIView.Animate(Constants.tweenTime, () => {
 
 					foreach (NSLayoutConstraint constraint in view.Constraints)
 					{
@@ -1242,7 +1272,7 @@ namespace LocationConnection
 					context.View.LayoutIfNeeded();
 
 				}, () => {
-					UIView.Animate(context.tweenTime, () => {
+					UIView.Animate(Constants.tweenTime, () => {
 
 						view.Alpha = 0;
 
@@ -1272,8 +1302,51 @@ namespace LocationConnection
                 {
 					bottomOffset = new CGPoint(0, scroll.ContentSize.Height - scroll.Bounds.Size.Height + context.roundBottomHeight);
 				}
-				UIView.Animate(context.tweenTime, () => { scroll.ContentOffset = bottomOffset; }, () => { });
+				UIView.Animate(Constants.tweenTime, () => { scroll.ContentOffset = bottomOffset; }, () => { });
 				
+			}
+		}
+
+		public void ShowMenu(UIView MenuLayer, UIView MenuContainer)
+		{
+			if (!animRunning)
+			{
+				animRunning = true;
+
+				MenuLayer.Hidden = false;
+				Expand(MenuContainer);
+				UIView.Animate(Constants.tweenTime, () => {
+					context.View.LayoutIfNeeded();
+				}, () => {
+					MenuContainer.UserInteractionEnabled = true;
+					animRunning = false;
+				});
+			}
+		}
+
+		public void HideMenu(UIView MenuLayer, UIView MenuContainer, bool presented)
+		{
+			if (presented)
+			{
+				if (!animRunning && !MenuLayer.Hidden)
+				{
+					MenuContainer.UserInteractionEnabled = false;
+					animRunning = true;
+
+					UIView.Animate(Constants.tweenTime, () => {
+						MenuContainer.Alpha = 0;
+					}, () => {
+						MenuLayer.Hidden = true;
+						Collapse(MenuContainer);
+						MenuContainer.Alpha = 1;
+						animRunning = false;
+					});
+				}
+			}
+			else
+			{
+				MenuLayer.Hidden = true;
+				Collapse(MenuContainer);
 			}
 		}
 	}

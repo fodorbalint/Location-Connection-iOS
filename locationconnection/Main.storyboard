@@ -1078,8 +1078,8 @@
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                             </view>
-                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="RegisterScroll" customClass="TouchScrollView" translatesAutoresizingMaskIntoConstraints="NO">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="RegisterScroll" customClass="TouchScrollView" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <label opaque="NO" text="Sex" translatesAutoresizingMaskIntoConstraints="NO" id="SexLabel">
                                         <rect key="frame" x="10" y="45" width="24" height="17"/>
@@ -1220,7 +1220,7 @@
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UseLocationSwitch">
                                         <rect key="frame" x="314" y="758" width="51" height="31"/>
                                     </switch>
-                                    <label opaque="NO" text="LocationExplanation" translatesAutoresizingMaskIntoConstraints="NO" id="LocationExplanation">
+                                    <label opaque="NO" text="LocationExplanation" translatesAutoresizingMaskIntoConstraints="NO" numberOfLines="0" id="LocationExplanation">
                                         <rect key="frame" x="10" y="799" width="355" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
@@ -1315,8 +1315,20 @@
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareNone">
                                         <rect key="frame" x="314" y="1254" width="51" height="31"/>
                                     </switch>
+                                    <label opaque="NO" text="EulaLabel" translatesAutoresizingMaskIntoConstraints="NO" id="EulaLabel">
+                                        <rect key="frame" x="10" y="1305" width="65.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="EulaText" misplaced="YES" editable="NO">
+                                        <rect key="frame" x="10" y="0.0" width="10" height="150"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="EulaText0"/>
+                                        </constraints>
+                                    </textView>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Register">
-                                        <rect key="frame" x="10" y="1300" width="113" height="33"/>
+                                        <rect key="frame" x="10" y="1597" width="113" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Register0"/>
@@ -1333,7 +1345,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Reset">
-                                        <rect key="frame" x="131" y="1300" width="113" height="33"/>
+                                        <rect key="frame" x="131" y="1597" width="113" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Reset0"/>
@@ -1350,7 +1362,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="RegisterCancel">
-                                        <rect key="frame" x="252" y="1300" width="113" height="33"/>
+                                        <rect key="frame" x="252" y="1597" width="113" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="RegisterCancel0"/>
@@ -1473,14 +1485,19 @@
                                     <constraint firstAttribute="leading" secondItem="DistanceShareNoneLabel" secondAttribute="leading" constant="-35" id="DistanceShareNoneLabel3"/>
                                     <constraint firstItem="DistanceShareNone" firstAttribute="top" secondItem="DistanceShareFriend" secondAttribute="bottom" constant="10" id="DistanceShareNone2"/>
                                     <constraint firstAttribute="trailing" secondItem="DistanceShareNone" secondAttribute="trailing" constant="12" id="DistanceShareNone3"/>
-                                    <constraint firstItem="Register" firstAttribute="top" secondItem="DistanceShareNone" secondAttribute="bottom" constant="15" id="Register2"/>
+                                    <constraint firstItem="EulaLabel" firstAttribute="top" secondItem="DistanceShareNone" secondAttribute="bottom" constant="20" id="EulaLabel2"/>
+                                    <constraint firstAttribute="leading" secondItem="EulaLabel" secondAttribute="leading" constant="-10" id="EulaLabel3"/>
+                                    <constraint firstItem="EulaText" firstAttribute="top" secondItem="EulaLabel" secondAttribute="bottom" constant="10" id="EulaText2"/>
+                                    <constraint firstAttribute="leading" secondItem="EulaText" secondAttribute="leading" constant="-10" id="EulaText3"/>
+                                    <constraint firstAttribute="trailing" secondItem="EulaText" secondAttribute="trailing" constant="10" id="EulaText4"/>
+                                    <constraint firstItem="Register" firstAttribute="top" secondItem="EulaText" secondAttribute="bottom" constant="15" id="Register2"/>
                                     <constraint firstAttribute="leading" secondItem="Register" secondAttribute="leading" constant="-10" id="Register3"/>
                                     <constraint firstAttribute="bottom" secondItem="Register" secondAttribute="bottom" constant="10" id="Register4"/>
                                     <constraint firstItem="Register" firstAttribute="width" secondItem="Reset" secondAttribute="width" id="Register5"/>
-                                    <constraint firstItem="Reset" firstAttribute="top" secondItem="DistanceShareNone" secondAttribute="bottom" constant="15" id="Reset2"/>
+                                    <constraint firstItem="Reset" firstAttribute="top" secondItem="EulaText" secondAttribute="bottom" constant="15" id="Reset2"/>
                                     <constraint firstItem="Reset" firstAttribute="leading" secondItem="Register" secondAttribute="trailing" constant="8" id="Reset3"/>
                                     <constraint firstItem="Reset" firstAttribute="width" secondItem="RegisterCancel" secondAttribute="width" id="Reset4"/>
-                                    <constraint firstItem="RegisterCancel" firstAttribute="top" secondItem="DistanceShareNone" secondAttribute="bottom" constant="15" id="RegisterCancel2"/>
+                                    <constraint firstItem="RegisterCancel" firstAttribute="top" secondItem="EulaText" secondAttribute="bottom" constant="15" id="RegisterCancel2"/>
                                     <constraint firstItem="RegisterCancel" firstAttribute="leading" secondItem="Reset" secondAttribute="trailing" constant="8" id="RegisterCancel3"/>
                                     <constraint firstAttribute="trailing" secondItem="RegisterCancel" secondAttribute="trailing" constant="10" id="RegisterCancel4"/>
                                 </constraints>
@@ -1562,6 +1579,8 @@
                         <outlet property="SnackBottomConstraint" destination="Snackbar33" id="name-outlet-Snackbar33"/>
                         <outlet property="ScrollBottomConstraint" destination="Register4" id="name-outlet-Register4"/>
                         <outlet property="ScrollBottomOuterConstraint" destination="RegisterScroll3" id="name-outlet-RegisterScroll3"/>
+                        <outlet property="EulaLabel" destination="EulaLabel" id="name-outlet-EulaLabel"/>
+                        <outlet property="EulaText" destination="EulaText" id="name-outlet-EulaText"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="107819" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1581,7 +1600,7 @@
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
                             </view>
-                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="ProfileViewScroll" customClass="TouchScrollView" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" ambiguous="YES">
+                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="ProfileViewScroll" customClass="TouchScrollView" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Viewport1">
@@ -1669,15 +1688,25 @@
                                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.85" alpha="1"/>
                                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                             </scrollView>
+                                            <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuIcon">
+                                                <rect key="frame" x="327" y="0.0" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="48" id="ProfileViewMenuIcon0"/>
+                                                    <constraint firstAttribute="height" constant="48" id="ProfileViewMenuIcon1"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="ic_menu_black.png"/>
+                                                <state key="highlighted" backgroundImage="ic_menu_black.png"/>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ProfileImageScroll" secondAttribute="width" id="ProfileImageScroll0"/>
                                             <constraint firstAttribute="width" secondItem="ProfileImageScroll" secondAttribute="height" id="ProfileImageScroll1"/>
                                             <constraint firstAttribute="centerY" secondItem="ProfileImageScroll" secondAttribute="centerY" id="ProfileImageScroll2"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="ProfileImageScroll" secondAttribute="leading" id="ProfileImageScroll3"/>
+                                            <constraint firstAttribute="leading" secondItem="ProfileImageScroll" secondAttribute="leading" id="ProfileImageScroll3"/>
                                             <constraint firstAttribute="height" secondItem="ProfileImageScroll" secondAttribute="height" relation="greaterThanOrEqual" constant="0" id="ProfileImageScroll4"/>
+                                            <constraint firstAttribute="top" secondItem="ProfileViewMenuIcon" secondAttribute="top" id="ProfileViewMenuIcon2"/>
+                                            <constraint firstAttribute="trailing" secondItem="ProfileViewMenuIcon" secondAttribute="trailing" id="ProfileViewMenuIcon3"/>
                                         </constraints>
-                                        <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                     </view>
                                     <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewTopSeparator1">
                                         <rect key="frame" x="0.0" y="130" width="375" height="2"/>
@@ -1715,13 +1744,13 @@
                                             <userDefinedRuntimeAttribute type="float" keyPath="TopInset" value="10"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMap" misplaced="YES" ambiguous="YES">
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMap" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0" id="ProfileViewMap0"/>
                                         </constraints>
                                     </mapView>
-                                    <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMapStreet" misplaced="YES" ambiguous="YES">
+                                    <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMapStreet" misplaced="YES">
                                         <rect key="frame" x="10" y="406" width="80" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal">
@@ -1732,7 +1761,7 @@
                                             <constraint firstAttribute="width" constant="80" id="ProfileViewMapStreet1"/>
                                         </constraints>
                                     </button>
-                                    <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMapSatellite" misplaced="YES" ambiguous="YES">
+                                    <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMapSatellite" misplaced="YES">
                                         <rect key="frame" x="90" y="406" width="80" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal">
@@ -1744,22 +1773,80 @@
                                         </constraints>
                                         <state key="normal"/>
                                     </button>
-                                    <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewTopSeparator2" misplaced="YES" ambiguous="YES">
+                                    <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewTopSeparator2" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="ProfileViewTopSeparator20"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewBottomSeparator2" misplaced="YES" ambiguous="YES">
+                                    <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewBottomSeparator2" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="ProfileViewBottomSeparator20"/>
                                         </constraints>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NavigationSpacer" misplaced="YES" ambiguous="YES">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NavigationSpacer" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" priority="999" id="NavigationSpacer0"/>
+                                        </constraints>
+                                    </view>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuLayer">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="0"/>
+                                        <state key="normal"/>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuContainer">
+                                        <rect key="frame" x="241" y="134" width="130" height="96"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuContainerIn">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="96"/>
+                                                <subviews>
+                                                    <stackView contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuContainerStack">
+                                                        <rect key="frame" x="0.0" y="0.0" width="130" height="96"/>
+                                                        <subviews>
+                                                            <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuReport">
+                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="48"/>
+                                                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="48" id="ProfileViewMenuReport0"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="24" maxY="0.0"/>
+                                                                <state key="normal" title="MenuReport">
+                                                                    <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                                                </state>
+                                                                <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
+                                                            </button>
+                                                            <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuBlock">
+                                                                <rect key="frame" x="0.0" y="48" width="130" height="48"/>
+                                                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="48" id="ProfileViewMenuBlock0"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="24" maxY="0.0"/>
+                                                                <state key="normal" title="MenuBlock">
+                                                                    <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                                                </state>
+                                                                <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="top" secondItem="ProfileViewMenuContainerStack" secondAttribute="top" id="ProfileViewMenuContainerStack2"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ProfileViewMenuContainerStack" secondAttribute="bottom" priority="749" id="ProfileViewMenuContainerStack3"/>
+                                                    <constraint firstAttribute="leading" secondItem="ProfileViewMenuContainerStack" secondAttribute="leading" priority="749" id="ProfileViewMenuContainerStack4"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ProfileViewMenuContainerStack" secondAttribute="trailing" id="ProfileViewMenuContainerStack5"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="top" secondItem="ProfileViewMenuContainerIn" secondAttribute="top" id="ProfileViewMenuContainerIn2"/>
+                                            <constraint firstAttribute="bottom" secondItem="ProfileViewMenuContainerIn" secondAttribute="bottom" id="ProfileViewMenuContainerIn3"/>
+                                            <constraint firstAttribute="leading" secondItem="ProfileViewMenuContainerIn" secondAttribute="leading" id="ProfileViewMenuContainerIn4"/>
+                                            <constraint firstAttribute="trailing" secondItem="ProfileViewMenuContainerIn" secondAttribute="trailing" id="ProfileViewMenuContainerIn5"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1842,6 +1929,12 @@
                                     <constraint firstAttribute="leading" secondItem="NavigationSpacer" secondAttribute="leading" id="NavigationSpacer4"/>
                                     <constraint firstAttribute="trailing" secondItem="NavigationSpacer" secondAttribute="trailing" id="NavigationSpacer5"/>
                                     <constraint firstItem="NavigationSpacer" firstAttribute="bottom" secondItem="Viewport1" secondAttribute="bottom" relation="greaterThanOrEqual" constant="0" id="NavigationSpacer6"/>
+                                    <constraint firstItem="ProfileViewMenuContainer" firstAttribute="top" secondItem="ProfileImageContainer" secondAttribute="top" constant="4" id="ProfileViewMenuContainer2"/>
+                                    <constraint firstItem="ProfileViewMenuContainer" firstAttribute="trailing" secondItem="ProfileImageContainer" secondAttribute="trailing" constant="-4" id="ProfileViewMenuContainer3"/>
+                                    <constraint firstAttribute="top" secondItem="ProfileViewMenuLayer" secondAttribute="top" id="ProfileViewMenuLayer2"/>
+                                    <constraint firstAttribute="bottom" secondItem="ProfileViewMenuLayer" secondAttribute="bottom" id="ProfileViewMenuLayer3"/>
+                                    <constraint firstAttribute="leading" secondItem="ProfileViewMenuLayer" secondAttribute="leading" id="ProfileViewMenuLayer4"/>
+                                    <constraint firstAttribute="trailing" secondItem="ProfileViewMenuLayer" secondAttribute="trailing" id="ProfileViewMenuLayer5"/>
                                 </constraints>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
                             </scrollView>
@@ -1868,7 +1961,24 @@
                                     <constraint firstAttribute="width" constant="35" id="EditSelfBack1"/>
                                 </constraints>
                             </button>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EditSelf">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SendLocation" misplaced="YES">
+                                <rect key="frame" x="79" y="26" width="103" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="SendLocation0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.761" alpha="1"/>
+                                <state key="normal" title="UpdateLocation">
+                                    <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="color_9b9b9b.png"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EditSelf" misplaced="YES">
                                 <rect key="frame" x="79" y="26" width="290" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="EditSelf0"/>
@@ -1966,9 +2076,12 @@
                             <constraint firstItem="RippleProfileView" firstAttribute="centerY" secondItem="EditSelfBack" secondAttribute="centerY" id="RippleProfileView3"/>
                             <constraint firstItem="EditSelfBack" firstAttribute="centerY" secondItem="EditSelfHeader" secondAttribute="centerY" id="EditSelfBack2"/>
                             <constraint firstItem="EditSelfBack" firstAttribute="leading" secondItem="EditSelfHeader" secondAttribute="leading" constant="20" id="EditSelfBack3"/>
+                            <constraint firstItem="SendLocation" firstAttribute="centerY" secondItem="EditSelfHeader" secondAttribute="centerY" id="SendLocation2"/>
+                            <constraint firstItem="SendLocation" firstAttribute="leading" secondItem="EditSelfBack" secondAttribute="trailing" constant="24" id="SendLocation3"/>
                             <constraint firstItem="EditSelf" firstAttribute="centerY" secondItem="EditSelfHeader" secondAttribute="centerY" id="EditSelf2"/>
-                            <constraint firstItem="EditSelf" firstAttribute="leading" secondItem="EditSelfBack" secondAttribute="trailing" constant="24" id="EditSelf3"/>
+                            <constraint firstItem="EditSelf" firstAttribute="leading" secondItem="SendLocation" secondAttribute="trailing" constant="8" id="EditSelf3"/>
                             <constraint firstItem="EditSelf" firstAttribute="trailing" secondItem="SafeArea4" secondAttribute="trailing" constant="-6" id="EditSelf4"/>
+                            <constraint firstItem="SendLocation" firstAttribute="width" secondItem="EditSelf" secondAttribute="width" id="EditSelf5"/>
                             <constraint firstItem="BackButton" firstAttribute="top" secondItem="SafeArea4" secondAttribute="top" constant="10" id="BackButton2"/>
                             <constraint firstItem="BackButton" firstAttribute="leading" secondItem="SafeArea4" secondAttribute="leading" id="BackButton3"/>
                             <constraint firstItem="PreviousButton" firstAttribute="bottom" secondItem="RoundBottom4" secondAttribute="top" id="PreviousButton2"/>
@@ -1988,7 +2101,7 @@
                             <constraint firstItem="RoundBottom4" firstAttribute="leading" secondItem="SafeArea4" secondAttribute="leading" id="RoundBottom44"/>
                             <constraint firstItem="RoundBottom4" firstAttribute="trailing" secondItem="SafeArea4" secondAttribute="trailing" id="RoundBottom45"/>
                             <constraint firstAttribute="bottom" secondItem="Snackbar4" secondAttribute="top" priority="200" id="Snackbar42"/>
-                            <constraint firstAttribute="bottom" secondItem="Snackbar4" secondAttribute="bottom" priority="499" id="Snackbar43"/>
+                            <constraint firstAttribute="bottom" secondItem="Snackbar4" secondAttribute="bottom" priority="199" id="Snackbar43"/>
                             <constraint firstItem="Snackbar4" firstAttribute="leading" secondItem="SafeArea4" secondAttribute="leading" id="Snackbar44"/>
                             <constraint firstItem="Snackbar4" firstAttribute="trailing" secondItem="SafeArea4" secondAttribute="trailing" id="Snackbar45"/>
                         </constraints>
@@ -2031,6 +2144,12 @@
                         <outlet property="BottomConstraint" destination="RoundBottom42" id="name-outlet-RoundBottom42"/>
                         <outlet property="ScrollBottomConstraint" destination="NavigationSpacer3" id="name-outlet-NavigationSpacer3"/>
                         <outlet property="SnackBottomConstraint" destination="Snackbar43" id="name-outlet-Snackbar43"/>
+                        <outlet property="MenuLayer" destination="ProfileViewMenuLayer" id="name-outlet-ProfileViewMenuLayer"/>
+                        <outlet property="MenuReport" destination="ProfileViewMenuReport" id="name-outlet-ProfileViewMenuReport"/>
+                        <outlet property="MenuBlock" destination="ProfileViewMenuBlock" id="name-outlet-ProfileViewMenuBlock"/>
+                        <outlet property="MenuIcon" destination="ProfileViewMenuIcon" id="name-outlet-ProfileViewMenuIcon"/>
+                        <outlet property="MenuContainer" destination="ProfileViewMenuContainer" id="name-outlet-ProfileViewMenuContainer"/>
+                        <outlet property="SendLocation" destination="SendLocation" id="name-outlet-SendLocation"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="108786" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2051,11 +2170,6 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.55" alpha="1"/>
                             </view>
-                            <label opaque="NO" text="NoMatch" translatesAutoresizingMaskIntoConstraints="NO" id="NoMatch">
-                                <rect key="frame" x="158" y="30" width="59" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ChatUserList" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="0.0" y="20" width="375" height="618"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
@@ -2184,6 +2298,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" text="NoMatch" translatesAutoresizingMaskIntoConstraints="NO" id="NoMatch">
+                                <rect key="frame" x="158" y="30" width="59" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                            </label>
                             <!--<imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ChatListTopSeparator">
                                 <rect key="frame" x="0.0" y="20" width="375" height="2"/>
                                 <constraints>
@@ -2401,11 +2520,25 @@
                                                 <view contentMode="scaleToFill" clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MainView">
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
                                                     <subviews>
-                                                        <textView text="MessageText" scrollEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MessageText" misplaced="YES" ambiguous="YES">
-                                                            <rect key="frame" x="10" y="0.0" width="355" height="722.5"/>
+                                                        <label text="MessageText" numberOfLines="0" contentMode="scaleToFill" lineBreakMode="tailTruncation" opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MessageText" ambiguous="YES" customClass="InsetLabel" misplaced="YES">
+                                                            <rect key="frame" x="10" y="722.5" width="355" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
-                                                        </textView>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="TopInset">
+                                                                    <real key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="LeftInset">
+                                                                    <real key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="RightInset">
+                                                                    <real key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="BottomInset">
+                                                                    <real key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
                                                         <label text="TimeText" contentMode="scaleToFill" lineBreakMode="tailTruncation" opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TimeText" ambiguous="YES" customClass="InsetLabel" misplaced="YES">
                                                             <rect key="frame" x="10" y="722.5" width="355" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2514,13 +2647,13 @@
                                 <state key="normal"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChatOneMenuContainer">
-                                <rect key="frame" x="167" y="24" width="204" height="144"/>
+                                <rect key="frame" x="167" y="24" width="204" height="240"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ChatOneMenuContainerIn">
-                                        <rect key="frame" x="0.0" y="0.0" width="204" height="144"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="204" height="240"/>
                                         <subviews>
                                             <stackView contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ChatOneMenuContainerStack">
-                                                <rect key="frame" x="0.0" y="0.0" width="204" height="144"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="204" height="240"/>
                                                 <subviews>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuLocationUpdates">
                                                         <rect key="frame" x="0.0" y="0.0" width="204" height="48"/>
@@ -2557,6 +2690,32 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="24" maxY="0.0"/>
                                                         <state key="normal" title="MenuUnmatch">
+                                                            <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                                        </state>
+                                                        <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
+                                                    </button>
+                                                    <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuReport">
+                                                        <rect key="frame" x="0.0" y="144" width="204" height="48"/>
+                                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="48" id="MenuReport0"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="24" maxY="0.0"/>
+                                                        <state key="normal" title="MenuReport">
+                                                            <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                                        </state>
+                                                        <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
+                                                    </button>
+                                                    <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuBlock">
+                                                        <rect key="frame" x="0.0" y="192" width="204" height="48"/>
+                                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="48" id="MenuBlock0"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="24" maxY="0.0"/>
+                                                        <state key="normal" title="MenuBlock">
                                                             <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                                         </state>
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
@@ -2649,6 +2808,8 @@
                         <outlet property="ChatOneLeftConstraint" destination="ChatEditMessage4" id="name-outlet-ChatEditMessage4"/>
                         <outlet property="ChatOneRightConstraint" destination="ChatSendMessage4" id="name-outlet-ChatSendMessage4"/>
                         <outlet property="LocationHistoryList9" destination="LocationHistoryList9" id="name-outlet-LocationHistoryList9"/>
+                        <outlet property="MenuReport" destination="MenuReport" id="name-outlet-MenuReport"/>
+                        <outlet property="MenuBlock" destination="MenuBlock" id="name-outlet-MenuBlock"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="113673" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3906,16 +4067,21 @@
                                             <constraint firstAttribute="width" constant="69" id="InAppLocationRateValue0"/>
                                         </constraints>
                                     </label>
+                                    <label text="InAppLocationRateExplanation" opaque="NO" contentMode="scaleToFill" numberOfLines="0" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateExplanation">
+                                        <rect key="frame" x="10" y="602.5" width="355" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                    </label>
                                     <label text="BackgroundLocationRateLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRateLabel">
-                                        <rect key="frame" x="10" y="602.5" width="197" height="17"/>
+                                        <rect key="frame" x="10" y="629.5" width="197" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRate">
-                                        <rect key="frame" x="8" y="629.5" width="280" height="31"/>
+                                        <rect key="frame" x="8" y="656.5" width="280" height="31"/>
                                     </slider>
                                     <label text="BackgroundLocationRateValue" textAlignment="right" opaque="NO" adjustsFontSizeToFit="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRateValue">
-                                        <rect key="frame" x="296" y="636" width="69" height="17"/>
+                                        <rect key="frame" x="296" y="663" width="69" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <constraints>
@@ -3923,7 +4089,7 @@
                                         </constraints>
                                     </label>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="LocationHistoryButton">
-                                        <rect key="frame" x="10" y="669.5" width="355" height="33"/>
+                                        <rect key="frame" x="10" y="701.5" width="355" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="LocationHistoryButton0"/>
@@ -3940,7 +4106,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator4">
-                                        <rect key="frame" x="0.0" y="750.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="782.5" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsBottomSeparator40"/>
                                         </constraints>
@@ -3955,7 +4121,7 @@
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsTopSeparator4">
-                                        <rect key="frame" x="0.0" y="792.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="824.5" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsTopSeparator40"/>
                                         </constraints>
@@ -4127,14 +4293,17 @@
                                     <constraint firstItem="InAppLocationRateValue" firstAttribute="centerY" secondItem="InAppLocationRate" secondAttribute="centerY" id="InAppLocationRateValue2"/>
                                     <constraint firstItem="InAppLocationRateValue" firstAttribute="leading" secondItem="InAppLocationRate" secondAttribute="trailing" constant="10" id="InAppLocationRateValue3"/>
                                     <constraint firstAttribute="trailing" secondItem="InAppLocationRateValue" secondAttribute="trailing" constant="10" id="InAppLocationRateValue4"/>
-                                    <constraint firstItem="BackgroundLocationRateLabel" firstAttribute="top" secondItem="InAppLocationRate" secondAttribute="bottom" constant="10" id="BackgroundLocationRateLabel2"/>
+                                    <constraint firstItem="InAppLocationRateExplanation" firstAttribute="top" secondItem="InAppLocationRate" secondAttribute="bottom" constant="10" id="InAppLocationRateExplanation2"/>
+                                    <constraint firstAttribute="leading" secondItem="InAppLocationRateExplanation" secondAttribute="leading" constant="-10" id="InAppLocationRateExplanation3"/>
+                                    <constraint firstAttribute="trailing" secondItem="InAppLocationRateExplanation" secondAttribute="trailing" constant="10" id="InAppLocationRateExplanation4"/>
+                                    <constraint firstItem="BackgroundLocationRateLabel" firstAttribute="top" secondItem="InAppLocationRateExplanation" secondAttribute="bottom" constant="10" id="BackgroundLocationRateLabel2"/>
                                     <constraint firstAttribute="leading" secondItem="BackgroundLocationRateLabel" secondAttribute="leading" constant="-10" id="BackgroundLocationRateLabel3"/>
                                     <constraint firstItem="BackgroundLocationRate" firstAttribute="top" secondItem="BackgroundLocationRateLabel" secondAttribute="bottom" constant="10" id="BackgroundLocationRate2"/>
                                     <constraint firstAttribute="leading" secondItem="BackgroundLocationRate" secondAttribute="leading" constant="-10" id="BackgroundLocationRate3"/>
                                     <constraint firstItem="BackgroundLocationRateValue" firstAttribute="centerY" secondItem="BackgroundLocationRate" secondAttribute="centerY" id="BackgroundLocationRateValue2"/>
                                     <constraint firstItem="BackgroundLocationRateValue" firstAttribute="leading" secondItem="BackgroundLocationRate" secondAttribute="trailing" constant="10" id="BackgroundLocationRateValue3"/>
                                     <constraint firstAttribute="trailing" secondItem="BackgroundLocationRateValue" secondAttribute="trailing" constant="10" id="BackgroundLocationRateValue4"/>
-                                    <constraint firstItem="LocationHistoryButton" firstAttribute="top" secondItem="BackgroundLocationRate" secondAttribute="bottom" constant="10" id="LocationHistoryButton2"/>
+                                    <constraint firstItem="LocationHistoryButton" firstAttribute="top" secondItem="BackgroundLocationRate" secondAttribute="bottom" constant="15" id="LocationHistoryButton2"/>
                                     <constraint firstAttribute="leading" secondItem="LocationHistoryButton" secondAttribute="leading" constant="-10" id="LocationHistoryButton3"/>
                                     <constraint firstAttribute="trailing" secondItem="LocationHistoryButton" secondAttribute="trailing" constant="10" id="LocationHistoryButton4"/>
                                     <constraint firstItem="SettingsBottomSeparator4" firstAttribute="bottom" secondItem="SettingsFormCaption" secondAttribute="top" id="SettingsBottomSeparator42"/>
@@ -4208,6 +4377,7 @@
                         <outlet property="InAppLocationRateLabel" destination="InAppLocationRateLabel" id="name-outlet-InAppLocationRateLabel"/>
                         <outlet property="InAppLocationRate" destination="InAppLocationRate" id="name-outlet-InAppLocationRate"/>
                         <outlet property="InAppLocationRateValue" destination="InAppLocationRateValue" id="name-outlet-InAppLocationRateValue"/>
+                        <outlet property="InAppLocationRateExplanation" destination="InAppLocationRateExplanation" id="name-outlet-InAppLocationRateExplanation"/>
                         <outlet property="BackgroundLocationRateLabel" destination="BackgroundLocationRateLabel" id="name-outlet-BackgroundLocationRateLabel"/>
                         <outlet property="BackgroundLocationRate" destination="BackgroundLocationRate" id="name-outlet-BackgroundLocationRate"/>
                         <outlet property="BackgroundLocationRateValue" destination="BackgroundLocationRateValue" id="name-outlet-BackgroundLocationRateValue"/>
@@ -4221,6 +4391,9 @@
                         <outlet property="ScrollBottomConstraint" destination="SettingsMessageContainer3" id="name-outlet-SettingsMessageContainer3"/>
                         <outlet property="ScrollBottomOuterConstraint" destination="SettingsScroll3" id="name-outlet-SettingsScroll3"/>
                         <outlet property="Settings_Scroll" destination="SettingsScroll" id="name-outlet-SettingsScroll"/>
+                        <outlet property="InAppLocationRateLabelConstraint" destination="InAppLocationRateLabel2" id="name-outlet-InAppLocationRateLabel2"/>
+                        <outlet property="LocationHistoryButtonConstraint" destination="LocationHistoryButton2" id="name-outlet-LocationHistoryButton2"/>
+                        <outlet property="BackgroundLocationRateLabelConstraint" destination="BackgroundLocationRateLabel2" id="name-outlet-BackgroundLocationRateLabel2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="136244" userLabel="First Responder" sceneMemberID="firstResponder"/>

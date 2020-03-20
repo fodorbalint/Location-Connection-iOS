@@ -80,6 +80,26 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MenuBlock { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView MenuContainer { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MenuIcon { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MenuLayer { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MenuReport { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel Name { get; set; }
 
         [Outlet]
@@ -145,6 +165,10 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint ScrollBottomConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton SendLocation { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -240,6 +264,31 @@ namespace LocationConnection
                 MapTopSeparator = null;
             }
 
+            if (MenuBlock != null) {
+                MenuBlock.Dispose ();
+                MenuBlock = null;
+            }
+
+            if (MenuContainer != null) {
+                MenuContainer.Dispose ();
+                MenuContainer = null;
+            }
+
+            if (MenuIcon != null) {
+                MenuIcon.Dispose ();
+                MenuIcon = null;
+            }
+
+            if (MenuLayer != null) {
+                MenuLayer.Dispose ();
+                MenuLayer = null;
+            }
+
+            if (MenuReport != null) {
+                MenuReport.Dispose ();
+                MenuReport = null;
+            }
+
             if (Name != null) {
                 Name.Dispose ();
                 Name = null;
@@ -323,6 +372,11 @@ namespace LocationConnection
             if (ScrollBottomConstraint != null) {
                 ScrollBottomConstraint.Dispose ();
                 ScrollBottomConstraint = null;
+            }
+
+            if (SendLocation != null) {
+                SendLocation.Dispose ();
+                SendLocation = null;
             }
 
             if (Snackbar != null) {
