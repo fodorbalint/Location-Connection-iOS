@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class LangEnglish
     {
-        public const string versionInfo = "Version: 15. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories\n\n";
+        public const string versionInfo = "Version: 23. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories\n\n";
 
         public static string ConfirmAction = "Confirm action";
         public static string DialogOK = "OK";
@@ -133,8 +133,8 @@ namespace LocationConnection
 
         public const string DialogDeactivate = "Are you sure you want to deactivate your account?\n\nIt will no longer be visible and searchable.\nYour matches will still see your name and your small picture, but they neither can go into your page.\nYou can still like or hide people, and get a match.\n\nYour account can be activated again anytime.";
         public const string DialogDelete = "Are you sure you want to delete your account?\nThis cannot be undone.";
-        public const string Deactivated = "Your account is now inactive";
-        public const string Activated = "Your account is now active";
+        public const string Deactivated = "Your account is now inactive.";
+        public const string Activated = "Your account is now active.";
 
         //User-fault error messages from server
 

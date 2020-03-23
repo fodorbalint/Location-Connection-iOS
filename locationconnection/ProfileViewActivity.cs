@@ -143,9 +143,12 @@ namespace LocationConnection
 				ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(0, 0);
 				imageIndex = 0;
 
-				c.CW("ProfileViewActivity ViewWillAppear profileViewPageType " + IntentData.profileViewPageType + " viewindex " + ListActivity.viewIndex + " absolutestartindex " +  ListActivity.absoluteStartIndex);     
-
-				pageType = IntentData.profileViewPageType;
+                if (pageType is null) //activity can be resumed by pressing a back button from chat one
+                {
+					c.CW("ProfileViewActivity pageType is null");
+					pageType = IntentData.profileViewPageType;
+				}
+				c.CW("ProfileViewActivity ViewWillAppear pageType " + pageType + " viewindex " + ListActivity.viewIndex + " absolutestartindex " + ListActivity.absoluteStartIndex);
 
 				switch (pageType)
 				{
@@ -454,6 +457,29 @@ namespace LocationConnection
 				responseString = responseString.Substring(3);
 				ServerParser<Profile> parser = new ServerParser<Profile>(responseString);
 				displayUser = parser.returnCollection[0];
+
+				UserLocationData data = GetLocationData(targetID);
+                if (data != null)
+                {
+					displayUser.Latitude = data.Latitude;
+					displayUser.Longitude = data.Longitude;
+					displayUser.LocationTime = data.LocationTime;
+					if (!(displayUser.Distance is null))
+					{
+						float distance;
+						if (!Constants.SafeLocationMode)
+						{
+							distance = CalculateDistance((double)Session.Latitude, (double)Session.Longitude, data.Latitude, data.Longitude);
+						}
+						else
+						{
+							distance = CalculateDistance((double)Session.LatestLatitude, (double)Session.LatestLongitude, data.Latitude, data.Longitude);
+						}
+
+						displayUser.Distance = distance;
+					}
+				}
+
 				LoadUser();
 			}
 			else if (responseString.Substring(0, 6) == "ERROR_")
@@ -510,7 +536,7 @@ namespace LocationConnection
 				{
 					for (int i = 0; i < Session.Pictures.Length; i++)
 					{
-						LoadPicture(Session.ID.ToString(), Session.Pictures[i], i);
+						LoadPicture(Session.ID.ToString(), Session.Pictures[i], i, true);
 					}
 				}, cts.Token);
 
@@ -610,7 +636,7 @@ namespace LocationConnection
 				{                    
 					for (int i = 0; i < displayUser.Pictures.Length; i++)
 					{
-						LoadPicture(displayUser.ID.ToString(), displayUser.Pictures[i], i);
+						LoadPicture(displayUser.ID.ToString(), displayUser.Pictures[i], i, false);
 					}
 				}, cts.Token);
 			}
@@ -843,27 +869,38 @@ namespace LocationConnection
 			}
 		}
 
-		private void LoadPicture(string folder, string picture, int index)
+		private void LoadPicture(string folder, string picture, int index, bool usecache)
 		{
 			//c.CW("LoadPicture " + folder + " " + picture + " " + index);
 			try {
 				UIImageView ProfileImage = null;
 				InvokeOnMainThread(() => {
-					ProfileImage = (UIImageView)ProfileImageScroll.Subviews[index]; //index out of range exception
+					ProfileImage = (UIImageView)ProfileImageScroll.Subviews[index];
 				});
 
-			    string url;
-			    url = Constants.HostName + Constants.UploadFolder + "/" + folder + "/" + Constants.LargeImageSize + "/" + picture;
-			    UIImage im = CommonMethods.LoadFromUrl(url);
-
-                if (im == null)
+                if (usecache)
                 {
-					im = UIImage.FromBundle(Constants.noImageHD);
-                }
+					ImageCache im = new ImageCache(this);
+					InvokeOnMainThread(() => {
+						im.LoadImage(ProfileImage, folder, picture);
+					});
+				}
+                else
+                {
+					string url;
+					url = Constants.HostName + Constants.UploadFolder + "/" + folder + "/" + Constants.LargeImageSize + "/" + picture;
+					UIImage im = CommonMethods.LoadFromUrl(url);
 
-			    InvokeOnMainThread(() => {
-				    ProfileImage.Image = im;
-			    });
+					if (im == null)
+					{
+						im = UIImage.FromBundle(Constants.noImageHD);
+					}
+
+					InvokeOnMainThread(() => {
+						ProfileImage.Image = im;
+					});
+				}
+			    
 		    }
 			catch (Exception ex)
 			{
@@ -1028,7 +1065,7 @@ namespace LocationConnection
 		private void PrevLoadAction()
 		{
 			//c.LogActivity("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
-			//c.CW("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
+			c.CW("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count);
 			if (ListActivity.viewIndex == 0 && ListActivity.absoluteStartIndex > 1 && Session.ResultsFrom > 1) //preceding list will be loaded. Session.ResultsFrom may now be greater than absoluteStartIndex if the upper end of the list was loaded, but the user went back.
 			{
 				Session.ResultsFrom = ListActivity.absoluteIndex - Constants.MaxResultCount + 1;
@@ -1049,7 +1086,7 @@ namespace LocationConnection
 		private void NextLoadAction()
 		{
 			//c.LogActivity("Next viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
-			c.CW("NextLoadAction viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count + " totalResultCount " + ListActivity.totalResultCount);
+			c.CW("NextLoadAction viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " totalResultCount " + ListActivity.totalResultCount);
 			if (ListActivity.viewIndex == ListActivity.viewProfiles.Count - 1 && ListActivity.totalResultCount > ListActivity.absoluteIndex + 1) //list will be loaded
 			{
 				c.CW("NextLoadAction 2 loading list");
@@ -1075,6 +1112,7 @@ namespace LocationConnection
 			if (pageType == "standalone")
 			{
 				IntentData.senderID = displayUser.ID; //we could have gotten on this profile page from another chat by clicking on a notification.
+				c.CW("LikeButton_Click senderID set");
 				BackButton_Click(null, null);
 				return;
 			}
@@ -1183,6 +1221,8 @@ namespace LocationConnection
 							ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
                         }
 						ListActivity.viewIndex--;
+						ListActivity.absoluteIndex--;
+						ListActivity.totalResultCount--;
 						NextButton_Click(null, null);
 					}
                     else
@@ -1259,7 +1299,12 @@ namespace LocationConnection
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.BlockDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				string responseString = await c.MakeRequest("action=blockprofileview&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + displayUser.ID);
+				if (IsUpdatingTo(displayUser.ID)) {
+					RemoveUpdatesTo(displayUser.ID);
+				}
+
+				long unixTimestamp = c.Now();
+				string responseString = await c.MakeRequest("action=blockprofileview&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + displayUser.ID + "&time=" + unixTimestamp);
 				if (responseString.Substring(0, 2) == "OK")
 				{
 					ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex);
@@ -1268,6 +1313,8 @@ namespace LocationConnection
 						ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
 					}
 					ListActivity.viewIndex--;
+					ListActivity.absoluteIndex--;
+					ListActivity.totalResultCount--;
 					NextButton_Click(null, null);
 				}
 				else

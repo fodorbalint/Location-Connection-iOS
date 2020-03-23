@@ -24,6 +24,7 @@ namespace LocationConnection
 		public static bool firstLocationAcquired;
 		public static string locationUpdatesTo;
 		public static string locationUpdatesFrom;
+		public static List<UserLocationData> locationUpdatesFromData;
 
 		public static float screenWidth;
 		public static float screenHeight;
@@ -165,27 +166,19 @@ namespace LocationConnection
         {
             base.ViewDidAppear(animated);
 
-			c.CW(Class.Name + " ViewDidAppear");
-			c.LogActivity(Class.Name + " ViewDidAppear");
+			c.CW(Class.Name + " ViewDidAppear, active " + active + " CommonMethods.transitionTarget " + CommonMethods.transitionTarget);
+			c.LogActivity(Class.Name + " ViewDidAppear, active " + active + " CommonMethods.transitionTarget " + CommonMethods.transitionTarget);
 
 			appeared = true;
 
-			/* On ProfileView, Snackbar is shown and hid instantly. No solution found.
-            
-			For testing in ShowSnack:
-            Stopwatch stw = new Stopwatch();
-			stw.Start();
-			CW("ShowSnack start tweentime " + context.tweenTime);
-
-            stw.Stop(); CW("ShowSnack end " + stw.ElapsedMilliseconds);
-            */
-			if (active)
+			if (active && CommonMethods.transitionTarget == "empty") //ViewDidAppear is called before transition ends. If new activity is scheduled, active is not yet set to false, because there was no context to set it to in CommonMethods.OpenPage
 			{
+				c.CW("ViewDidAppear Session.SnackMessage " + Session.SnackMessage);
 				if (!(Session.SnackMessage is null))
 				{
 					if (this is ChatOneActivity)
 					{
-						c.Snack(Session.SnackMessage.Replace("[name]", Session.CurrentMatch.TargetName));
+						c.Snack(Session.SnackMessage.Replace("[name]", ((ChatOneActivity)this).currentMatch.TargetName));
 					}
 					else
 					{
@@ -548,6 +541,72 @@ namespace LocationConnection
 				returnStr = returnStr.Substring(0, returnStr.Length - 1);
 			}
 			locationUpdatesFrom = returnStr;
+		}
+
+        public void AddLocationData(int ID, double Latitude, double Longitude, long LocationTime)
+        {
+            if (locationUpdatesFromData is null)
+            {
+				locationUpdatesFromData = new List<UserLocationData>();
+            }
+
+			bool found = false;
+            foreach (UserLocationData data in locationUpdatesFromData)
+            {
+                if (data.ID == ID)
+                {
+					found = true;
+					data.Latitude = Latitude;
+					data.Longitude = Longitude;
+					data.LocationTime = LocationTime;
+					break;
+				}
+            }
+            if (!found)
+            {
+				locationUpdatesFromData.Add(new UserLocationData
+				{
+					ID = ID,
+                    Latitude = Latitude,
+                    Longitude = Longitude,
+                    LocationTime = LocationTime
+				});
+            }
+        }
+
+        public void RemoveLocationData(int ID)
+        {
+            if (!(locationUpdatesFromData is null))
+            {
+				for (int i= 0; i < locationUpdatesFromData.Count; i++)
+                {
+                    if (locationUpdatesFromData[i].ID == ID)
+                    {
+						locationUpdatesFromData.RemoveAt(i);
+						break;
+                    }
+                }
+            }
+        }
+
+        public UserLocationData GetLocationData(int ID)
+        {
+			if (!(locationUpdatesFromData is null))
+			{
+				foreach (UserLocationData data in locationUpdatesFromData)
+				{
+					if (data.ID == ID)
+					{
+						return data;
+					}
+				}
+				return null;
+			}
+            else
+            {
+				return null;
+            }
+
 		}
 	}
 }

@@ -970,7 +970,7 @@ namespace LocationConnection
 			}
 		}
 
-		public string UnescapeBraces(string input)
+		public static string UnescapeBraces(string input)
 		{
 			return input.Replace(@"\{", "{").Replace(@"\}", "}").Replace(@"\""", @"""");
 		}
@@ -1149,16 +1149,22 @@ namespace LocationConnection
 
 		public static void OpenPage(string target, byte anim)
         {
-			BaseActivity currentContext =  GetCurrentViewController(); //LocationManager's context is either ListActivity or ProfileEditActivity, but in case of authorization error, we need to open a new viewcontroller.
-			currentContext.active = false;
-			LogActivityStatic("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
-			Console.WriteLine("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
 			if (transitionRunning)
-            {
+			{
+                //while transition is running, GetCurrentViewController return the old activity
+				LogActivityStatic("OpenPage transitionRunning target " + target + " anim " + anim);
+				Console.WriteLine("OpenPage transitionRunning target " + target + " anim " + anim);
+
 				transitionTarget = target;
 				transitionAnim = anim;
 				return;
 			}
+
+			BaseActivity currentContext = GetCurrentViewController(); //LocationManager's context is either ListActivity or ProfileEditActivity, but in case of authorization error, we need to open a new viewcontroller.
+			currentContext.active = false;
+
+			LogActivityStatic("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
+			Console.WriteLine("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
 
 			transitionTarget = "empty";
 			transitionRunning = true; //In ProfileView, transition will start after a http request is made, due to it is being called sync. Unless I figure out how to cancel presentation from ViewWillAppear, completing the transition is necessary.
@@ -1178,6 +1184,23 @@ namespace LocationConnection
 				currentContext.PresentViewController(activity, true, null);
 			}            
 		}
+
+        public object Clone(object obj)
+        {
+			Type type = obj.GetType();
+			object newObj = Activator.CreateInstance(type);
+
+            FieldInfo[] fieldInfos = type.GetFields();
+            foreach (FieldInfo field in fieldInfos)
+            {
+				object value = field.GetValue(obj);
+                if (value != null)
+                {
+					field.SetValue(newObj, value);
+                }
+            }
+			return newObj;
+        }
 
 		public static BaseActivity GetCurrentViewController()
 		{

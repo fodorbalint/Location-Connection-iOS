@@ -39,18 +39,16 @@ namespace LocationConnection
 
             SetNormal();
 
-            if (valid)
+            if (valid && (int)context.currentMatch.TargetID != 0) //not a deleted user
             {
                 IntentData.profileViewPageType = "standalone";
-
-                IntentData.targetID = (int)Session.CurrentMatch.TargetID;
+                IntentData.targetID = (int)context.currentMatch.TargetID;
                 CommonMethods.OpenPage("ProfileViewActivity", 1);
             }
         }
 
         private void SetHighlighted ()
         {
-            
             view.BackgroundColor = UIColor.FromRGB(179, 179, 179);
         }
 

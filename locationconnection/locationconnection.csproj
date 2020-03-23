@@ -165,6 +165,7 @@
         <Compile Include="Session.cs" />
         <Compile Include="ChatListActivity.cs" />
         <Compile Include="ChatMessageWindowCell.cs" />
+        <Compile Include="UserLocationData.cs" />
     </ItemGroup>
     <ItemGroup>
       <BundleResource Include="Resources\check_checked.png" />

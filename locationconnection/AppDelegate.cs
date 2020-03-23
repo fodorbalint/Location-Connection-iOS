@@ -121,10 +121,10 @@ namespace LocationConnection
 
 							meta = messageID + "|" + senderID + "|" + sentTime + "|" + seenTime + "|" + readTime + "|";
 
-							if (senderID != Session.ID && senderID == Session.CurrentMatch.TargetID) //for tests, you can use 2 accounts from the same device, and a sent message would appear duplicate.
-							{
+							if (senderID != Session.ID && senderID == ((ChatOneActivity)context).currentMatch.TargetID) //for tests, you can use 2 accounts from the same device, and a sent message would appear duplicate.
+							{   
 								((ChatOneActivity)context).AddMessageItemOne(meta + body);
-								((ChatOneActivity)context).c.MakeRequest("action=messagedelivered&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + Session.CurrentMatch.MatchID + "&MessageID=" + messageID + "&Status=Read");
+								((ChatOneActivity)context).c.MakeRequest("action=messagedelivered&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + ((ChatOneActivity)context).currentMatch.MatchID + "&MessageID=" + messageID + "&Status=Read");
 							}
                             else if (inApp && senderID != Session.ID)
                             {
@@ -149,7 +149,7 @@ namespace LocationConnection
 					case "messageDelivered":
 					case "loadMessages":
 					case "loadMessageList":
-						if (context is ChatOneActivity && senderID == Session.CurrentMatch.TargetID)
+						if (context is ChatOneActivity && senderID == ((ChatOneActivity)context).currentMatch.TargetID)
 						{
 							string[] updateItems = meta.Substring(1, meta.Length - 2).Split("}{");
 							foreach (string item in updateItems)
@@ -201,7 +201,7 @@ namespace LocationConnection
 						if (inApp)
 						{
 							title = remoteMessage.AppData["title"].ToString();
-							if (context is ChatOneActivity && Session.CurrentMatch.TargetID == senderID)
+							if (context is ChatOneActivity && ((ChatOneActivity)context).currentMatch.TargetID == senderID)
 							{
 								context.c.Snack(title);
 							}
@@ -249,7 +249,7 @@ namespace LocationConnection
 						if (inApp)
 						{
 							title = remoteMessage.AppData["title"].ToString();
-							if (context is ChatOneActivity && Session.CurrentMatch.TargetID == senderID)
+							if (context is ChatOneActivity && ((ChatOneActivity)context).currentMatch.TargetID == senderID)
 							{
 								context.c.Snack(title);
 							}
@@ -311,6 +311,8 @@ namespace LocationConnection
 						double latitude = double.Parse(meta.Substring(sep3Pos + 1, sep4Pos - sep3Pos - 1), CultureInfo.InvariantCulture);
 						double longitude = double.Parse(meta.Substring(sep4Pos + 1), CultureInfo.InvariantCulture);
 
+						context.AddLocationData(senderID, latitude, longitude, time);
+
 						if (!(ListActivity.listProfiles is null))
 						{
 							foreach (Profile user in ListActivity.listProfiles)
@@ -347,11 +349,13 @@ namespace LocationConnection
 						if (context.IsUpdatingFrom(senderID)) //user could have gone to the background, clearing out the list of people to receive updates from.
 						{
 							context.RemoveUpdatesFrom(senderID);
+							context.RemoveLocationData(senderID);
 
 							text = senderName + " " + LangEnglish.LocationUpdatesFromEnd;
 							context.c.Snack(text);
 						}
 						break;
+						
 				}
 			}
             catch (Exception ex)

@@ -1,141 +1,4 @@
 ﻿/*
-background location battery drain
-
-interval 5 min, accuracy 10m
-12:32 99%
-14:17 97%
-20:36 91%
-22:50 89%
-23:59 88% (last update 23:40 - did it just stop, or I logged in on another device?)
-
-not running
-8:51 87%
-13:02 86%
-17:50 85%
-00:00 84%
-
-interval 5 min, accuracy 1000m
-(right off charger)
-4:32 100%
-
-unselecting a location item should remove the circle
-
-Helpcenter:
-- Android / iOS differences
-- explain location colors
-- that backgrounding the app stops the location updates
-Implement match not found error message on server
-Implement block and report
-new screenshots of Settings and Profile View self to send to Apple
-Imlement updatelocationmatch
-EULA: remove info about duplicate accounts
-
-Sending location updates does not work yet
-
-Not important / can't solve
-
-Crash once at Profile View index out of range
-Once pin and current location markers appeared on iphone at the same time
-Overlapping pictures on map may flicker
-Dark mode support
-Map region is larger than normal when switching from chat list to list. Same in profileView
-Background notifications do not work
-Restart backgroud location on reboot, worth it?
-null error sometimes in Customannotationview and in UserSearchList. (caught)
-Does backgroud location always work even if permission is only authorizedWhenInUse? Otherwise permission need to be requested twice. / Dialog appearing every 3 days about background location being used when permission is AuthorizedAlways. (Feb 22 11:00, Feb 26. 23:03)
-Native crash when pressing Cancel from RegisterActivity into ListActivity. Has something to do with SetCollectionViewLayout, seems to only occur in simulator.
-
-Android:
-Register: label below use location switch, "These settings can be changed later on your profile edit page"
-introduce updatelocationmatch
-location updates needs to be greater than or equal user defined rate, not greater
-hide login failed snack after logging in
-Location Activity: create empty list even if file does not exist.
-use Unescape all in ChatOne adapter
-login falied message still visible after logging in
-gray map circle line instead of black
-remove profiles when map circle radius changes.
-do we need paddigTop, paddingBottom on ImagesProgressText
-ChatList: second line showing in an entry when the line is long (screenshot taken.
-remove date when showing log
-Profile edit: rename done button to save
-Profile edit: womentext and mentext have to be vertically centered to their switches
-Profile edit: more space above save button
-PE: write "press and hold an image to rearrange"
-ImageFrameLayout: LargeImageSize folder is used, but small can do.
-Align map buttons and separator relative to map in Location History
-Edit back button requires smaller ripple
-Help center: change separator constaints to align with scrollview
-Help center / settings: remove focus from messageedit when it is hidden.
-Location changed to Uselocation in RegisterActivity. ResetPassword on MainActivity also needs to be changed.
-Is string LocationRationale used?
-can profileview load the list in background, because ListActivity.active = false?
-disable like button when it is liked.
-Chat one: when textfield expands, scroll position doesn't remain at the bottom.
-Chat one: limit number of lines for input?
-ChatOne line 334: necessary to add event handler again? (or event handler should not be added at start)
-ChatOne: make chat window using table for memory concerns
-Login failed snack remains in ListActivity after logging in
-deleted profileview line 916 917 addcircles
-ProfileView: right margin to EditSelf button
-ProfileView: delete strokealpha from ic_hide
-rename ic_refresh to reinstate (and only one tag is necessary with two closed paths)
-ProfileView: ic_liked, ic_chat_one: remove unnecessary round background
-ProfileView: change separator constraints to ProfileImageContainer, same with map
-ProfileView: profileview xml line 75 color value used, not style.
-ProfileView: no space between name and stats when name is long?
-ProfileView: line 27 background necessary?
-RegisterActivity: more spacing below No one
-RegisterActivity: strings: replace Done with Register
-imageframelayout line 250 changed.
-change settingsdefault.hostname to constants
-GetScreenMetrics() at start of RegisterActivity needed, in case the device was rotated before.
-RegisterActivity: inserted RegisterActivity line 536 requestfocus
-RegisterCommonMethods: Rewrite line 226 to use islocationenabled()
-Help center form send button: wrap content instead of 100 px width
-Snack on ListActivity if settings cannot be saved by network error.
-imageDeleting variable in ImageFrameLayout.cs
-Reset_Click changed, condition added.
-inernal server error on 28 feb from Android
-Location History: draw most recent lines on top
-handle autohorization errors in Reporterrorsilent
-Location History: remove circle as part of addcircle
-animate filters expanding or collapsing
-new logo
-chat one with list
-ProfileView editself: small ripple
-when enabling location, profileview map does not show immediately (Does "Location x seconds ago" appear?)
-disable background location rate slider when background location is off
-remove onlocationresult logs
-token file can be declared in baseactivity
-not initialized error results in crash on chatlistactivity
-unmatching notificaion in chatOne does not hide Start location updates menu. And it shows "Show" button unnecessarily
-update profileview refreshtimer_elapsed with null checking on displayuser
-In chat one, match notification, show button only if we are in another chat.
-Null checking AddUpdateMatch in ChatReceiver
-Show Session.SnackMessage in BaseActivity
-Nowms function not needed
-Rewrite chatReceiver, senderID-s needed in messages?
-ChatOne: message that user is passive when clicking on header, if user was passive to start with.
-Eliminate updating layout every second in Profile View
-make selector for android 6 to use png images instead of vector.
-UpdateLocationSetting : MapViewSecond necessary? OnResume will be called anyway which sets the map. Now first time we have no location yet. Test logged in user enabling location by clicking on map.
-line 1229 correct Settings.GeoSourceOther to Session.GeoSourceOther, otherwise the list loading will use the set coordinates instead of the current one.
-mapSet always have to be set to false in LoadResults (otherwise a logged in user who previously saw the map, but now uses current location will see the old map when swithing back)
-DistanceSource_Click: list is not loading after UpdateLocationSetting(); (user turned off location, and clicked on other address, but now wants to use own location again.) If OnResume is called, is location acquired?
-Session.LocationTime = null; only has to be set after PM granted, not in UpdateLocationSetting (for the above example.)
-DistanceSource_Click on current location when uselocation is off (but pm on) should start location updates
-disable all buttons that performs a network request when clicked
-Remove onlocationresult logs
-Link to source code in About alert
-On tablet, distance limit circle is larger than the map
-
-Admin:
-selected cell gets edited by pressing esc after exiting editing mode
-editable table headers
-
-----------
-
 Device screens:
 
 iphone 11: {X=0,Y=0,Width=414,Height=896} --- {X=0,Y=44,Width=414,Height=818} --- 34, to microphone 21
@@ -186,8 +49,7 @@ SnackTopConstraint_Base = SnackTopConstraint; ----- For keyboard window resizing
 SnackBottomConstraint_Base = SnackBottomConstraint;
 ScrollBottomConstraint_Base = ScrollBottomConstraint; ----- For pages with ScrollView -----
 
-ResizeWindowOnKeyboard(); ----- For keyboard window resizing, goes to ViewWillAppear -----
-
+ResizeWindowOnKeyboard(); ----- For keyboard window resizing, goes to ViewWillAppear -----  
 */
 
 using CoreAnimation;
@@ -294,6 +156,7 @@ namespace LocationConnection
                         }
                         locationUpdatesTo = null; //stop real-time location updates when app goes to background
                         locationUpdatesFrom = null;
+                        locationUpdatesFromData = null;
 
                         if ((!c.IsLoggedIn() || !(bool)Session.UseLocation || !(bool)Session.BackgroundLocation || !c.IsLocationEnabled()) && !(locMgr is null))
                         {

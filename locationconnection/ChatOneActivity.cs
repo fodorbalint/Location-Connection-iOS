@@ -19,6 +19,7 @@ namespace LocationConnection
 		string earlyDelivery;
 		bool dataLoadStarted;
 		CustomTapNoDelay tap;
+		public MatchItem currentMatch;
 
 		private string notificationRequestFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "notificationrequest.txt");
 
@@ -38,10 +39,12 @@ namespace LocationConnection
 				if (!foregroundNotificationSet)
 				{
 					UIApplication.Notifications.ObserveDidBecomeActive((sender, args) => {
+						c.CW("Entered foreground, registering for notifications");
 						c.LogActivity("Entered foreground, registering for notifications");
 
 						var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
 						UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
+							Console.WriteLine("ChatOne Notification authorization granted: " + granted);
 							CommonMethods.LogActivityStatic("ChatOne Notification authorization granted: " + granted);
 							if (granted)
 							{
@@ -51,6 +54,12 @@ namespace LocationConnection
 								});
 							}
 						});
+
+						BaseActivity currentController = CommonMethods.GetCurrentViewController();
+						if (currentController is ChatOneActivity)
+						{
+							((ChatOneActivity)currentController).SetMenu(); //needed in case location updates were running before backgrounding
+						}
 					});
 
 					foregroundNotificationSet = true;
@@ -68,7 +77,6 @@ namespace LocationConnection
 				MenuReport.SetTitle(LangEnglish.MenuReport, UIControlState.Normal);
 
 				c.HideMenu(MenuLayer, MenuContainer, false);
-				SetMenu();
 
 				ChatMessageWindow.RowHeight = UITableView.AutomaticDimension;
 				ChatMessageWindow.EstimatedRowHeight = 100;
@@ -114,6 +122,17 @@ namespace LocationConnection
 			{
 				base.ViewWillAppear(animated);
 
+				c.CW("ChatOne ViewWillAppear0 IntentData.senderID " + IntentData.senderID);
+
+                if (currentMatch is null && Session.CurrentMatch != null)
+                {
+					currentMatch = (MatchItem)c.Clone(Session.CurrentMatch);
+                }
+
+				dataLoadStarted = false;
+
+				SetMenu();
+
 				var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
 				UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
 					CommonMethods.LogActivityStatic("ChatOne notification authorization granted: " + granted);
@@ -139,8 +158,8 @@ namespace LocationConnection
 					}
 				});
 
-				dataLoadStarted = false;
-
+				c.CW("ChatOne ViewWillAppear IntentData.senderID " + IntentData.senderID);
+				
 				string responseString;
 				if (!(IntentData.senderID is null))
 				{
@@ -156,6 +175,7 @@ namespace LocationConnection
 					}
 					else if (responseString == "ERROR_MatchNotFound")
 					{
+						c.CW("Match not found");
 						Session.SnackMessage = LangEnglish.MatchNotFound;
 						CommonMethods.OpenPage(null, 0);
 					}
@@ -169,9 +189,7 @@ namespace LocationConnection
 					dataLoadStarted = true;
 					LoadHeader();
 
-					responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + Session.CurrentMatch.MatchID);
-
-					//c.Alert("Alert after loading");
+					responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + currentMatch.MatchID);
 
 					if (responseString.Substring(0, 2) == "OK")
 					{
@@ -226,7 +244,7 @@ namespace LocationConnection
 			}
 			else
 			{
-				targetID = (int)Session.CurrentMatch.TargetID;
+				targetID = (int)currentMatch.TargetID;
 			}
 
 			if ((bool)Session.UseLocation && c.IsLocationEnabled())
@@ -246,9 +264,9 @@ namespace LocationConnection
 				MenuLocationUpdates.Hidden = true;
 			}
 
-			if (!(Session.CurrentMatch is null))
+			if (!(currentMatch is null))
 			{
-				if (Session.CurrentMatch.UnmatchDate is null)
+				if (currentMatch.UnmatchDate is null)
 				{
 					MenuFriend.Hidden = false;
 				}
@@ -256,6 +274,15 @@ namespace LocationConnection
 				{
 					MenuFriend.Hidden = true;
 				}
+
+                if (currentMatch.TargetID == 0)
+                {
+					MenuBlock.Hidden = true;
+                }
+                else
+                {
+					MenuBlock.Hidden = false;
+                }
 			}
 		}
 
@@ -272,7 +299,7 @@ namespace LocationConnection
 		private void MenuLocationUpdates_Click(object sender, EventArgs e)
 		{
 			c.HideMenu(MenuLayer, MenuContainer, true);
-			if (IsUpdatingTo((int)Session.CurrentMatch.TargetID))
+			if (IsUpdatingTo((int)currentMatch.TargetID))
 			{
 				StopRealTimeLocation();
 			}
@@ -292,7 +319,7 @@ namespace LocationConnection
 		private void MenuFriend_Click(object sender, EventArgs e)
 		{
 			c.HideMenu(MenuLayer, MenuContainer, true);
-			if (!(Session.CurrentMatch is null) && !(Session.CurrentMatch.Friend is null))
+			if (!(currentMatch is null) && !(currentMatch.Friend is null))
 			{
 				AddFriend();
 			}
@@ -305,7 +332,7 @@ namespace LocationConnection
 		private void MenuUnmatch_Click(object sender, EventArgs e)
 		{
 			c.HideMenu(MenuLayer, MenuContainer, true);
-			if (!(Session.CurrentMatch is null) && !(Session.CurrentMatch.Friend is null))
+			if (!(currentMatch is null) && !(currentMatch.Friend is null))
 			{
 				Unmatch();
 			}
@@ -321,7 +348,7 @@ namespace LocationConnection
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.ReportDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				string responseString = await c.MakeRequest("action=reportchatone" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + Session.CurrentMatch.TargetID + "&MatchID=" + Session.CurrentMatch.MatchID);
+				string responseString = await c.MakeRequest("action=reportchatone&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + currentMatch.TargetID + "&MatchID=" + currentMatch.MatchID);
 				if (responseString.Substring(0, 2) == "OK")
 				{
 					c.Snack(LangEnglish.UserReported);
@@ -339,7 +366,12 @@ namespace LocationConnection
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.BlockDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				string responseString = await c.MakeRequest("action=blockchatone&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + Session.CurrentMatch.TargetID + "&MatchID=" + Session.CurrentMatch.MatchID);
+				if (IsUpdatingTo((int)currentMatch.TargetID)) {
+					RemoveUpdatesTo((int)currentMatch.TargetID);
+				}
+
+				long unixTimestamp = c.Now();
+				string responseString = await c.MakeRequest("action=blockchatone&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + currentMatch.TargetID + "&time=" + unixTimestamp);
 				if (responseString.Substring(0, 2) == "OK")
 				{
 
@@ -347,7 +379,7 @@ namespace LocationConnection
 					{
 						for (int i = 0; i < ListActivity.listProfiles.Count; i++)
 						{
-							if (ListActivity.listProfiles[i].ID == Session.CurrentMatch.TargetID)
+							if (ListActivity.listProfiles[i].ID == currentMatch.TargetID)
 							{
 								ListActivity.listProfiles.RemoveAt(i);
 								break;
@@ -358,7 +390,7 @@ namespace LocationConnection
 					{
 						for (int i = 0; i < ListActivity.viewProfiles.Count; i++)
 						{
-							if (ListActivity.viewProfiles[i].ID == Session.CurrentMatch.TargetID)
+							if (ListActivity.viewProfiles[i].ID == currentMatch.TargetID)
 							{
 								ListActivity.viewProfiles.RemoveAt(i);
 								break;
@@ -366,7 +398,7 @@ namespace LocationConnection
 						}
 					}
 
-					CommonMethods.OpenPage(null, 0);
+					CommonMethods.OpenPage("ListActivity", 1);
 				}
 				else
 				{
@@ -377,10 +409,10 @@ namespace LocationConnection
 
 		private void LoadHeader()
 		{
-			TargetName.Text = Session.CurrentMatch.TargetName;
+			TargetName.Text = currentMatch.TargetName;
 
 			ImageCache im = new ImageCache(this);
-			im.LoadImage(ChatTargetImage, Session.CurrentMatch.TargetID.ToString(), Session.CurrentMatch.TargetPicture);
+			im.LoadImage(ChatTargetImage, currentMatch.TargetID.ToString(), currentMatch.TargetPicture);
 		}
 
 		private void LoadMessages(string responseString, bool merge)
@@ -390,13 +422,13 @@ namespace LocationConnection
 			if (!merge)
 			{
 				ServerParser<MatchItem> parser = new ServerParser<MatchItem>(responseString);
-				Session.CurrentMatch = parser.returnCollection[0];
+				currentMatch = parser.returnCollection[0];
 				LoadHeader();
 			}
 			else
 			{
 				//we need to add the new properties to the existing MatchItem.
-				MatchItem sessionMatchItem = Session.CurrentMatch;
+				MatchItem sessionMatchItem = currentMatch;
 				ServerParser<MatchItem> parser = new ServerParser<MatchItem>(responseString);
 				MatchItem mergeMatchItem = parser.returnCollection[0];
 				Type type = typeof(MatchItem);
@@ -411,11 +443,11 @@ namespace LocationConnection
 				}
 			}
 
-			DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)Session.CurrentMatch.MatchDate).ToLocalTime();
+			DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.MatchDate).ToLocalTime();
 			MatchDate.Text = LangEnglish.Matched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
-			if (!(Session.CurrentMatch.UnmatchDate is null))
+			if (!(currentMatch.UnmatchDate is null))
 			{
-				dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)Session.CurrentMatch.UnmatchDate).ToLocalTime();
+				dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.UnmatchDate).ToLocalTime();
 				UnmatchDate.Text = LangEnglish.Unmatched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
 				MenuFriend.Hidden = true;
 			}
@@ -425,7 +457,7 @@ namespace LocationConnection
 				MenuFriend.Hidden = false;
 			}
 
-			if ((bool)Session.CurrentMatch.Active)
+			if ((bool)currentMatch.Active)
 			{
 				if ((bool)Session.UseLocation && c.IsLocationEnabled())
 				{
@@ -453,7 +485,7 @@ namespace LocationConnection
 				ChatViewProfile.AddGestureRecognizer(tap);
 			}			
 
-			if (!(bool)Session.CurrentMatch.Friend)
+			if (!(bool)currentMatch.Friend)
 			{
 				MenuFriend.SetTitle(LangEnglish.MenuAddFriend, UIControlState.Normal);
 			}
@@ -463,10 +495,10 @@ namespace LocationConnection
 			}
 
 			messageItems = new List<MessageItem>();
-			if (Session.CurrentMatch.Chat.Length != 0)
+			if (currentMatch.Chat.Length != 0)
 			{
 				NoMessages.Hidden = true;
-				foreach (string messageItem in Session.CurrentMatch.Chat)
+				foreach (string messageItem in currentMatch.Chat)
 				{
 					AddMessageItem(messageItem);
 				}
@@ -480,6 +512,9 @@ namespace LocationConnection
 			else
 			{
 				NoMessages.Hidden = false;
+				ChatMessageWindowAdapter adapter = new ChatMessageWindowAdapter(messageItems);
+				ChatMessageWindow.Source = adapter;
+				ChatMessageWindow.ReloadData();
 			}
 		}
 
@@ -498,7 +533,7 @@ namespace LocationConnection
 				SentTime = long.Parse(messageItem.Substring(sep2Pos + 1, sep3Pos - sep2Pos - 1)),
 				SeenTime = long.Parse(messageItem.Substring(sep3Pos + 1, sep4Pos - sep3Pos - 1)),
 				ReadTime = long.Parse(messageItem.Substring(sep4Pos + 1, sep5Pos - sep4Pos - 1)),
-				Content = c.UnescapeBraces(messageItem.Substring(sep5Pos + 1))
+				Content = CommonMethods.UnescapeBraces(messageItem.Substring(sep5Pos + 1))
 			};
 			messageItems.Add(item);
 		}
@@ -565,14 +600,14 @@ namespace LocationConnection
 
 		public void UpdateStatus(int senderID, bool active, long? unmatchDate)
 		{
-			if (senderID == Session.CurrentMatch.TargetID)
+			if (senderID == currentMatch.TargetID)
 			{
-				Session.CurrentMatch.Active = active;
-				Session.CurrentMatch.UnmatchDate = unmatchDate;
+				currentMatch.Active = active;
+				currentMatch.UnmatchDate = unmatchDate;
 
 				if (!(unmatchDate is null))
 				{
-					DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)Session.CurrentMatch.UnmatchDate).ToLocalTime();
+					DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.UnmatchDate).ToLocalTime();
 					UnmatchDate.Text = LangEnglish.Unmatched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
 					MenuFriend.Hidden = true;
 				}
@@ -608,7 +643,7 @@ namespace LocationConnection
 			{
 				ChatSendMessage.Enabled = false; //to prevent mulitple clicks
 				ChatSendMessage.Alpha = 0.5f;
-				string responseString = await c.MakeRequest("action=sendmessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + Session.CurrentMatch.MatchID + "&message=" + c.UrlEncode(message));
+				string responseString = await c.MakeRequest("action=sendmessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + currentMatch.MatchID + "&message=" + c.UrlEncode(message));
 				if (responseString.Substring(0, 2) == "OK")
 				{
 					ChatEditMessage.Text = "";
@@ -651,7 +686,7 @@ namespace LocationConnection
 
 		private void ChatOneBack_Click(object sender, EventArgs e)
 		{
-			CommonMethods.OpenPage(null, 0);
+			CommonMethods.OpenPage(null, 0); 
 		}
 
         public void ScrollToBottom(bool animated)
@@ -682,11 +717,11 @@ namespace LocationConnection
 
 		private void StartRealTimeLocation()
 		{
-			if ((bool)Session.CurrentMatch.Friend)
+			if ((bool)currentMatch.Friend)
 			{
 				if (Session.LocationShare < 1)
 				{
-					c.Snack(LangEnglish.EnableLocationLevelFriend.Replace("[name]", Session.CurrentMatch.TargetName));
+					c.Snack(LangEnglish.EnableLocationLevelFriend.Replace("[name]", currentMatch.TargetName));
 					return;
 				}
 			}
@@ -694,12 +729,12 @@ namespace LocationConnection
 			{
 				if (Session.LocationShare < 2)
 				{
-					c.Snack(LangEnglish.EnableLocationLevelMatch.Replace("[name]", Session.CurrentMatch.TargetName)
-						.Replace("[sex]", (Session.CurrentMatch.Sex == 0) ? LangEnglish.SexHer : LangEnglish.SexHim));
+					c.Snack(LangEnglish.EnableLocationLevelMatch.Replace("[name]", currentMatch.TargetName)
+						.Replace("[sex]", (currentMatch.Sex == 0) ? LangEnglish.SexHer : LangEnglish.SexHim));
 					return;
 				}
 			}
-			AddUpdatesTo((int)Session.CurrentMatch.TargetID);
+			AddUpdatesTo((int)currentMatch.TargetID);
 			MenuLocationUpdates.SetTitle(LangEnglish.MenuStopLocationUpdates, UIControlState.Normal);
 
             if (locMgr is null) //should not happen, but for security
@@ -712,22 +747,22 @@ namespace LocationConnection
 
 		private void StopRealTimeLocation()
 		{
-			RemoveUpdatesTo((int)Session.CurrentMatch.TargetID);
+			RemoveUpdatesTo((int)currentMatch.TargetID);
 			MenuLocationUpdates.SetTitle(LangEnglish.MenuStartLocationUpdates, UIControlState.Normal);
 			c.Snack(LangEnglish.LocationUpdatesToEnd);
-			EndLocationShare((int)Session.CurrentMatch.TargetID);
+			EndLocationShare((int)currentMatch.TargetID);
 		}
 
 		private async void AddFriend()
 		{
 			long unixTimestamp = c.Now();
-			if (!(bool)Session.CurrentMatch.Friend)
+			if (!(bool)currentMatch.Friend)
 			{
-				string responseString = await c.MakeRequest("action=addfriend&ID=" + Session.ID + "&target=" + Session.CurrentMatch.TargetID
+				string responseString = await c.MakeRequest("action=addfriend&ID=" + Session.ID + "&target=" + currentMatch.TargetID
 		+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
 				if (responseString == "OK")
 				{
-					Session.CurrentMatch.Friend = true;
+					currentMatch.Friend = true;
 					c.Snack(LangEnglish.FriendAdded);
 					MenuFriend.SetTitle(LangEnglish.MenuRemoveFriend, UIControlState.Normal);
 				}
@@ -738,11 +773,11 @@ namespace LocationConnection
 			}
 			else
 			{
-				string responseString = await c.MakeRequest("action=removefriend&ID=" + Session.ID + "&target=" + Session.CurrentMatch.TargetID
+				string responseString = await c.MakeRequest("action=removefriend&ID=" + Session.ID + "&target=" + currentMatch.TargetID
 		+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
 				if (responseString == "OK")
 				{
-					Session.CurrentMatch.Friend = false;
+					currentMatch.Friend = false;
 					c.Snack(LangEnglish.FriendRemoved);
 					MenuFriend.SetTitle(LangEnglish.MenuAddFriend, UIControlState.Normal);
 				}
@@ -756,25 +791,25 @@ namespace LocationConnection
 		private void Unmatch()
 		{
 			string displayText;
-			if (Session.CurrentMatch.TargetID == 0)
+			if (currentMatch.TargetID == 0)
 			{
 				displayText = LangEnglish.DialogUnmatchDeleted;
 			}
 			else
 			{
-				displayText = (Session.CurrentMatch.UnmatchDate is null) ? LangEnglish.DialogUnmatchMatched : LangEnglish.DialogUnmatchUnmatched;
-				displayText = displayText.Replace("[name]", Session.CurrentMatch.TargetName);
-				displayText = displayText.Replace("[sex]", (Session.CurrentMatch.Sex == 0) ? LangEnglish.SexShe : LangEnglish.SexHe);
+				displayText = (currentMatch.UnmatchDate is null) ? LangEnglish.DialogUnmatchMatched : LangEnglish.DialogUnmatchUnmatched;
+				displayText = displayText.Replace("[name]", currentMatch.TargetName);
+				displayText = displayText.Replace("[sex]", (currentMatch.Sex == 0) ? LangEnglish.SexShe : LangEnglish.SexHe);
 			}
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, displayText, LangEnglish.DialogOK, LangEnglish.DialogCancel, async alert => {
-				if (IsUpdatingTo((int)Session.CurrentMatch.TargetID)) //user could have gone to the background, clearing out the list of people to receive updates from.
+				if (IsUpdatingTo((int)currentMatch.TargetID)) //user could have gone to the background, clearing out the list of people to receive updates from.
 				{
-					RemoveUpdatesTo((int)Session.CurrentMatch.TargetID);
+					RemoveUpdatesTo((int)currentMatch.TargetID);
 				}
 
 				long unixTimestamp = c.Now();
-				string responseString = await c.MakeRequest("action=unmatch&ID=" + Session.ID + "&target=" + Session.CurrentMatch.TargetID
+				string responseString = await c.MakeRequest("action=unmatch&ID=" + Session.ID + "&target=" + currentMatch.TargetID
 					+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
 				if (responseString == "OK")
 				{
@@ -782,7 +817,7 @@ namespace LocationConnection
 					{
 						foreach (Profile item in ListActivity.listProfiles)
 						{
-							if (item.ID == Session.CurrentMatch.TargetID)
+							if (item.ID == currentMatch.TargetID)
 							{
 								item.UserRelation = 0;
 							}
@@ -792,13 +827,13 @@ namespace LocationConnection
 					{
 						foreach (Profile item in ListActivity.viewProfiles)
 						{
-							if (item.ID == Session.CurrentMatch.TargetID)
+							if (item.ID == currentMatch.TargetID)
 							{
 								item.UserRelation = 0;
 							}
 						}
 					}
-					Session.CurrentMatch = null;
+					currentMatch = null;
 					CommonMethods.OpenPage("ChatListActivity", 1);
 				}
 				else
