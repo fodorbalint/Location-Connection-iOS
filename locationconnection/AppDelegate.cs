@@ -24,6 +24,8 @@ namespace LocationConnection
 		[Export ("application:didFinishLaunchingWithOptions:")]
         public bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
         {
+			Console.WriteLine("Launchoptions: " + launchOptions);
+
             Firebase.Core.App.Configure();
 
             //if (!File.Exists(notificationRequestFile))
@@ -73,37 +75,145 @@ namespace LocationConnection
 			Console.WriteLine("RegisteredForRemoteNotifications");
         }
 
-        [Export("messaging:didReceiveMessage:")]
-        public void DidReceiveMessage(Firebase.CloudMessaging.Messaging messaging, Firebase.CloudMessaging.RemoteMessage remoteMessage)
-        {
+
+
+		[Export("userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:")] //does it come after autologin?
+		public void DidReceiveNotificationResponse(UNUserNotificationCenter center, UNNotificationResponse response, Action //called when app is in background, and user taps on notification
+			completionHandler)
+		{
+			completionHandler();
+			NSDictionary userInfo = response.Notification.Request.Content.UserInfo;
+
+			CommonMethods c = new CommonMethods(null);
 			BaseActivity context = CommonMethods.GetCurrentViewController();
 
-			//fires in-app, or when app entered foreground.
-			Console.WriteLine("DidReceiveMessage " + remoteMessage.AppData.ToString().Replace(Environment.NewLine, "") + " current window: " + context);
-			context.c.LogActivity("DidReceiveMessage " + remoteMessage.AppData.ToString().Replace(Environment.NewLine, "") + " current window: " + context); //DidReceiveMessage is called after the viewcontrollers's ViewDidLoad, ViewWillAppear, ViewDidLayoutSubviews, entering foreground sequence, so c cannot be null.
+			Console.WriteLine("DidReceiveNotificationResponse " + userInfo + " logged in " + c.IsLoggedIn() + " context " + context);
+			CommonMethods.LogActivityStatic("DidReceiveNotificationResponse " + userInfo.ToString().Replace(Environment.NewLine, " ") + " logged in " + c.IsLoggedIn() + " context " + context);
 
-			int sep1Pos;
-            int sep2Pos;
-            int sep3Pos;
-			int sep4Pos;
-            int matchID;
-            string senderName;
-            string text;
+            if (userInfo != null && userInfo.ContainsKey(new NSString("aps")))
+			{
+				int senderID = int.Parse(userInfo.ObjectForKey(new NSString("fromuser")) as NSString);
+				int targetID = int.Parse(userInfo.ObjectForKey(new NSString("touser")) as NSString);
 
-			int senderID = int.Parse(remoteMessage.AppData["fromuser"].ToString());
-			string type = remoteMessage.AppData["type"].ToString();
-            string meta = remoteMessage.AppData["meta"].ToString();
-            bool inApp = (remoteMessage.AppData["inapp"].ToString() == "0") ? false : true;
+                if (targetID != Session.ID)
+                {
+					return;
+                }
 
+				IntentData.senderID = senderID;
+                if (!(context is ChatOneActivity))
+                {
+					CommonMethods.OpenPage("ChatOneActivity", 1);
+				}
+				//otherwise foreground notification will refresh the page
+			}
+		}
+
+
+		[Export("application:didReceiveRemoteNotification:")]
+		public void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo) //called when app is in foreground, and the message contains a notification object. Without this oject, DidReceiveMessage is called.
+		{
+			/*
+             userInfo {
+                aps =     {
+                    alert =         {
+                        body = 18;
+                        title = "New message from Balint";
+                    };
+                };
+                fromuser = 1;
+                "gcm.message_id" = 1585131294275802;
+                "google.c.a.e" = 1;
+                "google.c.sender.id" = 205197408276;
+                inapp = 1;
+                meta = "18|1|1585131294|0|0";
+                type = sendMessage;
+            }
+            */
+			Console.WriteLine("ReceivedRemoteNotification userInfo " + userInfo);
+			CommonMethods.LogActivityStatic("ReceivedRemoteNotification userInfo " + userInfo.ToString().Replace(Environment.NewLine, " "));
+
+			try
+			{
+				if (userInfo != null && userInfo.ContainsKey(new NSString("aps")))
+				{
+					NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
+
+					int senderID = int.Parse(userInfo.ObjectForKey(new NSString("fromuser")) as NSString);
+					int targetID = int.Parse(userInfo.ObjectForKey(new NSString("touser")) as NSString);
+					string type = userInfo.ObjectForKey(new NSString("type")) as NSString;
+					string meta = userInfo.ObjectForKey(new NSString("meta")) as NSString;
+					bool inApp = (userInfo.ObjectForKey(new NSString("inapp")) as NSString == "0") ? false : true;
+
+					NSDictionary alert = aps.ObjectForKey(new NSString("alert")) as NSDictionary;
+					string title = alert.ObjectForKey(new NSString("title")) as NSString;
+					string body = alert.ObjectForKey(new NSString("body")) as NSString;
+
+					Console.WriteLine(title + " --- " + body);
+
+					HandleNotification(senderID, targetID, type, meta, inApp, title, body);
+				}
+			}
+			catch (Exception ex)
+			{
+				CommonMethods c = new CommonMethods(null);
+				c.ReportErrorSilent(ex.Message + " " + ex.StackTrace);
+			}
+		}
+
+		[Export("messaging:didReceiveMessage:")]
+		public void DidReceiveMessage(Firebase.CloudMessaging.Messaging messaging, Firebase.CloudMessaging.RemoteMessage remoteMessage)
+		{
             try
             {
-                //context.c.LogActivity("DidReceiveMessage " + type);
+				//fires in-app, or when app entered foreground.
+				Console.WriteLine("DidReceiveMessage " + remoteMessage.AppData.ToString());
+				CommonMethods.LogActivityStatic("DidReceiveMessage " + remoteMessage.AppData.ToString().Replace(Environment.NewLine, " ")); //DidReceiveMessage is called after the ViewControllers's ViewDidLoad, ViewWillAppear, ViewDidLayoutSubviews, entering foreground sequence, so c cannot be null.
 
+				int senderID = int.Parse(remoteMessage.AppData["fromuser"].ToString());
+				int targetID = int.Parse(remoteMessage.AppData["touser"].ToString());
+				string type = remoteMessage.AppData["type"].ToString();
+				string meta = remoteMessage.AppData["meta"].ToString();
+				bool inApp = (remoteMessage.AppData["inapp"].ToString() == "0") ? false : true;
+				string title = "";
+				string body = "";
+                if (remoteMessage.AppData.ContainsKey(new NSString("title")))
+                {
+					title = remoteMessage.AppData["title"].ToString();
+					body = remoteMessage.AppData["body"].ToString();
+				}
+
+				HandleNotification(senderID, targetID, type, meta, inApp, title, body);
+			}
+			catch (Exception ex)
+			{
+				CommonMethods c = new CommonMethods(null);
+				c.ReportErrorSilent(ex.Message + " " + ex.StackTrace);
+			}
+		}
+
+		private void HandleNotification(int senderID, int targetID, string type, string meta, bool inApp, string title, string body)
+        {
+			int sep1Pos;
+			int sep2Pos;
+			int sep3Pos;
+			int sep4Pos;
+			int matchID;
+			string senderName;
+			string text;
+
+			BaseActivity context = CommonMethods.GetCurrentViewController();
+			if (targetID != Session.ID)
+			{
+				return;
+			}
+
+			try
+			{
 				switch (type)
 				{
 					case "sendMessage":
-						string title = remoteMessage.AppData["title"].ToString();
-						string body = remoteMessage.AppData["body"].ToString();
+
 
 						if (context is ChatOneActivity)
 						{
@@ -122,12 +232,12 @@ namespace LocationConnection
 							meta = messageID + "|" + senderID + "|" + sentTime + "|" + seenTime + "|" + readTime + "|";
 
 							if (senderID != Session.ID && senderID == ((ChatOneActivity)context).currentMatch.TargetID) //for tests, you can use 2 accounts from the same device, and a sent message would appear duplicate.
-							{   
+							{
 								((ChatOneActivity)context).AddMessageItemOne(meta + body);
 								((ChatOneActivity)context).c.MakeRequest("action=messagedelivered&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + ((ChatOneActivity)context).currentMatch.MatchID + "&MessageID=" + messageID + "&Status=Read");
 							}
-                            else if (inApp && senderID != Session.ID)
-                            {
+							else if (inApp && senderID != Session.ID)
+							{
 								context.c.SnackAction(title, LangEnglish.ShowReceived, new Action(delegate () { GoToChatNoOpen(senderID); }));
 							}
 						}
@@ -162,15 +272,14 @@ namespace LocationConnection
 					case "matchProfile":
 						if (inApp) ////it is impossible to stand in that chat if wasn't previously a match
 						{
-							title = remoteMessage.AppData["title"].ToString();
-                            if (context is ChatOneActivity)
-                            {
+							if (context is ChatOneActivity)
+							{
 								context.c.SnackAction(title, LangEnglish.ShowReceived, new Action(delegate () { GoToChatNoOpen(senderID); }));
 							}
-                            else
-                            {
+							else
+							{
 								context.c.SnackAction(title, LangEnglish.ShowReceived, new Action(delegate () { GoToChat(senderID); }));
-							}							
+							}
 						}
 
 						if (context is ChatListActivity)
@@ -200,7 +309,6 @@ namespace LocationConnection
 
 						if (inApp)
 						{
-							title = remoteMessage.AppData["title"].ToString();
 							if (context is ChatOneActivity && ((ChatOneActivity)context).currentMatch.TargetID == senderID)
 							{
 								context.c.Snack(title);
@@ -248,7 +356,6 @@ namespace LocationConnection
 
 						if (inApp)
 						{
-							title = remoteMessage.AppData["title"].ToString();
 							if (context is ChatOneActivity && ((ChatOneActivity)context).currentMatch.TargetID == senderID)
 							{
 								context.c.Snack(title);
@@ -355,15 +462,15 @@ namespace LocationConnection
 							context.c.Snack(text);
 						}
 						break;
-						
+
 				}
 			}
-            catch (Exception ex)
-            {
-                CommonMethods c = new CommonMethods(null);
-                c.ReportErrorSilent(ex.Message + System.Environment.NewLine + ex.StackTrace + System.Environment.NewLine + " Error in DidReceiveMessage");
-            }
-        }
+			catch (Exception ex)
+			{
+				CommonMethods c = new CommonMethods(null);
+				c.ReportErrorSilent(ex.Message + System.Environment.NewLine + ex.StackTrace + System.Environment.NewLine + " Error in DidReceiveMessage");
+			}
+		}
 
 		private void GoToChat(int senderID)
 		{
@@ -405,13 +512,7 @@ namespace LocationConnection
 					}
 				}
 			}			
-		}
-
-        [Export("application:didReceiveRemoteNotification:")]
-        public void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
-        {
-            Console.WriteLine("ReceivedRemoteNotification " + userInfo);
-        }
+		}               
 
         [Export("application:didFailToRegisterForRemoteNotificationsWithError:")]
         public void FailedToRegisterForRemoteNotifications(UIKit.UIApplication application, Foundation.NSError error)

@@ -9,7 +9,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.5</string>
+	<string>1.0.6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>
@@ -65,10 +65,6 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleName</key>
 	<string>Location Connection</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Used for showing a map region, determining the distance between you and the search results, or narrowing the search results by distance if you haven&apos;t set an address. Registered users can send their latest position to the database, which will be visible for others depending on your privacy choice.</string>
 </dict>

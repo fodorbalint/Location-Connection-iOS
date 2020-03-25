@@ -882,7 +882,7 @@ namespace LocationConnection
                 {
 					ImageCache im = new ImageCache(this);
 					InvokeOnMainThread(() => {
-						im.LoadImage(ProfileImage, folder, picture);
+						im.LoadImage(ProfileImage, folder, picture, true);
 					});
 				}
                 else

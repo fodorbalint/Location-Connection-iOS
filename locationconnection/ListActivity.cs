@@ -165,7 +165,7 @@ namespace LocationConnection
                     });
 
                     UIApplication.Notifications.ObserveDidBecomeActive((sender, args) => {
-                        c.CW("Entered foreground");
+                        c.CW("Entered foreground " + args.Notification);
                         c.LogActivity("Entered foreground");
 
                         isAppForeground = true;
@@ -266,10 +266,12 @@ namespace LocationConnection
                             {
                                 if (c.IsLocationEnabled())
                                 {
-                                    
-                                    if ((bool)Session.BackgroundLocation)
+                                    if (!Constants.SafeLocationMode)
                                     {
-                                        locMgr.RestartLocationUpdates();
+                                        if ((bool)Session.BackgroundLocation)
+                                        {
+                                            locMgr.RestartLocationUpdates(); //allowBackground will change
+                                        }
                                     }
 
                                     if (!(localLatitude is null) && !(localLongitude is null) && !(localLocationTime is null)) //this has to be more recent than the loaded data
@@ -338,6 +340,11 @@ namespace LocationConnection
                             {
                                 c.CW("Autologin logged in, not using location");
                                 c.LogActivity("Autologin logged in, not using location");
+
+                                if (!(locMgr is null))
+                                {
+                                    locMgr.StopLocationUpdates();
+                                }
 
                                 recenterMap = true;
                                 if (Session.LastSearchType == Constants.SearchType_Filter)
@@ -614,7 +621,7 @@ namespace LocationConnection
 
                 if (!(listProfiles is null))
                 {
-                    c.CW(" listProfiles.Count " + listProfiles.Count);
+                    c.CW("listProfiles.Count " + listProfiles.Count);
 
                     adapter.items = listProfiles;
 
@@ -655,22 +662,45 @@ namespace LocationConnection
 
                 long unixTimestamp = c.Now();
 
-                if ((bool)Session.UseLocation && c.IsLocationEnabled() && locMgr is null)
+                if ((bool)Session.UseLocation && c.IsLocationEnabled())
                 {
                     isAppForeground = true;
 
-                    firstLocationAcquired = false;
+                    if (locMgr is null)
+                    {
+                        locMgr = new LocationManager(this);
+                    }
 
                     ResultSet.Hidden = false;
                     ResultSet.Text = LangEnglish.GettingLocation;
 
-                    locMgr = new LocationManager(this);
-                    locMgr.StartLocationUpdates(); //when autologin, background location is not yet enabled at this point
+                    if (!locationUpdating)
+                    {
+                        locMgr.StartLocationUpdates();
+                        ResultSet.Hidden = false;
+                        ResultSet.Text = LangEnglish.GettingLocation;
+                    }
+                    else if (!firstLocationAcquired) //first location will load the list
+                    {
+                        ResultSet.Hidden = false;
+                        ResultSet.Text = LangEnglish.GettingLocation;
+                    }
+                    else 
+                    {
+                        c.CW("ViewWillAppear location exists");
+                        c.LogActivity("ViewWillAppear location exists");
+                        LoadListStartup();
+                    }
+                    //when autologin, background location is not yet enabled at this point
                 }
-                else //no location or alread started, loading list
+                else //no location, loading list
                 {
-                    c.CW("ViewWillAppear no location or updates started: " + locationUpdating);
-                    c.LogActivity("ViewWillAppear no location or updates started: " + locationUpdating);
+                    if (locationUpdating) //not logged in user didn't enable PM, or logged-in user does not use location
+                    {
+                        locMgr.StopLocationUpdates();
+                    }
+                    c.CW("ViewWillAppear no location");
+                    c.LogActivity("ViewWillAppear no location");
                     LoadListStartup();
                 }
 
@@ -744,6 +774,8 @@ namespace LocationConnection
                 }
                 else //show no result label only if list is not being reloaded, and set map with the results loaded while being in ProfileView / Set map after location authorization
                 {
+                    c.CW("List not loading");
+                    c.LogActivity("List not loading");
                     if ((bool)Settings.IsMapView || mapToSet)
                     {
                         StartLoaderAnim();
@@ -2219,7 +2251,13 @@ namespace LocationConnection
                     {
                         listProfiles = parser.returnCollection;
                         viewProfiles = new List<Profile>(listProfiles);
+                        adapter = new UserSearchListAdapter(this, 3, 2f, DpWidth); //autologin completion may precede ViewWillAppear, where adapter is iniitalized
                         adapter.items = listProfiles;
+                        InvokeOnMainThread(() =>
+                        {
+                            UserSearchList.DataSource = adapter;
+                        });
+
                         absoluteFirstIndex = absoluteStartIndex = (int)Session.ResultsFrom - 1;
                         //c.LogActivity("LoadResults list loading absoluteFirstIndex " + absoluteFirstIndex);
                         newListProfiles = null;
@@ -2238,6 +2276,7 @@ namespace LocationConnection
                 {
                     listProfiles = new List<Profile>();
                     viewProfiles = null;
+                    adapter = new UserSearchListAdapter(this, 3, 2f, DpWidth);
                     adapter.items = listProfiles;
                     InvokeOnMainThread(() =>
                     {

@@ -51,14 +51,16 @@ namespace LocationConnection
                 locMgr.StartUpdatingLocation();
                 BaseActivity.locationUpdating = true;
 
-                context.c.LogActivity("Location updates started, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
-                context.c.CW("Location updates started, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
+                context.c.LogActivity("Location updates started"); //, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
+                context.c.CW("Location updates started"); //, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
             }
         }
 
         public void StopLocationUpdates()
         {
             locMgr.StopUpdatingLocation();
+            BaseActivity.locationUpdating = false;
+            BaseActivity.firstLocationAcquired = false;
             context.c.LogActivity("Location updates stopped");
             context.c.CW("Location updates stopped");
         }

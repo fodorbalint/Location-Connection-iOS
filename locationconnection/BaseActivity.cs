@@ -396,32 +396,40 @@ namespace LocationConnection
 
 		public void TruncateSystemLog()
 		{
-			CultureInfo provider = CultureInfo.InvariantCulture;
-			string format = @"yyyy-MM-dd HH\:mm\:ss.fff";
-			DateTime dt = DateTime.UtcNow;
-
-			string[] lines = File.ReadAllLines(CommonMethods.logFile);
-			string firstLine = lines[0];
-			int sep1Pos = firstLine.IndexOf(" ");
-			int sep2Pos = firstLine.IndexOf(" ", sep1Pos + 1);
-			DateTime logTime = DateTime.ParseExact(firstLine.Substring(0, sep2Pos), format, provider);
-
-			if (dt.Subtract(logTime).TotalSeconds > Constants.SystemLogKeepTime)
+			try //in case a new line is insterted in the logs
 			{
-				List<string> newLines = new List<string>();
-				for (int i = 1; i < lines.Length; i++)
-				{
-					string line = lines[i];
-					sep1Pos = line.IndexOf(" ");
-					sep2Pos = line.IndexOf(" ", sep1Pos + 1);
-					logTime = DateTime.ParseExact(line.Substring(0, sep2Pos), format, provider);
+				CultureInfo provider = CultureInfo.InvariantCulture;
+				string format = @"yyyy-MM-dd HH\:mm\:ss.fff";
+				DateTime dt = DateTime.UtcNow;
 
-					if (dt.Subtract(logTime).TotalSeconds <= Constants.SystemLogKeepTime)
+				string[] lines = File.ReadAllLines(CommonMethods.logFile);
+				string firstLine = lines[0];
+				int sep1Pos = firstLine.IndexOf(" ");
+				int sep2Pos = firstLine.IndexOf(" ", sep1Pos + 1);
+				DateTime logTime = DateTime.ParseExact(firstLine.Substring(0, sep2Pos), format, provider);
+
+				if (dt.Subtract(logTime).TotalSeconds > Constants.SystemLogKeepTime)
+				{
+					List<string> newLines = new List<string>();
+					for (int i = 1; i < lines.Length; i++)
 					{
-						newLines.Add(line);
+						string line = lines[i];
+						sep1Pos = line.IndexOf(" ");
+						sep2Pos = line.IndexOf(" ", sep1Pos + 1);
+						logTime = DateTime.ParseExact(line.Substring(0, sep2Pos), format, provider);
+
+						if (dt.Subtract(logTime).TotalSeconds <= Constants.SystemLogKeepTime)
+						{
+							newLines.Add(line);
+						}
 					}
+					File.WriteAllLines(CommonMethods.logFile, newLines);
 				}
-				File.WriteAllLines(CommonMethods.logFile, newLines);
+			}
+			catch
+			{
+				c.CW("Resetting log File");
+				File.WriteAllText(CommonMethods.logFile, "");
 			}
 		}
 

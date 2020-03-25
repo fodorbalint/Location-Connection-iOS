@@ -17,7 +17,6 @@ namespace LocationConnection
 		private static bool foregroundNotificationSet;
 		List<MessageItem> messageItems;
 		string earlyDelivery;
-		bool dataLoadStarted;
 		CustomTapNoDelay tap;
 		public MatchItem currentMatch;
 
@@ -59,6 +58,7 @@ namespace LocationConnection
 						if (currentController is ChatOneActivity)
 						{
 							((ChatOneActivity)currentController).SetMenu(); //needed in case location updates were running before backgrounding
+							((ChatOneActivity)currentController).RefreshPage();
 						}
 					});
 
@@ -122,14 +122,10 @@ namespace LocationConnection
 			{
 				base.ViewWillAppear(animated);
 
-				c.CW("ChatOne ViewWillAppear0 IntentData.senderID " + IntentData.senderID);
-
                 if (currentMatch is null && Session.CurrentMatch != null)
                 {
 					currentMatch = (MatchItem)c.Clone(Session.CurrentMatch);
                 }
-
-				dataLoadStarted = false;
 
 				SetMenu();
 
@@ -158,13 +154,9 @@ namespace LocationConnection
 					}
 				});
 
-				c.CW("ChatOne ViewWillAppear IntentData.senderID " + IntentData.senderID);
-				
 				string responseString;
 				if (!(IntentData.senderID is null))
 				{
-					dataLoadStarted = true;
-
 					responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + (int)IntentData.senderID);
 
 					IntentData.senderID = null;
@@ -186,7 +178,6 @@ namespace LocationConnection
 				}
 				else
 				{
-					dataLoadStarted = true;
 					LoadHeader();
 
 					responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + currentMatch.MatchID);
@@ -207,40 +198,39 @@ namespace LocationConnection
 			}
 		}
 
-        public async void RefreshPage()
-        {
-			View.EndEditing(true);
-			ChatEditMessage.Text = "";
+        public async void RefreshPage() //called whenever ChatOneActivity enters foreground, either from a notification tap or not.
+		{
+            if (IntentData.senderID != null) 
+            {
+				View.EndEditing(true);
+				ChatEditMessage.Text = "";
 
-			string responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + (int)IntentData.senderID);
+				string responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + (int)IntentData.senderID);
 
-			IntentData.senderID = null;
+				IntentData.senderID = null;
 
-			if (responseString.Substring(0, 2) == "OK")
-			{
-				LoadMessages(responseString, false);
-			}
-			else if (responseString == "ERROR_MatchNotFound")
-			{
-				Session.SnackMessage = LangEnglish.MatchNotFound;
-				CommonMethods.OpenPage(null, 0);
-			}
-			else
-			{
-				c.ReportError(responseString);
+				if (responseString.Substring(0, 2) == "OK")
+				{
+					LoadMessages(responseString, false);
+				}
+				else if (responseString == "ERROR_MatchNotFound")
+				{
+					Session.SnackMessage = LangEnglish.MatchNotFound;
+					CommonMethods.OpenPage(null, 0);
+				}
+				else
+				{
+					c.ReportError(responseString);
+				}
 			}
 		}
 
         private void SetMenu()
 		{
 			int targetID;
-			if (IntentData.senderID != null) //click from an in-app notification
+			if (IntentData.senderID != null) //click from an in-app or background notification
 			{
 				targetID = (int)IntentData.senderID;
-				if (dataLoadStarted)
-				{
-					IntentData.senderID = null;
-				}
 			}
 			else
 			{

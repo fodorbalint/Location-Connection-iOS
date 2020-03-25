@@ -19,19 +19,30 @@ namespace LocationConnection
             cacheDir = Path.Combine (documents, "..", "Library/Caches");
         }
 
-        public void LoadImage(UIView imageView, string userID, string picture, bool temp = false)
+        public void LoadImage(UIView imageView, string userID, string picture, bool isLarge = false, bool temp = false)
         {
-            string url;
-            if (!temp)
+            string subFolder;
+
+            if (isLarge)
             {
-                url = Constants.HostName + Constants.UploadFolder + "/" + userID + "/" + Constants.SmallImageSize + "/" + picture;
+                subFolder = Constants.LargeImageSize.ToString();
             }
             else
             {
-                url = Constants.HostName + Constants.TempUploadFolder + "/" + userID + "/" + Constants.SmallImageSize + "/" + picture;
+                subFolder = Constants.SmallImageSize.ToString();
             }
 
-            string saveName = userID + "_" + picture;
+            string url;
+            if (!temp)
+            {
+                url = Constants.HostName + Constants.UploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+            }
+            else
+            {
+                url = Constants.HostName + Constants.TempUploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+            }
+
+            string saveName = userID + "_" + subFolder +  "_" + picture;
 
             if (Exists(saveName))
             {

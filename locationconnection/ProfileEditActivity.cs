@@ -394,7 +394,6 @@ namespace LocationConnection
                                 {
                                     locMgr.StopLocationUpdates();
                                 }
-                                c.CW("ProfileEdit Location disabled");
                                 Session.Latitude = null;
                                 Session.Longitude = null;
                                 Session.LocationTime = null;

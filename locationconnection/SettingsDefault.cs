@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +21,9 @@ namespace LocationConnection
 		public static int MapIconSize = 50;
 		public static float MapRatio = 0.63f; //10 : 16, 0.625
 
-		public const int ListMapType = 1;
-		public const int ProfileViewMapType = 1;
-		public const int LocationMapType = 1;
+		public const int ListMapType = 0;
+		public const int ProfileViewMapType = 0;
+		public const int LocationMapType = 0;
 
 		//------ For not logged-in users
 
