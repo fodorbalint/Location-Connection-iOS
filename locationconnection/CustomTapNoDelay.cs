@@ -41,7 +41,7 @@ namespace LocationConnection
 
             if (valid && (int)context.currentMatch.TargetID != 0) //not a deleted user
             {
-                IntentData.profileViewPageType = "standalone";
+                IntentData.profileViewPageType = Constants.ProfileViewType_Standalone;
                 IntentData.targetID = (int)context.currentMatch.TargetID;
                 CommonMethods.OpenPage("ProfileViewActivity", 1);
             }

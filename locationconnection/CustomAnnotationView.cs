@@ -90,10 +90,11 @@ namespace LocationConnection
                     }
                 }
 
-                IntentData.profileViewPageType = "list";
+                IntentData.profileViewPageType = Constants.ProfileViewType_List;
+                ListActivity.viewProfiles = new List<Profile>(ListActivity.listProfiles);
                 ListActivity.viewIndex = index;
                 ListActivity.absoluteIndex = index + (int)Session.ResultsFrom - 1;
-                ListActivity.absoluteStartIndex = (int)Session.ResultsFrom - 1;
+                ListActivity.absoluteFirstIndex = ListActivity.absoluteStartIndex = (int)Session.ResultsFrom - 1;
 
                 CommonMethods.OpenPage("ProfileViewActivity", 1);
             }

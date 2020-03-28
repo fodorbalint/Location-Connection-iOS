@@ -231,8 +231,16 @@ namespace LocationConnection
 						}
 
 						BottomConstraint_Base.Constant = newKeyboardHeight;
-						SnackBottomConstraint_Base.Constant = newKeyboardHeight - uselessHeight;
+                        if (roundBottomHeight > 0)
+                        {
+							SnackBottomConstraint_Base.Constant = newKeyboardHeight - uselessHeight;
+						}
+						else
+                        {
+							SnackBottomConstraint_Base.Constant = newKeyboardHeight + SnackBottomConstraintConstant;
+						}
 						SnackTopConstraint_Base.Constant = newKeyboardHeight;
+
 						if (ScrollBottomConstraint_Base != null)
 						{
 							ScrollBottomConstraint_Base.Constant = 10;
@@ -455,7 +463,7 @@ namespace LocationConnection
 			}
 		}
 
-		protected bool IsUpdatingTo(int targetID)
+		public bool IsUpdatingTo(int targetID)
 		{
 			if (string.IsNullOrEmpty(locationUpdatesTo))
 			{
@@ -485,7 +493,7 @@ namespace LocationConnection
 			}
 		}
 
-		protected void RemoveUpdatesTo(int targetID)
+		public void RemoveUpdatesTo(int targetID)
 		{
 			string[] arr = locationUpdatesTo.Split("|");
 			string returnStr = "";
@@ -549,6 +557,8 @@ namespace LocationConnection
 				returnStr = returnStr.Substring(0, returnStr.Length - 1);
 			}
 			locationUpdatesFrom = returnStr;
+
+			RemoveLocationData(targetID);
 		}
 
         public void AddLocationData(int ID, double Latitude, double Longitude, long LocationTime)

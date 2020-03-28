@@ -23,7 +23,7 @@ namespace LocationConnection
 		float counterCircleSize = 9;
 		List<UIImageView> counterCircles;
 		MKPointAnnotation thisMarker;
-		string pageType;
+		byte? pageType;
 		UIView spacerLeft, spacerRight;
 		int imageIndex;
 		UIView pressTarget;
@@ -152,7 +152,7 @@ namespace LocationConnection
 
 				switch (pageType)
 				{
-					case "self":
+					case Constants.ProfileViewType_Self:
 						c.Collapse(MenuIcon);
 
 						if ((bool)Session.UseLocation && c.IsLocationEnabled() && !(locMgr is null))
@@ -196,7 +196,7 @@ namespace LocationConnection
 						
 						break;
 
-					case "list":
+					case Constants.ProfileViewType_List:
                         if (c.IsLoggedIn())
                         {
 							c.Expand(MenuIcon);
@@ -246,7 +246,7 @@ namespace LocationConnection
 						LoadUser();
 						break;
 
-					case "standalone": //coming from chat, we already know this is a match, Userrelation=3.
+					case Constants.ProfileViewType_Standalone: //coming from chat, we already know this is a match, Userrelation=3.
 						c.Expand(MenuIcon);
 
 						if (!(IntentData.targetID is null)) //when pressing back button from ChatOne, IntentData.targetID is null.
@@ -274,7 +274,7 @@ namespace LocationConnection
         {
             base.ViewWillDisappear(animated);
 
-			if (pageType == "self" && (bool)Session.UseLocation && c.IsLocationEnabled() && !(locMgr is null))
+			if (pageType == Constants.ProfileViewType_Self && (bool)Session.UseLocation && c.IsLocationEnabled() && !(locMgr is null))
 			{
 				locMgr.LocationUpdated -= LocMgr_LocationUpdated;
 			}
@@ -459,6 +459,7 @@ namespace LocationConnection
 				displayUser = parser.returnCollection[0];
 
 				UserLocationData data = GetLocationData(targetID);
+
                 if (data != null)
                 {
 					displayUser.Latitude = data.Latitude;
@@ -660,7 +661,7 @@ namespace LocationConnection
         {
             try
             {
-				if (pageType == "self")
+				if (pageType == Constants.ProfileViewType_Self)
 				{
 					if (Session.Latitude != null && Session.Longitude != null && Session.LocationTime != null) //location available
 					{
@@ -888,7 +889,15 @@ namespace LocationConnection
                 else
                 {
 					string url;
-					url = Constants.HostName + Constants.UploadFolder + "/" + folder + "/" + Constants.LargeImageSize + "/" + picture;
+					if (Constants.isTestDB)
+					{
+						url = Constants.HostName + Constants.UploadFolderTest + "/" + folder + "/" + Constants.LargeImageSize + "/" + picture;
+					}
+					else
+					{
+						url = Constants.HostName + Constants.UploadFolder + "/" + folder + "/" + Constants.LargeImageSize + "/" + picture;
+					}
+
 					UIImage im = CommonMethods.LoadFromUrl(url);
 
 					if (im == null)
@@ -913,7 +922,7 @@ namespace LocationConnection
 			InvokeOnMainThread(() => {
 				switch (pageType)
 				{
-					case "self":
+					case Constants.ProfileViewType_Self:
 						LastActiveDate.Text = c.GetTimeDiffStr(Session.LastActiveDate, true);
 
 						if (Session.Latitude != null && Session.Longitude != null && Session.LocationTime != null)
@@ -929,8 +938,8 @@ namespace LocationConnection
 						}
 
 						break;
-					case "list":
-					case "standalone":
+					case Constants.ProfileViewType_List:
+					case Constants.ProfileViewType_Standalone:
                         if (!(displayUser is null)) { //in case user is passive
 							LastActiveDate.Text = c.GetTimeDiffStr(displayUser.LastActiveDate, true);
 							if (displayUser.Latitude != null && displayUser.Longitude != null && displayUser.LocationTime != null)
@@ -959,6 +968,12 @@ namespace LocationConnection
 
 		private void BackButton_Click(object sender, EventArgs e)
 		{
+			if (Session.ListType == "hid")
+			{
+				Session.ResultsFrom = 1;
+				Session.LastDataRefresh = null;
+				ListActivity.listProfiles = null;
+			}
 			CommonMethods.OpenPage(null, 0);
 		}
 
@@ -1014,14 +1029,16 @@ namespace LocationConnection
 			{
 				cts.Cancel();
 			}
-			c.CW("PreviousButton_Click viewIndex " + ListActivity.viewIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
+
+			c.CW("PreviousButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
+
 			if (ListActivity.viewIndex >= 0)
 			{
 				PrevLoadAction();
 				displayUser = ListActivity.viewProfiles[ListActivity.viewIndex];
 				ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(0, 0);
 				imageIndex = 0;
-				c.CW("Loading prev user");
+				c.CW("Loading previous user");
 				LoadUser();
 			}
 			else
@@ -1043,7 +1060,7 @@ namespace LocationConnection
             {
 				cts.Cancel();
             }
-			c.CW("NextButton_Click viewIndex " + ListActivity.viewIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
+			c.CW("NextButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 
 			if (ListActivity.viewIndex < ListActivity.viewProfiles.Count)
 			{
@@ -1065,8 +1082,8 @@ namespace LocationConnection
 		private void PrevLoadAction()
 		{
 			//c.LogActivity("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
-			c.CW("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count);
-			if (ListActivity.viewIndex == 0 && ListActivity.absoluteStartIndex > 1 && Session.ResultsFrom > 1) //preceding list will be loaded. Session.ResultsFrom may now be greater than absoluteStartIndex if the upper end of the list was loaded, but the user went back.
+			c.CW("PrevLoadAction viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " totalResultCount " + ListActivity.totalResultCount);
+			if (ListActivity.viewIndex == 0 && ListActivity.absoluteFirstIndex > 0)
 			{
 				Session.ResultsFrom = ListActivity.absoluteIndex - Constants.MaxResultCount + 1;
 				//c.LogActivity("Prev2 ResultsFrom " + Session.ResultsFrom);
@@ -1089,7 +1106,6 @@ namespace LocationConnection
 			c.CW("NextLoadAction viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " totalResultCount " + ListActivity.totalResultCount);
 			if (ListActivity.viewIndex == ListActivity.viewProfiles.Count - 1 && ListActivity.totalResultCount > ListActivity.absoluteIndex + 1) //list will be loaded
 			{
-				c.CW("NextLoadAction 2 loading list");
 				Session.ResultsFrom = ListActivity.absoluteIndex + 2;
 				//c.LogActivity("Next2 ResultsFrom " + Session.ResultsFrom);
 				//c.CW("Next2 ResultsFrom " + Session.ResultsFrom);
@@ -1109,10 +1125,9 @@ namespace LocationConnection
 		{
 			c.HideMenu(MenuLayer, MenuContainer, true);
 
-			if (pageType == "standalone")
+			if (pageType == Constants.ProfileViewType_Standalone)
 			{
 				IntentData.senderID = displayUser.ID; //we could have gotten on this profile page from another chat by clicking on a notification.
-				c.CW("LikeButton_Click senderID set");
 				BackButton_Click(null, null);
 				return;
 			}
@@ -1155,7 +1170,7 @@ namespace LocationConnection
 						LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Normal);
 						LikeButton.UserInteractionEnabled = false;
 
-						if (pageType == "list")
+						if (pageType == Constants.ProfileViewType_List)
 						{
 							NextButton_Click(null, null);
 						}
@@ -1168,7 +1183,7 @@ namespace LocationConnection
 			}
 			else // already a match, opening chat window
 			{
-				if (pageType == "list") //a previously gotten match, we are coming from list, not chat
+				if (pageType == Constants.ProfileViewType_List) //a previously gotten match, we are coming from list, not chat
 				{
 					string responseString = await c.MakeRequest("action=requestmatchid&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&target=" + displayUser.ID);
 					if (responseString.Substring(0, 2) == "OK")
@@ -1215,32 +1230,32 @@ namespace LocationConnection
 
 					if (Session.ListType != "hid")
 					{
-						ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex); //will also remove the user from listProfiles
-                        if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
-                        {
-							ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
-                        }
+						ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex);
+						int listIndex = ListActivity.viewIndex - (ListActivity.absoluteStartIndex - ListActivity.absoluteFirstIndex); //we subtract from viewIndex the number of items that were loaded to add before listProfiles
+						{
+							if (listIndex >= 0 && listIndex < ListActivity.listProfiles.Count) // check the cases where an item was removed from the below or above added list
+							{
+								ListActivity.listProfiles.RemoveAt(listIndex);
+							}
+						}
+						
 						ListActivity.viewIndex--;
 						ListActivity.absoluteIndex--;
 						ListActivity.totalResultCount--;
 						NextButton_Click(null, null);
 					}
-                    else
-                    {
-						Session.LastDataRefresh = null;
-                    }
 				}
 				else if (responseString.Substring(0, 6) == "ERROR_") //IsAMatch
 				{
 					string sex = (displayUser.Sex == 0) ? LangEnglish.SexHer : LangEnglish.SexHim;
-					c.Snack(c.GetLang(responseString.Substring(6)).Replace("[sex]", sex));
+					c.Snack(c.GetLang(responseString.Substring(6)).Replace("[name]", displayUser.Name).Replace("[sex]", sex));
 				}
 				else
                 {
                     c.ReportError(responseString);
 				}
 			}
-			else if (displayUser.UserRelation == 1)
+			else if (displayUser.UserRelation == 1) //we are in Hid list
 			{
 				string responseString = await c.MakeRequest("action=unhide&ID=" + Session.ID + "&target=" + displayUser.ID
 				+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
@@ -1251,12 +1266,6 @@ namespace LocationConnection
 
 					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
 					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
-
-                    //Session.ListType = hid
-					if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
-					{
-						ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
-					}
 				}
 				else
 				{
@@ -1326,7 +1335,7 @@ namespace LocationConnection
 
 		public void AddNewMatch(int senderID, MatchItem item)
 		{
-			if (pageType != "self" && displayUser.ID == senderID)
+			if (pageType != Constants.ProfileViewType_Self && displayUser.ID == senderID)
 			{
 				Session.CurrentMatch = item;
 				ListActivity.viewProfiles[ListActivity.viewIndex].UserRelation = 3;
@@ -1340,7 +1349,7 @@ namespace LocationConnection
 
 		public void UpdateStatus(int senderID, bool isMatch, int? matchID)
 		{
-			if (pageType != "self" && displayUser.ID == senderID)
+			if (pageType == Constants.ProfileViewType_List && displayUser.ID == senderID)
 			{
 				if (isMatch) //start userrelation 2
 				{
@@ -1371,18 +1380,47 @@ namespace LocationConnection
 					c.ExpandX(HideButton);
 				}
 			}
+            else if (pageType == Constants.ProfileViewType_Standalone)
+            {
+				AppDelegate.AddUpdateMatch(senderID, isMatch);
+            }
+
+            if (pageType == Constants.ProfileViewType_Standalone && displayUser.ID == senderID)
+            {
+				if (isMatch) //start userrelation 2
+				{
+					displayUser.UserRelation = 3;
+
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Normal);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Highlighted);
+
+					c.CollapseX(HideButton);
+				}
+				else //start userrelation 3 or 4.
+				{
+					displayUser.UserRelation = 2;
+
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Normal);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Highlighted);
+
+					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+
+					c.ExpandX(HideButton);
+				}
+			}
 		}
 
 		public void UpdateLocationStart(int senderID, string message)
 		{
-			if (pageType != "self" && displayUser.ID == senderID)
+			if (pageType != Constants.ProfileViewType_Self && displayUser.ID == senderID)
 			{
 				c.Snack(message);
 			}
 			else
 			{
 				c.SnackAction(message, LangEnglish.ShowReceived, new Action(delegate () {
-					if (pageType == "self" && (bool)Session.UseLocation && c.IsLocationEnabled())
+					if (pageType == Constants.ProfileViewType_Self && (bool)Session.UseLocation && c.IsLocationEnabled())
 					{
 						locMgr.LocationUpdated -= LocMgr_LocationUpdated;
 					}
@@ -1390,7 +1428,7 @@ namespace LocationConnection
 					ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(0, 0);
 					imageIndex = 0;
 
-					pageType = "standalone";
+					pageType = Constants.ProfileViewType_Standalone;
 					LoadStandalone(senderID);
 				}));
 			}
@@ -1398,7 +1436,7 @@ namespace LocationConnection
 
 		public void UpdateLocation(int senderID, long time, double latitude, double longitude)
 		{
-			if (pageType != "self" && displayUser.ID == senderID)
+			if (pageType != Constants.ProfileViewType_Self && displayUser.ID == senderID)
 			{
 				displayUser.LastActiveDate = time;
 				displayUser.Latitude = latitude;

@@ -353,6 +353,10 @@ namespace LocationConnection
 						{
 							context.RemoveUpdatesFrom(senderID);
 						}
+						if (context.IsUpdatingTo(senderID))
+						{
+							context.RemoveUpdatesTo(senderID);
+						}
 
 						if (inApp)
 						{
@@ -456,7 +460,6 @@ namespace LocationConnection
 						if (context.IsUpdatingFrom(senderID)) //user could have gone to the background, clearing out the list of people to receive updates from.
 						{
 							context.RemoveUpdatesFrom(senderID);
-							context.RemoveLocationData(senderID);
 
 							text = senderName + " " + LangEnglish.LocationUpdatesFromEnd;
 							context.c.Snack(text);
@@ -487,12 +490,12 @@ namespace LocationConnection
 		private void GoToProfile(int targetID)
 		{
 			CommonMethods.GetCurrentViewController().c.LogActivity("GoToProfile");
-			IntentData.profileViewPageType = "standalone";
+			IntentData.profileViewPageType = Constants.ProfileViewType_Standalone;
 			IntentData.targetID = targetID;
 			CommonMethods.OpenPage("ProfileViewActivity", 1);			
 		}
 
-		public void AddUpdateMatch(int senderID, bool isMatch)
+		public static void AddUpdateMatch(int senderID, bool isMatch)
 		{
             if (!(ListActivity.viewProfiles is null))
             {

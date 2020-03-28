@@ -35,11 +35,25 @@ namespace LocationConnection
             string url;
             if (!temp)
             {
-                url = Constants.HostName + Constants.UploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+                if (Constants.isTestDB)
+				{
+					url = Constants.HostName + Constants.UploadFolderTest + "/" + userID + "/" + subFolder + "/" + picture;
+				}
+				else
+				{
+					url = Constants.HostName + Constants.UploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+				}
             }
             else
             {
-                url = Constants.HostName + Constants.TempUploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+                if (Constants.isTestDB)
+				{
+					url = Constants.HostName + Constants.TempUploadFolderTest + "/" + userID + "/" + subFolder + "/" + picture;
+				}
+				else
+				{
+					url = Constants.HostName + Constants.TempUploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+				}
             }
 
             string saveName = userID + "_" + subFolder +  "_" + picture;

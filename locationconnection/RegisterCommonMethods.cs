@@ -190,10 +190,18 @@ namespace LocationConnection
                 if (c.IsLoggedIn())
                 {
                     url = Constants.HostName + "?action=uploadtouser&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
+					if (Constants.isTestDB)
+					{
+						url += Constants.TestDB;
+					}
                 }
                 else
                 {
                     url = (regsessionid == "") ? Constants.HostName + "?action=uploadtotemp" : Constants.HostName + "?action=uploadtotemp&regsessionid=" + regsessionid;
+					if (Constants.isTestDB)
+					{
+						url += Constants.TestDB;
+					}
                 }
 
                 await client.UploadFileTaskAsync(url, fileName);

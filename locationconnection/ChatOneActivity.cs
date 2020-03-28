@@ -793,9 +793,13 @@ namespace LocationConnection
 			}
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, displayText, LangEnglish.DialogOK, LangEnglish.DialogCancel, async alert => {
-				if (IsUpdatingTo((int)currentMatch.TargetID)) //user could have gone to the background, clearing out the list of people to receive updates from.
+				if (IsUpdatingTo((int)currentMatch.TargetID))
 				{
 					RemoveUpdatesTo((int)currentMatch.TargetID);
+				}
+				if (IsUpdatingFrom((int)currentMatch.TargetID))
+				{
+					RemoveUpdatesFrom((int)currentMatch.TargetID);
 				}
 
 				long unixTimestamp = c.Now();

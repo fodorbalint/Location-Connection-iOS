@@ -140,7 +140,11 @@ namespace LocationConnection
 				try
 				{
 					string url = Constants.HostName + "?" + query;
-					//url += Constants.TestDB;
+					if (Constants.isTestDB)
+					{
+						url += Constants.TestDB;
+					}
+
 					HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 					request.Timeout = Constants.RequestTimeout;
 
@@ -219,7 +223,11 @@ namespace LocationConnection
 			try
 			{
 				string url = Constants.HostName + "?" + query;
-				//url += Constants.TestDB;
+				if (Constants.isTestDB)
+				{
+					url += Constants.TestDB;
+				}
+
 				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = Constants.RequestTimeout;
 

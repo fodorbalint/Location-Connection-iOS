@@ -23,7 +23,7 @@ namespace LocationConnection
             AddSubview(MainView);
 
             ImageCache im = new ImageCache(context);
-            im.LoadImage(UploadedImage, userID, picture, temp);
+            im.LoadImage(UploadedImage, userID, picture, false, temp);
         }
     }
 }
