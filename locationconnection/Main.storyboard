@@ -3961,12 +3961,12 @@
                                             <constraint firstAttribute="width" constant="28" id="CheckRematchBackground1"/>
                                         </constraints>
                                     </button>
-                                    <button contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator2">
+                                    <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator2">
                                         <rect key="frame" x="0.0" y="284.5" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsBottomSeparator20"/>
                                         </constraints>
-                                    </button>
+                                    </imageView>
                                     <label text="DisplaySection" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" customClass="InsetLabel" id="DisplaySection">
                                         <rect key="frame" x="0.0" y="286.5" width="375" height="27"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>

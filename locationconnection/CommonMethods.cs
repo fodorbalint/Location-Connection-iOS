@@ -339,7 +339,6 @@ namespace LocationConnection
 
 		public bool IsOwnLocationAvailable()
 		{
-			CW("IsOwnLocationAvailable " + Session.Latitude + "---" + Session.LatestLatitude);
             if (!Constants.SafeLocationMode)
             {
 				return Session.Latitude != null && Session.Longitude != null;

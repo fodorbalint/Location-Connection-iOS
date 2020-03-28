@@ -1114,6 +1114,7 @@ namespace LocationConnection
 
         private void OpenFilters_Click(object sender, EventArgs e)
         {
+            View.EndEditing(true);
             if (!filtersOpen)
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters_pressed.png"), UIControlState.Normal);
@@ -1152,6 +1153,7 @@ namespace LocationConnection
 
         private void OpenSearch_Click(object sender, EventArgs e)
         {
+            View.EndEditing(true);
             if (!searchOpen)
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters"), UIControlState.Normal);
@@ -1472,16 +1474,29 @@ namespace LocationConnection
         [Export("searchBarSearchButtonClicked:")]
         public void SearchButtonClicked(UISearchBar searchBar)
         {
+            c.CW("SearchButtonClicked");
             View.EndEditing(true);
-            Session.ResultsFrom = 1;
-            recenterMap = true;
-            Task.Run(() => LoadListSearch());
+            if ((bool)Settings.IsMapView) // if I load the data immediately while the keyboard is open, the pictures will not appear on the map. Not even keyboardAnimationDuration (0.25) is enough, even though the loading takes time too (ca. 100 ms).
+            //A total of 441 ms can still fail.
+            {
+                Timer t = new Timer();
+
+                t.Elapsed += T_Elapsed1;
+                t.Interval = keyboardAnimationDuration * 1000 * 2; // = 500
+                t.Start();
+            }
+            else
+            {
+                Session.ResultsFrom = 1;
+                recenterMap = true;
+                Task.Run(() => LoadListSearch());
+            }
         }
 
         [Export("textFieldShouldReturn:")]
         public bool ShouldReturn(UITextField textField)
         {
-            c.CW("textFieldShouldReturn " + textField);
+            c.CW("textFieldShouldReturn");
             View.EndEditing(true); //calls EditingEnded too
             if (textField == DistanceSourceAddressText)
             {
@@ -1489,7 +1504,13 @@ namespace LocationConnection
             }
             else if (textField == DistanceLimitInput)
             {
-                int progress = int.Parse(DistanceLimitInput.Text);
+                bool parsed = int.TryParse(DistanceLimitInput.Text, out int progress);
+                if (!parsed)
+                {
+                    c.Alert(LangEnglish.WrongNumberFormat);
+                    return false;
+                }
+
                 if (progress > Constants.MaxGoogleMapDistance)
                 {
                     return false;
@@ -1500,10 +1521,36 @@ namespace LocationConnection
                 }
                 SetDistanceLimit();
 
-                recenterMap = false;
-                Task.Run(() => LoadList());
+                if ((bool)Settings.IsMapView)
+                {
+                    Timer t = new Timer();
+
+                    t.Elapsed += T_Elapsed2;
+                    t.Interval = keyboardAnimationDuration * 1000 * 2; // = 500
+                    t.Start();
+                }
+                else
+                {
+                    recenterMap = false;
+                    Task.Run(() => LoadList());
+                }
             }
             return true;
+        }
+
+        private void T_Elapsed1(object sender, ElapsedEventArgs e)
+        {
+            ((Timer)sender).Stop();
+            Session.ResultsFrom = 1;
+            recenterMap = true;
+            Task.Run(() => LoadListSearch());
+        }
+
+        private void T_Elapsed2(object sender, ElapsedEventArgs e)
+        {
+            ((Timer)sender).Stop();
+            recenterMap = false;
+            Task.Run(() => LoadList());
         }
 
         private void ChangesDetected(object sender, NSNotificationEventArgs nSNotificationEventArgs)
@@ -1517,7 +1564,7 @@ namespace LocationConnection
         [Export("textFieldDidEndEditing:")]
         public void EditingEnded(UITextField textField)
         {
-            c.CW("textFieldDidEndEditing: " + textField);
+            c.CW("textFieldDidEndEditing " + textField);
             if (textField == DistanceSourceAddressText)
             {
                 MatchCoordinates(true);
@@ -1526,7 +1573,13 @@ namespace LocationConnection
             }
             else if (textField == DistanceLimitInput)
             {
-                int progress = int.Parse(DistanceLimitInput.Text);
+                bool parsed = int.TryParse(DistanceLimitInput.Text, out int progress);
+                if (!parsed)
+                {
+                    c.Alert(LangEnglish.WrongNumberFormat);
+                    return;
+                }
+
                 if (progress > Constants.MaxGoogleMapDistance)
                 {
                     c.Alert(LangEnglish.MaxDistanceMessage);
@@ -1849,6 +1902,22 @@ namespace LocationConnection
             //DistanceSourceAddressText.Background.ClearColorFilter();
         }
 
+        private void RevertInvalidAddress()
+        {
+            if (!(Session.OtherAddress is null))
+            {
+                distanceSourceAddressTextChanging = true;
+                DistanceSourceAddressText.Text = Session.OtherAddress;
+                distanceSourceAddressTextChanging = false;
+            }
+            else if (Session.OtherLatitude != null && Session.OtherLongitude != null)
+            {
+                distanceSourceAddressTextChanging = true;
+                DistanceSourceAddressText.Text = Session.OtherLatitude + ", " + Session.OtherLongitude;
+                distanceSourceAddressTextChanging = false;
+            }
+        }
+
 		private void DistanceLimit_ValueChanged(object sender, EventArgs e)
         {
             //c.CW("DistanceLimit_ValueChanged distanceLimitChangedByCode " + distanceLimitChangedByCode);
@@ -1891,7 +1960,16 @@ namespace LocationConnection
         private void SetDistanceLimit()
         {
             //invalid values are reverted.
-            int progress = int.Parse(DistanceLimitInput.Text);//------------ need to set it
+            bool parsed = int.TryParse(DistanceLimitInput.Text, out int progress);
+            if (!parsed)
+            {
+                DistanceLimitInput.Text = Session.DistanceLimit.ToString();
+                if (DistanceLimitInput.Focused)
+                {
+                    DistanceLimitInput.SelectAll(null);
+                }
+                return;
+            }
 
             if (progress > Constants.MaxGoogleMapDistance || progress < 1)
             {
@@ -1917,7 +1995,7 @@ namespace LocationConnection
                 }
                 Session.DistanceLimit = progress;
             }
-            //DistanceLimitInput.ClearFocus();
+            View.EndEditing(true);
         }
 
         private void UserSearchList_ItemClick(UITapGestureRecognizer recognizer)
@@ -2147,7 +2225,17 @@ namespace LocationConnection
                     return;
                 }
 
-                InvokeOnMainThread(() => { SetDistanceLimit(); });
+                if (c.snackPermanentText == LangEnglish.GeoFilterNoLocation && c.snackVisible)
+                {
+                    InvokeOnMainThread(() => {
+                        c.HideSnack();
+                    });
+                }
+
+                InvokeOnMainThread(() => {
+                    SetDistanceLimit();
+                    RevertInvalidAddress();
+                });
 
                 listLoading = true;
 

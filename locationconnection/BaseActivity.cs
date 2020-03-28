@@ -39,6 +39,7 @@ namespace LocationConnection
 
 		NSObject hideNotification, frameChangeNotification;
         public nfloat keyboardHeight = 0;
+		public static double keyboardAnimationDuration;
 
 		public UIView RoundBottom_Base { get; set; }
 		public Snackbar Snackbar_Base { get; set; }
@@ -219,6 +220,8 @@ namespace LocationConnection
 				if (SnackBottomConstraint_Base != null && SnackTopConstraint_Base != null)
 				{
 					nfloat newKeyboardHeight = ((NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey))).RectangleFValue.Size.Height; //changes from 320 to 265 when in Settings, I click on See log while keyboard is open. Framechangenotification is also called when keyboard is closed, having its height for opened state.
+                    keyboardAnimationDuration = ((NSNumber)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.AnimationDurationUserInfoKey))).DoubleValue; //used when loading the list in map view when pressing enter on a text field
+
 					if (keyboardHeight != newKeyboardHeight)
                     {
 						nfloat diff = 0;

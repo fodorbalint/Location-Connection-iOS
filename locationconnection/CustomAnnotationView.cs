@@ -25,6 +25,7 @@ namespace LocationConnection
 		{
             if (annotation is ProfileAnnotation) //profile image
             {
+                Console.WriteLine("GetViewForAnnotation userid " + ((ProfileAnnotation)annotation).UserID);
                 MKAnnotationView imageView = mapView.DequeueReusableAnnotation(iId);
                 if (imageView == null)
                 {

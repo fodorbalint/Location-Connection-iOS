@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class LangEnglish
     {
-        public const string versionInfo = "Version: 23. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories\n\n";
+        public const string versionInfo = "Version: 28. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories\n\n";
 
         public static string ConfirmAction = "Confirm action";
         public static string DialogOK = "OK";
@@ -212,6 +212,7 @@ namespace LocationConnection
         public static string DistanceUnit = "km";
         public static string GeoFilterNoLocation = "No location was set.\nTurn off geographic filtering, acquire current location, or set an address.";
         public static string LocationNotInUse = "Location is not in use.";
+        public static string WrongNumberFormat = "Wrong number format.";
         public static string MinDistanceMessage = "Distance must be at least 1 km.";
         public static string MaxDistanceMessage = "The maximum distance is 20015 km.";
         public static string MapStreet = "Street";
