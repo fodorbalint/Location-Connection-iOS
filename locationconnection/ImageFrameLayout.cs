@@ -65,7 +65,7 @@ namespace LocationConnection
 
 		public void SetTileSize()
 		{
-			tileSize = (BaseActivity.DpWidth - 20 - 2 * tileSpacing) / numColumns;
+			tileSize = (BaseActivity.DpWidth - 20 - tileSpacing * (numColumns - 1)) / numColumns;
 		}
 
 		public void Reposition()
@@ -250,7 +250,7 @@ namespace LocationConnection
 					MovePictureTo(i, i - 1);
 				}
 				Timer t = new Timer();
-				t.Interval = tweenTime;
+				t.Interval = tweenTime * 1000;
 				t.Elapsed += T_Elapsed;
 				t.Start();
 				Subviews[removeIndex].RemoveFromSuperview(); //RemoveViewFromDrawOrder(removeIndex);

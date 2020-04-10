@@ -14,6 +14,8 @@ namespace LocationConnection
 	{
 		public string deviceTokenFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "devicetoken.txt");
 		public string tokenUptoDateFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "tokenuptodate.txt");
+		public static string regSessionFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "regsession.txt");
+        public static string regSaveFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "regsave.txt");
 
 		public CommonMethods c;
 
@@ -376,14 +378,17 @@ namespace LocationConnection
 		public void TruncateLocationLog()
 		{
 			long unixTimestamp = c.Now();
-			string[] lines = File.ReadAllLines(c.locationLogFile);			
+			string[] lines = File.ReadAllLines(c.locationLogFile);
 			string firstLine = lines[0];
 			int sep1Pos = firstLine.IndexOf("|");
 			long locationTime = long.Parse(firstLine.Substring(0, sep1Pos));
+
+			int j = 0;
 			if (locationTime < unixTimestamp - Constants.LocationKeepTime)
 			{
+				j++;
 				List<string> newLines = new List<string>();
-				for (int i = 1; i < lines.Length; i++)
+				for(int i = 1; i < lines.Length; i++)
 				{
 					string line = lines[i];
 					sep1Pos = line.IndexOf("|");
@@ -392,22 +397,33 @@ namespace LocationConnection
 					{
 						newLines.Add(line);
 					}
+					else
+					{
+						j++;
+					}
 				}
-
-                if (newLines.Count != 0)
-                {
+				if (newLines.Count != 0)
+				{
 					File.WriteAllLines(c.locationLogFile, newLines);
 				}
-                else //it would write an empty string into the file, and lines[0] would throw an error
-                {
+				else //it would write an empty string into the file, and lines[0] would throw an error
+				{
 					File.Delete(c.locationLogFile);
-                }
-			}			
+				}
+			}
+			if (j == 0)
+			{
+				c.LogActivity("Location log up to date");
+			}
+			else
+			{
+				c.LogActivity("Removed " + j + " items from location log");
+			}
 		}
 
 		public void TruncateSystemLog()
 		{
-			try //in case a new line is insterted in the logs
+			try
 			{
 				CultureInfo provider = CultureInfo.InvariantCulture;
 				string format = @"yyyy-MM-dd HH\:mm\:ss.fff";
@@ -419,8 +435,10 @@ namespace LocationConnection
 				int sep2Pos = firstLine.IndexOf(" ", sep1Pos + 1);
 				DateTime logTime = DateTime.ParseExact(firstLine.Substring(0, sep2Pos), format, provider);
 
+				int j = 0;
 				if (dt.Subtract(logTime).TotalSeconds > Constants.SystemLogKeepTime)
 				{
+					j++;
 					List<string> newLines = new List<string>();
 					for (int i = 1; i < lines.Length; i++)
 					{
@@ -433,15 +451,27 @@ namespace LocationConnection
 						{
 							newLines.Add(line);
 						}
+						else
+						{
+							j++;
+						}
 					}
 					File.WriteAllLines(CommonMethods.logFile, newLines);
+				}
+				if (j == 0)
+				{
+					c.LogActivity("System log up to date");
+				}
+				else
+				{
+					c.LogActivity("Removed " + j + " items from system log");
 				}
 			}
 			catch
 			{
 				c.CW("Resetting log File");
 				File.WriteAllText(CommonMethods.logFile, "");
-			}
+			}			
 		}
 
 		protected void EndLocationShare(int? targetID = null)

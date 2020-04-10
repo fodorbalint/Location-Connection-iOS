@@ -231,14 +231,20 @@ namespace LocationConnection
 							c.CollapseX(LikeButton);
 						}
 
-						//c.LogActivity("--------OnResume start --------");
 						if (ListActivity.viewProfiles.Count > Constants.MaxResultCount)
 						{
 							c.LogActivity("Error: ListActivity.viewProfiles.Count is greater than " + Constants.MaxResultCount + ": " + ListActivity.viewProfiles.Count);
-						}
+						}						
+
+                        if (ListActivity.viewIndex >= ListActivity.viewProfiles.Count) //when blocking a user from chat window, but returning to profileview list
+                        {
+							CommonMethods.OpenPage(null, 0);
+							return;
+                        }
+
 						PrevLoadAction();
 						NextLoadAction();
-						//c.LogActivity("--------OnResume end --------");
+
 						displayUser = ListActivity.viewProfiles[ListActivity.viewIndex];
 
 						Session.CurrentMatch = null;
@@ -483,11 +489,10 @@ namespace LocationConnection
 
 				LoadUser();
 			}
-			else if (responseString.Substring(0, 6) == "ERROR_")
+			else if (responseString.Substring(0, 6) == "ERROR_") // UserPassive, MatchNotFound or UserNotAvailable 
 			{
-				c.CW("Profile View User not found");
 				Session.SnackMessage = c.GetLang(responseString.Substring(6));
-				BackButton_Click(null, null);
+				CommonMethods.OpenPage(null, 0);
 			}
 			else
 			{
@@ -552,6 +557,8 @@ namespace LocationConnection
         {
 			try
 			{
+				c.CW("Loaduser ID " + displayUser.ID);
+
 				if (c.IsLoggedIn())
 				{
 					switch (displayUser.UserRelation)
@@ -968,6 +975,8 @@ namespace LocationConnection
 
 		private void BackButton_Click(object sender, EventArgs e)
 		{
+			CancelTask();
+
 			if (Session.ListType == "hid")
 			{
 				Session.ResultsFrom = 1;
@@ -1013,6 +1022,7 @@ namespace LocationConnection
 
 		private void EditSelf_Click(object sender, EventArgs e)
 		{
+			CancelTask();
 			c.HideMenu(MenuLayer, MenuContainer, true);
 
 			CommonMethods.OpenPage("ProfileEditActivity", 1);
@@ -1025,10 +1035,7 @@ namespace LocationConnection
 			ListActivity.viewIndex--;
 			ListActivity.absoluteIndex--;
 
-			if (!imageLoading.IsCompleted)
-			{
-				cts.Cancel();
-			}
+			CancelTask();
 
 			c.CW("PreviousButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 
@@ -1056,10 +1063,8 @@ namespace LocationConnection
 			ListActivity.viewIndex++;
 			ListActivity.absoluteIndex++;
 
-            if (!imageLoading.IsCompleted)
-            {
-				cts.Cancel();
-            }
+            CancelTask();
+
 			c.CW("NextButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 
 			if (ListActivity.viewIndex < ListActivity.viewProfiles.Count)
@@ -1160,7 +1165,7 @@ namespace LocationConnection
 						c.CollapseX(HideButton);
 
 						c.DisplayCustomDialog("", LangEnglish.DialogMatch, LangEnglish.DialogYes, LangEnglish.DialogNo, alert => {
-							//IntentData.chatOnePageType = "profileView";
+							CancelTask();
                             CommonMethods.OpenPage("ChatOneActivity", 1);
 						}, null);
 					}
@@ -1195,7 +1200,7 @@ namespace LocationConnection
 						Session.CurrentMatch.TargetName = displayUser.Name;
 						Session.CurrentMatch.TargetPicture = displayUser.Pictures[0];
 
-						//IntentData.chatOnePageType = "profileView";
+						CancelTask();
 						CommonMethods.OpenPage("ChatOneActivity", 1);
 					}
 					else
@@ -1205,7 +1210,7 @@ namespace LocationConnection
 				}
 				else
 				{
-					//IntentData.chatOnePageType = "chatList";
+					CancelTask();
 					CommonMethods.OpenPage("ChatOneActivity", 1);
 				}
 			}
@@ -1308,23 +1313,58 @@ namespace LocationConnection
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.BlockDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				if (IsUpdatingTo(displayUser.ID)) {
+				if (IsUpdatingTo(displayUser.ID))
+				{
 					RemoveUpdatesTo(displayUser.ID);
+				}
+				if (IsUpdatingFrom(displayUser.ID))
+				{
+					RemoveUpdatesFrom(displayUser.ID);
 				}
 
 				long unixTimestamp = c.Now();
 				string responseString = await c.MakeRequest("action=blockprofileview&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + displayUser.ID + "&time=" + unixTimestamp);
 				if (responseString.Substring(0, 2) == "OK")
 				{
-					ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex);
-					if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
-					{
-						ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
+					if (pageType == Constants.ProfileViewType_List)
+                    {
+						ListActivity.viewProfiles.RemoveAt(ListActivity.viewIndex);
+						if (ListActivity.viewIndex >= 0 && ListActivity.viewIndex < ListActivity.listProfiles.Count)
+						{
+							ListActivity.listProfiles.RemoveAt(ListActivity.viewIndex);
+						}
+						ListActivity.viewIndex--;
+						ListActivity.absoluteIndex--;
+						ListActivity.totalResultCount--;
+
+						NextButton_Click(null, null);
 					}
-					ListActivity.viewIndex--;
-					ListActivity.absoluteIndex--;
-					ListActivity.totalResultCount--;
-					NextButton_Click(null, null);
+                    else //standalone
+                    {
+						if (!(ListActivity.listProfiles is null))
+						{
+							for (int i = 0; i < ListActivity.listProfiles.Count; i++)
+							{
+								if (ListActivity.listProfiles[i].ID == displayUser.ID)
+								{
+									ListActivity.listProfiles.RemoveAt(i);
+									break;
+								}
+							}
+						}
+						if (!(ListActivity.viewProfiles is null))
+						{
+							for (int i = 0; i < ListActivity.viewProfiles.Count; i++)
+							{
+								if (ListActivity.viewProfiles[i].ID == displayUser.ID)
+								{
+									ListActivity.viewProfiles.RemoveAt(i);
+									break;
+								}
+							}
+						}
+						CommonMethods.OpenPage(null, 0); //Disabled chat window will show, with unmatch date given.
+					}					
 				}
 				else
 				{
@@ -1516,6 +1556,15 @@ namespace LocationConnection
 			Math.Cos(Math.PI / 180 * lat1) * Math.Cos(Math.PI / 180 * lat2) * Math.Cos(Math.PI / 180 * long2 - Math.PI / 180 * long1)
 			+ Math.Sin(Math.PI / 180 * lat1) * Math.Sin(Math.PI / 180 * lat2)
 			), 1);
+		}
+
+		private void CancelTask()
+		{
+			if (!(imageLoading is null) && !imageLoading.IsCompleted)
+			{
+				c.CW("cancelling image loading");
+				cts.Cancel();
+			}
 		}
 	}
 }

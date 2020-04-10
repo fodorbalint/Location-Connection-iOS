@@ -13,10 +13,6 @@ namespace LocationConnection
 {
     public partial class RegisterActivity : BaseActivity
     {
-        
-        public static string regSessionFile = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "regsession.txt");
-        private string regSaveFile = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "regsave.txt");
-
         public RegisterCommonMethods rc;
 
         public static string regsessionid; //for use in UploadedListAdapter
@@ -403,6 +399,8 @@ namespace LocationConnection
 
         private async void Reset_Click(object sender, EventArgs e)
         {
+            View.EndEditing(true);
+
             Reset.Enabled = false;
             Reset.Alpha = 0.5f;
 
@@ -430,8 +428,7 @@ namespace LocationConnection
             else
             {
                 ResetForm();
-            }
-            
+            }            
             Reset.Enabled = true;
             Reset.Alpha = 1;
         }

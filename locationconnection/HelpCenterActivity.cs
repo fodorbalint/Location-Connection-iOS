@@ -132,6 +132,7 @@ namespace LocationConnection
             {
                 MessageSend.Enabled = false;
                 MessageSend.Alpha = 0.5f;
+
                 string url = "action=helpcentermessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&Content=" + c.UrlEncode(MessageEdit.Text);
                 string responseString = await c.MakeRequest(url);
                 if (responseString == "OK")
@@ -144,7 +145,7 @@ namespace LocationConnection
                 else
                 {
                     c.ReportError(responseString);
-                }
+                }                
                 MessageSend.Enabled = true;
                 MessageSend.Alpha = 1f;
             }

@@ -165,7 +165,7 @@ namespace LocationConnection
 					{
 						LoadMessages(responseString, false);
 					}
-					else if (responseString == "ERROR_MatchNotFound")
+					else if (responseString == "ERROR_MatchNotFound") //user deleted itself while the other was on its standalone page, and now loading chat. Chat remains, but userid does not exist anymore. 
 					{
 						c.CW("Match not found");
 						Session.SnackMessage = LangEnglish.MatchNotFound;
@@ -213,7 +213,7 @@ namespace LocationConnection
 				{
 					LoadMessages(responseString, false);
 				}
-				else if (responseString == "ERROR_MatchNotFound")
+				else if (responseString == "ERROR_MatchNotFound") //user deleted itself while the other was on its standalone page, and now loading chat. Chat remains, but userid does not exist anymore. 
 				{
 					Session.SnackMessage = LangEnglish.MatchNotFound;
 					CommonMethods.OpenPage(null, 0);
@@ -356,15 +356,19 @@ namespace LocationConnection
 
 			c.DisplayCustomDialog(LangEnglish.ConfirmAction, LangEnglish.BlockDialogText, LangEnglish.DialogYes, LangEnglish.DialogNo, async alert =>
 			{
-				if (IsUpdatingTo((int)currentMatch.TargetID)) {
+				if (IsUpdatingTo((int)currentMatch.TargetID))
+				{
 					RemoveUpdatesTo((int)currentMatch.TargetID);
+				}
+				if (IsUpdatingFrom((int)currentMatch.TargetID))
+				{
+					RemoveUpdatesFrom((int)currentMatch.TargetID);
 				}
 
 				long unixTimestamp = c.Now();
 				string responseString = await c.MakeRequest("action=blockchatone&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + currentMatch.TargetID + "&time=" + unixTimestamp);
 				if (responseString.Substring(0, 2) == "OK")
 				{
-
 					if (!(ListActivity.listProfiles is null))
 					{
 						for (int i = 0; i < ListActivity.listProfiles.Count; i++)
@@ -388,7 +392,7 @@ namespace LocationConnection
 						}
 					}
 
-					CommonMethods.OpenPage("ListActivity", 1);
+					CommonMethods.OpenPage(null, 0); //what if we step back to viewprofiles, and the blocked profile was the last one?
 				}
 				else
 				{
@@ -633,6 +637,7 @@ namespace LocationConnection
 			{
 				ChatSendMessage.Enabled = false; //to prevent mulitple clicks
 				ChatSendMessage.Alpha = 0.5f;
+
 				string responseString = await c.MakeRequest("action=sendmessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + currentMatch.MatchID + "&message=" + c.UrlEncode(message));
 				if (responseString.Substring(0, 2) == "OK")
 				{
@@ -669,6 +674,7 @@ namespace LocationConnection
 				{
 					c.ReportError(responseString);
 				}
+				
 				ChatSendMessage.Enabled = true;
 				ChatSendMessage.Alpha = 1f;
 			}

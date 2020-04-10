@@ -24,7 +24,7 @@ namespace LocationConnection
 		public string locationLogFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "locationlog.txt");
 		private string settingsFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "settings.txt");
 		private string defaultSettingsFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "defaultsettings.txt");
-		private string loginSessionFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "loginsession.txt");
+		public string loginSessionFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "loginsession.txt");
 
 		//-----Snackbar snack;
 		BaseActivity context;
@@ -37,7 +37,11 @@ namespace LocationConnection
 		private UIButton SnackButton;
 		private Timer snackTimer;
 		private int snackDuration = 4000;
-		private bool animRunning;
+		private bool animRunning;		
+
+        public static bool transitionRunning;
+		public static string transitionTarget;
+		public static byte transitionAnim;
         	
 		public CommonMethods(BaseActivity context)
 		{
@@ -164,6 +168,7 @@ namespace LocationConnection
 					}
 
 					var response = request.GetResponse();
+					
 					stw.Stop();
 					CW(stw.ElapsedMilliseconds + " " + url);
 
@@ -1109,8 +1114,6 @@ namespace LocationConnection
                     //Console.WriteLine(DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + " ------ LoadFromUrl end --------");
 					return image;
 				}
-                    
-
 			}
             catch
             {
@@ -1150,10 +1153,6 @@ namespace LocationConnection
 			    }
 			});
 		}
-
-        public static bool transitionRunning;
-		public static string transitionTarget;
-		public static byte transitionAnim;
 
 		public static void OpenPage(string target, byte anim)
         {

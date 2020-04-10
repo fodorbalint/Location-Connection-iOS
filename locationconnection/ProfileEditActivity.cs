@@ -173,9 +173,7 @@ namespace LocationConnection
                     EditImagesProgressText.Text = "";
                 }
 
-                Console.WriteLine("Onresume: imagesuploading: " + rc.imagesUploading);
-
-                //works only if activity is resuming. It is recreaed when pressing cancel and coming here again.
+                //works only if activity is resuming. It is recreated when pressing cancel and coming here again. Can it happen?
                 if (rc.imagesUploading)
                 {
                     rc.StartAnim();
@@ -306,6 +304,7 @@ namespace LocationConnection
             {
                 EditSave.Enabled = false;
                 EditSave.Alpha = 0.5f;
+                
                 //not visible form fields do not get saved, but there is no need to reload the form, since we are exiting the activity on successful save.
                 string requestStringBase = "action=profileedit&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
                 string requestStringAdd = "";
@@ -411,6 +410,7 @@ namespace LocationConnection
                             }
                         }
                         Session.SnackMessage = LangEnglish.SettingsUpdated;
+
                         EditSave.Enabled = true;
                         EditSave.Alpha = 1;
                         CommonMethods.OpenPage(null, 0);
@@ -527,6 +527,7 @@ namespace LocationConnection
                 {
                     DeactivateAccount.Enabled = false;
                     DeactivateAccount.Alpha = 0.5f;
+
                     string url = "action=deactivateaccount&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
                     if (!string.IsNullOrEmpty(locationUpdatesTo))
                     {
@@ -552,6 +553,7 @@ namespace LocationConnection
             {
                 DeactivateAccount.Enabled = false;
                 DeactivateAccount.Alpha = 0.5f;
+
                 string responseString = await c.MakeRequest("action=activateaccount&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
                 if (responseString == "OK")
                 {
@@ -574,6 +576,7 @@ namespace LocationConnection
             {
                 DeleteAccount.Enabled = true;
                 DeleteAccount.Alpha = 0.5f;
+
                 string url = "action=deleteaccount&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
                 if (!string.IsNullOrEmpty(locationUpdatesTo))
                 {

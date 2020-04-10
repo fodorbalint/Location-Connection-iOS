@@ -10,25 +10,25 @@ namespace LocationConnection
 {
 	class LangEnglish
     {
-        public const string versionInfo = "Version: 28. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories\n\n";
+        public const string versionInfo = "Version: 28. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories";
 
-        public static string ConfirmAction = "Confirm action";
-        public static string DialogOK = "OK";
-        public static string DialogCancel = "Cancel";
-        public static string DialogYes = "Yes";
-        public static string DialogNo = "No";
-        public static string SnackOK = "OK";
+        public const string ConfirmAction = "Confirm action";
+        public const string DialogOK = "OK";
+        public const string DialogCancel = "Cancel";
+        public const string DialogYes = "Yes";
+        public const string DialogNo = "No";
+        public const string SnackOK = "OK";
 
-        public static string ShowReceived = "Show";
-        public static string LocationUpdatesFromStart = "is now sending you location updates every";
-        public static string LocationUpdatesFromEnd = "has stopped the location updates.";
+        public const string ShowReceived = "Show";
+        public const string LocationUpdatesFromStart = "is now sending you location updates every";
+        public const string LocationUpdatesFromEnd = "has stopped the location updates.";
 
         public const string MenuReport = "Report...";
         public const string MenuBlock = "Block...";
         public const string UserReported = "User reported.";
 
-        public const string BlockDialogText = "This will permanently hide the user while you are logged in to your account.\nThey will not show up in search lists, nor can you find them on the list of hidden people.\nThis action cannot be undone.\nAre you sure you want to continue?";
         public const string ReportDialogText = "This will send a nofitication to the developer, who will review it, and take action if necessary.\nAre you sure you want to continue?";
+        public const string BlockDialogText = "This will permanently hide the user while you are logged in to your account.\nThey will not show up in search lists, nor can you find them on the list of hidden people.\nThis action cannot be undone.\nAre you sure you want to continue?";
 
         // Main
 
@@ -147,6 +147,8 @@ namespace LocationConnection
         public const string PictureTooLarge = "The uploaded image exceeds the 20 MB limit.";
         public const string PasswordMismatch = "Incorrect password. Log out to reset it.";
         public const string UserPassive = "[name] is not active.";
+        public const string MatchNotFound = "Match not found.";
+        public const string UserNotAvailable = "User not available.";
 
         // List
 
@@ -205,155 +207,154 @@ namespace LocationConnection
             "men"
         };
 
-        public static string UseGeoNo = "No location filter";
-        public static string UseGeoYes = "Within distance from:";
-        public static string DistanceSourceCurrent = "Current location";
-        public static string DistanceSourceAddress = "Address/coordinates";
-        public static string DistanceUnit = "km";
-        public static string GeoFilterNoLocation = "No location was set.\nTurn off geographic filtering, acquire current location, or set an address.";
-        public static string LocationNotInUse = "Location is not in use.";
-        public static string WrongNumberFormat = "Wrong number format.";
-        public static string MinDistanceMessage = "Distance must be at least 1 km.";
-        public static string MaxDistanceMessage = "The maximum distance is 20015 km.";
-        public static string MapStreet = "Street";
-        public static string MapSatellite = "Satellite";
+        public const string UseGeoNo = "No location filter";
+        public const string UseGeoYes = "Within distance from:";
+        public const string DistanceSourceCurrent = "Current location";
+        public const string DistanceSourceAddress = "Address/coordinates";
+        public const string DistanceUnit = "km";
+        public const string GeoFilterNoLocation = "No location was set.\nTurn off geographic filtering, acquire current location, or set an address.";
+        public const string LocationNotInUse = "Location is not in use.";
+        public const string WrongNumberFormat = "Wrong number format.";
+        public const string MinDistanceMessage = "Distance must be at least 1 km.";
+        public const string MaxDistanceMessage = "The maximum distance is 20015 km.";
+        public const string MapStreet = "Street";
+        public const string MapSatellite = "Satellite";
 
-        public static string ConvertingAddress = "Converting address...";
-        public static string AddressNoResult = "Address not found.";
-        public static string OverQueryLimit = "Query limit reached.\nConverting address to coordinates is a paid service, read about current limitations in the Help Center.\nTry again later, or enter coordinates.";
-        public static string LoggingIn = "Logging in...";
-        public static string GettingLocation = "Getting location...";
-        public static string LoadingList = "Loading...";
-        public static string NoResult = "Nobody matched your search criteria.";
-        public static string ResultsCount = "[num] results.";
-        public static string ResultCount = "1 result.";
-        public static string ResultSetInterval = "[start] - [end] of";
-        public static string SettingMap = "Setting map...";
-        public static string NoLocationSet = "Location was not set or acquired.";
-        public static string MapViewNoLocation = "Showing map requires location access, or you need to set an address.\n\nDo you want to turn on location now?";
-        public static string MapViewNoUseLocation = "Do you want to enable location?";
-        public static string LocationDisabledButUsingLocation = "Your setting to use location is on, but permission is not granted.\nLocation is not acquired.";
-        public static string LocationNotGranted = "Location permission was not granted.";
+        public const string ConvertingAddress = "Converting address...";
+        public const string AddressNoResult = "Address not found.";
+        public const string OverQueryLimit = "Query limit reached.\nConverting address to coordinates is a paid service, read about current limitations in the Help Center.\nTry again later, or enter coordinates.";
+        public const string LoggingIn = "Logging in...";
+        public const string GettingLocation = "Getting location...";
+        public const string LoadingList = "Loading...";
+        public const string NoResult = "Nobody matched your search criteria.";
+        public const string ResultsCount = "[num] results.";
+        public const string ResultCount = "1 result.";
+        public const string ResultSetInterval = "[start] - [end] of";
+        public const string SettingMap = "Setting map...";
+        public const string NoLocationSet = "Location was not set or acquired.";
+        public const string MapViewNoLocation = "Showing map requires location access, or you need to set an address.\n\nDo you want to turn on location now?";
+        public const string MapViewNoUseLocation = "Do you want to enable location?";
+        public const string LocationDisabledButUsingLocation = "Your setting to use location is on, but permission is not granted.\nLocation is not acquired.";
+        public const string LocationNotGranted = "Location permission was not granted.";
 
-        public static string NoNetwork = "No Internet connection.";
-        public static string NetworkTimeout = "Internet connection timed out.";
-        public static string ErrorEncountered = "Error encountered";
-        public static string ErrorNotificationSent = "Developer has been notified.";
-        public static string ErrorNotificationToSend = "Developer will be notified on app restart.";
+        public const string NoNetwork = "No Internet connection.";
+        public const string NetworkTimeout = "Internet connection timed out.";
+        public const string ErrorEncountered = "Error encountered";
+        public const string ErrorNotificationSent = "Developer has been notified.";
+        public const string ErrorNotificationToSend = "Developer will be notified on app restart.";
 
         // Profile View
 
-        public static string SendLocation = "Update location";
-        public static string EditSelf = "Edit profile";
-        public static string ShortSecond = "sec";
-        public static string ShortSeconds = "sec";
-        public static string Second = "second";
-        public static string Seconds = "seconds";
-        public static string ShortMinute = "min";
-        public static string ShortMinutes = "min";
-        public static string Minute = "minute";
-        public static string Minutes = "minutes";
-        public static string Hour = "hour";
-        public static string Hours = "hours";
-        public static string Day = "day";
-        public static string Days = "days";
-        public static string Ago = "ago";
-        public static string Now = "Now";
-        public static string NowSmall = "now";
+        public const string SendLocation = "Update location";
+        public const string EditSelf = "Edit profile";
+        public const string ShortSecond = "sec";
+        public const string ShortSeconds = "sec";
+        public const string Second = "second";
+        public const string Seconds = "seconds";
+        public const string ShortMinute = "min";
+        public const string ShortMinutes = "min";
+        public const string Minute = "minute";
+        public const string Minutes = "minutes";
+        public const string Hour = "hour";
+        public const string Hours = "hours";
+        public const string Day = "day";
+        public const string Days = "days";
+        public const string Ago = "ago";
+        public const string Now = "Now";
+        public const string NowSmall = "now";
 
-        public static string ProfileViewLocation = "Location";
-        public static string ProfileViewDistance = "Distance";
-        public static string ProfileViewAway = "away";
+        public const string ProfileViewLocation = "Location";
+        public const string ProfileViewDistance = "Distance";
+        public const string ProfileViewAway = "away";
 
-        public static string LocationUpdated = "Location updated.";
-        public static string LocationNotUpdated = "Location could not be updated.";
-        public static string LocationNotAcquired = "Location is not yet acquired.";
+        public const string LocationUpdated = "Location updated.";
+        public const string LocationNotUpdated = "Location could not be updated.";
+        public const string LocationNotAcquired = "Location is not yet acquired.";
 
-        public static string IsAMatch = "To hide [name], unmatch [sex] first.";
-        public static string SexHim = "him";
-        public static string SexHer = "her";
+        public const string IsAMatch = "To hide [name], unmatch [sex] first.";
+        public const string SexHim = "him";
+        public const string SexHer = "her";
 
         public static string DialogMatch = "It is a match!" + Environment.NewLine + "Chat now?";
 
         // Chat List
 
-        public static string NoMatch = "You don't have any matches.";
-        public static string ChatListMatch = "match.";
-        public static string ChatListMatches = "matches.";
+        public const string NoMatch = "You don't have any matches.";
+        public const string ChatListMatch = "match.";
+        public const string ChatListMatches = "matches.";
 
         // Chat One
 
         public static string ChatOneEnableNotifications = "Enabling notifications is necessary for instant messaging." + Environment.NewLine + "Do you want to give permission now?" + Environment.NewLine + Environment.NewLine + "In-app and background notification preferences can be changed in Settings.";
-        public static string DialogDontAsk = "Don't ask again";
-        public static string DialogGoToSettings = "Go to Settings";
+        public const string DialogDontAsk = "Don't ask again";
+        public const string DialogGoToSettings = "Go to Settings";
 
-        public static string MatchNotFound = "Match not found.";
-        public static string ChatOneDataLoading = "Wait until data is loaded.";        
-        public static string Matched = "Matched";
-        public static string Unmatched = "Unmatched";
+        public const string ChatOneDataLoading = "Wait until data is loaded.";        
+        public const string Matched = "Matched";
+        public const string Unmatched = "Unmatched";
 
-        public static string MenuStartLocationUpdates = "Start sending location updates";
-        public static string MenuStopLocationUpdates = "Stop sending location updates";
-        public static string MenuAddFriend = "Add to friends";
-        public static string MenuRemoveFriend = "Remove from friends";
-        public static string MenuUnmatch = "Unmatch";
+        public const string MenuStartLocationUpdates = "Start sending location updates";
+        public const string MenuStopLocationUpdates = "Stop sending location updates";
+        public const string MenuAddFriend = "Add to friends";
+        public const string MenuRemoveFriend = "Remove from friends";
+        public const string MenuUnmatch = "Unmatch";
 
-        public static string ChangeUpdateCriteria = "For real-time updates, location refresh frequency must be at most 60 seconds. Apply this setting now?";
-        public static string LocationUpdatesToStart = "Location updates started.";
-        public static string LocationUpdatesToEnd = "Location updates stopped.";
-        public static string FriendAdded = "Friend added.";
-        public static string FriendRemoved = "Friend removed.";
+        public const string ChangeUpdateCriteria = "For real-time updates, location refresh frequency must be at most 60 seconds. Apply this setting now?";
+        public const string LocationUpdatesToStart = "Location updates started.";
+        public const string LocationUpdatesToEnd = "Location updates stopped.";
+        public const string FriendAdded = "Friend added.";
+        public const string FriendRemoved = "Friend removed.";
 
-        public static string DialogUnmatchMatched = "Are you sure you want to unmatch from [name]? If [sex] unmatches you, your conversations will not be recoverable.";
-        public static string DialogUnmatchUnmatched = "Are you sure you want to unmatch from [name]? Since [sex] already unmatched you, your conversation history will be deleted.";
-        public static string DialogUnmatchDeleted = "Are you sure you want to unmatch? Your conversation history will be deleted.";
-        public static string SexHe = "he";
-        public static string SexShe = "she";
+        public const string DialogUnmatchMatched = "Are you sure you want to unmatch from [name]? If [sex] unmatches you, your conversations will not be recoverable.";
+        public const string DialogUnmatchUnmatched = "Are you sure you want to unmatch from [name]? Since [sex] already unmatched you, your conversation history will be deleted.";
+        public const string DialogUnmatchDeleted = "Are you sure you want to unmatch? Your conversation history will be deleted.";
+        public const string SexHe = "he";
+        public const string SexShe = "she";
 
-        public static string NoMessages = "No messages yet.";
-        public static string MessageStatusSent = "Sent";
-        public static string MessageStatusSeen = "Seen";
-        public static string MessageStatusRead = "Read";
+        public const string NoMessages = "No messages yet.";
+        public const string MessageStatusSent = "Sent";
+        public const string MessageStatusSeen = "Seen";
+        public const string MessageStatusRead = "Read";
 
-        public static string EnableLocationLevelMatch = "To send location to [name], enable location sharing with matches, or add [sex] to your friends.";
-        public static string EnableLocationLevelFriend = "To send location to [name], enable location sharing with friends.";
+        public const string EnableLocationLevelMatch = "To send location to [name], enable location sharing with matches, or add [sex] to your friends.";
+        public const string EnableLocationLevelFriend = "To send location to [name], enable location sharing with friends.";
 
         // Location history
 
-        public static string NoLocationRecords = "No records yet.";
+        public const string NoLocationRecords = "No records yet.";
 
         // Help center
 
-        public static string HelpCenterFormCaption = "Ask a question or send feedback";
-        public static string HelpCenterFormSend = "Send";
-        public static string HelpCenterSent = "Message sent.";
+        public const string HelpCenterFormCaption = "Ask a question or send feedback";
+        public const string HelpCenterFormSend = "Send";
+        public const string HelpCenterSent = "Message sent.";
 
         // Settings
 
-        public static string NotificationsText = "Notifications";
-        public static string NotificationsInApp = "App in use";
-        public static string NotificationsBackground = "Background";
-        public static string NotificationsNewMatchText = "New match";
-        public static string NotificationsNewMessageText = "New message";
-        public static string NotificationsUnmatchText = "Unmatch";
-        public static string NotificationsRematchText = "Re-match";
+        public const string NotificationsText = "Notifications";
+        public const string NotificationsInApp = "App in use";
+        public const string NotificationsBackground = "Background";
+        public const string NotificationsNewMatchText = "New match";
+        public const string NotificationsNewMessageText = "New message";
+        public const string NotificationsUnmatchText = "Unmatch";
+        public const string NotificationsRematchText = "Re-match";
 
-        public static string DisplaySection = "Display";
-        public static string MapIconSizeText = "Profile icon size on map";
-        public static string MapRatioText = "Map height on profile page";
+        public const string DisplaySection = "Display";
+        public const string MapIconSizeText = "Profile icon size on map";
+        public const string MapRatioText = "Map height on profile page";
 
-        public static string LocationText = "Location";
-        public static string BackgroundLocation = "Update in background";
-        public static string InAppLocationRate = "In-app refresh frequency";
-        public static string InAppLocationRateExplanation = "Used for your device's location history, and determines the frequency for sending location updates to a match.";
-        public static string BackgroundLocationRate = "Background refresh frequency";
+        public const string LocationText = "Location";
+        public const string BackgroundLocation = "Update in background";
+        public const string InAppLocationRate = "In-app refresh frequency";
+        public const string InAppLocationRateExplanation = "Used for your device's location history, and determines the frequency for sending location updates to a match.";
+        public const string BackgroundLocationRate = "Background refresh frequency";
 
-        public static string LocationHistory = "See your 24-hour location history";
+        public const string LocationHistory = "See your 24-hour location history";
 
-        public static string SettingsFormCaption = "Report an error";
-        public static string SettingsFormSend = "Send";
-        public static string ProgramLogIncluded = "System log attached.";
-        public static string SeeProgramLog = "See log";
-        public static string SettingsSent = "Message sent.";
+        public const string SettingsFormCaption = "Report an error";
+        public const string SettingsFormSend = "Send";
+        public const string ProgramLogIncluded = "System log attached.";
+        public const string SeeProgramLog = "See log";
+        public const string SettingsSent = "Message sent.";
     }
 }

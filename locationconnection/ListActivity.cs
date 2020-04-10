@@ -73,14 +73,10 @@ namespace LocationConnection
 {
     public partial class ListActivity : BaseActivity, IUITextFieldDelegate, IUISearchBarDelegate, IUIAlertViewDelegate
     {
-        private string loginSessionFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "loginsession.txt");
-
         private static bool backgroundNotificationsSet;        
         public static ListActivity thisInstance;
         private bool autoLogin;
 
-        private bool filtersOpen;
-        private bool searchOpen;
         private bool distanceFiltersOpen;
 
         private bool listLoading;
@@ -201,7 +197,7 @@ namespace LocationConnection
                 //IsPlayServicesAvailable();
                 //CreateNotificationChannel();
 
-                if (!c.IsLoggedIn() && File.Exists(loginSessionFile))
+                if (!c.IsLoggedIn() && File.Exists(c.loginSessionFile))
                 {
                     autoLogin = true;
                 }
@@ -219,7 +215,7 @@ namespace LocationConnection
                         Session.LastDataRefresh = null;
                         Session.LocationTime = null;
 
-                        string str = File.ReadAllText(loginSessionFile);
+                        string str = File.ReadAllText(c.loginSessionFile);
                         string[] strarr = str.Split(";");
 
                         string url = "action=loginsession&ID=" + strarr[0] + "&SessionID=" + strarr[1];
@@ -323,6 +319,7 @@ namespace LocationConnection
                                     else
                                     {
                                         Session.SnackMessage = LangEnglish.LocationDisabledButUsingLocation;
+                                        Session.SnackPermanent = true;
                                     }
 
                                     recenterMap = true;
@@ -378,7 +375,7 @@ namespace LocationConnection
 
                                     if (error == "LoginFailed") // this is the only error we can get
                                     {
-                                        File.Delete(loginSessionFile);
+                                        File.Delete(c.loginSessionFile);
                                     }
 
                                     recenterMap = true;
@@ -464,8 +461,6 @@ namespace LocationConnection
                 mapToSet = false;
                 listLoading = false;
 
-                filtersOpen = true;
-                searchOpen = true;
                 distanceFiltersOpen = true;
 
                 UITextField.Notifications.ObserveTextFieldTextDidChange(ChangesDetected);
@@ -550,16 +545,14 @@ namespace LocationConnection
             {
                 base.ViewWillAppear(animated);
 
-                //c.CW("Stopwatch " + stw.ElapsedMilliseconds + " ViewWillAppear");
-
                 if (File.Exists(c.locationLogFile))
                 {
                     TruncateLocationLog();
                 }
                 TruncateSystemLog();
 
-                c.CW("ViewWillAppear logged in: " + c.IsLoggedIn());
-                c.LogActivity("ViewWillAppear logged in: " + c.IsLoggedIn());
+                c.CW("Logged in: " + c.IsLoggedIn());
+                c.LogActivity("Logged in: " + c.IsLoggedIn());
 
                 if (c.IsLoggedIn())
                 {
@@ -571,8 +564,6 @@ namespace LocationConnection
                     LoggedOutLayout();
                     SetLoggedOutMenu();
                 }
-
-                SetViews();
 
                 if (!(listProfiles is null) && !(newListProfiles is null) && Session.ListType != "hid") { //hid list will reload
 					if (absoluteIndex < absoluteStartIndex)
@@ -683,6 +674,12 @@ namespace LocationConnection
                         Session.UseLocation = true;
                     }
                 }
+                if (!(bool)Session.UseLocation || !c.IsLocationEnabled()) //the user might have turned off location while having current location checked
+				{
+					SetDistanceSourceAddress();
+				}
+
+                SetViews();
 
                 long unixTimestamp = c.Now();
 
@@ -959,20 +956,13 @@ namespace LocationConnection
             if (!(bool)Settings.SearchOpen)
             {
                 c.CollapseY(SearchLayout);
-                searchOpen = false;
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search.png"), UIControlState.Normal);
             }
             else
             {
-                //if (!searchInShown)
-                //{
                 Session.LastSearchType = Constants.SearchType_Search;
                 c.ExpandY(SearchLayout);
-                searchOpen = true;
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search_pressed.png"), UIControlState.Normal);
-                    //searchInClicked++;
-                    //searchInShown = true;
-                //}
             }
 
             SearchTerm.Text = Session.SearchTerm;
@@ -986,14 +976,12 @@ namespace LocationConnection
             if (!(bool)Settings.FiltersOpen)
             {
                 c.CollapseY(FilterLayout);
-                filtersOpen = false;
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters.png"), UIControlState.Normal);
             }
             else
             {
                 Session.LastSearchType = Constants.SearchType_Filter;
                 c.ExpandY(FilterLayout);
-                filtersOpen = true;
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters_pressed.png"), UIControlState.Normal);
             }
 
@@ -1115,28 +1103,27 @@ namespace LocationConnection
         private void OpenFilters_Click(object sender, EventArgs e)
         {
             View.EndEditing(true);
-            if (!filtersOpen)
+            if (!(bool)Settings.FiltersOpen)
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters_pressed.png"), UIControlState.Normal);
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search"), UIControlState.Normal);
                 c.ExpandY(FilterLayout);
-                if (searchOpen)
+                
+                if ((bool)Settings.SearchOpen)
                 {
                     c.CollapseY(SearchLayout);
-                    searchOpen = false;
+                    Settings.SearchOpen = false;
                 }
                 else
                 {
                     UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 }
-                filtersOpen = true;
                 Settings.FiltersOpen = true;
-                Settings.SearchOpen = false;
                 Session.LastDataRefresh = null;
                 if (Session.LastSearchType == Constants.SearchType_Search)
                 {
                     Session.ResultsFrom = 1;
-                    //recenterMap = true;
+                    recenterMap = true;
                     Task.Run(() => LoadList());
                 }
             }
@@ -1145,32 +1132,28 @@ namespace LocationConnection
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters"), UIControlState.Normal);
                 c.CollapseY(FilterLayout);
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
-                filtersOpen = false;
                 Settings.FiltersOpen = false;
             }
-            //FilterLayout.ClipsToBounds = true;
         }
 
         private void OpenSearch_Click(object sender, EventArgs e)
         {
             View.EndEditing(true);
-            if (!searchOpen)
+            if (!(bool)Settings.SearchOpen)
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters"), UIControlState.Normal);
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search_pressed.png"), UIControlState.Normal);
                 c.ExpandY(SearchLayout);
-                if (filtersOpen)
+
+                if ((bool)Settings.FiltersOpen)
                 {
                     c.CollapseY(FilterLayout);
-                    filtersOpen = false;
+                    Settings.FiltersOpen = false;
                 }
                 else
                 {
                     UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 }
-                
-                searchOpen = true;
-                Settings.FiltersOpen = false;
                 Settings.SearchOpen = true;
                 Session.LastDataRefresh = null;
                 if (Session.LastSearchType == Constants.SearchType_Filter)
@@ -1179,14 +1162,12 @@ namespace LocationConnection
                     recenterMap = true;
                     Task.Run(() => LoadListSearch());
                 }
-
             }
             else
             {
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search.png"), UIControlState.Normal);
                 c.CollapseY(SearchLayout);
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
-                searchOpen = false;
                 Settings.SearchOpen = false;
             }
         }
@@ -1843,6 +1824,9 @@ namespace LocationConnection
             {
                 if (!MatchCoordinates(true))
                 {
+                    AddressOK.Enabled = false;
+                    AddressOK.Alpha = 0.5f;
+
                     StartLoaderAnim();
                     ResultSet.Hidden = false;
                     ResultSet.Text = LangEnglish.ConvertingAddress;
@@ -1884,6 +1868,9 @@ namespace LocationConnection
 
                     SetResultStatus();
                     StopLoaderAnim();
+
+                    AddressOK.Enabled = true;
+                    AddressOK.Alpha = 1;
                 }
                 else
                 {

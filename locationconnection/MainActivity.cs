@@ -8,9 +8,6 @@ namespace LocationConnection
 {
     public partial class MainActivity : BaseActivity, IUITextFieldDelegate
     {
-        public static string regSessionFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "regsession.txt");
-        private string regSaveFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "regsave.txt");
-
         private string checkFormMessage;
         private bool resetSectionVisible;
 
@@ -170,6 +167,7 @@ namespace LocationConnection
 
                 LoginDone.Enabled = false;
                 LoginDone.Alpha = 0.5f;
+
                 string url = "action=login&User=" + c.UrlEncode(LoginEmail.Text.Trim()) + "&Password=" + c.UrlEncode(LoginPassword.Text.Trim());
 
                 if (File.Exists(deviceTokenFile)) //sends the token whether it was already sent from this device or not
@@ -212,7 +210,7 @@ namespace LocationConnection
                     c.ReportError(responseString);
                 }
                 LoginDone.Enabled = true;
-                LoginDone.Alpha = 1f;
+                LoginDone.Alpha = 1;
             }
             else
             {
@@ -266,6 +264,7 @@ namespace LocationConnection
             {
                 ResetSendButton.Enabled = false;
                 ResetSendButton.Alpha = 0.5f;
+
                 string url = "action=resetpassword&Email=" + c.UrlEncode(ResetEmail.Text.Trim());
 
                 string responseString = await c.MakeRequest(url);
@@ -279,7 +278,7 @@ namespace LocationConnection
                 else
                 {
                     c.ReportError(responseString);
-                }
+                }                
                 ResetSendButton.Enabled = true;
                 ResetSendButton.Alpha = 1f;
             }

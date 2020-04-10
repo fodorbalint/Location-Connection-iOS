@@ -237,8 +237,8 @@ namespace LocationConnection
 			imagesUploading = false;
 			StopAnim();
 
-            /*try
-            {*/
+            try
+            {
                 string responseString = System.Text.Encoding.UTF8.GetString(e.Result);
                 if (responseString.Substring(0, 2) == "OK")
                 {
@@ -283,11 +283,11 @@ namespace LocationConnection
                 {
                     ImagesProgressText.Text = "";
                 }
-            /*}
+            }
             catch (Exception ex)
             {
                 c.ReportErrorSilent(ex.Message + System.Environment.NewLine + ex.StackTrace);
-            }*/
+            }
         }
 
         public void StartAnim()

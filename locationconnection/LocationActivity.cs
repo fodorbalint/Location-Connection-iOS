@@ -151,6 +151,8 @@ namespace LocationConnection
             }
             lines = new List<MKPolyline>();
 
+            //File.Delete(c.locationLogFile);
+
             if (File.Exists(c.locationLogFile))
             {
                 string[] fileLines = File.ReadAllLines(c.locationLogFile);
@@ -190,11 +192,7 @@ namespace LocationConnection
                     }
                 }
                 locationList[0].isSelected = true;
-                selectedPos = 0;
-                adapter = new LocationListAdapter(locationList);
-                LocationHistoryList.Source = adapter;
-                LocationHistoryList.ReloadData();
-                LocationHistoryList.Delegate = this;
+                selectedPos = 0;                
 
                 SetMap();
             }
@@ -202,6 +200,11 @@ namespace LocationConnection
             {
                 c.Snack(LangEnglish.NoLocationRecords);
             }
+
+            adapter = new LocationListAdapter(locationList);
+            LocationHistoryList.Source = adapter;
+            LocationHistoryList.ReloadData();
+            LocationHistoryList.Delegate = this;
         }
 
         public void SetMap()
@@ -352,22 +355,31 @@ namespace LocationConnection
             
             item.inApp = true;
 
-            if (selectedPos == 0)
+            if (selectedPos == 0 && locationList.Count > 0)
             {
                 item.isSelected = true;
                 locationList[selectedPos].isSelected = false;
                 AddCircle(location);
                 MoveMap(location, false);
             }
+            else if (locationList.Count == 0) {
+                item.isSelected = true;
+                AddCircle(location);
+                MoveMap(location, true);
+            }
             else
             {
                 item.isSelected = false;
                 selectedPos++;
             }
+
             locationList.Insert(0, item);
             LocationHistoryList.ReloadData();
 
-            AddLine(new CLLocationCoordinate2D(locationList[1].latitude, locationList[1].longitude), location, 0, 255, 0);
+            if (locationList.Count >= 2) {
+                AddLine(new CLLocationCoordinate2D(locationList[1].latitude, locationList[1].longitude), location, 0, 255, 0);
+            }
+            
         }
     }
 }

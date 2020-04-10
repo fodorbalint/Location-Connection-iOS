@@ -32,30 +32,6 @@ namespace LocationConnection
                 subFolder = Constants.SmallImageSize.ToString();
             }
 
-            string url;
-            if (!temp)
-            {
-                if (Constants.isTestDB)
-				{
-					url = Constants.HostName + Constants.UploadFolderTest + "/" + userID + "/" + subFolder + "/" + picture;
-				}
-				else
-				{
-					url = Constants.HostName + Constants.UploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
-				}
-            }
-            else
-            {
-                if (Constants.isTestDB)
-				{
-					url = Constants.HostName + Constants.TempUploadFolderTest + "/" + userID + "/" + subFolder + "/" + picture;
-				}
-				else
-				{
-					url = Constants.HostName + Constants.TempUploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
-				}
-            }
-
             string saveName = userID + "_" + subFolder +  "_" + picture;
 
             if (Exists(saveName))
@@ -89,6 +65,30 @@ namespace LocationConnection
                     ((MKAnnotationView)imageView).Image = UIImage.FromBundle(Constants.loadingImage);
                 }
 
+                string url;
+                if (!temp)
+                {
+                    if (Constants.isTestDB)
+                    {
+                        url = Constants.HostName + Constants.UploadFolderTest + "/" + userID + "/" + subFolder + "/" + picture;
+                    }
+                    else
+                    {
+                        url = Constants.HostName + Constants.UploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+                    }
+                }
+                else
+                {
+                    if (Constants.isTestDB)
+                    {
+                        url = Constants.HostName + Constants.TempUploadFolderTest + "/" + userID + "/" + subFolder + "/" + picture;
+                    }
+                    else
+                    {
+                        url = Constants.HostName + Constants.TempUploadFolder + "/" + userID + "/" + subFolder + "/" + picture;
+                    }
+                }
+
                 CommonMethods.LoadFromUrlAsyncData(url).ContinueWith((task) => {
                     if (task.Result != null)
                     {
@@ -113,7 +113,12 @@ namespace LocationConnection
                         context.InvokeOnMainThread(() => {
                             if (imageView is UIImageView)
                             {
-                                ((UIImageView)imageView).Image = UIImage.FromBundle(Constants.noImage);
+                                if (isLarge) {
+                                    ((UIImageView)imageView).Image = UIImage.FromBundle(Constants.noImageHD);
+                                }
+                                else {
+                                    ((UIImageView)imageView).Image = UIImage.FromBundle(Constants.noImage);
+                                }
                             }
                             else if (imageView is UIButton)
                             {

@@ -56,16 +56,11 @@ namespace LocationConnection
                 cell.MessageText.BackgroundColor = UIColor.FromRGB(246, 226, 187);
                 cell.TimeText.TextAlignment = UITextAlignment.Left;
             }
-            cell.MessageText.Text = UnescapeAll(item.Content);
+            cell.MessageText.Text = item.Content;
 
             SetMessageTime(cell, item.SentTime, item.SeenTime, item.ReadTime);
 
             return cell;
-        }
-
-        private string UnescapeAll(string input)
-        {
-            return input.Replace(@"\{", "{").Replace(@"\}", "}").Replace(@"\""", @"""");
         }
 
         public void SetMessageTime(ChatMessageWindowCell view, long sentTime, long seenTime, long readTime)
