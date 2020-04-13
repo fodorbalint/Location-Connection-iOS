@@ -70,7 +70,7 @@ namespace LocationConnection
                 string message = messageItem.Substring(sep5Pos + 1);
 
                 UILabel label = (UILabel)cell.ChatUserListItems.Subviews[j];
-                label.Text = CommonMethods.UnescapeBraces(message.Replace(Environment.NewLine, " "));
+                label.Text = message.Replace(Environment.NewLine, " ");
                 j++;
                 label.TextColor = UIColor.Black;
                 if (senderID != Session.ID)

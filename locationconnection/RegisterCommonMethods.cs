@@ -147,8 +147,9 @@ namespace LocationConnection
                             imagesUploading = true;
                             StartAnim();
 
-                            await UploadFile(e1.ImageUrl.Path, RegisterActivity.regsessionid);
-                        };
+                            await UploadFile(e1.ImageUrl.Path, RegisterActivity.regsessionid);						
+
+						};
                     }
 
                     imagePicker.SourceType = UIImagePickerControllerSourceType.PhotoLibrary;
@@ -212,7 +213,7 @@ namespace LocationConnection
 
                 imagesUploading = false;
                 context.InvokeOnMainThread(() => {
-                          c.ReportError(ex.Message + Environment.NewLine + ex.StackTrace);
+                    c.ReportError(ex.Message + Environment.NewLine + ex.StackTrace);
                 });
             }
         }

@@ -975,17 +975,12 @@ namespace LocationConnection
 		{
 			if (!string.IsNullOrEmpty(input))
 			{
-				return input.Replace("#", "%23").Replace("&", "%26").Replace("+", "%2B");
+				return input.Replace("#", "%23").Replace("&", "%26").Replace("+", "%2B").Replace(" ","%20"); //spaces at the end of the url will be otherwise cut off
 			}
 			else
 			{
 				return "";
 			}
-		}
-
-		public static string UnescapeBraces(string input)
-		{
-			return input.Replace(@"\{", "{").Replace(@"\}", "}").Replace(@"\""", @"""");
 		}
 
 		private void CollapseButton()

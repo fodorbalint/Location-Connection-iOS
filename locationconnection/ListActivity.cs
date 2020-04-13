@@ -1824,7 +1824,7 @@ namespace LocationConnection
             {
                 if (!MatchCoordinates(true))
                 {
-                    AddressOK.Enabled = false;
+                    AddressOK.UserInteractionEnabled = false;
                     AddressOK.Alpha = 0.5f;
 
                     StartLoaderAnim();
@@ -1869,8 +1869,8 @@ namespace LocationConnection
                     SetResultStatus();
                     StopLoaderAnim();
 
-                    AddressOK.Enabled = true;
-                    AddressOK.Alpha = 1;
+                    AddressOK.UserInteractionEnabled = true;
+                    AddressOK.Alpha = 1f;
                 }
                 else
                 {

@@ -55,6 +55,7 @@ namespace LocationConnection
             "Man"
         };
         public const string Email = "Email:";
+        public const string EmailExplanation = "A confirmation email will be sent. Should you ever forget your password, you can use this e-mail to reset it.";
         public const string Password = "Password:";
         public const string ConfirmPassword = "Confirm password:";
         public const string Username = "Username:";
@@ -103,6 +104,9 @@ namespace LocationConnection
         public const string NameEmpty = "Name must be filled in.";
         public const string ImagesEmpty = "At least one image must be uploaded.";
         public const string DescriptionEmpty = "Introduction must be filled in.";
+        public const string UsernameBackslash = "Last character of username cannot be \\";
+        public const string NameBackslash = "Last character of name cannot be \\";
+        public const string DescriptionBackslash = "Last character of introduction cannot be \\";
 
         public const string UsernameAvailable = "Username available.";
 

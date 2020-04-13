@@ -88,6 +88,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel EmailExplanationLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel EmailLabel { get; set; }
 
         [Outlet]
@@ -336,6 +340,11 @@ namespace LocationConnection
             if (Email != null) {
                 Email.Dispose ();
                 Email = null;
+            }
+
+            if (EmailExplanationLabel != null) {
+                EmailExplanationLabel.Dispose ();
+                EmailExplanationLabel = null;
             }
 
             if (EmailLabel != null) {

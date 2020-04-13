@@ -180,8 +180,10 @@ namespace LocationConnection
                 if (remoteMessage.AppData.ContainsKey(new NSString("title")))
                 {
 					title = remoteMessage.AppData["title"].ToString();
-					body = remoteMessage.AppData["body"].ToString();
+					body = remoteMessage.AppData["body"].ToString(); // \\ already converted to \
 				}
+
+				Console.WriteLine("Didreceivemessage:" + body);
 
 				HandleNotification(senderID, targetID, type, meta, inApp, title, body);
 			}
@@ -194,6 +196,8 @@ namespace LocationConnection
 
 		private void HandleNotification(int senderID, int targetID, string type, string meta, bool inApp, string title, string body)
         {
+			Console.WriteLine("HandleNotif:" + body);
+
 			int sep1Pos;
 			int sep2Pos;
 			int sep3Pos;

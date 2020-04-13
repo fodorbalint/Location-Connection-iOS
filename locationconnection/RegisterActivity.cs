@@ -11,7 +11,7 @@ using UIKit;
 
 namespace LocationConnection
 {
-    public partial class RegisterActivity : BaseActivity
+    public partial class RegisterActivity : BaseActivity, IUITextViewDelegate
     {
         public RegisterCommonMethods rc;
 
@@ -37,6 +37,7 @@ namespace LocationConnection
 
                 SexLabel.Text = LangEnglish.Sex;
                 EmailLabel.Text = LangEnglish.Email;
+                EmailExplanationLabel.Text = LangEnglish.EmailExplanation;
                 PasswordLabel.Text = LangEnglish.Password;
                 ConfirmPasswordLabel.Text = LangEnglish.ConfirmPassword;
                 UsernameLabel.Text = LangEnglish.Username;
@@ -62,6 +63,8 @@ namespace LocationConnection
                 Register.SetTitle(LangEnglish.Register, UIControlState.Normal);
                 Reset.SetTitle(LangEnglish.Reset, UIControlState.Normal);
                 RegisterCancel.SetTitle(LangEnglish.Cancel, UIControlState.Normal);
+
+                DescriptionText.Delegate = this;
 
                 CheckUsername.Layer.MasksToBounds = true; //required for presevering corner radius for highlighted state
                 Images.Layer.MasksToBounds = true;
@@ -99,7 +102,7 @@ namespace LocationConnection
                 }
 
                 CheckUsername.TouchUpInside += rc.CheckUsername_Click;
-                Images.TouchUpInside += rc.Images_Click;
+                Images.TouchUpInside += rc.Images_Click;                
 
                 UseLocationSwitch.TouchUpInside += rc.UseLocationSwitch_Click;
                 LocationShareAll.TouchUpInside += rc.LocationShareAll_Click;
@@ -250,6 +253,12 @@ namespace LocationConnection
             }
         }
 
+        [Export("textViewDidBeginEditing:")]
+        public virtual void EditingStarted(UIKit.UITextView textView)
+        {
+            RegisterScroll.ScrollRectToVisible(DescriptionText.Frame, true);
+        }
+
         public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
         {
             GetScreenMetrics();
@@ -279,7 +288,7 @@ namespace LocationConnection
 
                 string url = "action=register&Sex=" + (Sex.SelectedRowInComponent(0) - 1) + "&Email=" + c.UrlEncode(Email.Text.Trim()) + "&Password=" + c.UrlEncode(Password.Text.Trim())
                     + "&Username=" + c.UrlEncode(Username.Text.Trim()) + "&Name=" + c.UrlEncode(Name.Text.Trim())
-                    + "&Pictures=" + c.UrlEncode(string.Join("|", rc.uploadedImages)) + "&Description=" + c.UrlEncode(DescriptionText.Text.Trim()) + "&UseLocation=" + UseLocationSwitch.On
+                    + "&Pictures=" + c.UrlEncode(string.Join("|", rc.uploadedImages)) + "&Description=" + c.UrlEncode(DescriptionText.Text) + "&UseLocation=" + UseLocationSwitch.On
                     + "&LocationShare=" + locationShare + "&DistanceShare=" + distanceShare + "&regsessionid=" + regsessionid;
 
                 if (File.Exists(deviceTokenFile)) //sends the token whether it was sent from this device or not
@@ -376,12 +385,22 @@ namespace LocationConnection
                 Username.BecomeFirstResponder();
                 return false;
             }
+            if (Username.Text.Trim().Substring(Username.Text.Trim().Length - 1) == "\\")
+			{
+				checkFormMessage = LangEnglish.UsernameBackslash;
+				return false;
+			}
             if (Name.Text.Trim() == "")
             {
                 checkFormMessage = LangEnglish.NameEmpty;
                 Name.BecomeFirstResponder();
                 return false;
             }
+            if (Name.Text.Trim().Substring(Name.Text.Trim().Length - 1) == "\\")
+			{
+				checkFormMessage = LangEnglish.NameBackslash;
+				return false;
+			}
             if (rc.uploadedImages.Count == 0)
             {
                 checkFormMessage = LangEnglish.ImagesEmpty;
@@ -394,6 +413,11 @@ namespace LocationConnection
                 DescriptionText.BecomeFirstResponder();
                 return false;
             }
+            if (DescriptionText.Text.Substring(DescriptionText.Text.Length - 1) == "\\")
+			{
+				checkFormMessage =LangEnglish.DescriptionBackslash;
+				return false;
+			}
             return true;
         }
 

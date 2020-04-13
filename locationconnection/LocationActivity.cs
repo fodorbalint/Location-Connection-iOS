@@ -376,7 +376,8 @@ namespace LocationConnection
             locationList.Insert(0, item);
             LocationHistoryList.ReloadData();
 
-            if (locationList.Count >= 2) {
+            if (locationList.Count >= 2)
+            {
                 AddLine(new CLLocationCoordinate2D(locationList[1].latitude, locationList[1].longitude), location, 0, 255, 0);
             }
             

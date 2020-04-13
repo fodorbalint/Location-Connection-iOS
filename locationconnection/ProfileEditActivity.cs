@@ -9,7 +9,7 @@ using UIKit;
 
 namespace LocationConnection
 {
-    public partial class ProfileEditActivity : BaseActivity
+    public partial class ProfileEditActivity : BaseActivity, IUITextViewDelegate
     {
         public RegisterCommonMethods rc;
         private string checkFormMessage;
@@ -70,6 +70,8 @@ namespace LocationConnection
 
                 DeactivateAccount.SetTitle(LangEnglish.DeactivateAccount, UIControlState.Normal);
                 DeleteAccount.SetTitle(LangEnglish.DeleteAccount, UIControlState.Normal);
+
+                EditDescriptionText.Delegate = this;
 
                 EditImages.Layer.MasksToBounds = true;
                 EditSave.Layer.MasksToBounds = true;
@@ -201,6 +203,12 @@ namespace LocationConnection
             }
         }
 
+        [Foundation.Export("textViewDidBeginEditing:")]
+        public virtual void EditingStarted(UITextView textView)
+        {
+            ProfileEditScroll.ScrollRectToVisible(EditDescriptionText.Frame, true);
+        }
+
         private void SetSexChoice()
         {
             switch (Session.SexChoice)
@@ -311,6 +319,7 @@ namespace LocationConnection
                 if (EditDescriptionText.Text != Session.Description)
                 {
                     requestStringAdd += "&Description=" + c.UrlEncode(EditDescriptionText.Text);
+                    c.CW("req-" + requestStringAdd + "-------------------");
                 }
                 if (GetSexChoice() != Session.SexChoice)
                 {
@@ -447,6 +456,12 @@ namespace LocationConnection
                 EditDescriptionText.BecomeFirstResponder();
                 return false;
             }
+            if (EditDescriptionText.Text.Substring(EditDescriptionText.Text.Length-1) == "\\")
+			{
+				checkFormMessage = LangEnglish.DescriptionBackslash;
+                EditDescriptionText.BecomeFirstResponder();
+                return false;
+			}
 
             if (EditAccountDataSection.Frame.Height != 0)
             {
@@ -476,12 +491,24 @@ namespace LocationConnection
                     EditUsername.BecomeFirstResponder();
                     return false;
                 }
+                if (EditUsername.Text.Trim().Substring(EditUsername.Text.Trim().Length - 1) == "\\")
+				{
+					checkFormMessage = LangEnglish.UsernameBackslash;
+                    EditUsername.BecomeFirstResponder();
+                    return false;
+				}
                 if (EditName.Text.Trim() == "")
                 {
                     checkFormMessage = LangEnglish.NameEmpty;
                     EditName.BecomeFirstResponder();
                     return false;
                 }
+                if (EditName.Text.Trim().Substring(EditName.Text.Trim().Length - 1) == "\\")
+				{
+					checkFormMessage = LangEnglish.NameBackslash;
+                    EditName.BecomeFirstResponder();
+                    return false;
+				}
             }
 
             if (EditChangePasswordSection.Frame.Height != 0)

@@ -26,7 +26,7 @@
                                         </constraints>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="120">
-                                        <rect key="frame" x="10" y="15.5" width="67.5" height="17"/>
+                                        <rect key="frame" x="10" y="24" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                     </label>
@@ -548,16 +548,16 @@
                                 <state key="normal"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MenuContainer">
-                                <rect key="frame" x="207" y="24" width="164" height="336"/>
+                                <rect key="frame" x="171" y="24" width="200" height="336"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MenuContainerIn">
-                                        <rect key="frame" x="0.0" y="0.0" width="164" height="336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="336"/>
                                         <subviews>
                                             <stackView contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MenuContainerStack">
-                                                <rect key="frame" x="0.0" y="0.0" width="164" height="336"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="336"/>
                                                 <subviews>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuLogOut">
-                                                        <rect key="frame" x="0.0" y="0.0" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuLogOut0"/>
@@ -570,7 +570,7 @@
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuLogIn">
-                                                        <rect key="frame" x="0.0" y="48" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="48" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuLogIn0"/>
@@ -583,7 +583,7 @@
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuRegister">
-                                                        <rect key="frame" x="0.0" y="96" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="96" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuRegister0"/>
@@ -596,7 +596,7 @@
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuSettings">
-                                                        <rect key="frame" x="0.0" y="144" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="144" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuSettings0"/>
@@ -609,7 +609,7 @@
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuLocation">
-                                                        <rect key="frame" x="0.0" y="192" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="192" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuLocation0"/>
@@ -622,7 +622,7 @@
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuHelpCenter">
-                                                        <rect key="frame" x="0.0" y="240" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="240" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuHelpCenter0"/>
@@ -635,7 +635,7 @@
                                                         <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MenuAbout">
-                                                        <rect key="frame" x="0.0" y="288" width="164" height="48"/>
+                                                        <rect key="frame" x="0.0" y="288" width="200" height="48"/>
                                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="MenuAbout0"/>
@@ -1104,38 +1104,43 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" textContentType="email" keyboardType="emailAddress"/>
                                     </textField>
+                                    <label opaque="NO" text="EmailExplanationLabel" translatesAutoresizingMaskIntoConstraints="NO" numberOfLines="0" id="EmailExplanationLabel">
+                                        <rect key="frame" x="10" y="161" width="355" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                    </label>
                                     <label opaque="NO" text="Password" translatesAutoresizingMaskIntoConstraints="NO" id="PasswordLabel">
-                                        <rect key="frame" x="10" y="169.5" width="62.5" height="17"/>
+                                        <rect key="frame" x="10" y="196.5" width="62.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <textField opaque="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="Password">
-                                        <rect key="frame" x="134" y="161" width="231" height="34"/>
+                                        <rect key="frame" x="134" y="188" width="231" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <label opaque="NO" text="ConfirmPassword" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ConfirmPasswordLabel">
-                                        <rect key="frame" x="10" y="213.5" width="114" height="17"/>
+                                        <rect key="frame" x="10" y="240.5" width="114" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <textField opaque="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ConfirmPassword" borderStyle="roundedRect">
-                                        <rect key="frame" x="134" y="205" width="231" height="34"/>
+                                        <rect key="frame" x="134" y="232" width="231" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <label opaque="NO" text="Username" translatesAutoresizingMaskIntoConstraints="NO" id="UsernameLabel">
-                                        <rect key="frame" x="10" y="257.5" width="66" height="17"/>
+                                        <rect key="frame" x="10" y="284.5" width="66" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <textField opaque="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="Username">
-                                        <rect key="frame" x="134" y="249" width="231" height="34"/>
+                                        <rect key="frame" x="134" y="276" width="231" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="CheckUsername">
-                                        <rect key="frame" x="10" y="293" width="355" height="33"/>
+                                        <rect key="frame" x="10" y="320" width="355" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="CheckUsername0"/>
@@ -1152,17 +1157,17 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <label opaque="NO" text="Name" translatesAutoresizingMaskIntoConstraints="NO" id="NameLabel">
-                                        <rect key="frame" x="10" y="344.5" width="38" height="17"/>
+                                        <rect key="frame" x="10" y="371.5" width="38" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <textField opaque="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="Name">
-                                        <rect key="frame" x="134" y="336" width="231" height="34"/>
+                                        <rect key="frame" x="134" y="363" width="231" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Images">
-                                        <rect key="frame" x="10" y="380" width="355" height="33"/>
+                                        <rect key="frame" x="10" y="407" width="355" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Images0"/>
@@ -1179,33 +1184,33 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="ImageFrameLayout" id="ImagesUploaded">
-                                        <rect key="frame" x="10" y="423" width="355" height="0.0"/>
+                                        <rect key="frame" x="10" y="450" width="355" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0" id="ImagesUploaded0"/>
                                         </constraints>.
                                     </view>
                                     <label opaque="NO" text="ImagesProgressText" translatesAutoresizingMaskIntoConstraints="NO" id="ImagesProgressText">
-                                        <rect key="frame" x="10" y="432.5" width="319" height="17"/>
+                                        <rect key="frame" x="10" y="459.5" width="319" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <imageView contentMode="scaleToFill" image="ic_reload.png" translatesAutoresizingMaskIntoConstraints="NO" id="LoaderCircle">
-                                        <rect key="frame" x="329" y="423" width="36" height="36"/>
+                                        <rect key="frame" x="329" y="450" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="LoaderCircle0"/>
                                             <constraint firstAttribute="width" constant="36" id="LoaderCircle1"/>
                                         </constraints>
                                     </imageView>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0" translatesAutoresizingMaskIntoConstraints="NO" id="ImagesProgress">
-                                        <rect key="frame" x="10" y="459" width="355" height="2"/>
+                                        <rect key="frame" x="10" y="486" width="355" height="2"/>
                                     </progressView>
                                     <label opaque="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="DescriptionLabel">
-                                        <rect key="frame" x="10" y="471" width="74" height="17"/>
+                                        <rect key="frame" x="10" y="498" width="74" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <textView borderStyle="roundedRect" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Description">
-                                        <rect key="frame" x="10" y="498" width="355" height="250"/>
+                                        <rect key="frame" x="10" y="525" width="355" height="250"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1214,110 +1219,110 @@
                                         </constraints>
                                     </textView>
                                     <label opaque="NO" text="UseLocation" translatesAutoresizingMaskIntoConstraints="NO" id="UseLocationLabel">
-                                        <rect key="frame" x="10" y="765" width="80.5" height="17"/>
+                                        <rect key="frame" x="10" y="792" width="80.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UseLocationSwitch">
-                                        <rect key="frame" x="314" y="758" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="785" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="LocationExplanation" translatesAutoresizingMaskIntoConstraints="NO" numberOfLines="0" id="LocationExplanation">
-                                        <rect key="frame" x="10" y="799" width="355" height="17"/>
+                                        <rect key="frame" x="10" y="826" width="355" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label opaque="NO" text="LocationShare" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareLabel">
-                                        <rect key="frame" x="10" y="831" width="355" height="17"/>
+                                        <rect key="frame" x="10" y="858" width="355" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label opaque="NO" text="LocationShareAll" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareAllLabel">
-                                        <rect key="frame" x="35" y="865" width="108.5" height="17"/>
+                                        <rect key="frame" x="35" y="892" width="108.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareAll">
-                                        <rect key="frame" x="314" y="858" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="885" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="LocationShareLike" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareLikeLabel">
-                                        <rect key="frame" x="35" y="906" width="119" height="17"/>
+                                        <rect key="frame" x="35" y="933" width="119" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareLike">
-                                        <rect key="frame" x="314" y="899" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="926" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="LocationShareMatch" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareMatchLabel">
-                                        <rect key="frame" x="35" y="947" width="133" height="17"/>
+                                        <rect key="frame" x="35" y="974" width="133" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareMatch">
-                                        <rect key="frame" x="314" y="940" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="967" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="LocationShareFriend" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareFriendLabel">
-                                        <rect key="frame" x="35" y="988" width="133.5" height="17"/>
+                                        <rect key="frame" x="35" y="1015" width="133.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareFriend">
-                                        <rect key="frame" x="314" y="981" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1008" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="LocationShareNone" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareNoneLabel">
-                                        <rect key="frame" x="35" y="1029" width="127" height="17"/>
+                                        <rect key="frame" x="35" y="1056" width="127" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LocationShareNone">
-                                        <rect key="frame" x="314" y="1022" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1049" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="DistanceShare" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareLabel">
-                                        <rect key="frame" x="10" y="1063" width="355" height="17"/>
+                                        <rect key="frame" x="10" y="1090" width="355" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label opaque="NO" text="DistanceShareAll" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareAllLabel">
-                                        <rect key="frame" x="35" y="1097" width="110" height="17"/>
+                                        <rect key="frame" x="35" y="1124" width="110" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareAll">
-                                        <rect key="frame" x="314" y="1090" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1117" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="DistanceShareLike" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareLikeLabel">
-                                        <rect key="frame" x="35" y="1138" width="120" height="17"/>
+                                        <rect key="frame" x="35" y="1165" width="120" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareLike">
-                                        <rect key="frame" x="314" y="1131" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1158" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="DistanceShareMatch" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareMatchLabel">
-                                        <rect key="frame" x="35" y="1179" width="134.5" height="17"/>
+                                        <rect key="frame" x="35" y="1206" width="134.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareMatch">
-                                        <rect key="frame" x="314" y="1172" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1199" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="DistanceShareFriend" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareFriendLabel">
-                                        <rect key="frame" x="35" y="1220" width="134.5" height="17"/>
+                                        <rect key="frame" x="35" y="1247" width="134.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareFriend">
-                                        <rect key="frame" x="314" y="1213" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1240" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="DistanceShareNone" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareNoneLabel">
-                                        <rect key="frame" x="35" y="1261" width="128.5" height="17"/>
+                                        <rect key="frame" x="35" y="1288" width="128.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceShareNone">
-                                        <rect key="frame" x="314" y="1254" width="51" height="31"/>
+                                        <rect key="frame" x="314" y="1281" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" text="EulaLabel" translatesAutoresizingMaskIntoConstraints="NO" id="EulaLabel">
-                                        <rect key="frame" x="10" y="1305" width="65.5" height="17"/>
+                                        <rect key="frame" x="10" y="1332" width="65.5" height="17"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
@@ -1329,7 +1334,7 @@
                                         </constraints>
                                     </textView>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Register">
-                                        <rect key="frame" x="10" y="1597" width="113" height="33"/>
+                                        <rect key="frame" x="10" y="1624" width="113" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Register0"/>
@@ -1346,7 +1351,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Reset">
-                                        <rect key="frame" x="131" y="1597" width="113" height="33"/>
+                                        <rect key="frame" x="131" y="1624" width="113" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Reset0"/>
@@ -1363,7 +1368,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="RegisterCancel">
-                                        <rect key="frame" x="252" y="1597" width="113" height="33"/>
+                                        <rect key="frame" x="252" y="1624" width="113" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="RegisterCancel0"/>
@@ -1391,9 +1396,12 @@
                                     <constraint firstItem="Email" firstAttribute="top" secondItem="Sex" secondAttribute="bottom" constant="10" id="Email2"/>
                                     <constraint firstItem="Email" firstAttribute="leading" secondItem="ConfirmPasswordLabel" secondAttribute="trailing" constant="10" id="Email3"/>
                                     <constraint firstAttribute="trailing" secondItem="Email" secondAttribute="trailing" constant="10" id="Email4"/>
+                                    <constraint firstItem="EmailExplanationLabel" firstAttribute="top" secondItem="Email" secondAttribute="bottom" constant="10" id="EmailExplanationLabel2"/>
+                                    <constraint firstAttribute="leading" secondItem="EmailExplanationLabel" secondAttribute="leading" constant="-10" id="EmailExplanationLabel3"/>
+                                    <constraint firstAttribute="trailing" secondItem="EmailExplanationLabel" secondAttribute="trailing" constant="10" id="EmailExplanationLabel4"/>
                                     <constraint firstItem="PasswordLabel" firstAttribute="centerY" secondItem="Password" secondAttribute="centerY" id="PasswordLabel2"/>
                                     <constraint firstAttribute="leading" secondItem="PasswordLabel" secondAttribute="leading" constant="-10" id="PasswordLabel3"/>
-                                    <constraint firstItem="Password" firstAttribute="top" secondItem="Email" secondAttribute="bottom" constant="10" id="Password2"/>
+                                    <constraint firstItem="Password" firstAttribute="top" secondItem="EmailExplanationLabel" secondAttribute="bottom" constant="10" id="Password2"/>
                                     <constraint firstItem="Password" firstAttribute="leading" secondItem="ConfirmPasswordLabel" secondAttribute="trailing" constant="10" id="Password3"/>
                                     <constraint firstAttribute="trailing" secondItem="Password" secondAttribute="trailing" constant="10" id="Password4"/>
                                     <constraint firstItem="ConfirmPasswordLabel" firstAttribute="centerY" secondItem="ConfirmPassword" secondAttribute="centerY" id="ConfirmPasswordLabel2"/>
@@ -1582,6 +1590,7 @@
                         <outlet property="ScrollBottomOuterConstraint" destination="RegisterScroll3" id="name-outlet-RegisterScroll3"/>
                         <outlet property="EulaLabel" destination="EulaLabel" id="name-outlet-EulaLabel"/>
                         <outlet property="EulaText" destination="EulaText" id="name-outlet-EulaText"/>
+                        <outlet property="EmailExplanationLabel" destination="EmailExplanationLabel" id="name-outlet-EmailExplanationLabel"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="107819" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1798,16 +1807,16 @@
                                         <state key="normal"/>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuContainer">
-                                        <rect key="frame" x="241" y="134" width="130" height="96"/>
+                                        <rect key="frame" x="171" y="134" width="200" height="96"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuContainerIn">
-                                                <rect key="frame" x="0.0" y="0.0" width="130" height="96"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="96"/>
                                                 <subviews>
                                                     <stackView contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuContainerStack">
-                                                        <rect key="frame" x="0.0" y="0.0" width="130" height="96"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="96"/>
                                                         <subviews>
                                                             <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuReport">
-                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="48"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="48"/>
                                                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="48" id="ProfileViewMenuReport0"/>
@@ -1820,7 +1829,7 @@
                                                                 <state key="highlighted" backgroundImage="color_dcdcdc.png"/>
                                                             </button>
                                                             <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuBlock">
-                                                                <rect key="frame" x="0.0" y="48" width="130" height="48"/>
+                                                                <rect key="frame" x="0.0" y="48" width="200" height="48"/>
                                                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="48" id="ProfileViewMenuBlock0"/>
@@ -2457,17 +2466,17 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" text="" translatesAutoresizingMaskIntoConstraints="NO" id="ChatTargetName">
-                                                <rect key="frame" x="80" y="4" width="192" height="21.5"/>
+                                                <rect key="frame" x="80" y="4" width="192" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                             </label>
                                             <label opaque="NO" text="" translatesAutoresizingMaskIntoConstraints="NO" id="ChatMatchDate">
-                                                <rect key="frame" x="80" y="25.5" width="192" height="0.0"/>
+                                                <rect key="frame" x="80" y="4" width="192" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                             </label>
                                             <label opaque="NO" text="" translatesAutoresizingMaskIntoConstraints="NO" id="ChatUnmatchDate">
-                                                <rect key="frame" x="80" y="25.5" width="192" height="0.0"/>
+                                                <rect key="frame" x="80" y="4" width="192" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                             </label>
@@ -3886,22 +3895,22 @@
                                         </constraints>
                                     </imageView>
                                     <label text="NotificationsNewMatchLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NotificationsNewMatchLabel">
-                                        <rect key="frame" x="10" y="158" width="186" height="17"/>
+                                        <rect key="frame" x="10" y="97.5" width="186" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label text="NotificationsNewMessageLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NotificationsNewMessageLabel">
-                                        <rect key="frame" x="10" y="190" width="203.5" height="17"/>
+                                        <rect key="frame" x="10" y="129.5" width="203.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label text="NotificationsUnmatchLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NotificationsUnmatchLabel">
-                                        <rect key="frame" x="10" y="222" width="175.5" height="17"/>
+                                        <rect key="frame" x="10" y="161.5" width="175.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label text="NotificationsRematchLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NotificationsRematchLabel">
-                                        <rect key="frame" x="10" y="254" width="174" height="17"/>
+                                        <rect key="frame" x="10" y="193.5" width="174" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
@@ -3962,13 +3971,13 @@
                                         </constraints>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator2">
-                                        <rect key="frame" x="0.0" y="284.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="224" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsBottomSeparator20"/>
                                         </constraints>
                                     </imageView>
                                     <label text="DisplaySection" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" customClass="InsetLabel" id="DisplaySection">
-                                        <rect key="frame" x="0.0" y="286.5" width="375" height="27"/>
+                                        <rect key="frame" x="0.0" y="226" width="375" height="27"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.85" alpha="1"/>
@@ -3986,15 +3995,15 @@
                                         </constraints>
                                     </imageView>
                                     <label text="MapIconSizeLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MapIconSizeLabel">
-                                        <rect key="frame" x="10" y="323.5" width="118" height="17"/>
+                                        <rect key="frame" x="10" y="263" width="118" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="MapIconSize">
-                                        <rect key="frame" x="8" y="350.5" width="319" height="31"/>
+                                        <rect key="frame" x="8" y="290" width="319" height="31"/>
                                     </slider>
                                     <label text="MapIconSizeValue" textAlignment="right" opaque="NO" adjustsFontSizeToFit="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MapIconSizeValue">
-                                        <rect key="frame" x="335" y="357" width="30" height="17"/>
+                                        <rect key="frame" x="335" y="296.5" width="30" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <constraints>
@@ -4002,15 +4011,15 @@
                                         </constraints>
                                     </label>
                                     <label text="MapRatioLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MapRatioLabel">
-                                        <rect key="frame" x="10" y="390.5" width="96.5" height="17"/>
+                                        <rect key="frame" x="10" y="330" width="96.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="MapRatio">
-                                        <rect key="frame" x="8" y="417.5" width="319" height="31"/>
+                                        <rect key="frame" x="8" y="357" width="319" height="31"/>
                                     </slider>
                                     <label text="MapRatioValue" textAlignment="right" opaque="NO" adjustsFontSizeToFit="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MapRatioValue">
-                                        <rect key="frame" x="335" y="424" width="30" height="17"/>
+                                        <rect key="frame" x="335" y="363.5" width="30" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <constraints>
@@ -4018,13 +4027,13 @@
                                         </constraints>
                                     </label>
                                     <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator3">
-                                        <rect key="frame" x="0.0" y="455.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="395" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsBottomSeparator30"/>
                                         </constraints>
                                     </imageView>
                                     <label text="LocationLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" customClass="InsetLabel" id="LocationLabel">
-                                        <rect key="frame" x="0.0" y="457.5" width="375" height="27"/>
+                                        <rect key="frame" x="0.0" y="397" width="375" height="27"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.85" alpha="1"/>
@@ -4036,29 +4045,29 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsTopSeparator3">
-                                        <rect key="frame" x="0.0" y="484.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="424" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsTopSeparator30"/>
                                         </constraints>
                                     </imageView>
                                     <label text="BackgroundLocationLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationLabel">
-                                        <rect key="frame" x="10" y="501.5" width="168" height="17"/>
+                                        <rect key="frame" x="10" y="441" width="168" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocation">
-                                        <rect key="frame" x="316" y="494.5" width="51" height="31"/>
+                                        <rect key="frame" x="316" y="434" width="51" height="31"/>
                                     </switch>
                                     <label text="InAppLocationRateLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateLabel">
-                                        <rect key="frame" x="10" y="535.5" width="157.5" height="17"/>
+                                        <rect key="frame" x="10" y="475" width="157.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRate">
-                                        <rect key="frame" x="8" y="562.5" width="280" height="31"/>
+                                        <rect key="frame" x="8" y="502" width="280" height="31"/>
                                     </slider>
                                     <label text="InAppLocationRateValue" textAlignment="right" opaque="NO" adjustsFontSizeToFit="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateValue">
-                                        <rect key="frame" x="296" y="569" width="69" height="17"/>
+                                        <rect key="frame" x="296" y="508.5" width="69" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <constraints>
@@ -4066,20 +4075,20 @@
                                         </constraints>
                                     </label>
                                     <label text="InAppLocationRateExplanation" opaque="NO" contentMode="scaleToFill" numberOfLines="0" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateExplanation">
-                                        <rect key="frame" x="10" y="602.5" width="355" height="17"/>
+                                        <rect key="frame" x="10" y="542" width="355" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <label text="BackgroundLocationRateLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRateLabel">
-                                        <rect key="frame" x="10" y="629.5" width="197" height="17"/>
+                                        <rect key="frame" x="10" y="569" width="197" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRate">
-                                        <rect key="frame" x="8" y="656.5" width="280" height="31"/>
+                                        <rect key="frame" x="8" y="596" width="280" height="31"/>
                                     </slider>
                                     <label text="BackgroundLocationRateValue" textAlignment="right" opaque="NO" adjustsFontSizeToFit="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRateValue">
-                                        <rect key="frame" x="296" y="663" width="69" height="17"/>
+                                        <rect key="frame" x="296" y="602.5" width="69" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                         <constraints>
@@ -4087,7 +4096,7 @@
                                         </constraints>
                                     </label>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="LocationHistoryButton">
-                                        <rect key="frame" x="10" y="701.5" width="355" height="33"/>
+                                        <rect key="frame" x="10" y="641" width="355" height="33"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="LocationHistoryButton0"/>
@@ -4104,7 +4113,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator4">
-                                        <rect key="frame" x="0.0" y="782.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="722" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsBottomSeparator40"/>
                                         </constraints>
@@ -4119,7 +4128,7 @@
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsTopSeparator4">
-                                        <rect key="frame" x="0.0" y="824.5" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="764" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsTopSeparator40"/>
                                         </constraints>

@@ -25,8 +25,9 @@
         <MtouchArch>x86_64</MtouchArch>
         <MtouchLink>None</MtouchLink>
         <MtouchDebug>true</MtouchDebug>
-        <CodesignKey>iPhone Developer</CodesignKey>
+        <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
         <MtouchFloat32>true</MtouchFloat32>
+        <CodesignProvision>VS: WildCard Development</CodesignProvision>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
         <DebugType>none</DebugType>
@@ -37,6 +38,8 @@
         <MtouchLink>None</MtouchLink>
         <MtouchArch>x86_64</MtouchArch>
         <MtouchFloat32>true</MtouchFloat32>
+        <CodesignProvision>VS: WildCard Development</CodesignProvision>
+        <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
         <DebugSymbols>true</DebugSymbols>
@@ -48,10 +51,11 @@
         <WarningLevel>4</WarningLevel>
         <MtouchArch>ARM64</MtouchArch>
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-        <CodesignKey>iPhone Developer</CodesignKey>
+        <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
         <MtouchFloat32>true</MtouchFloat32>
         <DeviceSpecificBuild>true</DeviceSpecificBuild>
+        <CodesignProvision>VS: WildCard Development</CodesignProvision>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
         <DebugType>none</DebugType>
@@ -61,8 +65,9 @@
         <WarningLevel>4</WarningLevel>
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
         <MtouchArch>ARM64</MtouchArch>
-        <CodesignKey>iPhone Developer</CodesignKey>
+        <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
         <MtouchFloat32>true</MtouchFloat32>
+        <CodesignProvision>VS: WildCard Development</CodesignProvision>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System" />

@@ -527,13 +527,14 @@ namespace LocationConnection
 				SentTime = long.Parse(messageItem.Substring(sep2Pos + 1, sep3Pos - sep2Pos - 1)),
 				SeenTime = long.Parse(messageItem.Substring(sep3Pos + 1, sep4Pos - sep3Pos - 1)),
 				ReadTime = long.Parse(messageItem.Substring(sep4Pos + 1, sep5Pos - sep4Pos - 1)),
-				Content = CommonMethods.UnescapeBraces(messageItem.Substring(sep5Pos + 1))
+				Content = messageItem.Substring(sep5Pos + 1)
 			};
 			messageItems.Add(item);
 		}
 
 		public void AddMessageItemOne(string messageItem)
 		{
+			c.CW("ADDMessageitemone:" + messageItem);
 			NoMessages.Hidden = true;
 			AddMessageItem(messageItem);
 

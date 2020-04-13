@@ -145,7 +145,6 @@ namespace LocationConnection
 
                 if (pageType is null) //activity can be resumed by pressing a back button from chat one
                 {
-					c.CW("ProfileViewActivity pageType is null");
 					pageType = IntentData.profileViewPageType;
 				}
 				c.CW("ProfileViewActivity ViewWillAppear pageType " + pageType + " viewindex " + ListActivity.viewIndex + " absolutestartindex " + ListActivity.absoluteStartIndex);
@@ -1562,7 +1561,6 @@ namespace LocationConnection
 		{
 			if (!(imageLoading is null) && !imageLoading.IsCompleted)
 			{
-				c.CW("cancelling image loading");
 				cts.Cancel();
 			}
 		}
