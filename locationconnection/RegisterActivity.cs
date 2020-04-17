@@ -28,8 +28,8 @@ namespace LocationConnection
 
         public override void ViewDidLoad()
         {
-            try
-            {
+            //try
+            //{
                 base.ViewDidLoad();
 
                 GetScreenMetrics();
@@ -63,6 +63,7 @@ namespace LocationConnection
                 Register.SetTitle(LangEnglish.Register, UIControlState.Normal);
                 Reset.SetTitle(LangEnglish.Reset, UIControlState.Normal);
                 RegisterCancel.SetTitle(LangEnglish.Cancel, UIControlState.Normal);
+                ImageEditorLabel.Text = LangEnglish.ImageEditorLabel;                
 
                 DescriptionText.Delegate = this;
 
@@ -81,9 +82,12 @@ namespace LocationConnection
 
                 LoaderCircle.Hidden = true;
 
+                ImageEditorFrameBorder.Layer.BorderColor = UIColor.Black.CGColor;
+                ImageEditorFrameBorder.Layer.BorderWidth = 1;
+
                 rc = new RegisterCommonMethods(this, c, ImagesUploaded, Email, Username, Name, DescriptionText, CheckUsername, Images,
                 ImagesProgressText, LoaderCircle, ImagesProgress, UseLocationSwitch, LocationShareAll, LocationShareLike, LocationShareMatch, LocationShareFriend, LocationShareNone,
-                DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone);
+                DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone, ImageEditorControls, ImageEditorStatus, ImageEditorCancel, ImageEditorOK, ImageEditor, ImageEditorFrame, ImageEditorFrameBorder);
 
                 RegisterScroll.SetContext(this);
 
@@ -120,6 +124,8 @@ namespace LocationConnection
                 Register.TouchUpInside += Register_Click;
                 Reset.TouchUpInside += Reset_Click;
                 RegisterCancel.TouchUpInside += RegisterCancel_Click;
+                ImageEditorCancel.TouchUpInside += rc.CancelImageEditing;
+                ImageEditorOK.TouchUpInside += rc.OKImageEditing;
 
                 RoundBottom_Base = RoundBottom;
                 Snackbar_Base = Snackbar;
@@ -128,11 +134,11 @@ namespace LocationConnection
                 SnackBottomConstraint_Base = SnackBottomConstraint;
                 ScrollBottomConstraint_Base = ScrollBottomConstraint;
                 ScrollBottomOuterConstraint_Base = ScrollBottomOuterConstraint;
-            }
+            /*}
             catch (Exception ex)
             {
                 c.ReportErrorSilent(ex.Message + Environment.NewLine + ex.StackTrace);
-            }
+            }*/
         }
 
         public async override void ViewWillAppear(bool animated)

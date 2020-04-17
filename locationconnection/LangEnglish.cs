@@ -110,6 +110,8 @@ namespace LocationConnection
 
         public const string UsernameAvailable = "Username available.";
 
+        public const string ImageEditorLabel = "Align the image with the frame to crop it. Use two fingers to zoom.";
+
         //Profile Edit
 
         public const string EditSex = "I want to find";

@@ -89,7 +89,7 @@ namespace LocationConnection
 
                 rc = new RegisterCommonMethods(this, c, EditImagesUploaded, EditEmail, EditUsername, EditName, EditDescriptionText, EditCheckUsername, EditImages,
                 EditImagesProgressText, EditLoaderCircle, EditImagesProgress, EditUseLocationSwitch, EditLocationShareAll, EditLocationShareLike, EditLocationShareMatch, EditLocationShareFriend, EditLocationShareNone,
-                EditDistanceShareAll, EditDistanceShareLike, EditDistanceShareMatch, EditDistanceShareFriend, EditDistanceShareNone);
+                EditDistanceShareAll, EditDistanceShareLike, EditDistanceShareMatch, EditDistanceShareFriend, EditDistanceShareNone, null, null, null, null, null, null, null);
 
                 c.AddViews(Snackbar, Snackbar.SnackText, Snackbar.SnackButton);
                 ProfileEditScroll.SetContext(this);

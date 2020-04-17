@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using CoreAnimation;
+using CoreGraphics;
 using CoreLocation;
 using Foundation;
 using UIKit;
@@ -26,7 +27,14 @@ namespace LocationConnection
 		public UIProgressView ImagesProgress;
 		public UISwitch UseLocationSwitch, LocationShareAll, LocationShareLike, LocationShareMatch, LocationShareFriend, LocationShareNone;
 		public UISwitch DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone;
-
+		public UIView ImageEditorControls;
+		public UIView ImageEditorStatus;
+		public UIButton ImageEditorCancel;
+		public UIButton ImageEditorOK;
+		public UIImageView ImageEditor;
+		public UIView ImageEditorFrame, ImageEditorFrameBorder;
+		//private CustomMove move;
+        
 		public CommonMethods c;
 
 		public List<string> uploadedImages;
@@ -36,10 +44,11 @@ namespace LocationConnection
         private WebClient client;
 
         UIImagePickerController imagePicker;
+		private static string selectedImage;
 
         public RegisterCommonMethods(BaseActivity context, CommonMethods c, ImageFrameLayout ImagesUploaded, UITextField Email, UITextField Username, UITextField Name, UITextView DescriptionText, UIButton CheckUsername, UIButton Images,
             UILabel ImagesProgressText, UIImageView LoaderCircle, UIProgressView ImagesProgress, UISwitch UseLocationSwitch, UISwitch LocationShareAll, UISwitch LocationShareLike, UISwitch LocationShareMatch, UISwitch LocationShareFriend, UISwitch LocationShareNone,
-            UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone)
+            UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone, UIView ImageEditorControls, UIView ImageEditorStatus, UIButton ImageEditorCancel, UIButton ImageEditorOK, UIImageView ImageEditor, UIView ImageEditorFrame, UIView ImageEditorFrameBorder)
         {
             this.context = context;
             this.c = c;
@@ -64,14 +73,29 @@ namespace LocationConnection
 			this.DistanceShareLike = DistanceShareLike;
 			this.DistanceShareMatch = DistanceShareMatch;
 			this.DistanceShareFriend = DistanceShareFriend;
-			this.DistanceShareNone = DistanceShareNone;			
+			this.DistanceShareNone = DistanceShareNone;
+			this.ImageEditorControls = ImageEditorControls;
+			this.ImageEditorStatus = ImageEditorStatus;
+			this.ImageEditorCancel = ImageEditorCancel;
+			this.ImageEditorOK = ImageEditorOK;
+			this.ImageEditor = ImageEditor;
+			this.ImageEditorFrame = ImageEditorFrame;
+			this.ImageEditorFrameBorder = ImageEditorFrameBorder;
+
+			UIPanGestureRecognizer move = new UIPanGestureRecognizer();
+			move.AddTarget(() => MoveImage(move));
+			ImageEditor.AddGestureRecognizer(move);
+
+			UIPinchGestureRecognizer zoom = new UIPinchGestureRecognizer();
+			zoom.AddTarget(() => ZoomImage(zoom));
+			ImageEditor.AddGestureRecognizer(zoom);
 
 			uploadedImages = new List<string>();
 
             client = new WebClient();
             client.UploadProgressChanged += Client_UploadProgressChanged;
             client.UploadFileCompleted += Client_UploadFileCompleted;
-            client.Headers.Add("Content-Type", "image/jpeg");
+            client.Headers.Add("Content-Type", "image/jpeg");            
         }
 
 		public async void CheckUsername_Click(object sender, EventArgs e)
@@ -144,11 +168,38 @@ namespace LocationConnection
                                 return;
                             }
 
-                            imagesUploading = true;
-                            StartAnim();
+							UIImage image = UIImage.FromFile(e1.ImageUrl.Path);
+							nfloat sizeRatio = image.Size.Width / image.Size.Height;
 
-                            await UploadFile(e1.ImageUrl.Path, RegisterActivity.regsessionid);						
+                            if (sizeRatio == 1)
+                            {
+								await UploadFile(selectedImage, RegisterActivity.regsessionid);
+							}
+                            else
+                            {
+								ImageEditor.Image = image;
+								ImageEditorControls.Hidden = false;
+								ImageEditorStatus.Hidden = false;
+								ImageEditor.Hidden = false;
+								ImageEditorFrame.Hidden = false;
+								ImageEditorFrameBorder.Hidden = false;
+								selectedImage = e1.ImageUrl.Path;
 
+								//landscape mode?
+
+								if (sizeRatio > 1)
+								{
+									context.c.SetHeight(ImageEditor, ImageEditorFrame.Frame.Width);
+									context.c.SetWidth(ImageEditor, ImageEditorFrame.Frame.Width * sizeRatio);
+								}
+								else
+								{
+									context.c.SetHeight(ImageEditor, ImageEditorFrame.Frame.Width / sizeRatio);
+									context.c.SetWidth(ImageEditor, ImageEditorFrame.Frame.Width);
+								}
+
+								context.c.CW("SizeRatio: " + sizeRatio + " " + ImageEditorFrame.Frame.Width + " " + ImageEditorFrame.Frame.Width * sizeRatio);
+							}							
 						};
                     }
 
@@ -183,9 +234,147 @@ namespace LocationConnection
             }
         }
 
-        public async Task UploadFile(string fileName, string regsessionid) //use Task<int> for return value
+		nfloat lastScale = 1;
+		private nfloat touchStartX;
+		private nfloat touchStartY;
+		private nfloat startCenterX;
+		private nfloat startCenterY;
+		private nfloat xDist;
+		private nfloat yDist;
+		private bool outOfFrameX;
+		private bool outOfFrameY;
+
+
+        //out of frame image is allowed to come closer. Image in frame is not allowed to go out, only by pinching action.
+		public void MoveImage(UIPanGestureRecognizer recognizer)
+		{
+			var location = recognizer.LocationInView(ImageEditorFrame);
+			if (recognizer.State == UIGestureRecognizerState.Began)
+			{
+				touchStartX = location.X;
+				touchStartY = location.Y;
+				startCenterX = ImageEditor.Center.X;
+				startCenterY = ImageEditor.Center.Y;
+
+				xDist = startCenterX - ImageEditorFrame.Center.X;
+				yDist = startCenterY - ImageEditorFrame.Center.Y;
+
+				if (yDist <= 0 && -yDist + ImageEditorFrame.Frame.Height / 2 > ImageEditor.Frame.Height / 2 || yDist >= 0 && yDist + ImageEditorFrame.Frame.Height > ImageEditor.Frame.Height / 2)
+				{
+					outOfFrameY = true;
+				}
+                else
+                {
+					outOfFrameY = false;
+                }
+				if (xDist <= 0 && -xDist + ImageEditorFrame.Frame.Width / 2 > ImageEditor.Frame.Width / 2 || xDist >= 0 && xDist + ImageEditorFrame.Frame.Width > ImageEditor.Frame.Width / 2)
+				{
+					outOfFrameX = true;
+				}
+                else
+                {
+					outOfFrameX = false;
+                }
+			}
+            else
+            {
+				nfloat newxDist = startCenterX + location.X - touchStartX - ImageEditorFrame.Center.X;
+				nfloat newyDist = startCenterY + location.Y - touchStartY - ImageEditorFrame.Center.Y;
+
+				if (outOfFrameY && (yDist <= 0 && newyDist < yDist || yDist >= 0 && newyDist > yDist))
+				{
+					return;
+				}
+                else if (outOfFrameY)
+                {
+					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, startCenterY + location.Y - touchStartY);
+				}
+				if (outOfFrameX && (xDist <= 0 && newxDist < xDist || xDist >= 0 && newxDist > xDist))
+				{
+					return;
+				}
+                else if (outOfFrameX)
+                {
+					ImageEditor.Center = new CoreGraphics.CGPoint(startCenterX + location.X - touchStartX, ImageEditor.Center.Y);
+				}
+
+				if (yDist <= 0 && -yDist + ImageEditorFrame.Frame.Height / 2 <= ImageEditor.Frame.Height / 2 || yDist >= 0 && yDist + ImageEditorFrame.Frame.Height <= ImageEditor.Frame.Height / 2)
+                {
+					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, startCenterY + location.Y - touchStartY);
+					outOfFrameY = false;
+				}
+				if (xDist <= 0 && -xDist + ImageEditorFrame.Frame.Width / 2 <= ImageEditor.Frame.Width / 2 || xDist >= 0 && xDist + ImageEditorFrame.Frame.Width <= ImageEditor.Frame.Width / 2)
+				{
+					ImageEditor.Center = new CoreGraphics.CGPoint(startCenterX + location.X - touchStartX, ImageEditor.Center.Y);
+					outOfFrameX = false;
+				}
+
+				xDist = newxDist;
+				yDist = newyDist;
+			}
+
+			context.c.CW("Image moved, state: " + recognizer.State + " --- " + ImageEditorFrame.Center + " --- " + ImageEditor.Center);
+		}
+
+		public void ZoomImage(UIPinchGestureRecognizer recognizer)
+		{
+            if (recognizer.State == UIGestureRecognizerState.Ended)
+            {
+				lastScale = recognizer.Scale * lastScale;
+                if (lastScale < 1)
+                {
+					lastScale = 1;
+                }
+                else if (lastScale > 3)
+                {
+					lastScale = 3;
+                }
+				return;
+            }
+            if (lastScale * recognizer.Scale >= 1 && lastScale * recognizer.Scale <= 3)
+            {
+				recognizer.View.Transform = CGAffineTransform.MakeScale(recognizer.Scale * lastScale, recognizer.Scale * lastScale);
+			}
+            else if (lastScale * recognizer.Scale < 1)
+            {
+				recognizer.View.Transform = CGAffineTransform.MakeScale(1, 1);
+			}
+            else
+            {
+				recognizer.View.Transform = CGAffineTransform.MakeScale(3, 3);
+			}
+			
+			//context.c.CW("Image pinched, state: " + recognizer.State + " " + recognizer.Scale + " " + lastScale);
+		}
+
+		public void CancelImageEditing(object sender, EventArgs e)
+		{
+			ImageEditorControls.Hidden = true;
+			ImageEditorStatus.Hidden = true;
+			ImageEditor.Hidden = true;
+			ImageEditorFrame.Hidden = true;
+			ImageEditorFrameBorder.Hidden = true;
+			ImageEditor.Image = null;
+		}
+
+		public async void OKImageEditing(object sender, EventArgs e)
+		{
+			ImageEditorControls.Hidden = true;
+			ImageEditorStatus.Hidden = true;
+			ImageEditor.Hidden = true;
+			ImageEditorFrame.Hidden = true;
+			ImageEditorFrameBorder.Hidden = true;
+
+			await UploadFile(selectedImage, RegisterActivity.regsessionid);
+		}
+
+		public async Task UploadFile(string fileName, string regsessionid) //use Task<int> for return value
         {
-            try
+			imagesUploading = true;
+
+			context.InvokeOnMainThread(() => { StartAnim(); });
+
+			try
             {
                 string url;
                 if (c.IsLoggedIn())
@@ -209,9 +398,9 @@ namespace LocationConnection
             }
             catch (Exception ex)
             {
-                StopAnim();
+				context.InvokeOnMainThread(() => { StopAnim(); });
 
-                imagesUploading = false;
+				imagesUploading = false;
                 context.InvokeOnMainThread(() => {
                     c.ReportError(ex.Message + Environment.NewLine + ex.StackTrace);
                 });

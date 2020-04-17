@@ -104,6 +104,38 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView ImageEditor { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ImageEditorCancel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ImageEditorControls { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ImageEditorFrame { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ImageEditorFrameBorder { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel ImageEditorLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ImageEditorOK { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ImageEditorStatus { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton Images { get; set; }
 
         [Outlet]
@@ -360,6 +392,46 @@ namespace LocationConnection
             if (EulaText != null) {
                 EulaText.Dispose ();
                 EulaText = null;
+            }
+
+            if (ImageEditor != null) {
+                ImageEditor.Dispose ();
+                ImageEditor = null;
+            }
+
+            if (ImageEditorCancel != null) {
+                ImageEditorCancel.Dispose ();
+                ImageEditorCancel = null;
+            }
+
+            if (ImageEditorControls != null) {
+                ImageEditorControls.Dispose ();
+                ImageEditorControls = null;
+            }
+
+            if (ImageEditorFrame != null) {
+                ImageEditorFrame.Dispose ();
+                ImageEditorFrame = null;
+            }
+
+            if (ImageEditorFrameBorder != null) {
+                ImageEditorFrameBorder.Dispose ();
+                ImageEditorFrameBorder = null;
+            }
+
+            if (ImageEditorLabel != null) {
+                ImageEditorLabel.Dispose ();
+                ImageEditorLabel = null;
+            }
+
+            if (ImageEditorOK != null) {
+                ImageEditorOK.Dispose ();
+                ImageEditorOK = null;
+            }
+
+            if (ImageEditorStatus != null) {
+                ImageEditorStatus.Dispose ();
+                ImageEditorStatus = null;
             }
 
             if (Images != null) {

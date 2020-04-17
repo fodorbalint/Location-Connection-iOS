@@ -1511,6 +1511,62 @@
                                     <constraint firstAttribute="trailing" secondItem="RegisterCancel" secondAttribute="trailing" constant="10" id="RegisterCancel4"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrame" hidden="YES">
+                                <rect key="frame" x="0.0" y="57" width="375" height="610"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
+                            </view>
+                            <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditor" hidden="YES" misplaced="YES">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="0" id="RegisterImageEditor0"/>
+                                    <constraint firstAttribute="height" constant="0" id="RegisterImageEditor1"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrameBorder" userInteractionEnabled="NO" hidden="YES">
+                                <rect key="frame" x="0.0" y="174.5" width="375" height="375"/>
+                            </view>
+                            <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorStatus">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                            </view>
+                            <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorControls" misplaced="YES">
+                                <rect key="frame" x="0.0" y="20" width="375" height="0.0"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                <subviews>
+                                    <label opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" text="RegisterImageEditorLabel" id="RegisterImageEditorLabel" numberOfLines="0">
+                                        <rect key="frame" x="10" y="10" width="278" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    </label>
+                                    <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorCancel" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                        <state key="normal" backgroundImage="ic_cross36.png"/>
+                                        <state key="highlighted" backgroundImage="ic_cross36_pressed.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="RegisterImageEditorCancel0"/>
+                                            <constraint firstAttribute="height" constant="36" id="RegisterImageEditorCancel1"/>
+                                        </constraints>
+                                    </button>
+                                    <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorOK" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                        <state key="normal" backgroundImage="ic_check36_green.png"/>
+                                        <state key="highlighted" backgroundImage="ic_check36_pressed_green.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="RegisterImageEditorOK0"/>
+                                            <constraint firstAttribute="height" constant="36" id="RegisterImageEditorOK1"/>
+                                        </constraints>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="top" secondItem="RegisterImageEditorLabel" secondAttribute="top" constant="-10" id="RegisterImageEditorLabel2"/>
+                                    <constraint firstAttribute="bottom" secondItem="RegisterImageEditorLabel" secondAttribute="bottom" constant="10" id="RegisterImageEditorLabel3"/>
+                                    <constraint firstAttribute="leading" secondItem="RegisterImageEditorLabel" secondAttribute="leading" constant="-10" id="RegisterImageEditorLabel4"/>
+                                    <constraint firstAttribute="centerY" secondItem="RegisterImageEditorCancel" secondAttribute="centerY" id="RegisterImageEditorCancel2"/>
+                                    <constraint firstItem="RegisterImageEditorCancel" firstAttribute="leading" secondItem="RegisterImageEditorLabel" secondAttribute="trailing" constant="10" id="RegisterImageEditorCancel3"/>
+                                    <constraint firstAttribute="centerY" secondItem="RegisterImageEditorOK" secondAttribute="centerY" id="RegisterImageEditorOK2"/>
+                                    <constraint firstItem="RegisterImageEditorOK" firstAttribute="leading" secondItem="RegisterImageEditorCancel" secondAttribute="trailing" id="RegisterImageEditorOK3"/>
+                                    <constraint firstAttribute="trailing" secondItem="RegisterImageEditorOK" secondAttribute="trailing" constant="5" id="RegisterImageEditorOK4"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" id="Snackbar3" customClass="Snackbar" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                             </view>
@@ -1520,6 +1576,23 @@
                             <constraint firstAttribute="bottom" secondItem="RegisterScroll" secondAttribute="bottom" id="RegisterScroll3"/>
                             <constraint firstItem="RegisterScroll" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterScroll4"/>
                             <constraint firstItem="RegisterScroll" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterScroll5"/>
+                            <constraint firstAttribute="top" secondItem="RegisterImageEditorStatus" secondAttribute="top" id="RegisterImageEditorStatus2"/>
+                            <constraint firstItem="RegisterImageEditorStatus" firstAttribute="bottom" secondItem="SafeArea3" secondAttribute="top" id="RegisterImageEditorStatus3"/>
+                            <constraint firstItem="RegisterImageEditorStatus" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorStatus4"/>
+                            <constraint firstItem="RegisterImageEditorStatus" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorStatus5"/>
+                            <constraint firstItem="RegisterImageEditorControls" firstAttribute="top" secondItem="SafeArea3" secondAttribute="top" id="RegisterImageEditorControls2"/>
+                            <constraint firstItem="RegisterImageEditorControls" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorControls3"/>
+                            <constraint firstItem="RegisterImageEditorControls" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorControls4"/>
+                            <constraint firstItem="RegisterImageEditorFrame" firstAttribute="top" secondItem="RegisterImageEditorControls" secondAttribute="bottom" id="RegisterImageEditorFrame2"/>
+                            <constraint firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" id="RegisterImageEditorFrame3"/>
+                            <constraint firstItem="RegisterImageEditorFrame" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorFrame4"/>
+                            <constraint firstItem="RegisterImageEditorFrame" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorFrame5"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="width" secondItem="RegisterImageEditorFrame" secondAttribute="width" id="RegisterImageEditorFrameBorder0"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="height" secondItem="RegisterImageEditorFrame" secondAttribute="width" id="RegisterImageEditorFrameBorder1"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditorFrameBorder2"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" id="RegisterImageEditorFrameBorder3"/>
+                            <constraint firstItem="RegisterImageEditor" firstAttribute="centerX" secondItem="RegisterImageEditorFrame" secondAttribute="centerX" id="RegisterImageEditor2"/>
+                            <constraint firstItem="RegisterImageEditor" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditor3"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom3" secondAttribute="top" id="RoundBottom32"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom3" secondAttribute="bottom" id="RoundBottom33"/>
                             <constraint firstItem="RoundBottom3" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RoundBottom34"/>
@@ -1591,6 +1664,14 @@
                         <outlet property="EulaLabel" destination="EulaLabel" id="name-outlet-EulaLabel"/>
                         <outlet property="EulaText" destination="EulaText" id="name-outlet-EulaText"/>
                         <outlet property="EmailExplanationLabel" destination="EmailExplanationLabel" id="name-outlet-EmailExplanationLabel"/>
+                        <outlet property="ImageEditor" destination="RegisterImageEditor" id="name-outlet-RegisterImageEditor"/>
+                        <outlet property="ImageEditorLabel" destination="RegisterImageEditorLabel" id="name-outlet-RegisterImageEditorLabel"/>
+                        <outlet property="ImageEditorCancel" destination="RegisterImageEditorCancel" id="name-outlet-RegisterImageEditorCancel"/>
+                        <outlet property="ImageEditorOK" destination="RegisterImageEditorOK" id="name-outlet-RegisterImageEditorOK"/>
+                        <outlet property="ImageEditorControls" destination="RegisterImageEditorControls" id="name-outlet-RegisterImageEditorControls"/>
+                        <outlet property="ImageEditorFrame" destination="RegisterImageEditorFrame" id="name-outlet-RegisterImageEditorFrame"/>
+                        <outlet property="ImageEditorFrameBorder" destination="RegisterImageEditorFrameBorder" id="name-outlet-RegisterImageEditorFrameBorder"/>
+                        <outlet property="ImageEditorStatus" destination="RegisterImageEditorStatus" id="name-outlet-RegisterImageEditorStatus"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="107819" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4454,5 +4535,9 @@
         <image name="ic_previous_list_highlighted.png" width="140" height="116"/>
         <image name="separator_right_transparent.png" width="8" height="8"/>
         <image name="ripple_back.png" width="200" height="200"/>
+        <image name="ic_check36_green.png" width="144" height="144"/>
+        <image name="ic_check36_pressed_green.png" width="144" height="144"/>
+        <image name="ic_cross36_pressed.png" width="144" height="144"/>
+        <image name="ic_cross36.png" width="144" height="144"/>
     </resources>
 </document>
