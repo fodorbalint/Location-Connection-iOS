@@ -1587,10 +1587,10 @@
                             <constraint firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" id="RegisterImageEditorFrame3"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorFrame4"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorFrame5"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="width" secondItem="RegisterImageEditorFrame" secondAttribute="width" id="RegisterImageEditorFrameBorder0"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="height" secondItem="RegisterImageEditorFrame" secondAttribute="width" id="RegisterImageEditorFrameBorder1"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="width" secondItem="RegisterImageEditorFrame" secondAttribute="width" constant="-40" id="RegisterImageEditorFrameBorder0"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="height" secondItem="RegisterImageEditorFrame" secondAttribute="width" constant="-40" id="RegisterImageEditorFrameBorder1"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditorFrameBorder2"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" id="RegisterImageEditorFrameBorder3"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20" id="RegisterImageEditorFrameBorder3"/>
                             <constraint firstItem="RegisterImageEditor" firstAttribute="centerX" secondItem="RegisterImageEditorFrame" secondAttribute="centerX" id="RegisterImageEditor2"/>
                             <constraint firstItem="RegisterImageEditor" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditor3"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom3" secondAttribute="top" id="RoundBottom32"/>

@@ -46,7 +46,19 @@ namespace LocationConnection
         UIImagePickerController imagePicker;
 		private static string selectedImage;
 
-        public RegisterCommonMethods(BaseActivity context, CommonMethods c, ImageFrameLayout ImagesUploaded, UITextField Email, UITextField Username, UITextField Name, UITextView DescriptionText, UIButton CheckUsername, UIButton Images,
+		private nfloat lastScale;
+		private nfloat touchStartX;
+		private nfloat touchStartY;
+		private nfloat startCenterX;
+		private nfloat startCenterY;
+		private nfloat xDist;
+		private nfloat yDist;
+		private nfloat prevTouchX;
+		private nfloat prevTouchY;
+		private bool outOfFrameX;
+		private bool outOfFrameY;
+
+		public RegisterCommonMethods(BaseActivity context, CommonMethods c, ImageFrameLayout ImagesUploaded, UITextField Email, UITextField Username, UITextField Name, UITextView DescriptionText, UIButton CheckUsername, UIButton Images,
             UILabel ImagesProgressText, UIImageView LoaderCircle, UIProgressView ImagesProgress, UISwitch UseLocationSwitch, UISwitch LocationShareAll, UISwitch LocationShareLike, UISwitch LocationShareMatch, UISwitch LocationShareFriend, UISwitch LocationShareNone,
             UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone, UIView ImageEditorControls, UIView ImageEditorStatus, UIButton ImageEditorCancel, UIButton ImageEditorOK, UIImageView ImageEditor, UIView ImageEditorFrame, UIView ImageEditorFrameBorder)
         {
@@ -178,6 +190,8 @@ namespace LocationConnection
                             else
                             {
 								ImageEditor.Image = image;
+								ImageEditor.Transform = CGAffineTransform.MakeScale(1, 1);
+								lastScale = 1;
 								ImageEditorControls.Hidden = false;
 								ImageEditorStatus.Hidden = false;
 								ImageEditor.Hidden = false;
@@ -189,13 +203,13 @@ namespace LocationConnection
 
 								if (sizeRatio > 1)
 								{
-									context.c.SetHeight(ImageEditor, ImageEditorFrame.Frame.Width);
-									context.c.SetWidth(ImageEditor, ImageEditorFrame.Frame.Width * sizeRatio);
+									context.c.SetHeight(ImageEditor, ImageEditorFrame.Frame.Width - 40);
+									context.c.SetWidth(ImageEditor, (ImageEditorFrame.Frame.Width - 40) * sizeRatio);
 								}
 								else
 								{
-									context.c.SetHeight(ImageEditor, ImageEditorFrame.Frame.Width / sizeRatio);
-									context.c.SetWidth(ImageEditor, ImageEditorFrame.Frame.Width);
+									context.c.SetHeight(ImageEditor, (ImageEditorFrame.Frame.Width - 40) / sizeRatio);
+									context.c.SetWidth(ImageEditor, ImageEditorFrame.Frame.Width - 40);
 								}
 
 								context.c.CW("SizeRatio: " + sizeRatio + " " + ImageEditorFrame.Frame.Width + " " + ImageEditorFrame.Frame.Width * sizeRatio);
@@ -234,90 +248,144 @@ namespace LocationConnection
             }
         }
 
-		nfloat lastScale = 1;
-		private nfloat touchStartX;
-		private nfloat touchStartY;
-		private nfloat startCenterX;
-		private nfloat startCenterY;
-		private nfloat xDist;
-		private nfloat yDist;
-		private bool outOfFrameX;
-		private bool outOfFrameY;
+        private bool IsOutOfFrameY(nfloat yDist)
+        {
+			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
-
-        //out of frame image is allowed to come closer. Image in frame is not allowed to go out, only by pinching action.
+		private bool IsOutOfFrameX(nfloat xDist)
+		{
+			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		//out of frame image is allowed to come closer. Image in frame is not allowed to go out, only by pinching action.
 		public void MoveImage(UIPanGestureRecognizer recognizer)
 		{
 			var location = recognizer.LocationInView(ImageEditorFrame);
 			if (recognizer.State == UIGestureRecognizerState.Began)
 			{
-				touchStartX = location.X;
-				touchStartY = location.Y;
+				prevTouchX = touchStartX = location.X;
+				prevTouchY = touchStartY = location.Y;
 				startCenterX = ImageEditor.Center.X;
 				startCenterY = ImageEditor.Center.Y;
 
-				xDist = startCenterX - ImageEditorFrame.Center.X;
-				yDist = startCenterY - ImageEditorFrame.Center.Y;
+				xDist = startCenterX - ImageEditorFrameBorder.Center.X;
+				yDist = startCenterY - ImageEditorFrameBorder.Center.Y;
 
-				if (yDist <= 0 && -yDist + ImageEditorFrame.Frame.Height / 2 > ImageEditor.Frame.Height / 2 || yDist >= 0 && yDist + ImageEditorFrame.Frame.Height > ImageEditor.Frame.Height / 2)
-				{
-					outOfFrameY = true;
-				}
-                else
-                {
-					outOfFrameY = false;
-                }
-				if (xDist <= 0 && -xDist + ImageEditorFrame.Frame.Width / 2 > ImageEditor.Frame.Width / 2 || xDist >= 0 && xDist + ImageEditorFrame.Frame.Width > ImageEditor.Frame.Width / 2)
-				{
-					outOfFrameX = true;
-				}
-                else
-                {
-					outOfFrameX = false;
-                }
+				outOfFrameY = IsOutOfFrameY(yDist);
+				outOfFrameX = IsOutOfFrameX(xDist);
 			}
             else
             {
-				nfloat newxDist = startCenterX + location.X - touchStartX - ImageEditorFrame.Center.X;
-				nfloat newyDist = startCenterY + location.Y - touchStartY - ImageEditorFrame.Center.Y;
+				nfloat newxDist = startCenterX + location.X - touchStartX - ImageEditorFrameBorder.Center.X;
+				nfloat newyDist = startCenterY + location.Y - touchStartY - ImageEditorFrameBorder.Center.Y;
 
-				if (outOfFrameY && (yDist <= 0 && newyDist < yDist || yDist >= 0 && newyDist > yDist))
+				if (outOfFrameY && (yDist <= 0 && newyDist < yDist || yDist > 0 && newyDist > yDist)) //out of frame, new distance is greater than previous
 				{
-					return;
+					touchStartY += location.Y - prevTouchY;
 				}
-                else if (outOfFrameY)
+                else if (outOfFrameY) //new distance is smaller
                 {
-					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, startCenterY + location.Y - touchStartY);
+					if (yDist <= 0 && newyDist > (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2) //making sure not to go out of frame the opposite end. (when the image is scaled back to 1:1, and moved fast, it can happen)
+                    {
+						yDist = (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2; //moving start touch position, so an opposite move will react immediately
+					}
+                    else if (yDist > 0 && newyDist < -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2)
+					{
+						yDist = -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+					}
+					else
+					{
+						yDist = newyDist;
+					}
+					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, ImageEditorFrameBorder.Center.Y + yDist);
+
+					outOfFrameY = IsOutOfFrameY(yDist);
 				}
-				if (outOfFrameX && (xDist <= 0 && newxDist < xDist || xDist >= 0 && newxDist > xDist))
+                else
+                {
+					yDist = newyDist;
+
+					if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2) //going out of frame too high
+					{
+						yDist = -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+					}
+                    else if (yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2) //going out of frame too low
+                    {
+						yDist = (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+					}
+					// else in frame 
+					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, ImageEditorFrameBorder.Center.Y + yDist);
+				}				
+
+
+				if (outOfFrameX && (xDist <= 0 && newxDist < xDist || xDist > 0 && newxDist > xDist)) //out of frame, new is distance greater than previous
 				{
-					return;
+					touchStartX += location.X - prevTouchX;
 				}
                 else if (outOfFrameX)
                 {
-					ImageEditor.Center = new CoreGraphics.CGPoint(startCenterX + location.X - touchStartX, ImageEditor.Center.Y);
-				}
+					if (xDist <= 0 && newxDist > (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2) //making sure not to go out of frame the opposite end. (when the image is scaled back to 1:1, and moved fast, it can happen)
+					{
+						xDist = (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
+					}
+					else if (xDist > 0 && newxDist < -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2)
+					{
+						xDist = -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
+					}
+					else
+					{
+						xDist = newxDist;
+					}
+					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditorFrameBorder.Center.X + xDist, ImageEditor.Center.Y);
 
-				if (yDist <= 0 && -yDist + ImageEditorFrame.Frame.Height / 2 <= ImageEditor.Frame.Height / 2 || yDist >= 0 && yDist + ImageEditorFrame.Frame.Height <= ImageEditor.Frame.Height / 2)
+					outOfFrameX = IsOutOfFrameX(xDist);
+				}
+                else
                 {
-					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, startCenterY + location.Y - touchStartY);
-					outOfFrameY = false;
-				}
-				if (xDist <= 0 && -xDist + ImageEditorFrame.Frame.Width / 2 <= ImageEditor.Frame.Width / 2 || xDist >= 0 && xDist + ImageEditorFrame.Frame.Width <= ImageEditor.Frame.Width / 2)
-				{
-					ImageEditor.Center = new CoreGraphics.CGPoint(startCenterX + location.X - touchStartX, ImageEditor.Center.Y);
-					outOfFrameX = false;
+					xDist = newxDist;
+
+					if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2) //going out of frame too left
+					{
+						xDist = -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
+					}
+                    else if (xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2) //going out of frame too right
+                    {
+						xDist = (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+					}
+					// else in frame
+					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditorFrameBorder.Center.X + xDist, ImageEditor.Center.Y);
 				}
 
-				xDist = newxDist;
-				yDist = newyDist;
+				prevTouchX = location.X;
+				prevTouchY = location.Y;
 			}
-
-			context.c.CW("Image moved, state: " + recognizer.State + " --- " + ImageEditorFrame.Center + " --- " + ImageEditor.Center);
 		}
 
 		public void ZoomImage(UIPinchGestureRecognizer recognizer)
 		{
+
             if (recognizer.State == UIGestureRecognizerState.Ended)
             {
 				lastScale = recognizer.Scale * lastScale;
@@ -359,6 +427,14 @@ namespace LocationConnection
 
 		public async void OKImageEditing(object sender, EventArgs e)
 		{
+			xDist = ImageEditor.Center.X - ImageEditorFrameBorder.Center.X;
+			yDist = ImageEditor.Center.Y - ImageEditorFrameBorder.Center.Y;
+			if (IsOutOfFrameX(xDist) || IsOutOfFrameY(yDist))
+            {
+				context.c.Alert(LangEnglish.ImageEditorAlert);
+				return;
+            }
+
 			ImageEditorControls.Hidden = true;
 			ImageEditorStatus.Hidden = true;
 			ImageEditor.Hidden = true;

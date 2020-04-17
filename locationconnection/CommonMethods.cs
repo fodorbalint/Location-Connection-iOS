@@ -1327,8 +1327,7 @@ namespace LocationConnection
                 {
 					bottomOffset = new CGPoint(0, scroll.ContentSize.Height - scroll.Bounds.Size.Height + context.roundBottomHeight);
 				}
-				UIView.Animate(Constants.tweenTime, () => { scroll.ContentOffset = bottomOffset; }, () => { });
-				
+				UIView.Animate(Constants.tweenTime, () => { scroll.ContentOffset = bottomOffset; }, () => { });				
 			}
 		}
 

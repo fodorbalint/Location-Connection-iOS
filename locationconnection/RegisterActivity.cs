@@ -511,6 +511,8 @@ namespace LocationConnection
             DistanceShareNone.On = true;
 
             rc.EnableLocationSwitches(false);
+
+            UIView.Animate(Constants.tweenTime, () => { RegisterScroll.ContentOffset = new CGPoint(0,0); }, () => { });
         }
     }
 }
