@@ -55,7 +55,7 @@ namespace LocationConnection
             "Man"
         };
         public const string Email = "Email:";
-        public const string EmailExplanation = "A confirmation email will be sent. Should you ever forget your password, you can use this email to reset it.";
+        public const string EmailExplanation = "A confirmation email will be sent. If you forget your password, you can use this email to reset it.";
         public const string Password = "Password:";
         public const string ConfirmPassword = "Confirm password:";
         public const string Username = "Username:";
@@ -110,7 +110,7 @@ namespace LocationConnection
 
         public const string UsernameAvailable = "Username available.";
 
-        public const string ImageEditorLabel = "Crop the image to the frame. Move with one finger, or zoom with two.";
+        public const string ImageEditorLabel = "Crop the image to the frame. You can move it with one finger, or zoom with two.";
         public const string ImageEditorAlert = "The image does not fill the frame.";
 
         //Profile Edit

@@ -1524,6 +1524,10 @@
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrameBorder" userInteractionEnabled="NO" hidden="YES">
                                 <rect key="frame" x="0.0" y="174.5" width="375" height="375"/>
+                                <!--<constraints>
+                                    <constraint firstAttribute="width" constant="50" id="RegisterImageEditorFrameBorder00"/>
+                                    <constraint firstAttribute="height" constant="50" id="RegisterImageEditorFrameBorder01"/>
+                                </constraints>-->
                             </view>
                             <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorStatus">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
@@ -1587,10 +1591,22 @@
                             <constraint firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" id="RegisterImageEditorFrame3"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorFrame4"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorFrame5"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="width" secondItem="RegisterImageEditorFrame" secondAttribute="width" constant="-40" id="RegisterImageEditorFrameBorder0"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="height" secondItem="RegisterImageEditorFrame" secondAttribute="width" constant="-40" id="RegisterImageEditorFrameBorder1"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditorFrameBorder2"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20" id="RegisterImageEditorFrameBorder3"/>
+                            
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="top" secondItem="RegisterImageEditorFrame" secondAttribute="top" constant="20" relation="greaterThanOrEqual" id="RegisterImageEditorFrameBorder0"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" constant="-20" relation="lessThanOrEqual" id="RegisterImageEditorFrameBorder1"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20" relation="greaterThanOrEqual" id="RegisterImageEditorFrameBorder2"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="trailing" secondItem="RegisterImageEditorFrame" secondAttribute="trailing" constant="-20" relation="lessThanOrEqual" id="RegisterImageEditorFrameBorder3"/>
+                            
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="top" secondItem="RegisterImageEditorFrame" secondAttribute="top" constant="20" priority="200" id="RegisterImageEditorFrameBorder4"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" constant="-20" priority="200" id="RegisterImageEditorFrameBorder5"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20"  priority="200" id="RegisterImageEditorFrameBorder6"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="trailing" secondItem="RegisterImageEditorFrame" secondAttribute="trailing" constant="-20"  priority="200" id="RegisterImageEditorFrameBorder7"/>
+                            
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="width" secondItem="RegisterImageEditorFrameBorder" secondAttribute="height" id="RegisterImageEditorFrameBorder8"/>
+                            
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditorFrameBorder9"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerX" secondItem="RegisterImageEditorFrame" secondAttribute="centerX" id="RegisterImageEditorFrameBorder10"/>
+                            
                             <constraint firstItem="RegisterImageEditor" firstAttribute="centerX" secondItem="RegisterImageEditorFrame" secondAttribute="centerX" id="RegisterImageEditor2"/>
                             <constraint firstItem="RegisterImageEditor" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditor3"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom3" secondAttribute="top" id="RoundBottom32"/>

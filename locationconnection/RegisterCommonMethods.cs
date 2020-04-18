@@ -199,17 +199,15 @@ namespace LocationConnection
 								ImageEditorFrameBorder.Hidden = false;
 								selectedImage = e1.ImageUrl.Path;
 
-								//landscape mode?
-
 								if (sizeRatio > 1)
 								{
-									context.c.SetHeight(ImageEditor, ImageEditorFrame.Frame.Width - 40);
-									context.c.SetWidth(ImageEditor, (ImageEditorFrame.Frame.Width - 40) * sizeRatio);
+									context.c.SetHeight(ImageEditor, ImageEditorFrameBorder.Frame.Width);
+									context.c.SetWidth(ImageEditor, ImageEditorFrameBorder.Frame.Width * sizeRatio);
 								}
 								else
 								{
-									context.c.SetHeight(ImageEditor, (ImageEditorFrame.Frame.Width - 40) / sizeRatio);
-									context.c.SetWidth(ImageEditor, ImageEditorFrame.Frame.Width - 40);
+									context.c.SetHeight(ImageEditor, ImageEditorFrameBorder.Frame.Width / sizeRatio);
+									context.c.SetWidth(ImageEditor, ImageEditorFrameBorder.Frame.Width);
 								}
 
 								context.c.CW("SizeRatio: " + sizeRatio + " " + ImageEditorFrame.Frame.Width + " " + ImageEditorFrame.Frame.Width * sizeRatio);
