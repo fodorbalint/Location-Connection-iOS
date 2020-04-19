@@ -29,102 +29,109 @@ namespace LocationConnection
 
                 GetScreenMetrics();
 
-                EditImages.SetTitle(LangEnglish.Images, UIControlState.Normal);
-                EditImagesProgressText.Text = "";
-                EditDescriptionLabel.Text = LangEnglish.Description;
-                EditSexLabel.Text = LangEnglish.EditSex;
+                Images.SetTitle(LangEnglish.Images, UIControlState.Normal);
+                ImagesProgressText.Text = "";
+                DescriptionLabel.Text = LangEnglish.Description;
+                SexLabel.Text = LangEnglish.EditSex;
                 WomenLabel.Text = LangEnglish.Women;
                 MenLabel.Text = LangEnglish.Men;
 
-                EditAccountData.SetTitle(LangEnglish.EditAccountData, UIControlState.Normal);
-                EditChangePassword.SetTitle(LangEnglish.EditChangePassword, UIControlState.Normal);
-                EditLocationSettings.SetTitle(LangEnglish.EditLocationSettings, UIControlState.Normal);
+                AccountData.SetTitle(LangEnglish.EditAccountData, UIControlState.Normal);
+                ChangePassword.SetTitle(LangEnglish.EditChangePassword, UIControlState.Normal);
+                LocationSettings.SetTitle(LangEnglish.EditLocationSettings, UIControlState.Normal);
 
-                EditSave.SetTitle(LangEnglish.EditSave, UIControlState.Normal);
-                EditCancel.SetTitle(LangEnglish.Cancel, UIControlState.Normal);
+                Save.SetTitle(LangEnglish.EditSave, UIControlState.Normal);
+                Cancel.SetTitle(LangEnglish.Cancel, UIControlState.Normal);
 
-                EditMoreOptions.SetTitle(LangEnglish.EditMoreOptions, UIControlState.Normal);
+                MoreOptions.SetTitle(LangEnglish.EditMoreOptions, UIControlState.Normal);
 
-                EditEmailLabel.Text = LangEnglish.Email;
-                EditUsernameLabel.Text = LangEnglish.Username;
-                EditCheckUsername.SetTitle(LangEnglish.CheckAvailability, UIControlState.Normal);
-                EditNameLabel.Text = LangEnglish.Name;
+                EmailLabel.Text = LangEnglish.Email;
+                UsernameLabel.Text = LangEnglish.Username;
+                CheckUsername.SetTitle(LangEnglish.CheckAvailability, UIControlState.Normal);
+                NameLabel.Text = LangEnglish.Name;
 
-                EditOldPasswordLabel.Text = LangEnglish.EditOldPassword;
-                EditNewPasswordLabel.Text = LangEnglish.EditNewPassword;
-                EditConfirmPasswordLabel.Text = LangEnglish.EditConfirmPassword;
+                OldPasswordLabel.Text = LangEnglish.EditOldPassword;
+                NewPasswordLabel.Text = LangEnglish.EditNewPassword;
+                ConfirmPasswordLabel.Text = LangEnglish.EditConfirmPassword;
 
-                EditUseLocationLabel.Text = LangEnglish.UseLocation;
-                EditLocationShareLabel.Text = LangEnglish.LocationShare;
-                EditLocationShareAllLabel.Text = LangEnglish.LocationShareAll;
-                EditLocationShareLikeLabel.Text = LangEnglish.LocationShareLike;
-                EditLocationShareMatchLabel.Text = LangEnglish.LocationShareMatch;
-                EditLocationShareFriendLabel.Text = LangEnglish.LocationShareFriend;
-                EditLocationShareNoneLabel.Text = LangEnglish.LocationShareNone;
-                EditDistanceShareLabel.Text = LangEnglish.DistanceShare;
-                EditDistanceShareAllLabel.Text = LangEnglish.DistanceShareAll;
-                EditDistanceShareLikeLabel.Text = LangEnglish.DistanceShareLike;
-                EditDistanceShareMatchLabel.Text = LangEnglish.DistanceShareMatch;
-                EditDistanceShareFriendLabel.Text = LangEnglish.DistanceShareFriend;
-                EditDistanceShareNoneLabel.Text = LangEnglish.DistanceShareNone;
+                UseLocationLabel.Text = LangEnglish.UseLocation;
+                LocationShareLabel.Text = LangEnglish.LocationShare;
+                LocationShareAllLabel.Text = LangEnglish.LocationShareAll;
+                LocationShareLikeLabel.Text = LangEnglish.LocationShareLike;
+                LocationShareMatchLabel.Text = LangEnglish.LocationShareMatch;
+                LocationShareFriendLabel.Text = LangEnglish.LocationShareFriend;
+                LocationShareNoneLabel.Text = LangEnglish.LocationShareNone;
+                DistanceShareLabel.Text = LangEnglish.DistanceShare;
+                DistanceShareAllLabel.Text = LangEnglish.DistanceShareAll;
+                DistanceShareLikeLabel.Text = LangEnglish.DistanceShareLike;
+                DistanceShareMatchLabel.Text = LangEnglish.DistanceShareMatch;
+                DistanceShareFriendLabel.Text = LangEnglish.DistanceShareFriend;
+                DistanceShareNoneLabel.Text = LangEnglish.DistanceShareNone;
+                ImageEditorLabel.Text = LangEnglish.ImageEditorLabel;
 
                 DeactivateAccount.SetTitle(LangEnglish.DeactivateAccount, UIControlState.Normal);
                 DeleteAccount.SetTitle(LangEnglish.DeleteAccount, UIControlState.Normal);
 
-                EditDescriptionText.Delegate = this;
+                DescriptionText.Delegate = this;
 
-                EditImages.Layer.MasksToBounds = true;
-                EditSave.Layer.MasksToBounds = true;
-                EditCancel.Layer.MasksToBounds = true;
+                Images.Layer.MasksToBounds = true;
+                Save.Layer.MasksToBounds = true;
+                Cancel.Layer.MasksToBounds = true;
                 DeactivateAccount.Layer.MasksToBounds = true;
                 DeleteAccount.Layer.MasksToBounds = true;
 
-                c.DrawBorder(EditDescriptionText);
+                c.DrawBorder(DescriptionText);
 
-                c.CollapseY(EditAccountDataSection);
-                c.CollapseY(EditChangePasswordSection);
-                c.CollapseY(EditLocationSettingsSection);
-                c.CollapseY(EditMoreOptionsSection);
-                EditLoaderCircle.Hidden = true;
+                c.CollapseY(AccountDataSection);
+                c.CollapseY(ChangePasswordSection);
+                c.CollapseY(LocationSettingsSection);
+                c.CollapseY(MoreOptionsSection);
+                LoaderCircle.Hidden = true;
 
-                rc = new RegisterCommonMethods(this, c, EditImagesUploaded, EditEmail, EditUsername, EditName, EditDescriptionText, EditCheckUsername, EditImages,
-                EditImagesProgressText, EditLoaderCircle, EditImagesProgress, EditUseLocationSwitch, EditLocationShareAll, EditLocationShareLike, EditLocationShareMatch, EditLocationShareFriend, EditLocationShareNone,
-                EditDistanceShareAll, EditDistanceShareLike, EditDistanceShareMatch, EditDistanceShareFriend, EditDistanceShareNone, null, null, null, null, null, null, null);
+                ImageEditorFrameBorder.Layer.BorderColor = UIColor.Black.CGColor;
+                ImageEditorFrameBorder.Layer.BorderWidth = 1;
+
+                rc = new RegisterCommonMethods(this, c, ImagesUploaded, Email, Username, Name, DescriptionText, CheckUsername, Images,
+                ImagesProgressText, LoaderCircle, ImagesProgress, UseLocationSwitch, LocationShareAll, LocationShareLike, LocationShareMatch, LocationShareFriend, LocationShareNone,
+                DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone, ImageEditorControls, ImageEditorStatus, ImageEditorCancel, ImageEditorOK, ImageEditor, ImageEditorFrame, ImageEditorFrameBorder);
 
                 c.AddViews(Snackbar, Snackbar.SnackText, Snackbar.SnackButton);
                 ProfileEditScroll.SetContext(this);
 
-                EditImagesUploaded.SetContext(this);
-                EditImagesUploaded.numColumns = 3; //it does not get passed in the layout file
-                EditImagesUploaded.tileSpacing = 2;
-                EditImagesUploaded.SetTileSize();
+                ImagesUploaded.SetContext(this);
+                ImagesUploaded.numColumns = 3; //it does not get passed in the layout file
+                ImagesUploaded.tileSpacing = 2;
+                ImagesUploaded.SetTileSize();
 
-                EditImages.TouchUpInside += rc.Images_Click;
+                Images.TouchUpInside += rc.Images_Click;
 
-                EditAccountData.TouchUpInside += EditAccountData_Click;
-                EditChangePassword.TouchUpInside += EditChangePassword_Click;
-                EditLocationSettings.TouchUpInside += EditLocationSettings_Click;
+                AccountData.TouchUpInside += AccountData_Click;
+                ChangePassword.TouchUpInside += ChangePassword_Click;
+                LocationSettings.TouchUpInside += LocationSettings_Click;
 
-                EditCheckUsername.TouchUpInside += rc.CheckUsername_Click;
+                CheckUsername.TouchUpInside += rc.CheckUsername_Click;
 
-                EditUseLocationSwitch.TouchUpInside += rc.UseLocationSwitch_Click;
-                EditLocationShareAll.TouchUpInside += rc.LocationShareAll_Click;
-                EditLocationShareLike.TouchUpInside += rc.LocationShareLike_Click;
-                EditLocationShareMatch.TouchUpInside += rc.LocationShareMatch_Click;
-                EditLocationShareFriend.TouchUpInside += rc.LocationShareFriend_Click;
-                EditLocationShareNone.TouchUpInside += rc.LocationShareNone_Click;
+                UseLocationSwitch.TouchUpInside += rc.UseLocationSwitch_Click;
+                LocationShareAll.TouchUpInside += rc.LocationShareAll_Click;
+                LocationShareLike.TouchUpInside += rc.LocationShareLike_Click;
+                LocationShareMatch.TouchUpInside += rc.LocationShareMatch_Click;
+                LocationShareFriend.TouchUpInside += rc.LocationShareFriend_Click;
+                LocationShareNone.TouchUpInside += rc.LocationShareNone_Click;
 
-                EditDistanceShareAll.TouchUpInside += rc.DistanceShareAll_Click;
-                EditDistanceShareLike.TouchUpInside += rc.DistanceShareLike_Click;
-                EditDistanceShareMatch.TouchUpInside += rc.DistanceShareMatch_Click;
-                EditDistanceShareFriend.TouchUpInside += rc.DistanceShareFriend_Click;
-                EditDistanceShareNone.TouchUpInside += rc.DistanceShareNone_Click;
+                DistanceShareAll.TouchUpInside += rc.DistanceShareAll_Click;
+                DistanceShareLike.TouchUpInside += rc.DistanceShareLike_Click;
+                DistanceShareMatch.TouchUpInside += rc.DistanceShareMatch_Click;
+                DistanceShareFriend.TouchUpInside += rc.DistanceShareFriend_Click;
+                DistanceShareNone.TouchUpInside += rc.DistanceShareNone_Click;
 
-                EditSave.TouchUpInside += EditSave_Click;
-                EditCancel.TouchUpInside += EditCancel_Click;
-                EditMoreOptions.TouchUpInside += EditMoreOptions_Click;
+                Save.TouchUpInside += Save_Click;
+                Cancel.TouchUpInside += Cancel_Click;
+                MoreOptions.TouchUpInside += MoreOptions_Click;
                 DeactivateAccount.TouchUpInside += DeactivateAccount_Click;
                 DeleteAccount.TouchUpInside += DeleteAccount_Click;
+
+                ImageEditorCancel.TouchUpInside += rc.CancelImageEditing;
+                ImageEditorOK.TouchUpInside += rc.OKImageEditing;
 
                 RoundBottom_Base = RoundBottom;
                 Snackbar_Base = Snackbar;
@@ -147,32 +154,32 @@ namespace LocationConnection
                 base.ViewWillAppear(animated);
 
                 SetSexChoice();
-                EditEmail.Text = Session.Email;
-                EditUsername.Text = Session.Username;
-                EditName.Text = Session.Name;
+                Email.Text = Session.Email;
+                Username.Text = Session.Username;
+                Name.Text = Session.Name;
                 rc.uploadedImages = new List<string>(Session.Pictures);
 
                 int i;
-                for (i = EditImagesUploaded.Subviews.Length - 1; i >= 0; i--)
+                for (i = ImagesUploaded.Subviews.Length - 1; i >= 0; i--)
                 {
-                    EditImagesUploaded.Subviews[i].RemoveFromSuperview();
+                    ImagesUploaded.Subviews[i].RemoveFromSuperview();
                 }
-                EditImagesUploaded.RefitImagesContainer();
+                ImagesUploaded.RefitImagesContainer();
 
                 i = 0;
                 foreach (string image in rc.uploadedImages)
                 {
-                    EditImagesUploaded.AddPicture(image, i);
+                    ImagesUploaded.AddPicture(image, i);
                     i++;
                 }
 
                 if (rc.uploadedImages.Count > 1)
                 {
-                    EditImagesProgressText.Text = LangEnglish.ImagesRearrange;
+                    ImagesProgressText.Text = LangEnglish.ImagesRearrange;
                 }
                 else
                 {
-                    EditImagesProgressText.Text = "";
+                    ImagesProgressText.Text = "";
                 }
 
                 //works only if activity is resuming. It is recreated when pressing cancel and coming here again. Can it happen?
@@ -181,9 +188,9 @@ namespace LocationConnection
                     rc.StartAnim();
                 }
 
-                EditDescriptionText.Text = Session.Description;
+                DescriptionText.Text = Session.Description;
 
-                EditUseLocationSwitch.On = (bool)Session.UseLocation;
+                UseLocationSwitch.On = (bool)Session.UseLocation;
                 rc.EnableLocationSwitches((bool)Session.UseLocation);
                 rc.SetLocationShareLevel((byte)Session.LocationShare);
                 rc.SetDistanceShareLevel((byte)Session.DistanceShare);
@@ -206,7 +213,7 @@ namespace LocationConnection
         [Foundation.Export("textViewDidBeginEditing:")]
         public virtual void EditingStarted(UITextView textView)
         {
-            ProfileEditScroll.ScrollRectToVisible(EditDescriptionText.Frame, true);
+            ProfileEditScroll.ScrollRectToVisible(DescriptionText.Frame, true);
         }
 
         private void SetSexChoice()
@@ -241,59 +248,59 @@ namespace LocationConnection
             return 2;
         }
 
-        private void EditAccountData_Click(object sender, EventArgs e)
+        private void AccountData_Click(object sender, EventArgs e)
         {
-            if (EditAccountDataSection.Frame.Height == 0)
+            if (AccountDataSection.Frame.Height == 0)
             {
-                c.ExpandY(EditAccountDataSection);
-                c.CollapseY(EditChangePasswordSection);
-                c.CollapseY(EditLocationSettingsSection);
-                c.CollapseY(EditMoreOptionsSection);
+                c.ExpandY(AccountDataSection);
+                c.CollapseY(ChangePasswordSection);
+                c.CollapseY(LocationSettingsSection);
+                c.CollapseY(MoreOptionsSection);
             }
             else
             {
-                c.CollapseY(EditAccountDataSection);
+                c.CollapseY(AccountDataSection);
             }            
         }
 
-        private void EditChangePassword_Click(object sender, EventArgs e)
+        private void ChangePassword_Click(object sender, EventArgs e)
         {
-            if (EditChangePasswordSection.Frame.Height == 0)
+            if (ChangePasswordSection.Frame.Height == 0)
             {
-                c.ExpandY(EditChangePasswordSection);
-                c.CollapseY(EditAccountDataSection);
-                c.CollapseY(EditLocationSettingsSection);
-                c.CollapseY(EditMoreOptionsSection);
+                c.ExpandY(ChangePasswordSection);
+                c.CollapseY(AccountDataSection);
+                c.CollapseY(LocationSettingsSection);
+                c.CollapseY(MoreOptionsSection);
             }
             else
             {
-                c.CollapseY(EditChangePasswordSection);
+                c.CollapseY(ChangePasswordSection);
             }
         }
 
-        private void EditLocationSettings_Click(object sender, EventArgs e)
+        private void LocationSettings_Click(object sender, EventArgs e)
         {
-            if (EditLocationSettingsSection.Frame.Height == 0)
+            if (LocationSettingsSection.Frame.Height == 0)
             {
-                c.ExpandY(EditLocationSettingsSection);
-                c.CollapseY(EditAccountDataSection);
-                c.CollapseY(EditChangePasswordSection);
-                c.CollapseY(EditMoreOptionsSection);
+                c.ExpandY(LocationSettingsSection);
+                c.CollapseY(AccountDataSection);
+                c.CollapseY(ChangePasswordSection);
+                c.CollapseY(MoreOptionsSection);
             }
             else
             {
-                c.CollapseY(EditLocationSettingsSection);
+                c.CollapseY(LocationSettingsSection);
             }
         }
 
-        private void EditMoreOptions_Click(object sender, EventArgs e)
+        private void MoreOptions_Click(object sender, EventArgs e)
         {
-            if (EditMoreOptionsSection.Frame.Height == 0)
+            if (MoreOptionsSection.Frame.Height == 0)
             {
-                c.ExpandY(EditMoreOptionsSection);
-                c.CollapseY(EditAccountDataSection);
-                c.CollapseY(EditChangePasswordSection);
-                c.CollapseY(EditLocationSettingsSection);
+                c.ExpandY(MoreOptionsSection);
+                c.CollapseY(AccountDataSection);
+                c.CollapseY(ChangePasswordSection);
+                c.CollapseY(LocationSettingsSection);
 
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
 
@@ -301,54 +308,54 @@ namespace LocationConnection
             }
             else
             {
-                c.CollapseY(EditMoreOptionsSection);
+                c.CollapseY(MoreOptionsSection);
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
             }
         }
 
-        private async void EditSave_Click(object sender, EventArgs e)
+        private async void Save_Click(object sender, EventArgs e)
         {
             if (CheckFields())
             {
-                EditSave.Enabled = false;
-                EditSave.Alpha = 0.5f;
+                Save.Enabled = false;
+                Save.Alpha = 0.5f;
                 
                 //not visible form fields do not get saved, but there is no need to reload the form, since we are exiting the activity on successful save.
                 string requestStringBase = "action=profileedit&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
                 string requestStringAdd = "";
-                if (EditDescriptionText.Text != Session.Description)
+                if (DescriptionText.Text != Session.Description)
                 {
-                    requestStringAdd += "&Description=" + c.UrlEncode(EditDescriptionText.Text);
+                    requestStringAdd += "&Description=" + c.UrlEncode(DescriptionText.Text);
                     c.CW("req-" + requestStringAdd + "-------------------");
                 }
                 if (GetSexChoice() != Session.SexChoice)
                 {
                     requestStringAdd += "&SexChoice=" + GetSexChoice();
                 }
-                if (EditAccountDataSection.Frame.Height != 0)
+                if (AccountDataSection.Frame.Height != 0)
                 {
-                    if (EditEmail.Text.Trim() != Session.Email)
+                    if (Email.Text.Trim() != Session.Email)
                     {
-                        requestStringAdd += "&Email=" + c.UrlEncode(EditEmail.Text.Trim());
+                        requestStringAdd += "&Email=" + c.UrlEncode(Email.Text.Trim());
                     }
-                    if (EditUsername.Text.Trim() != Session.Username)
+                    if (Username.Text.Trim() != Session.Username)
                     {
-                        requestStringAdd += "&Username=" + c.UrlEncode(EditUsername.Text.Trim());
+                        requestStringAdd += "&Username=" + c.UrlEncode(Username.Text.Trim());
                     }
-                    if (EditName.Text.Trim() != Session.Name)
+                    if (Name.Text.Trim() != Session.Name)
                     {
-                        requestStringAdd += "&Name=" + c.UrlEncode(EditName.Text.Trim());
+                        requestStringAdd += "&Name=" + c.UrlEncode(Name.Text.Trim());
                     }
                 }
-                if (EditChangePasswordSection.Frame.Height != 0)
+                if (ChangePasswordSection.Frame.Height != 0)
                 {
-                    requestStringAdd += "&OldPassword=" + c.UrlEncode(EditOldPassword.Text.Trim()) + "&Password=" + c.UrlEncode(EditNewPassword.Text.Trim());
+                    requestStringAdd += "&OldPassword=" + c.UrlEncode(OldPassword.Text.Trim()) + "&Password=" + c.UrlEncode(NewPassword.Text.Trim());
                 }
-                if (EditLocationSettingsSection.Frame.Height != 0)
+                if (LocationSettingsSection.Frame.Height != 0)
                 {
-                    if (EditUseLocationSwitch.On != Session.UseLocation)
+                    if (UseLocationSwitch.On != Session.UseLocation)
                     {
-                        requestStringAdd += "&UseLocation=" + EditUseLocationSwitch.On;
+                        requestStringAdd += "&UseLocation=" + UseLocationSwitch.On;
                     }
                     int locationShare = rc.GetLocationShareLevel();
                     int distanceShare = rc.GetDistanceShareLevel();
@@ -372,11 +379,11 @@ namespace LocationConnection
                             bool locationEnabled = false;
                             bool locationDisabled = false;
 
-                            if (!(bool)Session.UseLocation && EditUseLocationSwitch.On)
+                            if (!(bool)Session.UseLocation && UseLocationSwitch.On)
                             {
                                 locationEnabled = true;
                             }
-                            else if ((bool)Session.UseLocation && !EditUseLocationSwitch.On)
+                            else if ((bool)Session.UseLocation && !UseLocationSwitch.On)
                             {
                                 locationDisabled = true;
                             }
@@ -420,8 +427,8 @@ namespace LocationConnection
                         }
                         Session.SnackMessage = LangEnglish.SettingsUpdated;
 
-                        EditSave.Enabled = true;
-                        EditSave.Alpha = 1;
+                        Save.Enabled = true;
+                        Save.Alpha = 1;
                         CommonMethods.OpenPage(null, 0);
                     }
                     else if (responseString.Substring(0, 6) == "ERROR_")
@@ -435,12 +442,12 @@ namespace LocationConnection
                 }
                 else
                 {
-                    EditSave.Enabled = true;
-                    EditSave.Alpha = 1;
+                    Save.Enabled = true;
+                    Save.Alpha = 1;
                     CommonMethods.OpenPage(null, 0);
                 }
-                EditSave.Enabled = true;
-                EditSave.Alpha = 1;
+                Save.Enabled = true;
+                Save.Alpha = 1;
             }
             else
             {
@@ -450,98 +457,98 @@ namespace LocationConnection
 
         private bool CheckFields()
         {
-            if (EditDescriptionText.Text.Trim() == "")
+            if (DescriptionText.Text.Trim() == "")
             {
                 checkFormMessage = LangEnglish.DescriptionEmpty;
-                EditDescriptionText.BecomeFirstResponder();
+                DescriptionText.BecomeFirstResponder();
                 return false;
             }
-            if (EditDescriptionText.Text.Substring(EditDescriptionText.Text.Length-1) == "\\")
+            if (DescriptionText.Text.Substring(DescriptionText.Text.Length-1) == "\\")
 			{
 				checkFormMessage = LangEnglish.DescriptionBackslash;
-                EditDescriptionText.BecomeFirstResponder();
+                DescriptionText.BecomeFirstResponder();
                 return false;
 			}
 
-            if (EditAccountDataSection.Frame.Height != 0)
+            if (AccountDataSection.Frame.Height != 0)
             {
-                if (EditEmail.Text.Trim() == "")
+                if (Email.Text.Trim() == "")
                 {
                     checkFormMessage = LangEnglish.EmailEmpty;
-                    EditEmail.BecomeFirstResponder();
+                    Email.BecomeFirstResponder();
                     return false;
                 }
                 //If the extension is long, the regex will freeze the app.
-                int lastDotPos = EditEmail.Text.LastIndexOf(".");
-                if (lastDotPos < EditEmail.Text.Length - 5)
+                int lastDotPos = Email.Text.LastIndexOf(".");
+                if (lastDotPos < Email.Text.Length - 5)
                 {
                     checkFormMessage = LangEnglish.EmailWrong;
                     return false;
                 }
                 Regex regex = new Regex(Constants.EmailFormat); //when the email extension is long, it will take ages for the regex to finish
-                if (!regex.IsMatch(EditEmail.Text))
+                if (!regex.IsMatch(Email.Text))
                 {
                     checkFormMessage = LangEnglish.EmailWrong;
-                    EditEmail.BecomeFirstResponder();
+                    Email.BecomeFirstResponder();
                     return false;
                 }
-                if (EditUsername.Text.Trim() == "")
+                if (Username.Text.Trim() == "")
                 {
                     checkFormMessage = LangEnglish.UsernameEmpty;
-                    EditUsername.BecomeFirstResponder();
+                    Username.BecomeFirstResponder();
                     return false;
                 }
-                if (EditUsername.Text.Trim().Substring(EditUsername.Text.Trim().Length - 1) == "\\")
+                if (Username.Text.Trim().Substring(Username.Text.Trim().Length - 1) == "\\")
 				{
 					checkFormMessage = LangEnglish.UsernameBackslash;
-                    EditUsername.BecomeFirstResponder();
+                    Username.BecomeFirstResponder();
                     return false;
 				}
-                if (EditName.Text.Trim() == "")
+                if (Name.Text.Trim() == "")
                 {
                     checkFormMessage = LangEnglish.NameEmpty;
-                    EditName.BecomeFirstResponder();
+                    Name.BecomeFirstResponder();
                     return false;
                 }
-                if (EditName.Text.Trim().Substring(EditName.Text.Trim().Length - 1) == "\\")
+                if (Name.Text.Trim().Substring(Name.Text.Trim().Length - 1) == "\\")
 				{
 					checkFormMessage = LangEnglish.NameBackslash;
-                    EditName.BecomeFirstResponder();
+                    Name.BecomeFirstResponder();
                     return false;
 				}
             }
 
-            if (EditChangePasswordSection.Frame.Height != 0)
+            if (ChangePasswordSection.Frame.Height != 0)
             {
-                if (EditOldPassword.Text.Trim().Length < 6)
+                if (OldPassword.Text.Trim().Length < 6)
                 {
                     checkFormMessage = LangEnglish.PasswordShort;
-                    EditOldPassword.BecomeFirstResponder();
+                    OldPassword.BecomeFirstResponder();
                     return false;
                 }
-                if (EditNewPassword.Text.Trim().Length < 6)
+                if (NewPassword.Text.Trim().Length < 6)
                 {
                     checkFormMessage = LangEnglish.PasswordShort;
-                    EditNewPassword.BecomeFirstResponder();
+                    NewPassword.BecomeFirstResponder();
                     return false;
                 }
-                if (EditOldPassword.Text.Trim() == EditNewPassword.Text.Trim())
+                if (OldPassword.Text.Trim() == NewPassword.Text.Trim())
                 {
                     checkFormMessage = LangEnglish.PasswordNotChanged;
-                    EditNewPassword.BecomeFirstResponder();
+                    NewPassword.BecomeFirstResponder();
                     return false;
                 }
-                if (EditNewPassword.Text.Trim() != EditConfirmPassword.Text.Trim())
+                if (NewPassword.Text.Trim() != ConfirmPassword.Text.Trim())
                 {
                     checkFormMessage = LangEnglish.ConfirmPasswordNoMatch;
-                    EditConfirmPassword.BecomeFirstResponder();
+                    ConfirmPassword.BecomeFirstResponder();
                     return false;
                 }
             }
             return true;
         }
 
-        private void EditCancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
             CommonMethods.OpenPage(null, 0);
         }

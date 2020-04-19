@@ -27,7 +27,7 @@
         <MtouchDebug>true</MtouchDebug>
         <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
         <MtouchFloat32>true</MtouchFloat32>
-        <CodesignProvision>VS: WildCard Development</CodesignProvision>
+        <CodesignProvision>VS: balintfodor.locationconnection Development</CodesignProvision>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
         <DebugType>none</DebugType>
@@ -38,7 +38,7 @@
         <MtouchLink>None</MtouchLink>
         <MtouchArch>x86_64</MtouchArch>
         <MtouchFloat32>true</MtouchFloat32>
-        <CodesignProvision>VS: WildCard Development</CodesignProvision>
+        <CodesignProvision>VS: balintfodor.locationconnection Development</CodesignProvision>
         <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
@@ -55,7 +55,7 @@
         <MtouchDebug>true</MtouchDebug>
         <MtouchFloat32>true</MtouchFloat32>
         <DeviceSpecificBuild>true</DeviceSpecificBuild>
-        <CodesignProvision>VS: WildCard Development</CodesignProvision>
+        <CodesignProvision>VS: balintfodor.locationconnection Development</CodesignProvision>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
         <DebugType>none</DebugType>
@@ -67,7 +67,7 @@
         <MtouchArch>ARM64</MtouchArch>
         <CodesignKey>Apple Development: fodorbalint@gmail.com (NBGZ455HB4)</CodesignKey>
         <MtouchFloat32>true</MtouchFloat32>
-        <CodesignProvision>VS: WildCard Development</CodesignProvision>
+        <CodesignProvision>VS: balintfodor.locationconnection Development</CodesignProvision>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System" />

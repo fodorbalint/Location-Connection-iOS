@@ -41,18 +41,7 @@ namespace LocationConnection
 						c.CW("Entered foreground, registering for notifications");
 						c.LogActivity("Entered foreground, registering for notifications");
 
-						var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
-						UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
-							Console.WriteLine("ChatOne Notification authorization granted: " + granted);
-							CommonMethods.LogActivityStatic("ChatOne Notification authorization granted: " + granted);
-							if (granted)
-							{
-								InvokeOnMainThread(() => {
-									UIApplication.SharedApplication.RegisterForRemoteNotifications();
-									Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
-								});
-							}
-						});
+						c.RequestNotification();
 
 						BaseActivity currentController = CommonMethods.GetCurrentViewController();
 						if (currentController is ChatOneActivity)
@@ -236,44 +225,21 @@ namespace LocationConnection
 			{
 				targetID = (int)currentMatch.TargetID;
 			}
-
-			if ((bool)Session.UseLocation && c.IsLocationEnabled())
+			
+			if (IsUpdatingTo(targetID))
 			{
-				MenuLocationUpdates.Hidden = false;
-				if (IsUpdatingTo(targetID))
-				{
-					MenuLocationUpdates.SetTitle(LangEnglish.MenuStopLocationUpdates, UIControlState.Normal);
-				}
-				else
-				{
-					MenuLocationUpdates.SetTitle(LangEnglish.MenuStartLocationUpdates, UIControlState.Normal);
-				}
+				MenuLocationUpdates.SetTitle(LangEnglish.MenuStopLocationUpdates, UIControlState.Normal);
 			}
 			else
 			{
-				MenuLocationUpdates.Hidden = true;
+				MenuLocationUpdates.SetTitle(LangEnglish.MenuStartLocationUpdates, UIControlState.Normal);
 			}
-
-			if (!(currentMatch is null))
-			{
-				if (currentMatch.UnmatchDate is null)
-				{
-					MenuFriend.Hidden = false;
-				}
-				else
-				{
-					MenuFriend.Hidden = true;
-				}
-
-                if (currentMatch.TargetID == 0)
-                {
-					MenuBlock.Hidden = true;
-                }
-                else
-                {
-					MenuBlock.Hidden = false;
-                }
-			}
+			
+            MenuLocationUpdates.Hidden = true;
+			MenuFriend.Hidden = true;
+			MenuUnmatch.Hidden = true;
+			MenuReport.Hidden = true;
+			MenuBlock.Hidden = true;
 		}
 
 		private void MenuIcon_Click(object sender, EventArgs e)
@@ -439,16 +405,38 @@ namespace LocationConnection
 
 			DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.MatchDate).ToLocalTime();
 			MatchDate.Text = LangEnglish.Matched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
+
+			MenuIcon.Hidden = false;
+
 			if (!(currentMatch.UnmatchDate is null))
 			{
 				dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.UnmatchDate).ToLocalTime();
 				UnmatchDate.Text = LangEnglish.Unmatched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
 				MenuFriend.Hidden = true;
+
+				if (Session.CurrentMatch.TargetID == IntentData.blockedID)
+				{
+					IntentData.blockedID = null;
+					MenuUnmatch.Hidden = true;
+					MenuReport.Hidden = true;
+					MenuBlock.Hidden = true;
+
+					MenuIcon.Hidden = true;
+				}
+				else
+				{
+					MenuUnmatch.Hidden = false;
+					MenuReport.Hidden = false;
+					MenuBlock.Hidden = false;
+				}
 			}
 			else
 			{
 				UnmatchDate.Text = "";
 				MenuFriend.Hidden = false;
+				MenuUnmatch.Hidden = false;
+				MenuReport.Hidden = false;
+				MenuBlock.Hidden = false;
 			}
 
 			if ((bool)currentMatch.Active)

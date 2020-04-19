@@ -16,7 +16,39 @@ namespace LocationConnection
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton AccountData { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView AccountDataSection { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint BottomConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton Cancel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ChangePassword { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ChangePasswordSection { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton CheckUsername { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField ConfirmPassword { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel ConfirmPasswordLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -28,107 +60,55 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditAccountData { get; set; }
+        UIKit.UILabel DescriptionLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView EditAccountDataSection { get; set; }
+        UIKit.UITextView DescriptionText { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditCancel { get; set; }
+        UIKit.UISwitch DistanceShareAll { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditChangePassword { get; set; }
+        UIKit.UILabel DistanceShareAllLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView EditChangePasswordSection { get; set; }
+        UIKit.UISwitch DistanceShareFriend { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditCheckUsername { get; set; }
+        UIKit.UILabel DistanceShareFriendLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField EditConfirmPassword { get; set; }
+        UIKit.UILabel DistanceShareLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditConfirmPasswordLabel { get; set; }
+        UIKit.UISwitch DistanceShareLike { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDescriptionLabel { get; set; }
+        UIKit.UILabel DistanceShareLikeLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView EditDescriptionText { get; set; }
+        UIKit.UISwitch DistanceShareMatch { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditDistanceShareAll { get; set; }
+        UIKit.UILabel DistanceShareMatchLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDistanceShareAllLabel { get; set; }
+        UIKit.UISwitch DistanceShareNone { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditDistanceShareFriend { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDistanceShareFriendLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDistanceShareLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditDistanceShareLike { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDistanceShareLikeLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditDistanceShareMatch { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDistanceShareMatchLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditDistanceShareNone { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditDistanceShareNoneLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField EditEmail { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditEmailLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditImages { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIProgressView EditImagesProgress { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditImagesProgressText { get; set; }
+        UIKit.UILabel DistanceShareNoneLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -136,115 +116,111 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView EditLoaderCircle { get; set; }
+        UIKit.UITextField Email { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditLocationSettings { get; set; }
+        UIKit.UILabel EmailLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView EditLocationSettingsSection { get; set; }
+        UIKit.UIImageView ImageEditor { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditLocationShareAll { get; set; }
+        UIKit.UIButton ImageEditorCancel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditLocationShareAllLabel { get; set; }
+        UIKit.UIView ImageEditorControls { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditLocationShareFriend { get; set; }
+        UIKit.UIView ImageEditorFrame { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditLocationShareFriendLabel { get; set; }
+        UIKit.UIView ImageEditorFrameBorder { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditLocationShareLabel { get; set; }
+        UIKit.UILabel ImageEditorLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditLocationShareLike { get; set; }
+        UIKit.UIButton ImageEditorOK { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditLocationShareLikeLabel { get; set; }
+        UIKit.UIView ImageEditorStatus { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditLocationShareMatch { get; set; }
+        UIKit.UIButton Images { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditLocationShareMatchLabel { get; set; }
+        UIKit.UIProgressView ImagesProgress { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditLocationShareNone { get; set; }
+        UIKit.UILabel ImagesProgressText { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditLocationShareNoneLabel { get; set; }
+        UIKit.UIImageView LoaderCircle { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditMoreOptions { get; set; }
+        UIKit.UIButton LocationSettings { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView EditMoreOptionsSection { get; set; }
+        UIKit.UIView LocationSettingsSection { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField EditName { get; set; }
+        UIKit.UISwitch LocationShareAll { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditNameLabel { get; set; }
+        UIKit.UILabel LocationShareAllLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField EditNewPassword { get; set; }
+        UIKit.UISwitch LocationShareFriend { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditNewPasswordLabel { get; set; }
+        UIKit.UILabel LocationShareFriendLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField EditOldPassword { get; set; }
+        UIKit.UILabel LocationShareLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditOldPasswordLabel { get; set; }
+        UIKit.UISwitch LocationShareLike { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton EditSave { get; set; }
+        UIKit.UILabel LocationShareLikeLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditSexLabel { get; set; }
+        UIKit.UISwitch LocationShareMatch { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditUseLocationLabel { get; set; }
+        UIKit.UILabel LocationShareMatchLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch EditUseLocationSwitch { get; set; }
+        UIKit.UISwitch LocationShareNone { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField EditUsername { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EditUsernameLabel { get; set; }
+        UIKit.UILabel LocationShareNoneLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -256,6 +232,38 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton MoreOptions { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView MoreOptionsSection { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField Name { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel NameLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField NewPassword { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel NewPasswordLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField OldPassword { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel OldPasswordLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         LocationConnection.TouchScrollView ProfileEdit_Scroll { get; set; }
 
         [Outlet]
@@ -264,11 +272,19 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton Save { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint ScrollBottomConstraint { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint ScrollBottomOuterConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel SexLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -284,6 +300,22 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel UseLocationLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UISwitch UseLocationSwitch { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField Username { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel UsernameLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UISwitch Women { get; set; }
 
         [Outlet]
@@ -292,9 +324,49 @@ namespace LocationConnection
 
         void ReleaseDesignerOutlets ()
         {
+            if (AccountData != null) {
+                AccountData.Dispose ();
+                AccountData = null;
+            }
+
+            if (AccountDataSection != null) {
+                AccountDataSection.Dispose ();
+                AccountDataSection = null;
+            }
+
             if (BottomConstraint != null) {
                 BottomConstraint.Dispose ();
                 BottomConstraint = null;
+            }
+
+            if (Cancel != null) {
+                Cancel.Dispose ();
+                Cancel = null;
+            }
+
+            if (ChangePassword != null) {
+                ChangePassword.Dispose ();
+                ChangePassword = null;
+            }
+
+            if (ChangePasswordSection != null) {
+                ChangePasswordSection.Dispose ();
+                ChangePasswordSection = null;
+            }
+
+            if (CheckUsername != null) {
+                CheckUsername.Dispose ();
+                CheckUsername = null;
+            }
+
+            if (ConfirmPassword != null) {
+                ConfirmPassword.Dispose ();
+                ConfirmPassword = null;
+            }
+
+            if (ConfirmPasswordLabel != null) {
+                ConfirmPasswordLabel.Dispose ();
+                ConfirmPasswordLabel = null;
             }
 
             if (DeactivateAccount != null) {
@@ -307,134 +379,69 @@ namespace LocationConnection
                 DeleteAccount = null;
             }
 
-            if (EditAccountData != null) {
-                EditAccountData.Dispose ();
-                EditAccountData = null;
+            if (DescriptionLabel != null) {
+                DescriptionLabel.Dispose ();
+                DescriptionLabel = null;
             }
 
-            if (EditAccountDataSection != null) {
-                EditAccountDataSection.Dispose ();
-                EditAccountDataSection = null;
+            if (DescriptionText != null) {
+                DescriptionText.Dispose ();
+                DescriptionText = null;
             }
 
-            if (EditCancel != null) {
-                EditCancel.Dispose ();
-                EditCancel = null;
+            if (DistanceShareAll != null) {
+                DistanceShareAll.Dispose ();
+                DistanceShareAll = null;
             }
 
-            if (EditChangePassword != null) {
-                EditChangePassword.Dispose ();
-                EditChangePassword = null;
+            if (DistanceShareAllLabel != null) {
+                DistanceShareAllLabel.Dispose ();
+                DistanceShareAllLabel = null;
             }
 
-            if (EditChangePasswordSection != null) {
-                EditChangePasswordSection.Dispose ();
-                EditChangePasswordSection = null;
+            if (DistanceShareFriend != null) {
+                DistanceShareFriend.Dispose ();
+                DistanceShareFriend = null;
             }
 
-            if (EditCheckUsername != null) {
-                EditCheckUsername.Dispose ();
-                EditCheckUsername = null;
+            if (DistanceShareFriendLabel != null) {
+                DistanceShareFriendLabel.Dispose ();
+                DistanceShareFriendLabel = null;
             }
 
-            if (EditConfirmPassword != null) {
-                EditConfirmPassword.Dispose ();
-                EditConfirmPassword = null;
+            if (DistanceShareLabel != null) {
+                DistanceShareLabel.Dispose ();
+                DistanceShareLabel = null;
             }
 
-            if (EditConfirmPasswordLabel != null) {
-                EditConfirmPasswordLabel.Dispose ();
-                EditConfirmPasswordLabel = null;
+            if (DistanceShareLike != null) {
+                DistanceShareLike.Dispose ();
+                DistanceShareLike = null;
             }
 
-            if (EditDescriptionLabel != null) {
-                EditDescriptionLabel.Dispose ();
-                EditDescriptionLabel = null;
+            if (DistanceShareLikeLabel != null) {
+                DistanceShareLikeLabel.Dispose ();
+                DistanceShareLikeLabel = null;
             }
 
-            if (EditDescriptionText != null) {
-                EditDescriptionText.Dispose ();
-                EditDescriptionText = null;
+            if (DistanceShareMatch != null) {
+                DistanceShareMatch.Dispose ();
+                DistanceShareMatch = null;
             }
 
-            if (EditDistanceShareAll != null) {
-                EditDistanceShareAll.Dispose ();
-                EditDistanceShareAll = null;
+            if (DistanceShareMatchLabel != null) {
+                DistanceShareMatchLabel.Dispose ();
+                DistanceShareMatchLabel = null;
             }
 
-            if (EditDistanceShareAllLabel != null) {
-                EditDistanceShareAllLabel.Dispose ();
-                EditDistanceShareAllLabel = null;
+            if (DistanceShareNone != null) {
+                DistanceShareNone.Dispose ();
+                DistanceShareNone = null;
             }
 
-            if (EditDistanceShareFriend != null) {
-                EditDistanceShareFriend.Dispose ();
-                EditDistanceShareFriend = null;
-            }
-
-            if (EditDistanceShareFriendLabel != null) {
-                EditDistanceShareFriendLabel.Dispose ();
-                EditDistanceShareFriendLabel = null;
-            }
-
-            if (EditDistanceShareLabel != null) {
-                EditDistanceShareLabel.Dispose ();
-                EditDistanceShareLabel = null;
-            }
-
-            if (EditDistanceShareLike != null) {
-                EditDistanceShareLike.Dispose ();
-                EditDistanceShareLike = null;
-            }
-
-            if (EditDistanceShareLikeLabel != null) {
-                EditDistanceShareLikeLabel.Dispose ();
-                EditDistanceShareLikeLabel = null;
-            }
-
-            if (EditDistanceShareMatch != null) {
-                EditDistanceShareMatch.Dispose ();
-                EditDistanceShareMatch = null;
-            }
-
-            if (EditDistanceShareMatchLabel != null) {
-                EditDistanceShareMatchLabel.Dispose ();
-                EditDistanceShareMatchLabel = null;
-            }
-
-            if (EditDistanceShareNone != null) {
-                EditDistanceShareNone.Dispose ();
-                EditDistanceShareNone = null;
-            }
-
-            if (EditDistanceShareNoneLabel != null) {
-                EditDistanceShareNoneLabel.Dispose ();
-                EditDistanceShareNoneLabel = null;
-            }
-
-            if (EditEmail != null) {
-                EditEmail.Dispose ();
-                EditEmail = null;
-            }
-
-            if (EditEmailLabel != null) {
-                EditEmailLabel.Dispose ();
-                EditEmailLabel = null;
-            }
-
-            if (EditImages != null) {
-                EditImages.Dispose ();
-                EditImages = null;
-            }
-
-            if (EditImagesProgress != null) {
-                EditImagesProgress.Dispose ();
-                EditImagesProgress = null;
-            }
-
-            if (EditImagesProgressText != null) {
-                EditImagesProgressText.Dispose ();
-                EditImagesProgressText = null;
+            if (DistanceShareNoneLabel != null) {
+                DistanceShareNoneLabel.Dispose ();
+                DistanceShareNoneLabel = null;
             }
 
             if (EditImagesUploaded != null) {
@@ -442,144 +449,139 @@ namespace LocationConnection
                 EditImagesUploaded = null;
             }
 
-            if (EditLoaderCircle != null) {
-                EditLoaderCircle.Dispose ();
-                EditLoaderCircle = null;
+            if (Email != null) {
+                Email.Dispose ();
+                Email = null;
             }
 
-            if (EditLocationSettings != null) {
-                EditLocationSettings.Dispose ();
-                EditLocationSettings = null;
+            if (EmailLabel != null) {
+                EmailLabel.Dispose ();
+                EmailLabel = null;
             }
 
-            if (EditLocationSettingsSection != null) {
-                EditLocationSettingsSection.Dispose ();
-                EditLocationSettingsSection = null;
+            if (ImageEditor != null) {
+                ImageEditor.Dispose ();
+                ImageEditor = null;
             }
 
-            if (EditLocationShareAll != null) {
-                EditLocationShareAll.Dispose ();
-                EditLocationShareAll = null;
+            if (ImageEditorCancel != null) {
+                ImageEditorCancel.Dispose ();
+                ImageEditorCancel = null;
             }
 
-            if (EditLocationShareAllLabel != null) {
-                EditLocationShareAllLabel.Dispose ();
-                EditLocationShareAllLabel = null;
+            if (ImageEditorControls != null) {
+                ImageEditorControls.Dispose ();
+                ImageEditorControls = null;
             }
 
-            if (EditLocationShareFriend != null) {
-                EditLocationShareFriend.Dispose ();
-                EditLocationShareFriend = null;
+            if (ImageEditorFrame != null) {
+                ImageEditorFrame.Dispose ();
+                ImageEditorFrame = null;
             }
 
-            if (EditLocationShareFriendLabel != null) {
-                EditLocationShareFriendLabel.Dispose ();
-                EditLocationShareFriendLabel = null;
+            if (ImageEditorFrameBorder != null) {
+                ImageEditorFrameBorder.Dispose ();
+                ImageEditorFrameBorder = null;
             }
 
-            if (EditLocationShareLabel != null) {
-                EditLocationShareLabel.Dispose ();
-                EditLocationShareLabel = null;
+            if (ImageEditorLabel != null) {
+                ImageEditorLabel.Dispose ();
+                ImageEditorLabel = null;
             }
 
-            if (EditLocationShareLike != null) {
-                EditLocationShareLike.Dispose ();
-                EditLocationShareLike = null;
+            if (ImageEditorOK != null) {
+                ImageEditorOK.Dispose ();
+                ImageEditorOK = null;
             }
 
-            if (EditLocationShareLikeLabel != null) {
-                EditLocationShareLikeLabel.Dispose ();
-                EditLocationShareLikeLabel = null;
+            if (ImageEditorStatus != null) {
+                ImageEditorStatus.Dispose ();
+                ImageEditorStatus = null;
             }
 
-            if (EditLocationShareMatch != null) {
-                EditLocationShareMatch.Dispose ();
-                EditLocationShareMatch = null;
+            if (Images != null) {
+                Images.Dispose ();
+                Images = null;
             }
 
-            if (EditLocationShareMatchLabel != null) {
-                EditLocationShareMatchLabel.Dispose ();
-                EditLocationShareMatchLabel = null;
+            if (ImagesProgress != null) {
+                ImagesProgress.Dispose ();
+                ImagesProgress = null;
             }
 
-            if (EditLocationShareNone != null) {
-                EditLocationShareNone.Dispose ();
-                EditLocationShareNone = null;
+            if (ImagesProgressText != null) {
+                ImagesProgressText.Dispose ();
+                ImagesProgressText = null;
             }
 
-            if (EditLocationShareNoneLabel != null) {
-                EditLocationShareNoneLabel.Dispose ();
-                EditLocationShareNoneLabel = null;
+            if (LoaderCircle != null) {
+                LoaderCircle.Dispose ();
+                LoaderCircle = null;
             }
 
-            if (EditMoreOptions != null) {
-                EditMoreOptions.Dispose ();
-                EditMoreOptions = null;
+            if (LocationSettings != null) {
+                LocationSettings.Dispose ();
+                LocationSettings = null;
             }
 
-            if (EditMoreOptionsSection != null) {
-                EditMoreOptionsSection.Dispose ();
-                EditMoreOptionsSection = null;
+            if (LocationSettingsSection != null) {
+                LocationSettingsSection.Dispose ();
+                LocationSettingsSection = null;
             }
 
-            if (EditName != null) {
-                EditName.Dispose ();
-                EditName = null;
+            if (LocationShareAll != null) {
+                LocationShareAll.Dispose ();
+                LocationShareAll = null;
             }
 
-            if (EditNameLabel != null) {
-                EditNameLabel.Dispose ();
-                EditNameLabel = null;
+            if (LocationShareAllLabel != null) {
+                LocationShareAllLabel.Dispose ();
+                LocationShareAllLabel = null;
             }
 
-            if (EditNewPassword != null) {
-                EditNewPassword.Dispose ();
-                EditNewPassword = null;
+            if (LocationShareFriend != null) {
+                LocationShareFriend.Dispose ();
+                LocationShareFriend = null;
             }
 
-            if (EditNewPasswordLabel != null) {
-                EditNewPasswordLabel.Dispose ();
-                EditNewPasswordLabel = null;
+            if (LocationShareFriendLabel != null) {
+                LocationShareFriendLabel.Dispose ();
+                LocationShareFriendLabel = null;
             }
 
-            if (EditOldPassword != null) {
-                EditOldPassword.Dispose ();
-                EditOldPassword = null;
+            if (LocationShareLabel != null) {
+                LocationShareLabel.Dispose ();
+                LocationShareLabel = null;
             }
 
-            if (EditOldPasswordLabel != null) {
-                EditOldPasswordLabel.Dispose ();
-                EditOldPasswordLabel = null;
+            if (LocationShareLike != null) {
+                LocationShareLike.Dispose ();
+                LocationShareLike = null;
             }
 
-            if (EditSave != null) {
-                EditSave.Dispose ();
-                EditSave = null;
+            if (LocationShareLikeLabel != null) {
+                LocationShareLikeLabel.Dispose ();
+                LocationShareLikeLabel = null;
             }
 
-            if (EditSexLabel != null) {
-                EditSexLabel.Dispose ();
-                EditSexLabel = null;
+            if (LocationShareMatch != null) {
+                LocationShareMatch.Dispose ();
+                LocationShareMatch = null;
             }
 
-            if (EditUseLocationLabel != null) {
-                EditUseLocationLabel.Dispose ();
-                EditUseLocationLabel = null;
+            if (LocationShareMatchLabel != null) {
+                LocationShareMatchLabel.Dispose ();
+                LocationShareMatchLabel = null;
             }
 
-            if (EditUseLocationSwitch != null) {
-                EditUseLocationSwitch.Dispose ();
-                EditUseLocationSwitch = null;
+            if (LocationShareNone != null) {
+                LocationShareNone.Dispose ();
+                LocationShareNone = null;
             }
 
-            if (EditUsername != null) {
-                EditUsername.Dispose ();
-                EditUsername = null;
-            }
-
-            if (EditUsernameLabel != null) {
-                EditUsernameLabel.Dispose ();
-                EditUsernameLabel = null;
+            if (LocationShareNoneLabel != null) {
+                LocationShareNoneLabel.Dispose ();
+                LocationShareNoneLabel = null;
             }
 
             if (Men != null) {
@@ -592,6 +594,46 @@ namespace LocationConnection
                 MenLabel = null;
             }
 
+            if (MoreOptions != null) {
+                MoreOptions.Dispose ();
+                MoreOptions = null;
+            }
+
+            if (MoreOptionsSection != null) {
+                MoreOptionsSection.Dispose ();
+                MoreOptionsSection = null;
+            }
+
+            if (Name != null) {
+                Name.Dispose ();
+                Name = null;
+            }
+
+            if (NameLabel != null) {
+                NameLabel.Dispose ();
+                NameLabel = null;
+            }
+
+            if (NewPassword != null) {
+                NewPassword.Dispose ();
+                NewPassword = null;
+            }
+
+            if (NewPasswordLabel != null) {
+                NewPasswordLabel.Dispose ();
+                NewPasswordLabel = null;
+            }
+
+            if (OldPassword != null) {
+                OldPassword.Dispose ();
+                OldPassword = null;
+            }
+
+            if (OldPasswordLabel != null) {
+                OldPasswordLabel.Dispose ();
+                OldPasswordLabel = null;
+            }
+
             if (ProfileEdit_Scroll != null) {
                 ProfileEdit_Scroll.Dispose ();
                 ProfileEdit_Scroll = null;
@@ -602,6 +644,11 @@ namespace LocationConnection
                 RoundBottom = null;
             }
 
+            if (Save != null) {
+                Save.Dispose ();
+                Save = null;
+            }
+
             if (ScrollBottomConstraint != null) {
                 ScrollBottomConstraint.Dispose ();
                 ScrollBottomConstraint = null;
@@ -610,6 +657,11 @@ namespace LocationConnection
             if (ScrollBottomOuterConstraint != null) {
                 ScrollBottomOuterConstraint.Dispose ();
                 ScrollBottomOuterConstraint = null;
+            }
+
+            if (SexLabel != null) {
+                SexLabel.Dispose ();
+                SexLabel = null;
             }
 
             if (Snackbar != null) {
@@ -625,6 +677,26 @@ namespace LocationConnection
             if (SnackTopConstraint != null) {
                 SnackTopConstraint.Dispose ();
                 SnackTopConstraint = null;
+            }
+
+            if (UseLocationLabel != null) {
+                UseLocationLabel.Dispose ();
+                UseLocationLabel = null;
+            }
+
+            if (UseLocationSwitch != null) {
+                UseLocationSwitch.Dispose ();
+                UseLocationSwitch = null;
+            }
+
+            if (Username != null) {
+                Username.Dispose ();
+                Username = null;
+            }
+
+            if (UsernameLabel != null) {
+                UsernameLabel.Dispose ();
+                UsernameLabel = null;
             }
 
             if (Women != null) {

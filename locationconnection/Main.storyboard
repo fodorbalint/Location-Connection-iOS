@@ -1523,11 +1523,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrameBorder" userInteractionEnabled="NO" hidden="YES">
-                                <rect key="frame" x="0.0" y="174.5" width="375" height="375"/>
-                                <!--<constraints>
-                                    <constraint firstAttribute="width" constant="50" id="RegisterImageEditorFrameBorder00"/>
-                                    <constraint firstAttribute="height" constant="50" id="RegisterImageEditorFrameBorder01"/>
-                                </constraints>-->
+                                <rect key="frame" x="20" y="194.5" width="335" height="335"/>
                             </view>
                             <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorStatus">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
@@ -1591,22 +1587,17 @@
                             <constraint firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" id="RegisterImageEditorFrame3"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorFrame4"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorFrame5"/>
-                            
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="top" secondItem="RegisterImageEditorFrame" secondAttribute="top" constant="20" relation="greaterThanOrEqual" id="RegisterImageEditorFrameBorder0"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" constant="-20" relation="lessThanOrEqual" id="RegisterImageEditorFrameBorder1"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20" relation="greaterThanOrEqual" id="RegisterImageEditorFrameBorder2"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="trailing" secondItem="RegisterImageEditorFrame" secondAttribute="trailing" constant="-20" relation="lessThanOrEqual" id="RegisterImageEditorFrameBorder3"/>
-                            
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="top" secondItem="RegisterImageEditorFrame" secondAttribute="top" constant="20" priority="200" id="RegisterImageEditorFrameBorder4"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" constant="-20" priority="200" id="RegisterImageEditorFrameBorder5"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20"  priority="200" id="RegisterImageEditorFrameBorder6"/>
-                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="trailing" secondItem="RegisterImageEditorFrame" secondAttribute="trailing" constant="-20"  priority="200" id="RegisterImageEditorFrameBorder7"/>
-                            
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="leading" secondItem="RegisterImageEditorFrame" secondAttribute="leading" constant="20" priority="200" id="RegisterImageEditorFrameBorder6"/>
+                            <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="trailing" secondItem="RegisterImageEditorFrame" secondAttribute="trailing" constant="-20" priority="200" id="RegisterImageEditorFrameBorder7"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="width" secondItem="RegisterImageEditorFrameBorder" secondAttribute="height" id="RegisterImageEditorFrameBorder8"/>
-                            
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditorFrameBorder9"/>
                             <constraint firstItem="RegisterImageEditorFrameBorder" firstAttribute="centerX" secondItem="RegisterImageEditorFrame" secondAttribute="centerX" id="RegisterImageEditorFrameBorder10"/>
-                            
                             <constraint firstItem="RegisterImageEditor" firstAttribute="centerX" secondItem="RegisterImageEditorFrame" secondAttribute="centerX" id="RegisterImageEditor2"/>
                             <constraint firstItem="RegisterImageEditor" firstAttribute="centerY" secondItem="RegisterImageEditorFrame" secondAttribute="centerY" id="RegisterImageEditor3"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom3" secondAttribute="top" id="RoundBottom32"/>
@@ -3490,6 +3481,62 @@
                                     <constraint firstItem="EditMoreOptionsSection" firstAttribute="bottom" secondItem="Viewport2" secondAttribute="bottom" relation="greaterThanOrEqual" constant="-15" id="EditMoreOptionsSection6"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorFrame" hidden="YES">
+                                <rect key="frame" x="0.0" y="57" width="375" height="610"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
+                            </view>
+                            <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditor" hidden="YES" misplaced="YES">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="0" id="EditImageEditor0"/>
+                                    <constraint firstAttribute="height" constant="0" id="EditImageEditor1"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorFrameBorder" userInteractionEnabled="NO" hidden="YES">
+                                <rect key="frame" x="20" y="194.5" width="335" height="335"/>
+                            </view>
+                            <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorStatus">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                            </view>
+                            <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorControls" misplaced="YES">
+                                <rect key="frame" x="0.0" y="20" width="375" height="0.0"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                <subviews>
+                                    <label opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" text="EditImageEditorLabel" id="EditImageEditorLabel" numberOfLines="0">
+                                        <rect key="frame" x="10" y="10" width="278" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    </label>
+                                    <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorCancel" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                        <state key="normal" backgroundImage="ic_cross36.png"/>
+                                        <state key="highlighted" backgroundImage="ic_cross36_pressed.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="EditImageEditorCancel0"/>
+                                            <constraint firstAttribute="height" constant="36" id="EditImageEditorCancel1"/>
+                                        </constraints>
+                                    </button>
+                                    <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorOK" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                        <state key="normal" backgroundImage="ic_check36_green.png"/>
+                                        <state key="highlighted" backgroundImage="ic_check36_pressed_green.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="EditImageEditorOK0"/>
+                                            <constraint firstAttribute="height" constant="36" id="EditImageEditorOK1"/>
+                                        </constraints>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="top" secondItem="EditImageEditorLabel" secondAttribute="top" constant="-10" id="EditImageEditorLabel2"/>
+                                    <constraint firstAttribute="bottom" secondItem="EditImageEditorLabel" secondAttribute="bottom" constant="10" id="EditImageEditorLabel3"/>
+                                    <constraint firstAttribute="leading" secondItem="EditImageEditorLabel" secondAttribute="leading" constant="-10" id="EditImageEditorLabel4"/>
+                                    <constraint firstAttribute="centerY" secondItem="EditImageEditorCancel" secondAttribute="centerY" id="EditImageEditorCancel2"/>
+                                    <constraint firstItem="EditImageEditorCancel" firstAttribute="leading" secondItem="EditImageEditorLabel" secondAttribute="trailing" constant="10" id="EditImageEditorCancel3"/>
+                                    <constraint firstAttribute="centerY" secondItem="EditImageEditorOK" secondAttribute="centerY" id="EditImageEditorOK2"/>
+                                    <constraint firstItem="EditImageEditorOK" firstAttribute="leading" secondItem="EditImageEditorCancel" secondAttribute="trailing" id="EditImageEditorOK3"/>
+                                    <constraint firstAttribute="trailing" secondItem="EditImageEditorOK" secondAttribute="trailing" constant="5" id="EditImageEditorOK4"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="Snackbar" id="Snackbar7">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                             </view>
@@ -3499,6 +3546,30 @@
                             <constraint firstAttribute="bottom" secondItem="ProfileEditScroll" secondAttribute="bottom" id="ProfileEditScroll3"/>
                             <constraint firstItem="ProfileEditScroll" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="ProfileEditScroll4"/>
                             <constraint firstItem="ProfileEditScroll" firstAttribute="trailing" secondItem="SafeArea7" secondAttribute="trailing" id="ProfileEditScroll5"/>
+                            <constraint firstAttribute="top" secondItem="EditImageEditorStatus" secondAttribute="top" id="EditImageEditorStatus2"/>
+                            <constraint firstItem="EditImageEditorStatus" firstAttribute="bottom" secondItem="SafeArea7" secondAttribute="top" id="EditImageEditorStatus3"/>
+                            <constraint firstItem="EditImageEditorStatus" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="EditImageEditorStatus4"/>
+                            <constraint firstItem="EditImageEditorStatus" firstAttribute="trailing" secondItem="SafeArea7" secondAttribute="trailing" id="EditImageEditorStatus5"/>
+                            <constraint firstItem="EditImageEditorControls" firstAttribute="top" secondItem="SafeArea7" secondAttribute="top" id="EditImageEditorControls2"/>
+                            <constraint firstItem="EditImageEditorControls" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="EditImageEditorControls3"/>
+                            <constraint firstItem="EditImageEditorControls" firstAttribute="trailing" secondItem="SafeArea7" secondAttribute="trailing" id="EditImageEditorControls4"/>
+                            <constraint firstItem="EditImageEditorFrame" firstAttribute="top" secondItem="EditImageEditorControls" secondAttribute="bottom" id="EditImageEditorFrame2"/>
+                            <constraint firstAttribute="bottom" secondItem="EditImageEditorFrame" secondAttribute="bottom" id="EditImageEditorFrame3"/>
+                            <constraint firstItem="EditImageEditorFrame" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="EditImageEditorFrame4"/>
+                            <constraint firstItem="EditImageEditorFrame" firstAttribute="trailing" secondItem="SafeArea7" secondAttribute="trailing" id="EditImageEditorFrame5"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="top" secondItem="EditImageEditorFrame" secondAttribute="top" constant="20" relation="greaterThanOrEqual" id="EditImageEditorFrameBorder0"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="bottom" secondItem="EditImageEditorFrame" secondAttribute="bottom" constant="-20" relation="lessThanOrEqual" id="EditImageEditorFrameBorder1"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="leading" secondItem="EditImageEditorFrame" secondAttribute="leading" constant="20" relation="greaterThanOrEqual" id="EditImageEditorFrameBorder2"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="trailing" secondItem="EditImageEditorFrame" secondAttribute="trailing" constant="-20" relation="lessThanOrEqual" id="EditImageEditorFrameBorder3"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="top" secondItem="EditImageEditorFrame" secondAttribute="top" constant="20" priority="200" id="EditImageEditorFrameBorder4"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="bottom" secondItem="EditImageEditorFrame" secondAttribute="bottom" constant="-20" priority="200" id="EditImageEditorFrameBorder5"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="leading" secondItem="EditImageEditorFrame" secondAttribute="leading" constant="20" priority="200" id="EditImageEditorFrameBorder6"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="trailing" secondItem="EditImageEditorFrame" secondAttribute="trailing" constant="-20" priority="200" id="EditImageEditorFrameBorder7"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="width" secondItem="EditImageEditorFrameBorder" secondAttribute="height" id="EditImageEditorFrameBorder8"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="centerY" secondItem="EditImageEditorFrame" secondAttribute="centerY" id="EditImageEditorFrameBorder9"/>
+                            <constraint firstItem="EditImageEditorFrameBorder" firstAttribute="centerX" secondItem="EditImageEditorFrame" secondAttribute="centerX" id="EditImageEditorFrameBorder10"/>
+                            <constraint firstItem="EditImageEditor" firstAttribute="centerX" secondItem="EditImageEditorFrame" secondAttribute="centerX" id="EditImageEditor2"/>
+                            <constraint firstItem="EditImageEditor" firstAttribute="centerY" secondItem="EditImageEditorFrame" secondAttribute="centerY" id="EditImageEditor3"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom7" secondAttribute="top" id="RoundBottom72"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom7" secondAttribute="bottom" id="RoundBottom73"/>
                             <constraint firstItem="RoundBottom7" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="RoundBottom74"/>
@@ -3510,67 +3581,67 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="EditImagesProgressText" destination="EditImagesProgressText" id="name-outlet-EditImagesProgressText"/>
+                        <outlet property="ImagesProgressText" destination="EditImagesProgressText" id="name-outlet-EditImagesProgressText"/>
                         <outlet property="EditImagesUploaded" destination="EditImagesUploaded" id="name-outlet-EditImagesUploaded"/>
-                        <outlet property="EditImages" destination="EditImages" id="name-outlet-EditImages"/>
-                        <outlet property="EditLoaderCircle" destination="EditLoaderCircle" id="name-outlet-EditLoaderCircle"/>
-                        <outlet property="EditImagesProgress" destination="EditImagesProgress" id="name-outlet-EditImagesProgress"/>
-                        <outlet property="EditDescriptionLabel" destination="EditDescriptionLabel" id="name-outlet-EditDescriptionLabel"/>
-                        <outlet property="EditDescriptionText" destination="EditDescription" id="name-outlet-EditDescription"/>
-                        <outlet property="EditSexLabel" destination="EditSexLabel" id="name-outlet-EditSexLabel"/>
+                        <outlet property="Images" destination="EditImages" id="name-outlet-EditImages"/>
+                        <outlet property="LoaderCircle" destination="EditLoaderCircle" id="name-outlet-EditLoaderCircle"/>
+                        <outlet property="ImagesProgress" destination="EditImagesProgress" id="name-outlet-EditImagesProgress"/>
+                        <outlet property="DescriptionLabel" destination="EditDescriptionLabel" id="name-outlet-EditDescriptionLabel"/>
+                        <outlet property="DescriptionText" destination="EditDescription" id="name-outlet-EditDescription"/>
+                        <outlet property="SexLabel" destination="EditSexLabel" id="name-outlet-EditSexLabel"/>
                         <outlet property="WomenLabel" destination="WomenLabel" id="name-outlet-WomenLabel"/>
                         <outlet property="Women" destination="Women" id="name-outlet-Women"/>
                         <outlet property="MenLabel" destination="MenLabel" id="name-outlet-MenLabel"/>
                         <outlet property="Men" destination="Men" id="name-outlet-Men"/>
-                        <outlet property="EditAccountData" destination="EditAccountData" id="name-outlet-EditAccountData"/>
-                        <outlet property="EditAccountDataSection" destination="EditAccountDataSection" id="name-outlet-EditAccountDataSection"/>
-                        <outlet property="EditEmailLabel" destination="EditEmailLabel" id="name-outlet-EditEmailLabel"/>
-                        <outlet property="EditEmail" destination="EditEmail" id="name-outlet-EditEmail"/>
-                        <outlet property="EditUsernameLabel" destination="EditUsernameLabel" id="name-outlet-EditUsernameLabel"/>
-                        <outlet property="EditUsername" destination="EditUsername" id="name-outlet-EditUsername"/>
-                        <outlet property="EditCheckUsername" destination="EditCheckUsername" id="name-outlet-EditCheckUsername"/>
-                        <outlet property="EditNameLabel" destination="EditNameLabel" id="name-outlet-EditNameLabel"/>
-                        <outlet property="EditName" destination="EditName" id="name-outlet-EditName"/>
-                        <outlet property="EditChangePassword" destination="EditChangePassword" id="name-outlet-EditChangePassword"/>
-                        <outlet property="EditChangePasswordSection" destination="EditChangePasswordSection" id="name-outlet-EditChangePasswordSection"/>
-                        <outlet property="EditOldPasswordLabel" destination="EditOldPasswordLabel" id="name-outlet-EditOldPasswordLabel"/>
-                        <outlet property="EditOldPassword" destination="EditOldPassword" id="name-outlet-EditOldPassword"/>
-                        <outlet property="EditNewPasswordLabel" destination="EditNewPasswordLabel" id="name-outlet-EditNewPasswordLabel"/>
-                        <outlet property="EditNewPassword" destination="EditNewPassword" id="name-outlet-EditNewPassword"/>
-                        <outlet property="EditConfirmPasswordLabel" destination="EditConfirmPasswordLabel" id="name-outlet-EditConfirmPasswordLabel"/>
-                        <outlet property="EditConfirmPassword" destination="EditConfirmPassword" id="name-outlet-EditConfirmPassword"/>
-                        <outlet property="EditLocationSettings" destination="EditLocationSettings" id="name-outlet-EditLocationSettings"/>
-                        <outlet property="EditLocationSettingsSection" destination="EditLocationSettingsSection" id="name-outlet-EditLocationSettingsSection"/>
-                        <outlet property="EditSave" destination="EditSave" id="name-outlet-EditSave"/>
-                        <outlet property="EditCancel" destination="EditCancel" id="name-outlet-EditCancel"/>
-                        <outlet property="EditMoreOptions" destination="EditMoreOptions" id="name-outlet-EditMoreOptions"/>
-                        <outlet property="EditMoreOptionsSection" destination="EditMoreOptionsSection" id="name-outlet-EditMoreOptionsSection"/>
+                        <outlet property="AccountData" destination="EditAccountData" id="name-outlet-EditAccountData"/>
+                        <outlet property="AccountDataSection" destination="EditAccountDataSection" id="name-outlet-EditAccountDataSection"/>
+                        <outlet property="EmailLabel" destination="EditEmailLabel" id="name-outlet-EditEmailLabel"/>
+                        <outlet property="Email" destination="EditEmail" id="name-outlet-EditEmail"/>
+                        <outlet property="UsernameLabel" destination="EditUsernameLabel" id="name-outlet-EditUsernameLabel"/>
+                        <outlet property="Username" destination="EditUsername" id="name-outlet-EditUsername"/>
+                        <outlet property="CheckUsername" destination="EditCheckUsername" id="name-outlet-EditCheckUsername"/>
+                        <outlet property="NameLabel" destination="EditNameLabel" id="name-outlet-EditNameLabel"/>
+                        <outlet property="Name" destination="EditName" id="name-outlet-EditName"/>
+                        <outlet property="ChangePassword" destination="EditChangePassword" id="name-outlet-EditChangePassword"/>
+                        <outlet property="ChangePasswordSection" destination="EditChangePasswordSection" id="name-outlet-EditChangePasswordSection"/>
+                        <outlet property="OldPasswordLabel" destination="EditOldPasswordLabel" id="name-outlet-EditOldPasswordLabel"/>
+                        <outlet property="OldPassword" destination="EditOldPassword" id="name-outlet-EditOldPassword"/>
+                        <outlet property="NewPasswordLabel" destination="EditNewPasswordLabel" id="name-outlet-EditNewPasswordLabel"/>
+                        <outlet property="NewPassword" destination="EditNewPassword" id="name-outlet-EditNewPassword"/>
+                        <outlet property="ConfirmPasswordLabel" destination="EditConfirmPasswordLabel" id="name-outlet-EditConfirmPasswordLabel"/>
+                        <outlet property="ConfirmPassword" destination="EditConfirmPassword" id="name-outlet-EditConfirmPassword"/>
+                        <outlet property="LocationSettings" destination="EditLocationSettings" id="name-outlet-EditLocationSettings"/>
+                        <outlet property="LocationSettingsSection" destination="EditLocationSettingsSection" id="name-outlet-EditLocationSettingsSection"/>
+                        <outlet property="Save" destination="EditSave" id="name-outlet-EditSave"/>
+                        <outlet property="Cancel" destination="EditCancel" id="name-outlet-EditCancel"/>
+                        <outlet property="MoreOptions" destination="EditMoreOptions" id="name-outlet-EditMoreOptions"/>
+                        <outlet property="MoreOptionsSection" destination="EditMoreOptionsSection" id="name-outlet-EditMoreOptionsSection"/>
                         <outlet property="DeactivateAccount" destination="DeactivateAccount" id="name-outlet-DeactivateAccount"/>
                         <outlet property="DeleteAccount" destination="DeleteAccount" id="name-outlet-DeleteAccount"/>
-                        <outlet property="EditUseLocationLabel" destination="EditUseLocationLabel" id="name-outlet-EditUseLocatonLabel"/>
-                        <outlet property="EditUseLocationSwitch" destination="EditUseLocationSwitch" id="name-outlet-EditUseLocatonSwitch"/>
-                        <outlet property="EditLocationShareLabel" destination="EditLocationShareLabel" id="name-outlet-EditLocationShareLabel"/>
-                        <outlet property="EditLocationShareAllLabel" destination="EditLocationShareAllLabel" id="name-outlet-EditLocationShareAllLabel"/>
-                        <outlet property="EditLocationShareAll" destination="EditLocationShareAll" id="name-outlet-EditLocationShareAll"/>
-                        <outlet property="EditLocationShareLikeLabel" destination="EditLocationShareLikeLabel" id="name-outlet-EditLocationShareLikeLabel"/>
-                        <outlet property="EditLocationShareLike" destination="EditLocationShareLike" id="name-outlet-EditLocationShareLike"/>
-                        <outlet property="EditLocationShareMatchLabel" destination="EditLocationShareMatchLabel" id="name-outlet-EditLocationShareMatchLabel"/>
-                        <outlet property="EditLocationShareMatch" destination="EditLocationShareMatch" id="name-outlet-EditLocationShareMatch"/>
-                        <outlet property="EditLocationShareFriendLabel" destination="EditLocationShareFriendLabel" id="name-outlet-EditLocationShareFriendLabel"/>
-                        <outlet property="EditLocationShareFriend" destination="EditLocationShareFriend" id="name-outlet-EditLocationShareFriend"/>
-                        <outlet property="EditLocationShareNoneLabel" destination="EditLocationShareNoneLabel" id="name-outlet-EditLocationShareNoneLabel"/>
-                        <outlet property="EditLocationShareNone" destination="EditLocationShareNone" id="name-outlet-EditLocationShareNone"/>
-                        <outlet property="EditDistanceShareLabel" destination="EditDistanceShareLabel" id="name-outlet-EditDistanceShareLabel"/>
-                        <outlet property="EditDistanceShareAllLabel" destination="EditDistanceShareAllLabel" id="name-outlet-EditDistanceShareAllLabel"/>
-                        <outlet property="EditDistanceShareAll" destination="EditDistanceShareAll" id="name-outlet-EditDistanceShareAll"/>
-                        <outlet property="EditDistanceShareLikeLabel" destination="EditDistanceShareLikeLabel" id="name-outlet-EditDistanceShareLikeLabel"/>
-                        <outlet property="EditDistanceShareLike" destination="EditDistanceShareLike" id="name-outlet-EditDistanceShareLike"/>
-                        <outlet property="EditDistanceShareMatchLabel" destination="EditDistanceShareMatchLabel" id="name-outlet-EditDistanceShareMatchLabel"/>
-                        <outlet property="EditDistanceShareMatch" destination="EditDistanceShareMatch" id="name-outlet-EditDistanceShareMatch"/>
-                        <outlet property="EditDistanceShareFriendLabel" destination="EditDistanceShareFriendLabel" id="name-outlet-EditDistanceShareFriendLabel"/>
-                        <outlet property="EditDistanceShareFriend" destination="EditDistanceShareFriend" id="name-outlet-EditDistanceShareFriend"/>
-                        <outlet property="EditDistanceShareNoneLabel" destination="EditDistanceShareNoneLabel" id="name-outlet-EditDistanceShareNoneLabel"/>
-                        <outlet property="EditDistanceShareNone" destination="EditDistanceShareNone" id="name-outlet-EditDistanceShareNone"/>
+                        <outlet property="UseLocationLabel" destination="EditUseLocationLabel" id="name-outlet-EditUseLocatonLabel"/>
+                        <outlet property="UseLocationSwitch" destination="EditUseLocationSwitch" id="name-outlet-EditUseLocatonSwitch"/>
+                        <outlet property="LocationShareLabel" destination="EditLocationShareLabel" id="name-outlet-EditLocationShareLabel"/>
+                        <outlet property="LocationShareAllLabel" destination="EditLocationShareAllLabel" id="name-outlet-EditLocationShareAllLabel"/>
+                        <outlet property="LocationShareAll" destination="EditLocationShareAll" id="name-outlet-EditLocationShareAll"/>
+                        <outlet property="LocationShareLikeLabel" destination="EditLocationShareLikeLabel" id="name-outlet-EditLocationShareLikeLabel"/>
+                        <outlet property="LocationShareLike" destination="EditLocationShareLike" id="name-outlet-EditLocationShareLike"/>
+                        <outlet property="LocationShareMatchLabel" destination="EditLocationShareMatchLabel" id="name-outlet-EditLocationShareMatchLabel"/>
+                        <outlet property="LocationShareMatch" destination="EditLocationShareMatch" id="name-outlet-EditLocationShareMatch"/>
+                        <outlet property="LocationShareFriendLabel" destination="EditLocationShareFriendLabel" id="name-outlet-EditLocationShareFriendLabel"/>
+                        <outlet property="LocationShareFriend" destination="EditLocationShareFriend" id="name-outlet-EditLocationShareFriend"/>
+                        <outlet property="LocationShareNoneLabel" destination="EditLocationShareNoneLabel" id="name-outlet-EditLocationShareNoneLabel"/>
+                        <outlet property="LocationShareNone" destination="EditLocationShareNone" id="name-outlet-EditLocationShareNone"/>
+                        <outlet property="DistanceShareLabel" destination="EditDistanceShareLabel" id="name-outlet-EditDistanceShareLabel"/>
+                        <outlet property="DistanceShareAllLabel" destination="EditDistanceShareAllLabel" id="name-outlet-EditDistanceShareAllLabel"/>
+                        <outlet property="DistanceShareAll" destination="EditDistanceShareAll" id="name-outlet-EditDistanceShareAll"/>
+                        <outlet property="DistanceShareLikeLabel" destination="EditDistanceShareLikeLabel" id="name-outlet-EditDistanceShareLikeLabel"/>
+                        <outlet property="DistanceShareLike" destination="EditDistanceShareLike" id="name-outlet-EditDistanceShareLike"/>
+                        <outlet property="DistanceShareMatchLabel" destination="EditDistanceShareMatchLabel" id="name-outlet-EditDistanceShareMatchLabel"/>
+                        <outlet property="DistanceShareMatch" destination="EditDistanceShareMatch" id="name-outlet-EditDistanceShareMatch"/>
+                        <outlet property="DistanceShareFriendLabel" destination="EditDistanceShareFriendLabel" id="name-outlet-EditDistanceShareFriendLabel"/>
+                        <outlet property="DistanceShareFriend" destination="EditDistanceShareFriend" id="name-outlet-EditDistanceShareFriend"/>
+                        <outlet property="DistanceShareNoneLabel" destination="EditDistanceShareNoneLabel" id="name-outlet-EditDistanceShareNoneLabel"/>
+                        <outlet property="DistanceShareNone" destination="EditDistanceShareNone" id="name-outlet-EditDistanceShareNone"/>
                         <outlet property="RoundBottom" destination="RoundBottom7" id="name-outlet-RoundBottom7"/>
                         <outlet property="Snackbar" destination="Snackbar7" id="name-outlet-Snackbar7"/>
                         <outlet property="BottomConstraint" destination="RoundBottom72" id="name-outlet-RoundBottom72"/>
@@ -3579,6 +3650,14 @@
                         <outlet property="ScrollBottomConstraint" destination="EditMoreOptionsSection3" id="name-outlet-EditMoreOptionsSection3"/>
                         <outlet property="ScrollBottomOuterConstraint" destination="ProfileEditScroll3" id="name-outlet-ProfileEditScroll3"/>
                         <outlet property="ProfileEdit_Scroll" destination="ProfileEditScroll" id="name-outlet-ProfileEditScroll"/>
+                        <outlet property="ImageEditor" destination="EditImageEditor" id="name-outlet-EditImageEditor"/>
+                        <outlet property="ImageEditorLabel" destination="EditImageEditorLabel" id="name-outlet-EditImageEditorLabel"/>
+                        <outlet property="ImageEditorCancel" destination="EditImageEditorCancel" id="name-outlet-EditImageEditorCancel"/>
+                        <outlet property="ImageEditorOK" destination="EditImageEditorOK" id="name-outlet-EditImageEditorOK"/>
+                        <outlet property="ImageEditorControls" destination="EditImageEditorControls" id="name-outlet-EditImageEditorControls"/>
+                        <outlet property="ImageEditorFrame" destination="EditImageEditorFrame" id="name-outlet-EditImageEditorFrame"/>
+                        <outlet property="ImageEditorFrameBorder" destination="EditImageEditorFrameBorder" id="name-outlet-EditImageEditorFrameBorder"/>
+                        <outlet property="ImageEditorStatus" destination="EditImageEditorStatus" id="name-outlet-EditImageEditorStatus"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="111978" userLabel="First Responder" sceneMemberID="firstResponder"/>

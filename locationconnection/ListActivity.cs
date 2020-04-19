@@ -353,6 +353,8 @@ namespace LocationConnection
                                     LoadListSearch();
                                 }
                             }
+
+                            c.RequestNotification();
                         }
                         else if (responseString.Substring(0, 6) == "ERROR_")
                         {
@@ -2204,6 +2206,11 @@ namespace LocationConnection
                         c.LogActivity("Exiting loadlist GeoFilter " + Session.GeoFilter + " GeoSourceOther " + Session.GeoSourceOther
                             + " own location " + c.IsOwnLocationAvailable() + " other location " + c.IsOtherLocationAvailable());
                         c.SnackIndef(LangEnglish.GeoFilterNoLocation);
+
+                        if (refresh.Refreshing)
+                        {
+                            refresh.EndRefreshing();
+                        }
                         /*if (ReloadPulldown.Alpha == 1)
                         {
                             HidePulldown();

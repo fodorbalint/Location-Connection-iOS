@@ -73,9 +73,12 @@ namespace LocationConnection
 
 			c = new CommonMethods(this);
 
-            //implement notification handling if user is logged in
+			if (c.IsLoggedIn())
+			{
+				c.RequestNotification();
+			}
 
-            if (!(this is ProfileViewActivity) && !(this is LocationActivity) && !(this is ChatListActivity))
+			if (!(this is ProfileViewActivity) && !(this is LocationActivity) && !(this is ChatListActivity))
             {
 				var tap0 = new UITapGestureRecognizer(); //If CancelsTouchesInView is set to false, the buttons won't work at first click 
 				tap0.AddTarget(() => DismissKeyboard(tap0));

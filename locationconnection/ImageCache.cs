@@ -16,7 +16,7 @@ namespace LocationConnection
             this.context = context;
 
             var documents = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments);
-            cacheDir = Path.Combine (documents, "..", "Library/Caches");
+            cacheDir = Path.Combine(documents, "..", "Library/Caches");
         }
 
         public void LoadImage(UIView imageView, string userID, string picture, bool isLarge = false, bool temp = false)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace LocationConnection
         private WebClient client;
 
         UIImagePickerController imagePicker;
-		private static string selectedImage;
+		private static string selectedImage, selectedImageName;
 
 		private nfloat lastScale;
 		private nfloat touchStartX;
@@ -60,7 +61,7 @@ namespace LocationConnection
 
 		public RegisterCommonMethods(BaseActivity context, CommonMethods c, ImageFrameLayout ImagesUploaded, UITextField Email, UITextField Username, UITextField Name, UITextView DescriptionText, UIButton CheckUsername, UIButton Images,
             UILabel ImagesProgressText, UIImageView LoaderCircle, UIProgressView ImagesProgress, UISwitch UseLocationSwitch, UISwitch LocationShareAll, UISwitch LocationShareLike, UISwitch LocationShareMatch, UISwitch LocationShareFriend, UISwitch LocationShareNone,
-            UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone, UIView ImageEditorControls, UIView ImageEditorStatus, UIButton ImageEditorCancel, UIButton ImageEditorOK, UIImageView ImageEditor, UIView ImageEditorFrame, UIView ImageEditorFrameBorder)
+            UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone, UIView ImageEditorControls, UIView ImageEditorStatus, UIButton ImageEditorCancel, UIButton ImageEditorOK, UIImageView ImageEditor,UIView ImageEditorFrame, UIView ImageEditorFrameBorder)
         {
             this.context = context;
             this.c = c;
@@ -172,9 +173,11 @@ namespace LocationConnection
                         {
                             imagePicker.DismissViewController(true, null);
 
-                            string imageName = e1.ImageUrl.Path.Substring(e1.ImageUrl.Path.LastIndexOf("/") + 1);
-                            Console.WriteLine("imageName: " + imageName);
-                            if (uploadedImages.IndexOf(imageName) != -1)
+							selectedImage = e1.ImageUrl.Path;
+							selectedImageName = selectedImage.Substring(selectedImage.LastIndexOf("/") + 1);
+
+                            Console.WriteLine("imageName: " + selectedImageName);
+                            if (uploadedImages.IndexOf(selectedImageName) != -1) //virtually impossible, since uploaded images are tagged with timestamp
                             {
                                 context.c.Snack(LangEnglish.ImageExists);
                                 return;
@@ -197,7 +200,6 @@ namespace LocationConnection
 								ImageEditor.Hidden = false;
 								ImageEditorFrame.Hidden = false;
 								ImageEditorFrameBorder.Hidden = false;
-								selectedImage = e1.ImageUrl.Path;
 
 								if (sizeRatio > 1)
 								{
@@ -425,6 +427,7 @@ namespace LocationConnection
 
 		public async void OKImageEditing(object sender, EventArgs e)
 		{
+			
 			xDist = ImageEditor.Center.X - ImageEditorFrameBorder.Center.X;
 			yDist = ImageEditor.Center.Y - ImageEditorFrameBorder.Center.Y;
 			if (IsOutOfFrameX(xDist) || IsOutOfFrameY(yDist))
@@ -433,13 +436,51 @@ namespace LocationConnection
 				return;
             }
 
-			ImageEditorControls.Hidden = true;
-			ImageEditorStatus.Hidden = true;
-			ImageEditor.Hidden = true;
-			ImageEditorFrame.Hidden = true;
-			ImageEditorFrameBorder.Hidden = true;
+			nfloat w = ImageEditor.Image.Size.Width;
+			nfloat h = ImageEditor.Image.Size.Height;
 
-			await UploadFile(selectedImage, RegisterActivity.regsessionid);
+			nfloat x = (ImageEditorFrameBorder.Frame.Left - ImageEditor.Frame.Left) / ImageEditor.Frame.Width * w;
+			nfloat y = (ImageEditorFrameBorder.Frame.Top - ImageEditor.Frame.Top) / ImageEditor.Frame.Height * h;
+			nfloat cropW = ImageEditorFrameBorder.Frame.Width / ImageEditor.Frame.Width * w;
+			nfloat cropH = cropW;
+
+			//context.c.CW("OKImageEditing " + ImageEditorFrameBorder.Frame + " --- " + ImageEditor.Frame + " " + w + " " + h + " " + x + " " + y + " " + cropW + " " + cropH);
+
+			UIImage im = CropImage(ImageEditor.Image, (int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(cropW), (int)Math.Round(cropH));
+			NSData data = im.AsJPEG(); //default compression quality is 1. File size example: 0.99: 1710751, 1: 3502822
+
+			var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			string cacheDir = Path.Combine(documents, "..", "Library/Caches");
+			string fileName = Path.Combine(cacheDir, selectedImageName);
+			if (!data.Save(fileName, false, out NSError error))
+			{
+				context.c.ReportError("Error while cropping image: " + error.LocalizedDescription);
+			}
+            else
+            {
+				ImageEditorControls.Hidden = true;
+				ImageEditorStatus.Hidden = true;
+				ImageEditor.Hidden = true;
+				ImageEditorFrame.Hidden = true;
+				ImageEditorFrameBorder.Hidden = true;
+				ImageEditor.Image = null;
+
+				await UploadFile(fileName, RegisterActivity.regsessionid);
+			}
+		}
+
+		private UIImage CropImage(UIImage sourceImage, float crop_x, int crop_y, int width, int height)
+		{
+			var imgSize = sourceImage.Size;
+			UIGraphics.BeginImageContext(new SizeF(width, height));
+			var context = UIGraphics.GetCurrentContext();
+			var clippedRect = new RectangleF(0, 0, width, height);
+			context.ClipToRect(clippedRect);
+			var drawRect = new RectangleF(-crop_x, -crop_y, (float)imgSize.Width, (float)imgSize.Height);
+			sourceImage.Draw(drawRect);
+			var modifiedImage = UIGraphics.GetImageFromCurrentImageContext();
+			UIGraphics.EndImageContext();
+			return modifiedImage;
 		}
 
 		public async Task UploadFile(string fileName, string regsessionid) //use Task<int> for return value

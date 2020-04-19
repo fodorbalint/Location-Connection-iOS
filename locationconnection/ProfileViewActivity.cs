@@ -1362,6 +1362,7 @@ namespace LocationConnection
 								}
 							}
 						}
+						IntentData.blockedID = displayUser.ID;
 						CommonMethods.OpenPage(null, 0); //Disabled chat window will show, with unmatch date given.
 					}					
 				}

@@ -28,8 +28,8 @@ namespace LocationConnection
 
         public override void ViewDidLoad()
         {
-            //try
-            //{
+            try
+            {
                 base.ViewDidLoad();
 
                 GetScreenMetrics();
@@ -124,6 +124,7 @@ namespace LocationConnection
                 Register.TouchUpInside += Register_Click;
                 Reset.TouchUpInside += Reset_Click;
                 RegisterCancel.TouchUpInside += RegisterCancel_Click;
+
                 ImageEditorCancel.TouchUpInside += rc.CancelImageEditing;
                 ImageEditorOK.TouchUpInside += rc.OKImageEditing;
 
@@ -134,11 +135,11 @@ namespace LocationConnection
                 SnackBottomConstraint_Base = SnackBottomConstraint;
                 ScrollBottomConstraint_Base = ScrollBottomConstraint;
                 ScrollBottomOuterConstraint_Base = ScrollBottomOuterConstraint;
-            /*}
+            }
             catch (Exception ex)
             {
                 c.ReportErrorSilent(ex.Message + Environment.NewLine + ex.StackTrace);
-            }*/
+            }
         }
 
         public async override void ViewWillAppear(bool animated)

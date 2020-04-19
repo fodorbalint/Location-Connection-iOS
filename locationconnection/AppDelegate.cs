@@ -28,30 +28,16 @@ namespace LocationConnection
 
             Firebase.Core.App.Configure();
 
-            //if (!File.Exists(notificationRequestFile))
+            if (!File.Exists(notificationRequestFile))
             {
 				File.WriteAllText(notificationRequestFile, "True");
 			}
 
-			var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
-            UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
-                Console.WriteLine("Notification authorization granted: " + granted);
-				CommonMethods.LogActivityStatic("Notification authorization granted: " + granted);
-				if (granted)
-                {
-                    InvokeOnMainThread(() => {
-                        UIApplication.SharedApplication.RegisterForRemoteNotifications();
-                        Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
-                    });
-                }
-            });
-
-            UNUserNotificationCenter.Current.Delegate = this;
+			UNUserNotificationCenter.Current.Delegate = this;
             Messaging.SharedInstance.Delegate = this;    
 
             var token = Messaging.SharedInstance.FcmToken ?? "";
             Console.WriteLine($"Existing FCM token: {token}");
-
 
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
@@ -74,8 +60,6 @@ namespace LocationConnection
         {
 			Console.WriteLine("RegisteredForRemoteNotifications");
         }
-
-
 
 		[Export("userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:")] //does it come after autologin?
 		public void DidReceiveNotificationResponse(UNUserNotificationCenter center, UNNotificationResponse response, Action //called when app is in background, and user taps on notification

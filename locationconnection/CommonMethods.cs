@@ -14,6 +14,8 @@ using CoreLocation;
 using CoreGraphics;
 using Foundation;
 using UIKit;
+using UserNotifications;
+using Firebase.CloudMessaging;
 
 namespace LocationConnection
 {
@@ -58,6 +60,22 @@ namespace LocationConnection
 			this.SnackBar.Hidden = true;
 			snackVisible = false;
         }
+
+        public void RequestNotification()
+        {
+			var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
+			UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
+				Console.WriteLine("Notification authorization granted: " + granted);
+				CommonMethods.LogActivityStatic("Notification authorization granted: " + granted);
+				if (granted)
+				{
+					context.InvokeOnMainThread(() => {
+						UIApplication.SharedApplication.RegisterForRemoteNotifications();
+						Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
+					});
+				}
+			});
+		}
 
 		public void LoadSettings(bool defaultSettings)
 		{
