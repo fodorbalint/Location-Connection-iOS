@@ -2428,9 +2428,9 @@ namespace LocationConnection
             {
                 InvokeOnMainThread(() => {
                     LoadPrevious.Enabled = true;
-                    LoadPrevious.Alpha = 1f;
+                    LoadPrevious.Alpha = 1;
                     LoadNext.Enabled = true;
-                    LoadNext.Alpha = 1f;
+                    LoadNext.Alpha = 1;
                     listLoading = false;
                     StopLoaderAnim();
                     SetResultStatus();
@@ -2654,6 +2654,7 @@ namespace LocationConnection
             {
                 LoadNext.Hidden = false;
                 LoadNext.Enabled = true;
+                LoadNext.Alpha = 1;
             }
             else
             {
@@ -2664,6 +2665,7 @@ namespace LocationConnection
             {
                 LoadPrevious.Hidden = false;
                 LoadPrevious.Enabled = true;
+                LoadPrevious.Alpha = 1;
             }
             else
             {

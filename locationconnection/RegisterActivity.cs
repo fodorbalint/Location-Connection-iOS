@@ -487,12 +487,15 @@ namespace LocationConnection
             Username.Text = "";
             Name.Text = "";
             DescriptionText.Text = "";
+
             rc.uploadedImages = new List<string>();
+
             for (int i = ImagesUploaded.Subviews.Length - 1; i >= 0; i--)
             {
                 ImagesUploaded.Subviews[i].RemoveFromSuperview();
             }
             ImagesUploaded.RefitImagesContainer();
+
             DescriptionText.Text = "";
 
             ImagesProgressText.Text = "";

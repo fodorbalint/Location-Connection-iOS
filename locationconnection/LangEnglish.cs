@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class LangEnglish
     {
-        public const string versionInfo = "Version: 28. March 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories";
+        public const string versionInfo = "Version: 1.2 - 21 April 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories";
 
         public const string ConfirmAction = "Confirm action";
         public const string DialogOK = "OK";

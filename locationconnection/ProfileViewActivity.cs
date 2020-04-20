@@ -528,7 +528,7 @@ namespace LocationConnection
 				}
 				else
 				{
-					RegisterDate.Text = dt.ToString("d. MMMM yyyy");
+					RegisterDate.Text = dt.ToString("d MMMM yyyy");
 				}
 
 				LoadEmptyPictures(Session.Pictures.Length);
@@ -630,7 +630,7 @@ namespace LocationConnection
 				}
 				else
 				{
-					RegisterDate.Text = dt.ToString("d. MMMM yyyy");
+					RegisterDate.Text = dt.ToString("d MMMM yyyy");
 				}
 
 				LoadEmptyPictures(displayUser.Pictures.Length);

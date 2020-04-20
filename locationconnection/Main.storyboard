@@ -75,22 +75,21 @@
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="ActionBar0"/>
-                                    <constraint firstAttribute="topMargin" secondItem="StatusImage" secondAttribute="top" id="StatusImage2"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="StatusImage" secondAttribute="leading" id="StatusImage3"/>
+                                    <constraint firstAttribute="top" secondItem="StatusImage" secondAttribute="top" id="StatusImage2"/>
+                                    <constraint firstAttribute="leading" secondItem="StatusImage" secondAttribute="leading" id="StatusImage3"/>
                                     <constraint firstItem="StatusText" firstAttribute="centerY" secondItem="MapView" secondAttribute="centerY" id="StatusText2"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="StatusText" secondAttribute="leading" constant="-10" id="StatusText3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="OpenFilters" secondAttribute="top" id="OpenFilters2"/>
+                                    <constraint firstAttribute="leading" secondItem="StatusText" secondAttribute="leading" constant="-10" id="StatusText3"/>
+                                    <constraint firstAttribute="top" secondItem="OpenFilters" secondAttribute="top" id="OpenFilters2"/>
                                     <constraint firstItem="OpenFilters" firstAttribute="trailing" secondItem="OpenSearch" secondAttribute="leading" id="OpenFilters3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="OpenSearch" secondAttribute="top" id="OpenSearch2"/>
+                                    <constraint firstAttribute="top" secondItem="OpenSearch" secondAttribute="top" id="OpenSearch2"/>
                                     <constraint firstItem="OpenSearch" firstAttribute="trailing" secondItem="ListView" secondAttribute="leading" id="OpenSearch3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="ListView" secondAttribute="top" id="ListView2"/>
+                                    <constraint firstAttribute="top" secondItem="ListView" secondAttribute="top" id="ListView2"/>
                                     <constraint firstItem="ListView" firstAttribute="trailing" secondItem="MapView" secondAttribute="leading" id="ListView3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="MapView" secondAttribute="top" id="MapView2"/>
+                                    <constraint firstAttribute="top" secondItem="MapView" secondAttribute="top" id="MapView2"/>
                                     <constraint firstItem="MapView" firstAttribute="trailing" secondItem="MenuIcon" secondAttribute="leading" id="MapView3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="MenuIcon" secondAttribute="top" id="MenuIcon2"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="MenuIcon" secondAttribute="trailing" id="MenuIcon3"/>
+                                    <constraint firstAttribute="top" secondItem="MenuIcon" secondAttribute="top" id="MenuIcon2"/>
+                                    <constraint firstAttribute="trailing" secondItem="MenuIcon" secondAttribute="trailing" id="MenuIcon3"/>
                                 </constraints>
-                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SearchLayout">
                                 <rect key="frame" x="0.0" y="68" width="375" height="80"/>
@@ -114,13 +113,12 @@
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="SearchTerm" secondAttribute="centerY" id="SearchTerm2"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="SearchTerm" secondAttribute="leading" constant="-10" id="SearchTerm3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="SearchIn" secondAttribute="top" constant="10" id="SearchIn2"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="SearchIn" secondAttribute="bottom" constant="-10" priority="999" id="SearchIn3"/>
+                                    <constraint firstAttribute="leading" secondItem="SearchTerm" secondAttribute="leading" constant="-10" id="SearchTerm3"/>
+                                    <constraint firstAttribute="top" secondItem="SearchIn" secondAttribute="top" constant="10" id="SearchIn2"/>
+                                    <constraint firstAttribute="bottom" secondItem="SearchIn" secondAttribute="bottom" constant="-10" priority="999" id="SearchIn3"/>
                                     <constraint firstItem="SearchIn" firstAttribute="leading" secondItem="SearchTerm" secondAttribute="trailing" constant="5" id="SearchIn4"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="SearchIn" secondAttribute="trailing" constant="10" id="SearchIn5"/>
+                                    <constraint firstAttribute="trailing" secondItem="SearchIn" secondAttribute="trailing" constant="10" id="SearchIn5"/>
                                 </constraints>
-                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FilterLayout">
                                 <rect key="frame" x="0.0" y="148" width="375" height="279"/>
@@ -291,78 +289,75 @@
                                                     </label>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="topMargin" secondItem="DistanceSourceCurrent" secondAttribute="top" id="DistanceSourceCurrent2"/>
-                                                    <constraint firstAttribute="leadingMargin" secondItem="DistanceSourceCurrent" secondAttribute="leading" constant="-12" id="DistanceSourceCurrent3"/>
+                                                    <constraint firstAttribute="top" secondItem="DistanceSourceCurrent" secondAttribute="top" id="DistanceSourceCurrent2"/>
+                                                    <constraint firstAttribute="leading" secondItem="DistanceSourceCurrent" secondAttribute="leading" constant="-12" id="DistanceSourceCurrent3"/>
                                                     <constraint firstItem="DistanceSourceCurrentLabel" firstAttribute="centerY" secondItem="DistanceSourceCurrent" secondAttribute="centerY" id="DistanceSourceCurrentLabel2"/>
                                                     <constraint firstItem="DistanceSourceCurrentLabel" firstAttribute="leading" secondItem="DistanceSourceCurrent" secondAttribute="trailing" id="DistanceSourceCurrentLabel3"/>
-                                                    <constraint firstAttribute="topMargin" secondItem="DistanceSourceAddress" secondAttribute="top" id="DistanceSourceAddress2"/>
+                                                    <constraint firstAttribute="top" secondItem="DistanceSourceAddress" secondAttribute="top" id="DistanceSourceAddress2"/>
                                                     <constraint firstItem="DistanceSourceAddress" firstAttribute="leading" secondItem="DistanceSourceCurrentLabel" secondAttribute="trailing" constant="5" id="DistanceSourceAddress3"/>
                                                     <constraint firstItem="DistanceSourceAddressLabel" firstAttribute="centerY" secondItem="DistanceSourceCurrent" secondAttribute="centerY" id="DistanceSourceAddressLabel2"/>
                                                     <constraint firstItem="DistanceSourceAddressLabel" firstAttribute="leading" secondItem="DistanceSourceAddress" secondAttribute="trailing" id="DistanceSourceAddressLabel3"/>
                                                     <constraint firstItem="DistanceSourceAddressText" firstAttribute="centerY" secondItem="AddressOK" secondAttribute="centerY" id="DistanceSourceAddressText2"/>
-                                                    <constraint firstAttribute="leadingMargin" secondItem="DistanceSourceAddressText" secondAttribute="leading" constant="-10" id="DistanceSourceAddressText3"/>
+                                                    <constraint firstAttribute="leading" secondItem="DistanceSourceAddressText" secondAttribute="leading" constant="-10" id="DistanceSourceAddressText3"/>
                                                     <constraint firstItem="AddressOK" firstAttribute="top" secondItem="DistanceSourceCurrent" secondAttribute="bottom" constant="6" id="AddressOK2"/>
                                                     <constraint firstItem="AddressOK" firstAttribute="leading" secondItem="DistanceSourceAddressText" secondAttribute="trailing" constant="5" id="AddressOK3"/>
-                                                    <constraint firstAttribute="trailingMargin" secondItem="AddressOK" secondAttribute="trailing" constant="10" id="AddressOK4"/>
+                                                    <constraint firstAttribute="trailing" secondItem="AddressOK" secondAttribute="trailing" constant="10" id="AddressOK4"/>
                                                     <constraint firstItem="DistanceLimit" firstAttribute="centerY" secondItem="DistanceLimitInput" secondAttribute="centerY" id="DistanceLimit2"/>
-                                                    <constraint firstAttribute="leadingMargin" secondItem="DistanceLimit" secondAttribute="leading" constant="-10" id="DistanceLimit3"/>
+                                                    <constraint firstAttribute="leading" secondItem="DistanceLimit" secondAttribute="leading" constant="-10" id="DistanceLimit3"/>
                                                     <constraint firstItem="DistanceLimitInput" firstAttribute="top" secondItem="AddressOK" secondAttribute="bottom" constant="5" id="DistanceLimitInput2"/>
-                                                    <constraint firstAttribute="bottomMargin" secondItem="DistanceLimitInput" secondAttribute="bottom" constant="6" priority="999" id="DistanceLimitInput3"/>
+                                                    <constraint firstAttribute="bottom" secondItem="DistanceLimitInput" secondAttribute="bottom" constant="6" priority="999" id="DistanceLimitInput3"/>
                                                     <constraint firstItem="DistanceLimitInput" firstAttribute="leading" secondItem="DistanceLimit" secondAttribute="trailing" constant="10" id="DistanceLimitInput4"/>
                                                     <constraint firstItem="DistanceUnitText" firstAttribute="centerY" secondItem="DistanceLimitInput" secondAttribute="centerY" id="DistanceUnitText2"/>
                                                     <constraint firstItem="DistanceUnitText" firstAttribute="leading" secondItem="DistanceLimitInput" secondAttribute="trailing" constant="5" id="DistanceUnitText3"/>
-                                                    <constraint firstAttribute="trailingMargin" secondItem="DistanceUnitText" secondAttribute="trailing" constant="10" id="DistanceUnitText4"/>
+                                                    <constraint firstAttribute="trailing" secondItem="DistanceUnitText" secondAttribute="trailing" constant="10" id="DistanceUnitText4"/>
                                                 </constraints>
-                                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                             </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="topMargin" secondItem="ListTopSeparator1" secondAttribute="top" id="ListTopSeparator12"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="ListTopSeparator1" secondAttribute="leading" id="ListTopSeparator13"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="ListTopSeparator1" secondAttribute="trailing" id="ListTopSeparator14"/>
-                                            <constraint firstAttribute="topMargin" secondItem="UseGeoNo" secondAttribute="top" constant="-12" id="UseGeoNo2"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="UseGeoNo" secondAttribute="leading" constant="-12" id="UseGeoNo3"/>
+                                            <constraint firstAttribute="top" secondItem="ListTopSeparator1" secondAttribute="top" id="ListTopSeparator12"/>
+                                            <constraint firstAttribute="leading" secondItem="ListTopSeparator1" secondAttribute="leading" id="ListTopSeparator13"/>
+                                            <constraint firstAttribute="trailing" secondItem="ListTopSeparator1" secondAttribute="trailing" id="ListTopSeparator14"/>
+                                            <constraint firstAttribute="top" secondItem="UseGeoNo" secondAttribute="top" constant="-12" id="UseGeoNo2"/>
+                                            <constraint firstAttribute="leading" secondItem="UseGeoNo" secondAttribute="leading" constant="-12" id="UseGeoNo3"/>
                                             <constraint firstItem="UseGeoNoLabel" firstAttribute="centerY" secondItem="UseGeoNo" secondAttribute="centerY" id="UseGeoNoLabel2"/>
                                             <constraint firstItem="UseGeoNoLabel" firstAttribute="leading" secondItem="UseGeoNo" secondAttribute="trailing" id="UseGeoNoLabel3"/>
                                             <constraint firstItem="UseGeoYes" firstAttribute="top" secondItem="UseGeoNo" secondAttribute="bottom" constant="4" id="UseGeoYes2"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="UseGeoYes" secondAttribute="leading" constant="-12" id="UseGeoYes3"/>
+                                            <constraint firstAttribute="leading" secondItem="UseGeoYes" secondAttribute="leading" constant="-12" id="UseGeoYes3"/>
                                             <constraint firstItem="UseGeoYesLabel" firstAttribute="centerY" secondItem="UseGeoYes" secondAttribute="centerY" id="UseGeoYesLabel2"/>
                                             <constraint firstItem="UseGeoYesLabel" firstAttribute="leading" secondItem="UseGeoYes" secondAttribute="trailing" id="UseGeoYesLabel3"/>
-                                            <constraint firstAttribute="topMargin" secondItem="RefreshDistance" secondAttribute="top" constant="-10" id="RefreshDistance2"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="RefreshDistance" secondAttribute="trailing" constant="5" id="RefreshDistance3"/>
+                                            <constraint firstAttribute="top" secondItem="RefreshDistance" secondAttribute="top" constant="-10" id="RefreshDistance2"/>
+                                            <constraint firstAttribute="trailing" secondItem="RefreshDistance" secondAttribute="trailing" constant="5" id="RefreshDistance3"/>
                                             <constraint firstItem="UseGeoContainer" firstAttribute="top" secondItem="UseGeoYes" secondAttribute="bottom" constant="8" id="UseGeoContainer2"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="UseGeoContainer" secondAttribute="bottom" constant="4" priority="999" id="UseGeoContainer3"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="UseGeoContainer" secondAttribute="leading" id="UseGeoContainer4"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="UseGeoContainer" secondAttribute="trailing" id="UseGeoContainer5"/>
+                                            <constraint firstAttribute="bottom" secondItem="UseGeoContainer" secondAttribute="bottom" constant="4" priority="999" id="UseGeoContainer3"/>
+                                            <constraint firstAttribute="leading" secondItem="UseGeoContainer" secondAttribute="leading" id="UseGeoContainer4"/>
+                                            <constraint firstAttribute="trailing" secondItem="UseGeoContainer" secondAttribute="trailing" id="UseGeoContainer5"/>
                                         </constraints>
-                                        <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                         <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <!--<constraint firstAttribute="topMargin" secondItem="ListTypeCaption" secondAttribute="top" constant="-10" id="ListTypeCaption2"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="ListTypeCaption" secondAttribute="leading" constant="-10" id="ListTypeCaption3"/>-->
-                                    <constraint firstAttribute="topMargin" secondItem="ListType" secondAttribute="top" constant="10" id="ListType2"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="ListType" secondAttribute="bottom" relation="greaterThanOrEqual" constant="-10" priority="999" id="ListType3"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="ListType" secondAttribute="leading" constant="-10" id="ListType4"/>
-                                    <constraint firstAttribute="topMargin" secondItem="SortByCaption" secondAttribute="top" constant="-10" id="SortByCaption2"/>
+                                    <!--<constraint firstAttribute="top" secondItem="ListTypeCaption" secondAttribute="top" constant="-10" id="ListTypeCaption2"/>
+                                    <constraint firstAttribute="leadingn" secondItem="ListTypeCaption" secondAttribute="leading" constant="-10" id="ListTypeCaption3"/>-->
+                                    <constraint firstAttribute="top" secondItem="ListType" secondAttribute="top" constant="10" id="ListType2"/>
+                                    <constraint firstAttribute="bottom" secondItem="ListType" secondAttribute="bottom" relation="greaterThanOrEqual" constant="-10" priority="999" id="ListType3"/>
+                                    <constraint firstAttribute="leading" secondItem="ListType" secondAttribute="leading" constant="-10" id="ListType4"/>
+                                    <constraint firstAttribute="top" secondItem="SortByCaption" secondAttribute="top" constant="-10" id="SortByCaption2"/>
                                     <constraint firstItem="SortByCaption" firstAttribute="leading" secondItem="ListType" secondAttribute="trailing" constant="10" id="SortByCaption3"/>
-                                    <constraint firstItem="SortBy-LastActiveDate" firstAttribute="top" secondItem="SortByCaption" secondAttribute="bottom" constant="2" id="SortBy-LastActiveDate2"/>
+                                    <constraint firstItem="SortBy-LastActiveDate" firstAttribute="top" secondItem="SortByCaption" secondAttribute="bottom" constant="7" id="SortBy-LastActiveDate2"/>
                                     <constraint firstItem="SortBy-LastActiveDate" firstAttribute="leading" secondItem="ListType" secondAttribute="trailing" constant="10" id="SortBy-LastActiveDate3"/>
-                                    <constraint firstItem="SortBy-ResponseRate" firstAttribute="top" secondItem="SortByCaption" secondAttribute="bottom" constant="2" id="SortBy-ResponseRate2"/>
+                                    <constraint firstItem="SortBy-ResponseRate" firstAttribute="top" secondItem="SortByCaption" secondAttribute="bottom" constant="7" id="SortBy-ResponseRate2"/>
                                     <constraint firstItem="SortBy-ResponseRate" firstAttribute="leading" secondItem="SortBy-LastActiveDate" secondAttribute="trailing" id="SortBy-ResponseRate3"/>
-                                    <constraint firstItem="SortBy-RegisterDate" firstAttribute="top" secondItem="SortByCaption" secondAttribute="bottom" constant="2" id="SortBy-RegisterDate2"/>
+                                    <constraint firstItem="SortBy-RegisterDate" firstAttribute="top" secondItem="SortByCaption" secondAttribute="bottom" constant="7" id="SortBy-RegisterDate2"/>
                                     <constraint firstItem="SortBy-RegisterDate" firstAttribute="leading" secondItem="SortBy-ResponseRate" secondAttribute="trailing" id="SortBy-RegisterDate3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="OrderBy" secondAttribute="top" constant="-20" id="OrderBy2"/>
+                                    <constraint firstAttribute="top" secondItem="OrderBy" secondAttribute="top" constant="-20" id="OrderBy2"/>
                                     <constraint firstItem="OrderBy" firstAttribute="leading" secondItem="SortBy-RegisterDate" secondAttribute="trailing" constant="2" id="OrderBy3"/>
                                     <constraint firstItem="DistanceFiltersOpenClose" firstAttribute="centerY" secondItem="ListType" secondAttribute="centerY" id="DistanceFiltersOpenClose2"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="DistanceFiltersOpenClose" secondAttribute="trailing" constant="5" id="DistanceFiltersOpenClose3"/>
+                                    <constraint firstAttribute="trailing" secondItem="DistanceFiltersOpenClose" secondAttribute="trailing" constant="5" id="DistanceFiltersOpenClose3"/>
                                     <constraint firstItem="DistanceFilters" firstAttribute="top" secondItem="ListType" secondAttribute="bottom" constant="-10" id="DistanceFilters2"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="DistanceFilters" secondAttribute="bottom" priority="999" id="DistanceFilters3"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="DistanceFilters" secondAttribute="leading" id="DistanceFilters4"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="DistanceFilters" secondAttribute="trailing" id="DistanceFilters5"/>
+                                    <constraint firstAttribute="bottom" secondItem="DistanceFilters" secondAttribute="bottom" priority="999" id="DistanceFilters3"/>
+                                    <constraint firstAttribute="leading" secondItem="DistanceFilters" secondAttribute="leading" id="DistanceFilters4"/>
+                                    <constraint firstAttribute="trailing" secondItem="DistanceFilters" secondAttribute="trailing" id="DistanceFilters5"/>
                                 </constraints>
-                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchListScrollBg">
@@ -371,7 +366,6 @@
                             </view>
                             <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="UserSearchListScroll" translatesAutoresizingMaskIntoConstraints="NO" ambiguous="YES">
                                 <rect key="frame" x="0.0" y="427" width="375" height="211"/>
-                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchList">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
@@ -407,9 +401,9 @@
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="0"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="UserSearchList" secondAttribute="width" id="UserSearchList1"/>
-                                    <constraint firstAttribute="topMargin" secondItem="UserSearchList" secondAttribute="top" id="UserSearchList2"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="UserSearchList" secondAttribute="bottom" id="UserSearchList3"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="UserSearchList" secondAttribute="leading" id="UserSearchList4"/>
+                                    <constraint firstAttribute="top" secondItem="UserSearchList" secondAttribute="top" id="UserSearchList2"/>
+                                    <constraint firstAttribute="bottom" secondItem="UserSearchList" secondAttribute="bottom" id="UserSearchList3"/>
+                                    <constraint firstAttribute="leading" secondItem="UserSearchList" secondAttribute="leading" id="UserSearchList4"/>
                                 </constraints>
                             </scrollView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NoResult" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NoResult">
@@ -503,16 +497,15 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="StatusBar0"/>
-                                    <constraint firstAttribute="topMargin" secondItem="ListLoaderCircle" secondAttribute="top" id="ListLoaderCircle2"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="ListLoaderCircle" secondAttribute="leading" id="ListLoaderCircle3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="LoadPrevious" secondAttribute="top" id="LoadPrevious2"/>
+                                    <constraint firstAttribute="top" secondItem="ListLoaderCircle" secondAttribute="top" id="ListLoaderCircle2"/>
+                                    <constraint firstAttribute="leading" secondItem="ListLoaderCircle" secondAttribute="leading" id="ListLoaderCircle3"/>
+                                    <constraint firstAttribute="top" secondItem="LoadPrevious" secondAttribute="top" id="LoadPrevious2"/>
                                     <constraint firstItem="LoadPrevious" firstAttribute="trailing" secondItem="ResultSet" secondAttribute="leading" id="LoadPrevious3"/>
                                     <constraint firstAttribute="centerY" secondItem="ResultSet" secondAttribute="centerY" id="ResultSet2"/>
                                     <constraint firstAttribute="centerX" secondItem="ResultSet" secondAttribute="centerX" id="ResultSet3"/>
-                                    <constraint firstAttribute="topMargin" secondItem="LoadNext" secondAttribute="top" id="LoadNext2"/>
+                                    <constraint firstAttribute="top" secondItem="LoadNext" secondAttribute="top" id="LoadNext2"/>
                                     <constraint firstItem="LoadNext" firstAttribute="leading" secondItem="ResultSet" secondAttribute="trailing" id="LoadNext3"/>
                                 </constraints>
-                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.85" alpha="1"/>
                             </view>
                             <view contentMode="scaleToFill" id="RoundBottom1" translatesAutoresizingMaskIntoConstraints="NO">
@@ -734,7 +727,6 @@
                             <constraint firstItem="Snackbar1" firstAttribute="trailing" secondItem="SafeArea1" secondAttribute="trailing" id="Snackbar15"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SafeArea1"/>
-                        <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                     </view>
                     <connections>
                         <outlet property="ActionBar" destination="ActionBar" id="name-outlet-ActionBar"/>
@@ -923,7 +915,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="ResetEmailText" firstAttribute="centerY" secondItem="ResetEmail" secondAttribute="centerY" id="ResetEmailText2"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="ResetEmailText" secondAttribute="leading" id="ResetEmailText3"/>
+                                            <constraint firstAttribute="leading" secondItem="ResetEmailText" secondAttribute="leading" id="ResetEmailText3"/>
                                             <constraint firstAttribute="top" secondItem="ResetEmail" secondAttribute="top" constant="-6" id="ResetEmail2"/>
                                             <constraint firstItem="ResetEmail" firstAttribute="leading" secondItem="ResetEmailText" secondAttribute="trailing" constant="10" id="ResetEmail3"/>
                                             <constraint firstAttribute="trailing" secondItem="ResetEmail" secondAttribute="trailing" id="ResetEmail4"/>
@@ -1784,7 +1776,6 @@
                                             <scrollView showsHorizontalScrollIndicator="NO" pagingEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileImageScroll" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.85" alpha="1"/>
-                                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                             </scrollView>
                                             <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuIcon">
                                                 <rect key="frame" x="327" y="0.0" width="48" height="48"/>
