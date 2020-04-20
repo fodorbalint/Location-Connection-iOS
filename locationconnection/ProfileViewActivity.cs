@@ -105,7 +105,8 @@ namespace LocationConnection
 				RoundBottom_Base = RoundBottom;
 			    Snackbar_Base = Snackbar;
 			    BottomConstraint_Base = BottomConstraint;
-			    SnackBottomConstraint_Base = SnackBottomConstraint; 
+				SnackTopConstraint_Base = SnackTopConstraint;
+				SnackBottomConstraint_Base = SnackBottomConstraint; 
 			    ScrollBottomConstraint_Base = ScrollBottomConstraint;
 			}
 			catch (Exception ex)

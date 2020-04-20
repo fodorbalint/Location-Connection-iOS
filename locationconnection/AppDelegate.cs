@@ -59,6 +59,7 @@ namespace LocationConnection
         public void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
 			Console.WriteLine("RegisteredForRemoteNotifications");
+			CommonMethods.LogActivityStatic("RegisteredForRemoteNotifications");
         }
 
 		[Export("userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:")] //does it come after autologin?
@@ -508,7 +509,8 @@ namespace LocationConnection
         [Export("application:didFailToRegisterForRemoteNotificationsWithError:")]
         public void FailedToRegisterForRemoteNotifications(UIKit.UIApplication application, Foundation.NSError error)
         {
-            Console.WriteLine("FailedToRegisterForRemoteNotifications, error: " + error.Description);
+			Console.WriteLine("FailedToRegisterForRemoteNotifications, error: " + error.Description);
+			CommonMethods.LogActivityStatic("FailedToRegisterForRemoteNotifications, error: " + error.Description);
         }   
 
         // UISceneSession Lifecycle

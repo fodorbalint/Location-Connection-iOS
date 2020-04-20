@@ -38,14 +38,14 @@ secondItem="RoundBottom1" secondAttribute="top" ----- Link to the bottom element
 <outlet property="RoundBottom" destination="RoundBottom1" id="name-outlet-RoundBottom1"/>
 <outlet property="Snackbar" destination="Snackbar1" id="name-outlet-Snackbar1"/>
 <outlet property="BottomConstraint" destination="RoundBottom12" id="name-outlet-RoundBottom12"/>
-<outlet property="SnackTopConstraint" destination="Snackbar12" id="name-outlet-Snackbar12"/> ----- For keyboard window resizing -----
+<outlet property="SnackTopConstraint" destination="Snackbar12" id="name-outlet-Snackbar12"/>
 <outlet property="SnackBottomConstraint" destination="Snackbar13" id="name-outlet-Snackbar13"/>
 <outlet property="ScrollBottomConstraint" destination="Register4" id="name-outlet-Register4"/> ----- For pages with ScrollView ----
 
 RoundBottom_Base = RoundBottom;
 Snackbar_Base = Snackbar;
 BottomConstraint_Base = BottomConstraint;
-SnackTopConstraint_Base = SnackTopConstraint; ----- For keyboard window resizing -----
+SnackTopConstraint_Base = SnackTopConstraint;
 SnackBottomConstraint_Base = SnackBottomConstraint;
 ScrollBottomConstraint_Base = ScrollBottomConstraint; ----- For pages with ScrollView -----
 
@@ -531,8 +531,8 @@ namespace LocationConnection
                 RoundBottom_Base = RoundBottom;
                 Snackbar_Base = Snackbar;
                 BottomConstraint_Base = BottomConstraint;
-                SnackBottomConstraint_Base = SnackBottomConstraint;
                 SnackTopConstraint_Base = SnackTopConstraint;
+                SnackBottomConstraint_Base = SnackBottomConstraint;                
                 LoaderCircleLeftConstraint_Base = LoaderCircleLeftConstraint;
             }
             catch (Exception ex)
@@ -857,6 +857,8 @@ namespace LocationConnection
 
         public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
         {
+            GetScreenMetrics();
+
             c.SetHeight(UserSearchList, toSize.Width / UserSearchList.Frame.Width * UserSearchList.Frame.Height);
             adapter.UpdateItemSize(toSize.Width);
             gridLayout.UpdateCellSize(toSize.Width);
@@ -871,7 +873,7 @@ namespace LocationConnection
             }
 
             base.ViewWillTransitionToSize(toSize, coordinator);
-        }
+        }        
 
         private void LoggedInLayout()
         {

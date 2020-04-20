@@ -676,13 +676,7 @@ namespace LocationConnection
 
 			UIView.Animate(duration: Constants.tweenTime * 2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
 			{
-				foreach (NSLayoutConstraint constraint in MainLayout.Constraints)
-				{
-					if (constraint.SecondItem == SnackBar && constraint.SecondAttribute == NSLayoutAttribute.Top)
-					{
-						constraint.Priority = 198;
-					}
-				}
+				context.SnackTopConstraint_Base.Active = false;
 				MainLayout.LayoutIfNeeded();
 			}, completion: () => { });
 		}
@@ -694,13 +688,7 @@ namespace LocationConnection
 
 			UIView.Animate(duration: Constants.tweenTime * 2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animation: () =>
 			{
-				foreach (NSLayoutConstraint constraint in MainLayout.Constraints)
-				{
-					if (constraint.SecondItem == SnackBar && constraint.SecondAttribute == NSLayoutAttribute.Top)
-					{
-						constraint.Priority = 200;
-					}
-				}
+				context.SnackTopConstraint_Base.Active = true;
 				MainLayout.LayoutIfNeeded();
 			}, completion: () => { if (!snackVisible) this.SnackBar.Hidden = true; }); //a new snackbar could have appeared during animation
 		}

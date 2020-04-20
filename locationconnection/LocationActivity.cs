@@ -58,6 +58,7 @@ namespace LocationConnection
                 RoundBottom_Base = RoundBottom;
                 Snackbar_Base = Snackbar;
                 BottomConstraint_Base = BottomConstraint;
+                SnackTopConstraint_Base = SnackTopConstraint;
                 SnackBottomConstraint_Base = SnackBottomConstraint;
 
                 LocationHistoryList.SeparatorStyle = UITableViewCellSeparatorStyle.None;

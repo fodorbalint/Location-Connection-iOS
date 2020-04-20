@@ -27,7 +27,6 @@ namespace LocationConnection
 		{
 			nfloat size = GetSize(newWidth);
 			ItemSize = new CGSize(size, size);
-			//InvalidateLayout();
 		}
 
 		/*public override bool ShouldInvalidateLayoutForBoundsChange(CGRect newBounds)

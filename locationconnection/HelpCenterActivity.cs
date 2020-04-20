@@ -83,7 +83,7 @@ namespace LocationConnection
                         if (count == lines.Length)
                         {
                             NSLayoutConstraint constraint = text.BottomAnchor.ConstraintEqualTo(QuestionsScroll.BottomAnchor, -15);
-                            constraint.Priority = 999;
+                            constraint.Priority = 200; //in case there are fewer questions than what would fill the page, priority needs to be lower than the texts' hugging priority. 
                             constraint.Active = true;
                         }
                     }

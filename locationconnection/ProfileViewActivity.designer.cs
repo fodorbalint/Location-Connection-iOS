@@ -180,6 +180,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint SnackTopConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel Username { get; set; }
 
         void ReleaseDesignerOutlets ()
@@ -387,6 +391,11 @@ namespace LocationConnection
             if (SnackBottomConstraint != null) {
                 SnackBottomConstraint.Dispose ();
                 SnackBottomConstraint = null;
+            }
+
+            if (SnackTopConstraint != null) {
+                SnackTopConstraint.Dispose ();
+                SnackTopConstraint = null;
             }
 
             if (Username != null) {

@@ -269,6 +269,7 @@ namespace LocationConnection
         public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
         {
             GetScreenMetrics();
+
             ImagesUploaded.SetTileSize();
             ImagesUploaded.Reposition();
             ImagesUploaded.RefitImagesContainer();

@@ -54,6 +54,10 @@ namespace LocationConnection
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint SnackBottomConstraint { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint SnackTopConstraint { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
             if (BottomConstraint != null) {
@@ -104,6 +108,11 @@ namespace LocationConnection
             if (SnackBottomConstraint != null) {
                 SnackBottomConstraint.Dispose ();
                 SnackBottomConstraint = null;
+            }
+
+            if (SnackTopConstraint != null) {
+                SnackTopConstraint.Dispose ();
+                SnackTopConstraint = null;
             }
         }
     }
