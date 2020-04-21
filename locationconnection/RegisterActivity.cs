@@ -63,7 +63,7 @@ namespace LocationConnection
                 Register.SetTitle(LangEnglish.Register, UIControlState.Normal);
                 Reset.SetTitle(LangEnglish.Reset, UIControlState.Normal);
                 RegisterCancel.SetTitle(LangEnglish.Cancel, UIControlState.Normal);
-                ImageEditorLabel.Text = LangEnglish.ImageEditorLabel;                
+                ImageEditorLabel.Text = LangEnglish.ImageEditorLabel;
 
                 DescriptionText.Delegate = this;
 

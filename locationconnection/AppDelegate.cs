@@ -92,26 +92,89 @@ namespace LocationConnection
 				}
 				//otherwise foreground notification will refresh the page
 			}
-		}
+		}		
 
+		[Export("messaging:didReceiveMessage:")]
+		public void DidReceiveMessage(Firebase.CloudMessaging.Messaging messaging, Firebase.CloudMessaging.RemoteMessage remoteMessage)
+		{
+            try
+            {
+				//fires in-app, or when app entered foreground.
+				Console.WriteLine("DidReceiveMessage " + remoteMessage.AppData.ToString());
+				CommonMethods.LogActivityStatic("DidReceiveMessage " + remoteMessage.AppData.ToString().Replace(Environment.NewLine, " ")); //DidReceiveMessage is called after the ViewControllers's ViewDidLoad, ViewWillAppear, ViewDidLayoutSubviews, entering foreground sequence, so c cannot be null.
+
+				int senderID = int.Parse(remoteMessage.AppData["fromuser"].ToString());
+				int targetID = int.Parse(remoteMessage.AppData["touser"].ToString());
+				string type = remoteMessage.AppData["type"].ToString();
+				string meta = remoteMessage.AppData["meta"].ToString();
+				bool inApp = (remoteMessage.AppData["inapp"].ToString() == "0") ? false : true;
+				string title = "";
+				string body = "";
+				/*
+                 {
+                    body = hello8;
+                    from = 205197408276;
+                    fromuser = 4;
+                    inapp = 1;
+                    meta = "31|4|1587457419|0|0";
+                    title = "New message from Amanda";
+                    touser = 1;
+                    type = sendMessage;
+                }
+                */
+				if (remoteMessage.AppData.ContainsKey(new NSString("title")))
+                {
+					title = remoteMessage.AppData["title"].ToString();
+					body = remoteMessage.AppData["body"].ToString(); // \\ already converted to \
+				}
+				/* old message after enabling notifications from Settings (user background notification on)
+                 {
+                    "collapse_key" = "balintfodor.locationconnection";
+                    from = 205197408276;
+                    fromuser = 4;
+                    inapp = 1;
+                    meta = "29|4|1587457278|0|0";
+                    notification =     {
+                        body = hello6;
+                        e = 1;
+                        title = "New message from Amanda";
+                    };
+                    touser = 1;
+                    type = sendMessage;
+                }
+                */
+				else if (remoteMessage.AppData.ContainsKey(new NSString("notification"))) 
+                {
+					return; //message may have been already received through chatlist/chat update
+				}
+
+				HandleNotification(senderID, targetID, type, meta, inApp, title, body);
+			}
+			catch (Exception ex)
+			{
+				CommonMethods c = new CommonMethods(null);
+				c.ReportErrorSilent(ex.Message + " " + ex.StackTrace);
+			}
+		}
 
 		[Export("application:didReceiveRemoteNotification:")]
 		public void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo) //called when app is in foreground, and the message contains a notification object. Without this oject, DidReceiveMessage is called.
 		{
 			/*
-             userInfo {
+            userInfo {
                 aps =     {
                     alert =         {
-                        body = 18;
-                        title = "New message from Balint";
+                        body = hello7;
+                        title = "New message from Amanda";
                     };
                 };
-                fromuser = 1;
-                "gcm.message_id" = 1585131294275802;
+                fromuser = 4;
+                "gcm.message_id" = 1587457382515368;
                 "google.c.a.e" = 1;
                 "google.c.sender.id" = 205197408276;
                 inapp = 1;
-                meta = "18|1|1585131294|0|0";
+                meta = "30|4|1587457382|0|0";
+                touser = 1;
                 type = sendMessage;
             }
             */
@@ -138,39 +201,6 @@ namespace LocationConnection
 
 					HandleNotification(senderID, targetID, type, meta, inApp, title, body);
 				}
-			}
-			catch (Exception ex)
-			{
-				CommonMethods c = new CommonMethods(null);
-				c.ReportErrorSilent(ex.Message + " " + ex.StackTrace);
-			}
-		}
-
-		[Export("messaging:didReceiveMessage:")]
-		public void DidReceiveMessage(Firebase.CloudMessaging.Messaging messaging, Firebase.CloudMessaging.RemoteMessage remoteMessage)
-		{
-            try
-            {
-				//fires in-app, or when app entered foreground.
-				Console.WriteLine("DidReceiveMessage " + remoteMessage.AppData.ToString());
-				CommonMethods.LogActivityStatic("DidReceiveMessage " + remoteMessage.AppData.ToString().Replace(Environment.NewLine, " ")); //DidReceiveMessage is called after the ViewControllers's ViewDidLoad, ViewWillAppear, ViewDidLayoutSubviews, entering foreground sequence, so c cannot be null.
-
-				int senderID = int.Parse(remoteMessage.AppData["fromuser"].ToString());
-				int targetID = int.Parse(remoteMessage.AppData["touser"].ToString());
-				string type = remoteMessage.AppData["type"].ToString();
-				string meta = remoteMessage.AppData["meta"].ToString();
-				bool inApp = (remoteMessage.AppData["inapp"].ToString() == "0") ? false : true;
-				string title = "";
-				string body = "";
-                if (remoteMessage.AppData.ContainsKey(new NSString("title")))
-                {
-					title = remoteMessage.AppData["title"].ToString();
-					body = remoteMessage.AppData["body"].ToString(); // \\ already converted to \
-				}
-
-				Console.WriteLine("Didreceivemessage:" + body);
-
-				HandleNotification(senderID, targetID, type, meta, inApp, title, body);
 			}
 			catch (Exception ex)
 			{
