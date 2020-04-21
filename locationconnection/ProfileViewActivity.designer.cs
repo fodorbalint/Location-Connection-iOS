@@ -186,6 +186,10 @@ namespace LocationConnection
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel Username { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint ViewportConstraint { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
             if (BackButton != null) {
@@ -401,6 +405,11 @@ namespace LocationConnection
             if (Username != null) {
                 Username.Dispose ();
                 Username = null;
+            }
+
+            if (ViewportConstraint != null) {
+                ViewportConstraint.Dispose ();
+                ViewportConstraint = null;
             }
         }
     }

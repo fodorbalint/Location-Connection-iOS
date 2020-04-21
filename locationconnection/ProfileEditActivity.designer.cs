@@ -316,6 +316,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.NSLayoutConstraint ViewportConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UISwitch Women { get; set; }
 
         [Outlet]
@@ -697,6 +701,11 @@ namespace LocationConnection
             if (UsernameLabel != null) {
                 UsernameLabel.Dispose ();
                 UsernameLabel = null;
+            }
+
+            if (ViewportConstraint != null) {
+                ViewportConstraint.Dispose ();
+                ViewportConstraint = null;
             }
 
             if (Women != null) {

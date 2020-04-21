@@ -108,6 +108,7 @@ namespace LocationConnection
 				SnackTopConstraint_Base = SnackTopConstraint;
 				SnackBottomConstraint_Base = SnackBottomConstraint; 
 			    ScrollBottomConstraint_Base = ScrollBottomConstraint;
+				ViewportConstraint_Base = ViewportConstraint;
 			}
 			catch (Exception ex)
 			{

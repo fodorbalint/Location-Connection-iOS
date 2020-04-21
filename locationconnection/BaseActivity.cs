@@ -49,6 +49,7 @@ namespace LocationConnection
 		public NSLayoutConstraint SnackTopConstraint_Base { get; set; } //used when ResizeWindowOnKeyboard() is used
 		public NSLayoutConstraint SnackBottomConstraint_Base { get; set; }
 		public NSLayoutConstraint ScrollBottomConstraint_Base { get; set; }
+		public NSLayoutConstraint ViewportConstraint_Base { get; set; }
 		public NSLayoutConstraint ScrollBottomOuterConstraint_Base { get; set; }
 		public NSLayoutConstraint LoaderCircleLeftConstraint_Base { get; set; }
 		public NSLayoutConstraint ChatOneLeftConstraint_Base { get; set; }
@@ -116,7 +117,8 @@ namespace LocationConnection
 					if (this is ProfileViewActivity)
 					{
 						BottomConstraintConstant = 10 + uselessHeight;
-						ScrollBottomConstraintConstant = 10 + uselessHeight - roundBottomHeight;
+						ScrollBottomConstraintConstant = 10 + uselessHeight - roundBottomHeight; // = -11. iPhone 11 - map height set to 0.53, it does not scroll. -9 ok, -10 not ok.
+						ViewportConstraint_Base.Constant = -10 - uselessHeight;
 					}
                     else if (this is ChatOneActivity) //12 dp insets
 					{
@@ -130,6 +132,10 @@ namespace LocationConnection
 						if (this is RegisterActivity || this is ProfileEditActivity || this is SettingsActivity)
                         {
 							ScrollBottomConstraintConstant = 10 + uselessHeight - roundBottomHeight; //scrollbar will scroll more, but full scroll is truncated.
+                            if (this is ProfileEditActivity)
+                            {
+								ViewportConstraint_Base.Constant = -10 - uselessHeight;
+                            }
 						}
                         else if (this is ListActivity)
                         {
@@ -145,10 +151,15 @@ namespace LocationConnection
                     if (this is ProfileViewActivity)
                     {
 						ScrollBottomConstraintConstant = 0;
+						ViewportConstraint_Base.Constant = 0;
 					}
 					else if (this is RegisterActivity || this is ProfileEditActivity || this is SettingsActivity)
                     {
 						ScrollBottomConstraintConstant = 10;
+						if (this is ProfileEditActivity)
+						{
+							ViewportConstraint_Base.Constant = -10;
+						}
 					}
 					BottomConstraintConstant = 0;
 					SnackBottomConstraintConstant = -13; //Snackbar is extra padded at the bottom

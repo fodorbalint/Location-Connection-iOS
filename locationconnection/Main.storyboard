@@ -139,7 +139,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SortBy-LastActiveDate">
-                                        <rect key="frame" x="120" y="29" width="36" height="36"/>
+                                        <rect key="frame" x="120" y="34" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="SortBy-LastActiveDate0"/>
                                             <constraint firstAttribute="width" constant="36" id="SortBy-LastActiveDate1"/>
@@ -147,7 +147,7 @@
                                         <state key="normal" backgroundImage="ic_lightning36.png"/>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SortBy-ResponseRate">
-                                        <rect key="frame" x="156" y="29" width="36" height="36"/>
+                                        <rect key="frame" x="156" y="34" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="SortBy-ResponseRate0"/>
                                             <constraint firstAttribute="width" constant="36" id="SortBy-ResponseRate1"/>
@@ -155,7 +155,7 @@
                                         <state key="normal" backgroundImage="ic_chat_two36.png"/>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SortBy-RegisterDate">
-                                        <rect key="frame" x="192" y="29" width="36" height="36"/>
+                                        <rect key="frame" x="192" y="34" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="SortBy-RegisterDate0"/>
                                             <constraint firstAttribute="width" constant="36" id="SortBy-RegisterDate1"/>
@@ -886,7 +886,7 @@
                                         <rect key="frame" x="0.0" y="119" width="355" height="79"/>
                                         <subviews>
                                             <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="ResetEmail" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ResetEmailText">
-                                                <rect key="frame" x="8" y="14.5" width="71.5" height="17"/>
+                                                <rect key="frame" x="0.0" y="14.5" width="71.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                             </label>
@@ -1057,7 +1057,8 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13615" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="429" y="0.0"/></scene>
+            <point key="canvasLocation" x="429" y="0.0"/>
+        </scene>
         <!-- Register Activity -->
         <scene sceneID="107816">
             <objects>
@@ -1504,7 +1505,7 @@
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrame" hidden="YES">
-                                <rect key="frame" x="0.0" y="57" width="375" height="610"/>
+                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
                             </view>
                             <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditor" hidden="YES" misplaced="YES">
@@ -1515,7 +1516,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrameBorder" userInteractionEnabled="NO" hidden="YES">
-                                <rect key="frame" x="20" y="194.5" width="335" height="335"/>
+                                <rect key="frame" x="20" y="200" width="335" height="335"/>
                             </view>
                             <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorStatus">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
@@ -1526,13 +1527,13 @@
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                 <subviews>
                                     <label opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" text="RegisterImageEditorLabel" id="RegisterImageEditorLabel" numberOfLines="0">
-                                        <rect key="frame" x="10" y="10" width="278" height="17"/>
+                                        <rect key="frame" x="10" y="15.5" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorCancel" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_cross36.png"/>
-                                        <state key="highlighted" backgroundImage="ic_cross36_pressed.png"/>
+                                        <state key="normal" backgroundImage="ic_cross48.png"/>
+                                        <state key="highlighted" backgroundImage="ic_cross48_pressed.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="RegisterImageEditorCancel0"/>
                                             <constraint firstAttribute="height" constant="48" id="RegisterImageEditorCancel1"/>
@@ -1540,8 +1541,8 @@
                                     </button>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorOK" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_check36_green.png"/>
-                                        <state key="highlighted" backgroundImage="ic_check36_pressed_green.png"/>
+                                        <state key="normal" backgroundImage="ic_check48.png"/>
+                                        <state key="highlighted" backgroundImage="ic_check48_pressed.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="RegisterImageEditorOK0"/>
                                             <constraint firstAttribute="height" constant="48" id="RegisterImageEditorOK1"/>
@@ -1550,32 +1551,22 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="RegisterImageEditorLabel" secondAttribute="centerY" id="RegisterImageEditorLabel2"/>
-                                    
                                     <constraint firstAttribute="top" secondItem="RegisterImageEditorLabel" secondAttribute="top" constant="-10" priority="200" id="RegisterImageEditorLabel3"/>
                                     <constraint firstAttribute="bottom" secondItem="RegisterImageEditorLabel" secondAttribute="bottom" constant="10" priority="200" id="RegisterImageEditorLabel4"/>
                                     <constraint firstAttribute="top" secondItem="RegisterImageEditorLabel" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="RegisterImageEditorLabel5"/>
                                     <constraint firstAttribute="bottom" secondItem="RegisterImageEditorLabel" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="RegisterImageEditorLabel6"/>
-                                    
                                     <constraint firstAttribute="leading" secondItem="RegisterImageEditorLabel" secondAttribute="leading" constant="-10" id="RegisterImageEditorLabel7"/>
-                                    
-                                    
                                     <constraint firstAttribute="centerY" secondItem="RegisterImageEditorCancel" secondAttribute="centerY" id="RegisterImageEditorCancel2"/>
-                                    
                                     <constraint firstAttribute="top" secondItem="RegisterImageEditorCancel" secondAttribute="top" priority="700" id="RegisterImageEditorCancel3"/>
                                     <constraint firstAttribute="bottom" secondItem="RegisterImageEditorCancel" secondAttribute="bottom" priority="700" id="RegisterImageEditorCancel4"/>
                                     <constraint firstAttribute="top" secondItem="RegisterImageEditorCancel" secondAttribute="top" relation="lessThanOrEqual" id="RegisterImageEditorCancel5"/>
                                     <constraint firstAttribute="bottom" secondItem="RegisterImageEditorCancel" secondAttribute="bottom" relation="greaterThanOrEqual" id="RegisterImageEditorCancel6"/>
-                                    
                                     <constraint firstItem="RegisterImageEditorCancel" firstAttribute="leading" secondItem="RegisterImageEditorLabel" secondAttribute="trailing" constant="10" id="RegisterImageEditorCancel7"/>
-                                    
-                                    
                                     <constraint firstAttribute="centerY" secondItem="RegisterImageEditorOK" secondAttribute="centerY" id="RegisterImageEditorOK2"/>
-                                    
                                     <constraint firstAttribute="top" secondItem="RegisterImageEditorOK" secondAttribute="top" priority="700" id="RegisterImageEditorOK3"/>
                                     <constraint firstAttribute="bottom" secondItem="RegisterImageEditorOK" secondAttribute="bottom" priority="700" id="RegisterImageEditorOK4"/>
                                     <constraint firstAttribute="top" secondItem="RegisterImageEditorOK" secondAttribute="top" relation="lessThanOrEqual" id="RegisterImageEditorOK5"/>
                                     <constraint firstAttribute="bottom" secondItem="RegisterImageEditorOK" secondAttribute="bottom" relation="greaterThanOrEqual" id="RegisterImageEditorOK6"/>
-                                    
                                     <constraint firstItem="RegisterImageEditorOK" firstAttribute="leading" secondItem="RegisterImageEditorCancel" secondAttribute="trailing" id="RegisterImageEditorOK7"/>
                                     <constraint firstAttribute="trailing" secondItem="RegisterImageEditorOK" secondAttribute="trailing" constant="5" id="RegisterImageEditorOK8"/>
                                 </constraints>
@@ -1897,6 +1888,7 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NavigationSpacer" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" priority="999" id="NavigationSpacer0"/>
                                         </constraints>
@@ -2262,6 +2254,7 @@
                         <outlet property="MenuIcon" destination="ProfileViewMenuIcon" id="name-outlet-ProfileViewMenuIcon"/>
                         <outlet property="MenuContainer" destination="ProfileViewMenuContainer" id="name-outlet-ProfileViewMenuContainer"/>
                         <outlet property="SendLocation" destination="SendLocation" id="name-outlet-SendLocation"/>
+                        <outlet property="ViewportConstraint" destination="NavigationSpacer6" id="name-outlet-NavigationSpacer6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="108786" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3492,11 +3485,11 @@
                                     <constraint firstAttribute="bottom" secondItem="EditMoreOptionsSection" secondAttribute="bottom" constant="10" id="EditMoreOptionsSection3"/>
                                     <constraint firstAttribute="leading" secondItem="EditMoreOptionsSection" secondAttribute="leading" constant="-10" id="EditMoreOptionsSection4"/>
                                     <constraint firstAttribute="trailing" secondItem="EditMoreOptionsSection" secondAttribute="trailing" constant="10" id="EditMoreOptionsSection5"/>
-                                    <constraint firstItem="EditMoreOptionsSection" firstAttribute="bottom" secondItem="Viewport2" secondAttribute="bottom" relation="greaterThanOrEqual" constant="-15" id="EditMoreOptionsSection6"/>
+                                    <constraint firstItem="EditMoreOptionsSection" firstAttribute="bottom" secondItem="Viewport2" secondAttribute="bottom" relation="greaterThanOrEqual" constant="-10" id="EditMoreOptionsSection6"/>
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorFrame" hidden="YES">
-                                <rect key="frame" x="0.0" y="57" width="375" height="610"/>
+                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
                             </view>
                             <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditor" hidden="YES" misplaced="YES">
@@ -3507,7 +3500,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorFrameBorder" userInteractionEnabled="NO" hidden="YES">
-                                <rect key="frame" x="20" y="194.5" width="335" height="335"/>
+                                <rect key="frame" x="20" y="200" width="335" height="335"/>
                             </view>
                             <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorStatus">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
@@ -3518,13 +3511,13 @@
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                 <subviews>
                                     <label opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" text="EditImageEditorLabel" id="EditImageEditorLabel" numberOfLines="0">
-                                        <rect key="frame" x="10" y="10" width="278" height="17"/>
+                                        <rect key="frame" x="10" y="15.5" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorCancel" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_cross36.png"/>
-                                        <state key="highlighted" backgroundImage="ic_cross36_pressed.png"/>
+                                        <state key="normal" backgroundImage="ic_cross48.png"/>
+                                        <state key="highlighted" backgroundImage="ic_cross48_pressed.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EditImageEditorCancel0"/>
                                             <constraint firstAttribute="height" constant="48" id="EditImageEditorCancel1"/>
@@ -3532,8 +3525,8 @@
                                     </button>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorOK" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_check36_green.png"/>
-                                        <state key="highlighted" backgroundImage="ic_check36_pressed_green.png"/>
+                                        <state key="normal" backgroundImage="ic_check48.png"/>
+                                        <state key="highlighted" backgroundImage="ic_check48_pressed.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EditImageEditorOK0"/>
                                             <constraint firstAttribute="height" constant="48" id="EditImageEditorOK1"/>
@@ -3542,32 +3535,22 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="EditImageEditorLabel" secondAttribute="centerY" id="EditImageEditorLabel2"/>
-                                    
                                     <constraint firstAttribute="top" secondItem="EditImageEditorLabel" secondAttribute="top" constant="-10" priority="200" id="EditImageEditorLabel3"/>
                                     <constraint firstAttribute="bottom" secondItem="EditImageEditorLabel" secondAttribute="bottom" constant="10" priority="200" id="EditImageEditorLabel4"/>
                                     <constraint firstAttribute="top" secondItem="EditImageEditorLabel" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="EditImageEditorLabel5"/>
                                     <constraint firstAttribute="bottom" secondItem="EditImageEditorLabel" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="EditImageEditorLabel6"/>
-                                    
                                     <constraint firstAttribute="leading" secondItem="EditImageEditorLabel" secondAttribute="leading" constant="-10" id="EditImageEditorLabel7"/>
-                                    
-                                    
                                     <constraint firstAttribute="centerY" secondItem="EditImageEditorCancel" secondAttribute="centerY" id="EditImageEditorCancel2"/>
-                                    
                                     <constraint firstAttribute="top" secondItem="EditImageEditorCancel" secondAttribute="top" priority="700" id="EditImageEditorCancel3"/>
                                     <constraint firstAttribute="bottom" secondItem="EditImageEditorCancel" secondAttribute="bottom" priority="700" id="EditImageEditorCancel4"/>
                                     <constraint firstAttribute="top" secondItem="EditImageEditorCancel" secondAttribute="top" relation="lessThanOrEqual" id="EditImageEditorCancel5"/>
                                     <constraint firstAttribute="bottom" secondItem="EditImageEditorCancel" secondAttribute="bottom" relation="greaterThanOrEqual" id="EditImageEditorCancel6"/>
-                                    
                                     <constraint firstItem="EditImageEditorCancel" firstAttribute="leading" secondItem="EditImageEditorLabel" secondAttribute="trailing" constant="10" id="EditImageEditorCancel7"/>
-                                    
-                                    
                                     <constraint firstAttribute="centerY" secondItem="EditImageEditorOK" secondAttribute="centerY" id="EditImageEditorOK2"/>
-                                    
                                     <constraint firstAttribute="top" secondItem="EditImageEditorOK" secondAttribute="top" priority="700" id="EditImageEditorOK3"/>
                                     <constraint firstAttribute="bottom" secondItem="EditImageEditorOK" secondAttribute="bottom" priority="700" id="EditImageEditorOK4"/>
                                     <constraint firstAttribute="top" secondItem="EditImageEditorOK" secondAttribute="top" relation="lessThanOrEqual" id="EditImageEditorOK5"/>
                                     <constraint firstAttribute="bottom" secondItem="EditImageEditorOK" secondAttribute="bottom" relation="greaterThanOrEqual" id="EditImageEditorOK6"/>
-                                    
                                     <constraint firstItem="EditImageEditorOK" firstAttribute="leading" secondItem="EditImageEditorCancel" secondAttribute="trailing" id="EditImageEditorOK7"/>
                                     <constraint firstAttribute="trailing" secondItem="EditImageEditorOK" secondAttribute="trailing" constant="5" id="EditImageEditorOK8"/>
                                 </constraints>
@@ -3693,6 +3676,7 @@
                         <outlet property="ImageEditorFrame" destination="EditImageEditorFrame" id="name-outlet-EditImageEditorFrame"/>
                         <outlet property="ImageEditorFrameBorder" destination="EditImageEditorFrameBorder" id="name-outlet-EditImageEditorFrameBorder"/>
                         <outlet property="ImageEditorStatus" destination="EditImageEditorStatus" id="name-outlet-EditImageEditorStatus"/>
+                        <outlet property="ViewportConstraint" destination="EditMoreOptionsSection6" id="name-outlet-EditMoreOptionsSection6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="111978" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4666,9 +4650,9 @@
         <image name="ic_previous_list_highlighted.png" width="140" height="116"/>
         <image name="separator_right_transparent.png" width="8" height="8"/>
         <image name="ripple_back.png" width="200" height="200"/>
-        <image name="ic_check36_green.png" width="144" height="144"/>
-        <image name="ic_check36_pressed_green.png" width="144" height="144"/>
-        <image name="ic_cross36_pressed.png" width="144" height="144"/>
-        <image name="ic_cross36.png" width="144" height="144"/>
+        <image name="ic_check48_pressed.png" width="192" height="192"/>
+        <image name="ic_check48.png" width="192" height="192"/>
+        <image name="ic_cross48_pressed.png" width="192" height="192"/>
+        <image name="ic_cross48.png" width="192" height="192"/>
     </resources>
 </document>
