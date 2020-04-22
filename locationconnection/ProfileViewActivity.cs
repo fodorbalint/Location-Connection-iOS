@@ -786,13 +786,11 @@ namespace LocationConnection
 		private void ShowNavigationSpacer()
 		{
 			c.ExpandY(NavigationSpacer);
-			MapBottomSeparator.Hidden = false;
 		}
 
 		private void HideNavigationSpacer()
 		{
 			c.CollapseY(NavigationSpacer);
-			MapBottomSeparator.Hidden = true;
 		}
 
 		private void AddCircles(int count)

@@ -117,7 +117,7 @@ namespace LocationConnection
 					if (this is ProfileViewActivity)
 					{
 						BottomConstraintConstant = 10 + uselessHeight;
-						ScrollBottomConstraintConstant = 10 + uselessHeight - roundBottomHeight; // = -11. iPhone 11 - map height set to 0.53, it does not scroll. -9 ok, -10 not ok.
+						ScrollBottomConstraintConstant = 10 + uselessHeight - roundBottomHeight; // = -11 on iPhone. Reduces scrollview's content height, which means, it will not scroll unless content is more than 11 px taller than the screen.
 						ViewportConstraint_Base.Constant = -10 - uselessHeight;
 					}
                     else if (this is ChatOneActivity) //12 dp insets
@@ -190,7 +190,7 @@ namespace LocationConnection
 
 			if (active && CommonMethods.transitionTarget == "empty") //ViewDidAppear is called before transition ends. If new activity is scheduled, active is not yet set to false, because there was no context to set it to in CommonMethods.OpenPage
 			{
-				c.CW("ViewDidAppear Session.SnackMessage " + Session.SnackMessage);
+				//c.CW("ViewDidAppear Session.SnackMessage " + Session.SnackMessage);
 				if (!(Session.SnackMessage is null))
 				{
 					if (this is ChatOneActivity)

@@ -1888,7 +1888,6 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NavigationSpacer" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" priority="999" id="NavigationSpacer0"/>
                                         </constraints>
