@@ -1828,7 +1828,7 @@
                                         <rect key="frame" x="10" y="498" width="355" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
-                                    <label opaque="NO" text="" horizontalHuggingPriority="250" horizontalCompressionResistancePriority="750" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LocationTime" customClass="InsetLabel" misplaced="YES" ambiguous="YES">
+                                    <label opaque="NO" text="" horizontalCompressionResistancePriority="750" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LocationTime" customClass="InsetLabel" misplaced="YES" ambiguous="YES">
                                         <rect key="frame" x="10" y="0.0" width="262.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
@@ -1837,7 +1837,7 @@
                                             <userDefinedRuntimeAttribute type="float" keyPath="RightInset" value="10"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" text="" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceText" customClass="InsetLabel" misplaced="YES" ambiguous="YES">
+                                    <label opaque="NO" text=" " horizontalCompressionResistancePriority="751" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DistanceText" customClass="InsetLabel" misplaced="YES" ambiguous="YES">
                                         <rect key="frame" x="282.5" y="0.0" width="82.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>

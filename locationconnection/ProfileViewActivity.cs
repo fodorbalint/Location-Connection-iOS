@@ -732,6 +732,9 @@ namespace LocationConnection
 
 						if (!(displayUser.Distance is null))
 						{
+                            //A default text of " " was given to DistanceText, otherwise the intrinsic width would be 0, which if removed by Expand(), would make DistanceText lose its intrinsic content size. (It would be stretched to appear next to LocationText)
+                            //LocationText does not have this problem due to the TopInset and RightInset set to 10.
+                            //If DistanceText is too long, LocationText will be compressed to display smaller font, or disappear completely.
 							c.Expand(DistanceText);
 							DistanceText.Text = displayUser.Distance + " km " + LangEnglish.ProfileViewAway;
 						}
