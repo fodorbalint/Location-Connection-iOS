@@ -25,7 +25,6 @@ namespace LocationConnection
 		public static string logFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "systemlog.txt");
 		public string locationLogFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "locationlog.txt");
 		private string settingsFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "settings.txt");
-		private string defaultSettingsFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "defaultsettings.txt");
 		public string loginSessionFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "loginsession.txt");
 
 		//-----Snackbar snack;
@@ -85,9 +84,9 @@ namespace LocationConnection
 				if (File.Exists(settingsFile))
 				{
 					Type type = typeof(Settings);
-					string[] settingLines = (defaultSettings) ? File.ReadAllLines(defaultSettingsFile) : File.ReadAllLines(settingsFile);
+					string[] settingLines = File.ReadAllLines(settingsFile);
 					foreach (string line in settingLines)
-					{
+					{   
 						if (line != "" && line[0] != '\'')
 						{
 							int pos = line.IndexOf(":");

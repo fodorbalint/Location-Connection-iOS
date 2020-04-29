@@ -47,7 +47,7 @@ namespace LocationConnection
 		public const int SystemLogKeepTime = 60 * 5;
 		public const float tweenTime = 0.2f;
 
-		public const bool isTestDB = false;
+		public const bool isTestDB = true;
 		public const int MaxResultCount = 100;
 
 		public const string TestDB = "&testDB";

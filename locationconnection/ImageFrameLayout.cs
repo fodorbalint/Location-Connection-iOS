@@ -63,28 +63,26 @@ namespace LocationConnection
             }
 		}
 
-		public void SetTileSize(bool isRotated)
+		public void SetTileSize()
 		{
 			nfloat actualWidth = BaseActivity.dpWidth;
-            if (isRotated)
-            {
-				if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // rotated to landscape
-				{
-					actualWidth += BaseActivity.safeAreaTop + BaseActivity.safeAreaBottom;
-				}
-			}
-            else
-            {
-				if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // in landscape
-				{
-					actualWidth += BaseActivity.safeAreaLeft + BaseActivity.safeAreaRight;
-				}
+            if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // in landscape
+			{
+				actualWidth -= BaseActivity.safeAreaLeft + BaseActivity.safeAreaRight;
 			}
 			
 			tileSize = (actualWidth - 20 - tileSpacing * (numColumns - 1)) / numColumns;
+			context.c.CW("SetTileSize dpWidth " + BaseActivity.dpWidth + " left " + BaseActivity.safeAreaLeft + " right " + BaseActivity.safeAreaRight + " actualWidth " + actualWidth +  " tileSize "  + tileSize);
 		}
 
-		public void Reposition()
+        public override void LayoutMarginsDidChange()
+        {
+			context.c.CW("Layoutmarginschanged");
+
+            base.LayoutMarginsDidChange();
+        }
+
+        public void Reposition()
 		{
 			for (int i = 0; i < Subviews.Length; i++)
 			{

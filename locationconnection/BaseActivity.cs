@@ -30,8 +30,6 @@ namespace LocationConnection
 
 		public static nfloat dpWidth;
 		public static nfloat dpHeight;
-		public static nfloat safeAreaTop;
-		public static nfloat safeAreaBottom;
 		public static nfloat safeAreaLeft;
 		public static nfloat safeAreaRight;
 
@@ -374,7 +372,6 @@ namespace LocationConnection
 
 		public void DismissKeyboard(UITapGestureRecognizer tap)
 		{
-			c.CW(" DismissKeyboard ");
 			View.EndEditing(true);
 		}
 
@@ -386,16 +383,8 @@ namespace LocationConnection
 
             dpWidth = UIScreen.MainScreen.Bounds.Width;
 			dpHeight = UIScreen.MainScreen.Bounds.Height;
-			
-			/*UIWindow window = UIApplication.SharedApplication.KeyWindow;
-			Console.WriteLine(" GetScreenMetrics window " + window);
-			safeAreaTop = window.SafeAreaInsets.Top;
-			Console.WriteLine(" GetScreenMetrics safeAreaTop " + safeAreaTop);
-			safeAreaBottom = window.SafeAreaInsets.Bottom;
-			safeAreaLeft = window.SafeAreaInsets.Left;
-			safeAreaRight = window.SafeAreaInsets.Right;
 
-			c.LogActivity("ScreenWidth " + screenWidth + " ScreenHeight " + screenHeight + " PixelDensity " + pixelDensity + " DpWidth " + dpWidth + " DpHeight " + dpHeight + " top " + safeAreaTop + " bottom " + safeAreaBottom + " left " + safeAreaLeft + " right " + safeAreaRight);*/
+			c.LogActivity("ScreenWidth " + screenWidth + " ScreenHeight " + screenHeight + " PixelDensity " + pixelDensity + " DpWidth " + dpWidth + " DpHeight " + dpHeight);
 		}
 
 		public void TruncateLocationLog()

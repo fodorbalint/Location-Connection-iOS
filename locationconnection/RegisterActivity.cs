@@ -32,7 +32,6 @@ namespace LocationConnection
             {
                 base.ViewDidLoad();
 
-                GetScreenMetrics();
                 c.AddViews(Snackbar, Snackbar.SnackText, Snackbar.SnackButton);
 
                 SexLabel.Text = LangEnglish.Sex;
@@ -94,7 +93,6 @@ namespace LocationConnection
                 ImagesUploaded.SetContext(this);
                 ImagesUploaded.numColumns = 5; //it does not get passed in the layout file
                 ImagesUploaded.tileSpacing = 2;
-                ImagesUploaded.SetTileSize(false);
 
                 if (!File.Exists(regSessionFile))
                 {
@@ -242,6 +240,24 @@ namespace LocationConnection
             }
         }
 
+        public override void ViewDidLayoutSubviews() //called after ViewWillTransitionToSize
+        {
+            c.CW("ViewDidLayoutSubviews");
+
+            dpWidth = UIScreen.MainScreen.Bounds.Width;
+            dpHeight = UIScreen.MainScreen.Bounds.Height;
+
+            UIWindow window = UIApplication.SharedApplication.KeyWindow;
+            safeAreaLeft = window.SafeAreaInsets.Left;
+            safeAreaRight = window.SafeAreaInsets.Right;
+
+            ImagesUploaded.SetTileSize();
+            ImagesUploaded.Reposition();
+            ImagesUploaded.RefitImagesContainer();
+
+            base.ViewDidLayoutSubviews();
+        }
+
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
@@ -264,24 +280,6 @@ namespace LocationConnection
         public virtual void EditingStarted(UIKit.UITextView textView)
         {
             RegisterScroll.ScrollRectToVisible(DescriptionText.Frame, true);
-        }
-
-        public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
-        {
-            dpWidth = toSize.Width;
-            dpHeight = toSize.Height;
-
-            UIWindow window = UIApplication.SharedApplication.KeyWindow; //previous values
-            safeAreaTop = window.SafeAreaInsets.Top;
-            safeAreaBottom = window.SafeAreaInsets.Bottom;
-            safeAreaLeft = window.SafeAreaInsets.Left;
-            safeAreaRight = window.SafeAreaInsets.Right;
-
-            ImagesUploaded.SetTileSize(true);
-            ImagesUploaded.Reposition();
-            ImagesUploaded.RefitImagesContainer();
-
-            base.ViewWillTransitionToSize(toSize, coordinator);
         }
 
         private async void Register_Click(object sender, EventArgs e)

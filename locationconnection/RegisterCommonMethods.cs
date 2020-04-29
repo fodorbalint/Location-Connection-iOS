@@ -448,9 +448,11 @@ namespace LocationConnection
 			var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			string cacheDir = Path.Combine(documents, "..", "Library/Caches");
 			string fileName = Path.Combine(cacheDir, selectedImageName);
-			string ext = fileName.Substring(selectedImageName.LastIndexOf(".") + 1).ToLower();
+			string ext = selectedImageName.Substring(selectedImageName.LastIndexOf(".") + 1).ToLower();
 
-			NSData data = null;
+			NSData data;
+			context.c.CW(selectedImageName);
+
 			if (ext == "jpg" || ext == "jpeg")
 			{
 				data = im.AsJPEG(); //default compression quality is 1. File size example: 0.99: 1710751, 1: 3502822
