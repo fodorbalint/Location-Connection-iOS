@@ -770,7 +770,7 @@ namespace LocationConnection
 
 		private void ShowMap()
 		{
-			c.SetHeight(ProfileViewMap, (float)(DpWidth * Settings.MapRatio));
+			c.SetHeight(ProfileViewMap, (float)(dpWidth * Settings.MapRatio));
 
 			MapTopSeparator.Hidden = false;
 			MapStreet.Hidden = false;

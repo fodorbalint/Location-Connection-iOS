@@ -3,6 +3,8 @@ using System.Timers;
 using Foundation;
 using UIKit;
 
+//see CustomTap for differences between devices
+
 namespace LocationConnection
 {
     public class CustomTapNoDelay : UIGestureRecognizer
@@ -10,6 +12,7 @@ namespace LocationConnection
         ChatOneActivity context;
         UIView view;
         bool valid;
+        private nfloat startX, startY;
 
         public CustomTapNoDelay(ChatOneActivity context, UIView view)
         {
@@ -21,6 +24,10 @@ namespace LocationConnection
         {
             base.TouchesBegan(touches, evt);
 
+            var location = LocationInView(view);
+            startX = location.X;
+            startY = location.Y;
+
             valid = true;
             SetHighlighted();
         }
@@ -29,8 +36,13 @@ namespace LocationConnection
         {
             base.TouchesMoved(touches, evt);
 
-            valid = false;
-            SetNormal();
+            var location = LocationInView(view);
+
+            if (location.X != startX || location.Y != startY)
+            {
+                valid = false;
+                SetNormal();
+            }
         }
 
         public override void TouchesEnded(NSSet touches, UIEvent evt)

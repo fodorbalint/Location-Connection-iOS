@@ -28,13 +28,13 @@ namespace LocationConnection
 		public static string locationUpdatesFrom;
 		public static List<UserLocationData> locationUpdatesFromData;
 
-		public static float screenWidth;
-		public static float screenHeight;
-		public static float pixelDensity;
-		protected static float XPxPerIn;
-		protected static float XDpPerIn;
-		public static float DpWidth;
-		public static float DpHeight;
+		public static nfloat dpWidth;
+		public static nfloat dpHeight;
+		public static nfloat safeAreaTop;
+		public static nfloat safeAreaBottom;
+		public static nfloat safeAreaLeft;
+		public static nfloat safeAreaRight;
+
 		public nfloat roundBottomHeight;
 		public nfloat uselessHeight;
 		public bool layoutSet;
@@ -378,15 +378,24 @@ namespace LocationConnection
 			View.EndEditing(true);
 		}
 
-		public void GetScreenMetrics()
+		public void GetScreenMetrics() //only DpWidth and DpHeight is used in program
 		{
-			screenWidth = (float)UIScreen.MainScreen.NativeBounds.Width;
-			screenHeight = (float)UIScreen.MainScreen.NativeBounds.Height;
-			DpWidth = (float)UIScreen.MainScreen.Bounds.Width;
-			DpHeight = (float)UIScreen.MainScreen.Bounds.Height;
-			pixelDensity = (float)UIScreen.MainScreen.Scale;
+			nfloat screenWidth = (float)UIScreen.MainScreen.NativeBounds.Width;
+			nfloat screenHeight = (float)UIScreen.MainScreen.NativeBounds.Height;
+			nfloat pixelDensity = (float)UIScreen.MainScreen.Scale;
 
-			c.LogActivity("ScreenWidth " + screenWidth + " ScreenHeight " + screenHeight + " PixelDensity " + pixelDensity + " DpWidth " + DpWidth + " DpHeight " + DpHeight);
+            dpWidth = UIScreen.MainScreen.Bounds.Width;
+			dpHeight = UIScreen.MainScreen.Bounds.Height;
+			
+			/*UIWindow window = UIApplication.SharedApplication.KeyWindow;
+			Console.WriteLine(" GetScreenMetrics window " + window);
+			safeAreaTop = window.SafeAreaInsets.Top;
+			Console.WriteLine(" GetScreenMetrics safeAreaTop " + safeAreaTop);
+			safeAreaBottom = window.SafeAreaInsets.Bottom;
+			safeAreaLeft = window.SafeAreaInsets.Left;
+			safeAreaRight = window.SafeAreaInsets.Right;
+
+			c.LogActivity("ScreenWidth " + screenWidth + " ScreenHeight " + screenHeight + " PixelDensity " + pixelDensity + " DpWidth " + dpWidth + " DpHeight " + dpHeight + " top " + safeAreaTop + " bottom " + safeAreaBottom + " left " + safeAreaLeft + " right " + safeAreaRight);*/
 		}
 
 		public void TruncateLocationLog()

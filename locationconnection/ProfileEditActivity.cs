@@ -101,7 +101,7 @@ namespace LocationConnection
                 ImagesUploaded.SetContext(this);
                 ImagesUploaded.numColumns = 3; //it does not get passed in the layout file
                 ImagesUploaded.tileSpacing = 2;
-                ImagesUploaded.SetTileSize();
+                ImagesUploaded.SetTileSize(false);
 
                 Images.TouchUpInside += rc.Images_Click;
 
@@ -215,6 +215,24 @@ namespace LocationConnection
         public virtual void EditingStarted(UITextView textView)
         {
             ProfileEditScroll.ScrollRectToVisible(DescriptionText.Frame, true);
+        }
+
+        public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
+        {
+            dpWidth = toSize.Width;
+            dpHeight = toSize.Height;
+
+            UIWindow window = UIApplication.SharedApplication.KeyWindow; //previous values
+            safeAreaTop = window.SafeAreaInsets.Top;
+            safeAreaBottom = window.SafeAreaInsets.Bottom;
+            safeAreaLeft = window.SafeAreaInsets.Left;
+            safeAreaRight = window.SafeAreaInsets.Right;
+
+            ImagesUploaded.SetTileSize(true);
+            ImagesUploaded.Reposition();
+            ImagesUploaded.RefitImagesContainer();
+
+            base.ViewWillTransitionToSize(toSize, coordinator);
         }
 
         private void SetSexChoice()

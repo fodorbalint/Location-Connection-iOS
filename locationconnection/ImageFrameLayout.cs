@@ -19,7 +19,7 @@ namespace LocationConnection
 
 		public int numColumns;
 		public int tileSpacing;
-		public float tileSize;
+		public nfloat tileSize;
 		private float tweenTime = 0.36f;
 		//public List<int> drawOrder;
 
@@ -63,9 +63,25 @@ namespace LocationConnection
             }
 		}
 
-		public void SetTileSize()
+		public void SetTileSize(bool isRotated)
 		{
-			tileSize = (BaseActivity.DpWidth - 20 - tileSpacing * (numColumns - 1)) / numColumns;
+			nfloat actualWidth = BaseActivity.dpWidth;
+            if (isRotated)
+            {
+				if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // rotated to landscape
+				{
+					actualWidth += BaseActivity.safeAreaTop + BaseActivity.safeAreaBottom;
+				}
+			}
+            else
+            {
+				if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // in landscape
+				{
+					actualWidth += BaseActivity.safeAreaLeft + BaseActivity.safeAreaRight;
+				}
+			}
+			
+			tileSize = (actualWidth - 20 - tileSpacing * (numColumns - 1)) / numColumns;
 		}
 
 		public void Reposition()
@@ -600,12 +616,12 @@ namespace LocationConnection
 
 		private float GetPosX(int pos)
 		{
-			return pos % numColumns * (tileSize + tileSpacing);
+			return (float)(pos % numColumns * (tileSize + tileSpacing));
 		}
 
 		private float GetPosY(int pos)
 		{
-			return (pos - pos % numColumns) / numColumns * (tileSize + tileSpacing);
+			return (float)((pos - pos % numColumns) / numColumns * (tileSize + tileSpacing));
 		}
 
 		private int GetIndexFromPos(nfloat x, nfloat y)

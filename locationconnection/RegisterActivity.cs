@@ -94,7 +94,7 @@ namespace LocationConnection
                 ImagesUploaded.SetContext(this);
                 ImagesUploaded.numColumns = 5; //it does not get passed in the layout file
                 ImagesUploaded.tileSpacing = 2;
-                ImagesUploaded.SetTileSize();
+                ImagesUploaded.SetTileSize(false);
 
                 if (!File.Exists(regSessionFile))
                 {
@@ -268,9 +268,16 @@ namespace LocationConnection
 
         public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
         {
-            GetScreenMetrics();
+            dpWidth = toSize.Width;
+            dpHeight = toSize.Height;
 
-            ImagesUploaded.SetTileSize();
+            UIWindow window = UIApplication.SharedApplication.KeyWindow; //previous values
+            safeAreaTop = window.SafeAreaInsets.Top;
+            safeAreaBottom = window.SafeAreaInsets.Bottom;
+            safeAreaLeft = window.SafeAreaInsets.Left;
+            safeAreaRight = window.SafeAreaInsets.Right;
+
+            ImagesUploaded.SetTileSize(true);
             ImagesUploaded.Reposition();
             ImagesUploaded.RefitImagesContainer();
 

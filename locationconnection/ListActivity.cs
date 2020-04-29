@@ -631,9 +631,10 @@ namespace LocationConnection
 				newListProfiles = null;
 
                 GetScreenMetrics();
-                gridLayout = new GridLayout(3, 2f, DpWidth);
+                gridLayout = new GridLayout(3, 2f);
+                c.CW("GridLayout: " + gridLayout);
                 UserSearchList.SetCollectionViewLayout(gridLayout, false);
-                adapter = new UserSearchListAdapter(this, 3, 2f, DpWidth);
+                adapter = new UserSearchListAdapter(this, 3, 2f);
                 UserSearchList.DataSource = adapter;
 
                 if (!(listProfiles is null))
@@ -857,11 +858,43 @@ namespace LocationConnection
 
         public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
         {
-            GetScreenMetrics();
+            //On iPad, screenWidth, screenHeight would be old, DpWidth, DpHeight would be the new value.
+            //On iPhone X, DpWidth, DpHeight would be old, and screenWidth, screenHeight is always portrait dimensions.
 
+            /*-------------------------------------------------------------- ViewWillTransitionToSize w 812 h 375 1125 2436 375 812 44 34
+            2020-04-29 01:06:27.525 locationconnection[7351:117589] 
+            2020-04-29 01:06:27.525 locationconnection[7351:117589] 
+            -------------------------------------------------------------- UpdateItemSize 269,333333333333
+            2020-04-29 01:06:27.526 locationconnection[7351:117589] 
+            2020-04-29 01:06:27.526 locationconnection[7351:117589] UpdateCellSize 269,333333333333
+            2020-04-29 01:06:31.334 locationconnection[7351:117589] 
+            -------------------------------------------------------------- ViewWillTransitionToSize w 375 h 812 1125 2436 812 375 0 21*/
+
+            dpWidth = toSize.Width;
+            dpHeight = toSize.Height;
+            
+            UIWindow window = UIApplication.SharedApplication.KeyWindow; //previous values
+            safeAreaTop = window.SafeAreaInsets.Top;
+            safeAreaBottom = window.SafeAreaInsets.Bottom;
+            safeAreaLeft = window.SafeAreaInsets.Left;
+            safeAreaRight = window.SafeAreaInsets.Right;
+
+            c.CW("ViewWillTransitionToSize w " + toSize.Width + " h " + toSize.Height + " " + safeAreaTop + " " + safeAreaBottom + " " + safeAreaLeft + " " + safeAreaRight + " " + UserSearchList.Frame);
             c.SetHeight(UserSearchList, toSize.Width / UserSearchList.Frame.Width * UserSearchList.Frame.Height);
-            adapter.UpdateItemSize(toSize.Width);
-            gridLayout.UpdateCellSize(toSize.Width);
+
+            /*-------------------------------------------------------------- ViewWillTransitionToSize w 812 h 375 44 34 0 0 {X=0,Y=0,Width=375,Height=500,666666666667}
+2020-04-29 09:02:21.906 locationconnection[18920:219601] 
+2020-04-29 09:02:21.906 locationconnection[18920:219601] UpdateItemSize 243,333333333333 734 44 34
+2020-04-29 09:02:21.907 locationconnection[18920:219601] UpdateCellSize 243,333333333333 734 44 34
+2020-04-29 09:02:21.959 locationconnection[18920:219601] -----ShouldInvalidateLayoutForBoundsChange ------------
+2020-04-29 09:02:38.510 locationconnection[18920:219601] 
+-------------------------------------------------------------- ViewWillTransitionToSize w 375 h 812 0 21 44 44 {X=0,Y=0,Width=724,Height=1084}
+2020-04-29 09:02:38.511 locationconnection[18920:219601] 
+2020-04-29 09:02:38.511 locationconnection[18920:219601] UpdateItemSize 123,666666666667 375 0 21
+2020-04-29 09:02:38.511 locationconnection[18920:219601] UpdateCellSize 123,666666666667 375 0 21*/
+
+            adapter.UpdateItemSize();
+            gridLayout.UpdateCellSize();
 
             foreach (UIView view in UserSearchList.Subviews)
             {
@@ -2368,7 +2401,7 @@ namespace LocationConnection
                     {
                         //viewProfiles should not be set here, because if the click the first/last profile, background loading will start for the previous/next range, so when we go back and click another profile, a profile from the new range will be loaded.
                         listProfiles = parser.returnCollection;                        
-                        adapter = new UserSearchListAdapter(this, 3, 2f, DpWidth); //autologin completion may precede ViewWillAppear, where adapter is iniitalized
+                        adapter = new UserSearchListAdapter(this, 3, 2f); //autologin completion may precede ViewWillAppear, where adapter is iniitalized
                         adapter.items = listProfiles;
                         newListProfiles = null;
 
@@ -2389,7 +2422,7 @@ namespace LocationConnection
                 {
                     listProfiles = new List<Profile>();
                     viewProfiles = null;
-                    adapter = new UserSearchListAdapter(this, 3, 2f, DpWidth);
+                    adapter = new UserSearchListAdapter(this, 3, 2f);
                     adapter.items = listProfiles;
                     InvokeOnMainThread(() =>
                     {

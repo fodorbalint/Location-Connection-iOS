@@ -17,17 +17,29 @@ namespace LocationConnection
 		public nfloat spacing;
 		nfloat itemWidth; //since the cell does not scale content, it has to be set manually
 
-		public UserSearchListAdapter(ListActivity context, int colCount, nfloat spacing, nfloat width)
+		public UserSearchListAdapter(ListActivity context, int colCount, nfloat spacing)
 		{
 			this.context = context;
 			this.colCount = colCount;
 			this.spacing = spacing;
-			itemWidth = GetSize(width);
+
+			nfloat actualWidth = BaseActivity.dpWidth;
+			if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // in landscape
+			{
+				actualWidth -= BaseActivity.safeAreaLeft + BaseActivity.safeAreaRight;
+			}
+			itemWidth = GetSize(actualWidth);
 		}
 
-		public void UpdateItemSize(nfloat newWidth)
+		public void UpdateItemSize()
 		{
-			itemWidth = GetSize(newWidth);
+			nfloat actualWidth = BaseActivity.dpWidth;
+            if (BaseActivity.dpWidth / BaseActivity.dpHeight > 1) // rotated to landscape
+            {
+				actualWidth -= BaseActivity.safeAreaTop + BaseActivity.safeAreaBottom; //results in 243.333 originally // w 812 h 375 44 34 0 0
+			}
+			itemWidth = GetSize(actualWidth);
+			Console.WriteLine("UpdateItemSize " + itemWidth + " " + actualWidth + " " + BaseActivity.safeAreaTop + " " + BaseActivity.safeAreaBottom);
 		}
 
 		public override nint GetItemsCount(UICollectionView collectionView, nint section)

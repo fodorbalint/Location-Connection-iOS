@@ -103,8 +103,6 @@ namespace LocationConnection
 			zoom.AddTarget(() => ZoomImage(zoom));
 			ImageEditor.AddGestureRecognizer(zoom);
 
-			uploadedImages = new List<string>();
-
             client = new WebClient();
             client.UploadProgressChanged += Client_UploadProgressChanged;
             client.UploadFileCompleted += Client_UploadFileCompleted;
@@ -211,8 +209,6 @@ namespace LocationConnection
 									context.c.SetHeight(ImageEditor, ImageEditorFrameBorder.Frame.Width / sizeRatio);
 									context.c.SetWidth(ImageEditor, ImageEditorFrameBorder.Frame.Width);
 								}
-
-								context.c.CW("SizeRatio: " + sizeRatio + " " + ImageEditorFrame.Frame.Width + " " + ImageEditorFrame.Frame.Width * sizeRatio);
 							}							
 						};
                     }
@@ -271,6 +267,7 @@ namespace LocationConnection
 				return false;
 			}
 		}
+		
 		//out of frame image is allowed to come closer. Image in frame is not allowed to go out, only by pinching action.
 		public void MoveImage(UIPanGestureRecognizer recognizer)
 		{
@@ -447,11 +444,22 @@ namespace LocationConnection
 			//context.c.CW("OKImageEditing " + ImageEditorFrameBorder.Frame + " --- " + ImageEditor.Frame + " " + w + " " + h + " " + x + " " + y + " " + cropW + " " + cropH);
 
 			UIImage im = CropImage(ImageEditor.Image, (int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(cropW), (int)Math.Round(cropH));
-			NSData data = im.AsJPEG(); //default compression quality is 1. File size example: 0.99: 1710751, 1: 3502822
 
 			var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			string cacheDir = Path.Combine(documents, "..", "Library/Caches");
 			string fileName = Path.Combine(cacheDir, selectedImageName);
+			string ext = fileName.Substring(selectedImageName.LastIndexOf(".") + 1).ToLower();
+
+			NSData data = null;
+			if (ext == "jpg" || ext == "jpeg")
+			{
+				data = im.AsJPEG(); //default compression quality is 1. File size example: 0.99: 1710751, 1: 3502822
+			}
+			else
+			{
+				data = im.AsPNG();
+			}			
+
 			if (!data.Save(fileName, false, out NSError error))
 			{
 				context.c.ReportError("Error while cropping image: " + error.LocalizedDescription);
@@ -465,7 +473,7 @@ namespace LocationConnection
 				ImageEditorFrameBorder.Hidden = true;
 				ImageEditor.Image = null;
 
-				await UploadFile(fileName, RegisterActivity.regsessionid);
+				await UploadFile(fileName, RegisterActivity.regsessionid); //works for profile edit too
 			}
 		}
 
@@ -486,7 +494,6 @@ namespace LocationConnection
 		public async Task UploadFile(string fileName, string regsessionid) //use Task<int> for return value
         {
 			imagesUploading = true;
-
 			context.InvokeOnMainThread(() => { StartAnim(); });
 
 			try
