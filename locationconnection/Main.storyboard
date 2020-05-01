@@ -1530,10 +1530,17 @@
                                         <rect key="frame" x="10" y="15.5" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleRegisterImageEditor">
+                                        <rect key="frame" x="25" y="30" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="RippleRegisterImageEditor0"/>
+                                            <constraint firstAttribute="width" constant="25" id="RippleRegisterImageEditor1"/>
+                                        </constraints>
+                                    </imageView>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorCancel" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                         <state key="normal" backgroundImage="ic_cross48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_cross48_pressed.png"/>
+                                        <state key="highlighted" backgroundImage="ic_cross48.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="RegisterImageEditorCancel0"/>
                                             <constraint firstAttribute="height" constant="48" id="RegisterImageEditorCancel1"/>
@@ -1542,7 +1549,7 @@
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorOK" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                         <state key="normal" backgroundImage="ic_check48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_check48_pressed.png"/>
+                                        <state key="highlighted" backgroundImage="ic_check48.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="RegisterImageEditorOK0"/>
                                             <constraint firstAttribute="height" constant="48" id="RegisterImageEditorOK1"/>
@@ -1571,6 +1578,12 @@
                                     <constraint firstAttribute="trailing" secondItem="RegisterImageEditorOK" secondAttribute="trailing" constant="5" id="RegisterImageEditorOK8"/>
                                 </constraints>
                             </view>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterTopSeparator">
+                                <rect key="frame" x="0.0" y="68" width="375" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="RegisterTopSeparator0"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" id="Snackbar3" customClass="Snackbar" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                             </view>
@@ -1588,6 +1601,9 @@
                             <constraint firstItem="RegisterImageEditorControls" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorControls3"/>
                             <constraint firstItem="RegisterImageEditorControls" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorControls4"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="top" secondItem="RegisterImageEditorControls" secondAttribute="bottom" id="RegisterImageEditorFrame2"/>
+                            <constraint firstItem="RegisterTopSeparator" firstAttribute="top" secondItem="RegisterImageEditorControls" secondAttribute="bottom" id="RegisterTopSeparator2"/>
+                            <constraint firstItem="RegisterTopSeparator" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterTopSeparator3"/>
+                            <constraint firstItem="RegisterTopSeparator" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterTopSeparator4"/>
                             <constraint firstAttribute="bottom" secondItem="RegisterImageEditorFrame" secondAttribute="bottom" id="RegisterImageEditorFrame3"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="leading" secondItem="SafeArea3" secondAttribute="leading" id="RegisterImageEditorFrame4"/>
                             <constraint firstItem="RegisterImageEditorFrame" firstAttribute="trailing" secondItem="SafeArea3" secondAttribute="trailing" id="RegisterImageEditorFrame5"/>
@@ -1683,6 +1699,8 @@
                         <outlet property="ImageEditorFrame" destination="RegisterImageEditorFrame" id="name-outlet-RegisterImageEditorFrame"/>
                         <outlet property="ImageEditorFrameBorder" destination="RegisterImageEditorFrameBorder" id="name-outlet-RegisterImageEditorFrameBorder"/>
                         <outlet property="ImageEditorStatus" destination="RegisterImageEditorStatus" id="name-outlet-RegisterImageEditorStatus"/>
+                        <outlet property="TopSeparator" destination="RegisterTopSeparator" id="name-outlet-RegisterTopSeparator"/>
+                        <outlet property="RippleImageEditor" destination="RippleRegisterImageEditor" id="name-outlet-RippleRegisterImageEditor"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="107819" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3513,10 +3531,17 @@
                                         <rect key="frame" x="10" y="15.5" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleEditImageEditor">
+                                        <rect key="frame" x="25" y="30" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="RippleEditImageEditor0"/>
+                                            <constraint firstAttribute="width" constant="25" id="RippleEditImageEditor1"/>
+                                        </constraints>
+                                    </imageView>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorCancel" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                         <state key="normal" backgroundImage="ic_cross48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_cross48_pressed.png"/>
+                                        <state key="highlighted" backgroundImage="ic_cross48.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EditImageEditorCancel0"/>
                                             <constraint firstAttribute="height" constant="48" id="EditImageEditorCancel1"/>
@@ -3525,7 +3550,7 @@
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorOK" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                         <state key="normal" backgroundImage="ic_check48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_check48_pressed.png"/>
+                                        <state key="highlighted" backgroundImage="ic_check48.png"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EditImageEditorOK0"/>
                                             <constraint firstAttribute="height" constant="48" id="EditImageEditorOK1"/>
@@ -3554,6 +3579,12 @@
                                     <constraint firstAttribute="trailing" secondItem="EditImageEditorOK" secondAttribute="trailing" constant="5" id="EditImageEditorOK8"/>
                                 </constraints>
                             </view>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="EditTopSeparator">
+                                <rect key="frame" x="0.0" y="68" width="375" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="EditTopSeparator0"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="Snackbar" id="Snackbar7">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                             </view>
@@ -3570,6 +3601,9 @@
                             <constraint firstItem="EditImageEditorControls" firstAttribute="top" secondItem="SafeArea7" secondAttribute="top" id="EditImageEditorControls2"/>
                             <constraint firstItem="EditImageEditorControls" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="EditImageEditorControls3"/>
                             <constraint firstItem="EditImageEditorControls" firstAttribute="trailing" secondItem="SafeArea7" secondAttribute="trailing" id="EditImageEditorControls4"/>
+                            <constraint firstItem="EditTopSeparator" firstAttribute="top" secondItem="EditImageEditorControls" secondAttribute="bottom" id="EditTopSeparator2"/>
+                            <constraint firstItem="EditTopSeparator" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="EditTopSeparator3"/>
+                            <constraint firstItem="EditTopSeparator" firstAttribute="trailing" secondItem="SafeArea7" secondAttribute="trailing" id="EditTopSeparator4"/>
                             <constraint firstItem="EditImageEditorFrame" firstAttribute="top" secondItem="EditImageEditorControls" secondAttribute="bottom" id="EditImageEditorFrame2"/>
                             <constraint firstAttribute="bottom" secondItem="EditImageEditorFrame" secondAttribute="bottom" id="EditImageEditorFrame3"/>
                             <constraint firstItem="EditImageEditorFrame" firstAttribute="leading" secondItem="SafeArea7" secondAttribute="leading" id="EditImageEditorFrame4"/>
@@ -3676,6 +3710,8 @@
                         <outlet property="ImageEditorFrameBorder" destination="EditImageEditorFrameBorder" id="name-outlet-EditImageEditorFrameBorder"/>
                         <outlet property="ImageEditorStatus" destination="EditImageEditorStatus" id="name-outlet-EditImageEditorStatus"/>
                         <outlet property="ViewportConstraint" destination="EditMoreOptionsSection6" id="name-outlet-EditMoreOptionsSection6"/>
+                        <outlet property="TopSeparator" destination="EditTopSeparator" id="name-outlet-EditTopSeparator"/>
+                        <outlet property="RippleImageEditor" destination="RippleEditImageEditor" id="name-outlet-RippleEditImageEditor"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="111978" userLabel="First Responder" sceneMemberID="firstResponder"/>

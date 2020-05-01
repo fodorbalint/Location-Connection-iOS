@@ -281,9 +281,7 @@
       <BundleResource Include="Resources\status_round_background_corner.png" />
       <BundleResource Include="Resources\status_round_background.png" />
       <BundleResource Include="GoogleService-Info.plist" />
-      <BundleResource Include="Resources\ic_check48_pressed.png" />
       <BundleResource Include="Resources\ic_check48.png" />
-      <BundleResource Include="Resources\ic_cross48_pressed.png" />
       <BundleResource Include="Resources\ic_cross48.png" />
       <BundleResource Include="Resources\ic_delete_pressed.png" />
     </ItemGroup>

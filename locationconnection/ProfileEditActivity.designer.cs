@@ -268,6 +268,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView RippleImageEditor { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView RoundBottom { get; set; }
 
         [Outlet]
@@ -297,6 +301,10 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint SnackTopConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView TopSeparator { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -643,6 +651,11 @@ namespace LocationConnection
                 ProfileEdit_Scroll = null;
             }
 
+            if (RippleImageEditor != null) {
+                RippleImageEditor.Dispose ();
+                RippleImageEditor = null;
+            }
+
             if (RoundBottom != null) {
                 RoundBottom.Dispose ();
                 RoundBottom = null;
@@ -681,6 +694,11 @@ namespace LocationConnection
             if (SnackTopConstraint != null) {
                 SnackTopConstraint.Dispose ();
                 SnackTopConstraint = null;
+            }
+
+            if (TopSeparator != null) {
+                TopSeparator.Dispose ();
+                TopSeparator = null;
             }
 
             if (UseLocationLabel != null) {

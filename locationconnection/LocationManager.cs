@@ -61,6 +61,7 @@ namespace LocationConnection
             locMgr.StopUpdatingLocation();
             BaseActivity.locationUpdating = false;
             BaseActivity.firstLocationAcquired = false;
+            Session.SafeLocationTime = null;
             context.c.LogActivity("Location updates stopped");
             context.c.CW("Location updates stopped");
         }
@@ -151,7 +152,7 @@ namespace LocationConnection
 
                     if (context.c.IsLoggedIn())
                     {
-                        await context.c.UpdateLocationSync(true);
+                        await context.c.UpdateLocationSync(true); //to match
                     }
 
                     context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|1");

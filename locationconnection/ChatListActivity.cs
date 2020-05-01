@@ -75,6 +75,10 @@ namespace LocationConnection
                     }
                     ChatUserList.ReloadData();
                 }
+                else
+                {
+                    c.ReportError(responseString);
+                }
 
                 ChatUserList.RowHeight = 101; //If the delegate is set before setting the Source, row height is gotten from the adapter allright. Otherwise the first row is about 20, and the subsequent rows are about 70.
                 ChatUserList.Delegate = this; //must be called after setting the Source, otherwise the Scrolled event is not fired.

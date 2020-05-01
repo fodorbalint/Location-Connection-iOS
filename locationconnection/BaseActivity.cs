@@ -163,7 +163,7 @@ namespace LocationConnection
 					SnackBottomConstraintConstant = -13; //Snackbar is extra padded at the bottom
 				}
 
-				//c.CW("ViewDidLayoutSubviews roundBottomHeight " + roundBottomHeight + " " + BottomConstraintConstant + " " + SnackBottomConstraintConstant + " " + ScrollBottomConstraintConstant);
+				c.CW("ViewDidLayoutSubviews roundBottomHeight " + roundBottomHeight + " " + BottomConstraintConstant + " " + SnackBottomConstraintConstant + " " + ScrollBottomConstraintConstant);
 
 				BottomConstraint_Base.Constant = BottomConstraintConstant;
 				SnackBottomConstraint_Base.Constant = SnackBottomConstraintConstant;

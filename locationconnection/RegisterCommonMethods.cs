@@ -29,6 +29,7 @@ namespace LocationConnection
 		public UISwitch UseLocationSwitch, LocationShareAll, LocationShareLike, LocationShareMatch, LocationShareFriend, LocationShareNone;
 		public UISwitch DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone;
 		public UIView ImageEditorControls;
+		public UIImageView TopSeparator, RippleImageEditor;
 		public UIView ImageEditorStatus;
 		public UIButton ImageEditorCancel;
 		public UIButton ImageEditorOK;
@@ -61,7 +62,7 @@ namespace LocationConnection
 
 		public RegisterCommonMethods(BaseActivity context, CommonMethods c, ImageFrameLayout ImagesUploaded, UITextField Email, UITextField Username, UITextField Name, UITextView DescriptionText, UIButton CheckUsername, UIButton Images,
             UILabel ImagesProgressText, UIImageView LoaderCircle, UIProgressView ImagesProgress, UISwitch UseLocationSwitch, UISwitch LocationShareAll, UISwitch LocationShareLike, UISwitch LocationShareMatch, UISwitch LocationShareFriend, UISwitch LocationShareNone,
-            UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone, UIView ImageEditorControls, UIView ImageEditorStatus, UIButton ImageEditorCancel, UIButton ImageEditorOK, UIImageView ImageEditor,UIView ImageEditorFrame, UIView ImageEditorFrameBorder)
+            UISwitch DistanceShareAll, UISwitch DistanceShareLike, UISwitch DistanceShareMatch, UISwitch DistanceShareFriend, UISwitch DistanceShareNone, UIView ImageEditorControls, UIImageView TopSeparator, UIImageView RippleImageEditor, UIView ImageEditorStatus, UIButton ImageEditorCancel, UIButton ImageEditorOK, UIImageView ImageEditor,UIView ImageEditorFrame, UIView ImageEditorFrameBorder)
         {
             this.context = context;
             this.c = c;
@@ -88,12 +89,33 @@ namespace LocationConnection
 			this.DistanceShareFriend = DistanceShareFriend;
 			this.DistanceShareNone = DistanceShareNone;
 			this.ImageEditorControls = ImageEditorControls;
+			this.TopSeparator = TopSeparator;
+			this.RippleImageEditor = RippleImageEditor;
 			this.ImageEditorStatus = ImageEditorStatus;
 			this.ImageEditorCancel = ImageEditorCancel;
 			this.ImageEditorOK = ImageEditorOK;
 			this.ImageEditor = ImageEditor;
 			this.ImageEditorFrame = ImageEditorFrame;
 			this.ImageEditorFrameBorder = ImageEditorFrameBorder;
+
+			CheckUsername.TouchUpInside += CheckUsername_Click;
+			Images.TouchUpInside += Images_Click;
+
+			UseLocationSwitch.TouchUpInside += UseLocationSwitch_Click;
+			LocationShareAll.TouchUpInside += LocationShareAll_Click;
+			LocationShareLike.TouchUpInside += LocationShareLike_Click;
+			LocationShareMatch.TouchUpInside += LocationShareMatch_Click;
+			LocationShareFriend.TouchUpInside += LocationShareFriend_Click;
+			LocationShareNone.TouchUpInside += LocationShareNone_Click;
+
+			DistanceShareAll.TouchUpInside += DistanceShareAll_Click;
+			DistanceShareLike.TouchUpInside += DistanceShareLike_Click;
+			DistanceShareMatch.TouchUpInside += DistanceShareMatch_Click;
+			DistanceShareFriend.TouchUpInside += DistanceShareFriend_Click;
+			DistanceShareNone.TouchUpInside += DistanceShareNone_Click;
+
+            ImageEditorCancel.TouchDown += ImageEditorButton_TouchDown;
+            ImageEditorOK.TouchDown += ImageEditorButton_TouchDown;
 
 			UIPanGestureRecognizer move = new UIPanGestureRecognizer();
 			move.AddTarget(() => MoveImage(move));
@@ -109,7 +131,28 @@ namespace LocationConnection
             client.Headers.Add("Content-Type", "image/jpeg");            
         }
 
-		public async void CheckUsername_Click(object sender, EventArgs e)
+        private void ImageEditorButton_TouchDown(object sender, EventArgs e)
+        {
+            foreach (NSLayoutConstraint constraint in ImageEditorControls.Constraints)
+            {
+                if (constraint.FirstItem == RippleImageEditor)
+                {
+					context.c.CW("First item is it");
+					ImageEditorControls.RemoveConstraint(constraint);
+                }
+				if (constraint.SecondItem == RippleImageEditor)
+				{
+					context.c.CW("second item is it");
+					ImageEditorControls.RemoveConstraint(constraint);
+				}
+			}
+			RippleImageEditor.CenterXAnchor.ConstraintEqualTo(((UIButton)sender).CenterXAnchor).Active = true;
+			RippleImageEditor.CenterYAnchor.ConstraintEqualTo(((UIButton)sender).CenterYAnchor).Active = true;
+			ImageEditorControls.LayoutIfNeeded();
+            c.AnimateRipple(RippleImageEditor, 2);
+		}
+
+        public async void CheckUsername_Click(object sender, EventArgs e)
 		{
 			if (Username.Text.Trim() == "")
 			{
@@ -194,10 +237,11 @@ namespace LocationConnection
 								ImageEditor.Transform = CGAffineTransform.MakeScale(1, 1);
 								lastScale = 1;
 								ImageEditorControls.Hidden = false;
+								TopSeparator.Hidden = false;
 								ImageEditorStatus.Hidden = false;
 								ImageEditor.Hidden = false;
 								ImageEditorFrame.Hidden = false;
-								ImageEditorFrameBorder.Hidden = false;
+								ImageEditorFrameBorder.Hidden = false;								
 
 								if (sizeRatio > 1)
 								{
@@ -244,9 +288,19 @@ namespace LocationConnection
             }
         }
 
-        private bool IsOutOfFrameY(nfloat yDist)
+        private bool IsOutOfFrameY(nfloat yDist) //0.001 is to take account for the comparison of float numbers. Touch move resolution is larger.
         {
-			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2)
+            if (yDist <= 0)
+            {
+				context.c.CW("IsOutOfFrameY " + (-yDist + ImageEditorFrameBorder.Frame.Height / 2) + " " + ImageEditor.Frame.Height / 2);
+			}
+            else
+            {
+				context.c.CW("IsOutOfFrameY " + (yDist + ImageEditorFrameBorder.Frame.Height / 2) + " " + ImageEditor.Frame.Height / 2);
+			}
+			
+
+			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2 + 0.001 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2 + 0.001)
 			{
 				return true;
 			}
@@ -258,7 +312,16 @@ namespace LocationConnection
 
 		private bool IsOutOfFrameX(nfloat xDist)
 		{
-			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2)
+			if (xDist <= 0)
+			{
+				context.c.CW("IsOutOfFrameX " + (-xDist + ImageEditorFrameBorder.Frame.Width / 2) + " " + ImageEditor.Frame.Width / 2);
+			}
+			else
+			{
+				context.c.CW("IsOutOfFrameX " + (xDist + ImageEditorFrameBorder.Frame.Width / 2) + " " + ImageEditor.Frame.Width / 2);
+			}
+
+			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2 + 0.001 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2 + 0.001)
 			{
 				return true;
 			}
@@ -415,6 +478,7 @@ namespace LocationConnection
 		public void CancelImageEditing(object sender, EventArgs e)
 		{
 			ImageEditorControls.Hidden = true;
+			TopSeparator.Hidden = true;
 			ImageEditorStatus.Hidden = true;
 			ImageEditor.Hidden = true;
 			ImageEditorFrame.Hidden = true;
@@ -469,6 +533,7 @@ namespace LocationConnection
             else
             {
 				ImageEditorControls.Hidden = true;
+				TopSeparator.Hidden = true;
 				ImageEditorStatus.Hidden = true;
 				ImageEditor.Hidden = true;
 				ImageEditorFrame.Hidden = true;

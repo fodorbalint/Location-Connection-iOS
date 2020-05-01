@@ -414,7 +414,7 @@ namespace LocationConnection
 				UnmatchDate.Text = LangEnglish.Unmatched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
 				MenuFriend.Hidden = true;
 
-				if (Session.CurrentMatch.TargetID == IntentData.blockedID)
+				if (currentMatch.TargetID == IntentData.blockedID)
 				{
 					IntentData.blockedID = null;
 					MenuUnmatch.Hidden = true;
@@ -727,6 +727,10 @@ namespace LocationConnection
 				locMgr = new LocationManager(this);
 				locMgr.StartLocationUpdates();
 			}
+            else
+            {
+				locMgr.RestartLocationUpdates();
+            }
 			c.Snack(LangEnglish.LocationUpdatesToStart);
 		}
 

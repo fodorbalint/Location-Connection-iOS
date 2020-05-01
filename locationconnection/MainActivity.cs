@@ -125,7 +125,8 @@ namespace LocationConnection
                     if (IntentData.authError)
                     {
                         IntentData.authError = false;
-                        c.SnackIndef(LangEnglish.LoggedOut);
+                        Session.SnackMessage = LangEnglish.LoggedOut;
+                        Session.SnackPermanent = true;
                     }
                     LoginEmail.Text = "";
                     LoginPassword.Text = "";

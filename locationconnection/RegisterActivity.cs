@@ -86,7 +86,7 @@ namespace LocationConnection
 
                 rc = new RegisterCommonMethods(this, c, ImagesUploaded, Email, Username, Name, DescriptionText, CheckUsername, Images,
                 ImagesProgressText, LoaderCircle, ImagesProgress, UseLocationSwitch, LocationShareAll, LocationShareLike, LocationShareMatch, LocationShareFriend, LocationShareNone,
-                DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone, ImageEditorControls, ImageEditorStatus, ImageEditorCancel, ImageEditorOK, ImageEditor, ImageEditorFrame, ImageEditorFrameBorder);
+                DistanceShareAll, DistanceShareLike, DistanceShareMatch, DistanceShareFriend, DistanceShareNone, ImageEditorControls, TopSeparator, RippleImageEditor, ImageEditorStatus, ImageEditorCancel, ImageEditorOK, ImageEditor, ImageEditorFrame, ImageEditorFrameBorder);
 
                 RegisterScroll.SetContext(this);
 
@@ -101,23 +101,7 @@ namespace LocationConnection
                 else
                 {
                     regsessionid = File.ReadAllText(regSessionFile);
-                }
-
-                CheckUsername.TouchUpInside += rc.CheckUsername_Click;
-                Images.TouchUpInside += rc.Images_Click;                
-
-                UseLocationSwitch.TouchUpInside += rc.UseLocationSwitch_Click;
-                LocationShareAll.TouchUpInside += rc.LocationShareAll_Click;
-                LocationShareLike.TouchUpInside += rc.LocationShareLike_Click;
-                LocationShareMatch.TouchUpInside += rc.LocationShareMatch_Click;
-                LocationShareFriend.TouchUpInside += rc.LocationShareFriend_Click;
-                LocationShareNone.TouchUpInside += rc.LocationShareNone_Click;
-
-                DistanceShareAll.TouchUpInside += rc.DistanceShareAll_Click;
-                DistanceShareLike.TouchUpInside += rc.DistanceShareLike_Click;
-                DistanceShareMatch.TouchUpInside += rc.DistanceShareMatch_Click;
-                DistanceShareFriend.TouchUpInside += rc.DistanceShareFriend_Click;
-                DistanceShareNone.TouchUpInside += rc.DistanceShareNone_Click;
+                }                
 
                 Register.TouchUpInside += Register_Click;
                 Reset.TouchUpInside += Reset_Click;
