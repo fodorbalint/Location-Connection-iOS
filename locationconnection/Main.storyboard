@@ -644,7 +644,7 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="200" relation="greaterThanOrEqual" id="MenuContainerIn0"/>
+                                            <constraint firstAttribute="width" constant="200" relation="greaterThanOrEqual" priority="999" id="MenuContainerIn0"/>
                                             <constraint firstAttribute="top" secondItem="MenuContainerStack" secondAttribute="top" id="MenuContainerStack2"/>
                                             <constraint firstAttribute="bottom" secondItem="MenuContainerStack" secondAttribute="bottom" priority="749" id="MenuContainerStack3"/>
                                             <constraint firstAttribute="leading" secondItem="MenuContainerStack" secondAttribute="leading" priority="749" id="MenuContainerStack4"/>
@@ -833,7 +833,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="LoginEmail">
+                                    <textField verticalCompressionResistancePriority="1000" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="LoginEmail">
                                         <rect key="frame" x="80" y="0.0" width="200" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
@@ -843,7 +843,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="LoginPassword">
+                                    <textField verticalCompressionResistancePriority="1000" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="LoginPassword">
                                         <rect key="frame" x="80" y="32" width="200" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" returnKeyType="go"/>
@@ -890,7 +890,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="ResetEmail">
+                                            <textField verticalCompressionResistancePriority="1000" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" translatesAutoresizingMaskIntoConstraints="NO" id="ResetEmail">
                                                 <rect key="frame" x="80" y="108" width="200" height="32"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email" returnKeyType="go"/>
@@ -920,7 +920,7 @@
                                             <constraint firstItem="ResetEmail" firstAttribute="leading" secondItem="ResetEmailText" secondAttribute="trailing" constant="10" id="ResetEmail3"/>
                                             <constraint firstAttribute="trailing" secondItem="ResetEmail" secondAttribute="trailing" id="ResetEmail4"/>
                                             <constraint firstItem="ResetSendButton" firstAttribute="top" secondItem="ResetEmail" secondAttribute="bottom" constant="6" id="ResetSendButton2"/>
-                                            <constraint firstAttribute="bottom" secondItem="ResetSendButton" secondAttribute="bottom" priority="749" id="ResetSendButton3"/>
+                                            <constraint firstAttribute="bottom" secondItem="ResetSendButton" secondAttribute="bottom" priority="999" id="ResetSendButton3"/>
                                             <constraint firstAttribute="leading" secondItem="ResetSendButton" secondAttribute="leading" id="ResetSendButton4"/>
                                             <constraint firstAttribute="trailing" secondItem="ResetSendButton" secondAttribute="trailing" id="ResetSendButton5"/>
                                         </constraints>
@@ -1021,7 +1021,7 @@
                             <constraint firstItem="ListButton" firstAttribute="trailing" secondItem="SafeArea2" secondAttribute="trailing" constant="-10" id="ListButton4"/>
                             <constraint firstItem="MainSpacer4" firstAttribute="height" secondItem="MainSpacer3" secondAttribute="height" id="MainSpacer41"/>
                             <constraint firstItem="MainSpacer4" firstAttribute="top" secondItem="ListButton" secondAttribute="bottom" id="MainSpacer42"/>
-                            <constraint firstItem="MainSpacer4" firstAttribute="bottom" secondItem="RoundBottom2" secondAttribute="top" id="MainSpacer43"/>
+                            <constraint firstItem="MainSpacer4" firstAttribute="bottom" secondItem="RoundBottom2" secondAttribute="top" priority="998" id="MainSpacer43"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom2" secondAttribute="top" id="RoundBottom22"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom2" secondAttribute="bottom" id="RoundBottom23"/>
                             <constraint firstItem="RoundBottom2" firstAttribute="leading" secondItem="SafeArea2" secondAttribute="leading" id="RoundBottom24"/>
@@ -1810,8 +1810,8 @@
                                             <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ProfileViewMenuIcon">
                                                 <rect key="frame" x="327" y="0.0" width="48" height="48"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="48" id="ProfileViewMenuIcon0"/>
-                                                    <constraint firstAttribute="height" constant="48" id="ProfileViewMenuIcon1"/>
+                                                    <constraint firstAttribute="width" constant="48" priority="999" id="ProfileViewMenuIcon0"/>
+                                                    <constraint firstAttribute="height" constant="48" priority="999" id="ProfileViewMenuIcon1"/>
                                                 </constraints>
                                                 <state key="normal" backgroundImage="ic_menu_black.png"/>
                                                 <state key="highlighted" backgroundImage="ic_menu_black.png"/>
@@ -1954,7 +1954,7 @@
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" relation="greaterThanOrEqual" id="ProfileViewMenuContainerIn0"/>
+                                                    <constraint firstAttribute="width" constant="200" relation="greaterThanOrEqual" priority="999" id="ProfileViewMenuContainerIn0"/>
                                                     <constraint firstAttribute="top" secondItem="ProfileViewMenuContainerStack" secondAttribute="top" id="ProfileViewMenuContainerStack2"/>
                                                     <constraint firstAttribute="bottom" secondItem="ProfileViewMenuContainerStack" secondAttribute="bottom" priority="749" id="ProfileViewMenuContainerStack3"/>
                                                     <constraint firstAttribute="leading" secondItem="ProfileViewMenuContainerStack" secondAttribute="leading" priority="749" id="ProfileViewMenuContainerStack4"/>
@@ -2847,7 +2847,7 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="200" relation="greaterThanOrEqual" id="ChatOneMenuContainerIn0"/>
+                                            <constraint firstAttribute="width" constant="200" relation="greaterThanOrEqual" priority="999" id="ChatOneMenuContainerIn0"/>
                                             <constraint firstAttribute="top" secondItem="ChatOneMenuContainerStack" secondAttribute="top" id="ChatOneMenuContainerStack2"/>
                                             <constraint firstAttribute="bottom" secondItem="ChatOneMenuContainerStack" secondAttribute="bottom" priority="749" id="ChatOneMenuContainerStack3"/>
                                             <constraint firstAttribute="leading" secondItem="ChatOneMenuContainerStack" secondAttribute="leading" priority="749" id="ChatOneMenuContainerStack4"/>

@@ -48,7 +48,8 @@ namespace LocationConnection
         UIImagePickerController imagePicker;
 		private static string selectedImage, selectedImageName;
 
-		private nfloat lastScale;
+		private nfloat intrinsicWidth, intrinsicHeight;
+		private nfloat scaleFactor;
 		private nfloat touchStartX;
 		private nfloat touchStartY;
 		private nfloat startCenterX;
@@ -137,14 +138,8 @@ namespace LocationConnection
             {
                 if (constraint.FirstItem == RippleImageEditor)
                 {
-					context.c.CW("First item is it");
 					ImageEditorControls.RemoveConstraint(constraint);
                 }
-				if (constraint.SecondItem == RippleImageEditor)
-				{
-					context.c.CW("second item is it");
-					ImageEditorControls.RemoveConstraint(constraint);
-				}
 			}
 			RippleImageEditor.CenterXAnchor.ConstraintEqualTo(((UIButton)sender).CenterXAnchor).Active = true;
 			RippleImageEditor.CenterYAnchor.ConstraintEqualTo(((UIButton)sender).CenterYAnchor).Active = true;
@@ -235,7 +230,7 @@ namespace LocationConnection
                             {
 								ImageEditor.Image = image;
 								ImageEditor.Transform = CGAffineTransform.MakeScale(1, 1);
-								lastScale = 1;
+								scaleFactor = 1;
 								ImageEditorControls.Hidden = false;
 								TopSeparator.Hidden = false;
 								ImageEditorStatus.Hidden = false;
@@ -245,14 +240,16 @@ namespace LocationConnection
 
 								if (sizeRatio > 1)
 								{
-									context.c.SetHeight(ImageEditor, ImageEditorFrameBorder.Frame.Width);
-									context.c.SetWidth(ImageEditor, ImageEditorFrameBorder.Frame.Width * sizeRatio);
+									intrinsicHeight = ImageEditorFrameBorder.Frame.Width;
+									intrinsicWidth = ImageEditorFrameBorder.Frame.Width * sizeRatio;
 								}
 								else
 								{
-									context.c.SetHeight(ImageEditor, ImageEditorFrameBorder.Frame.Width / sizeRatio);
-									context.c.SetWidth(ImageEditor, ImageEditorFrameBorder.Frame.Width);
+									intrinsicHeight = ImageEditorFrameBorder.Frame.Width / sizeRatio;
+									intrinsicWidth = ImageEditorFrameBorder.Frame.Width;
 								}
+								context.c.SetHeight(ImageEditor, intrinsicHeight);
+								context.c.SetWidth(ImageEditor, intrinsicWidth);
 							}							
 						};
                     }
@@ -290,15 +287,23 @@ namespace LocationConnection
 
         private bool IsOutOfFrameY(nfloat yDist) //0.001 is to take account for the comparison of float numbers. Touch move resolution is larger.
         {
-            if (yDist <= 0)
+			if (yDist <= 0)
             {
-				context.c.CW("IsOutOfFrameY " + (-yDist + ImageEditorFrameBorder.Frame.Height / 2) + " " + ImageEditor.Frame.Height / 2);
+				context.c.CW("IsOutOfFrameY frame+dist " + (-yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new  " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
 			}
             else
             {
-				context.c.CW("IsOutOfFrameY " + (yDist + ImageEditorFrameBorder.Frame.Height / 2) + " " + ImageEditor.Frame.Height / 2);
+				context.c.CW("IsOutOfFrameY frame+dist " + (yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
 			}
-			
+
+			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2 + 0.001 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2 + 0.001)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}         
 
 			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2 + 0.001 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2 + 0.001)
 			{
@@ -314,11 +319,20 @@ namespace LocationConnection
 		{
 			if (xDist <= 0)
 			{
-				context.c.CW("IsOutOfFrameX " + (-xDist + ImageEditorFrameBorder.Frame.Width / 2) + " " + ImageEditor.Frame.Width / 2);
+				context.c.CW("IsOutOfFrameX frame+dist " + (-xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
 			}
 			else
 			{
-				context.c.CW("IsOutOfFrameX " + (xDist + ImageEditorFrameBorder.Frame.Width / 2) + " " + ImageEditor.Frame.Width / 2);
+				context.c.CW("IsOutOfFrameX frame+dist " + (xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
+			}
+
+			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2 + 0.001 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2 + 0.001)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 
 			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2 + 0.001 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2 + 0.001)
@@ -330,7 +344,7 @@ namespace LocationConnection
 				return false;
 			}
 		}
-		
+
 		//out of frame image is allowed to come closer. Image in frame is not allowed to go out, only by pinching action.
 		public void MoveImage(UIPanGestureRecognizer recognizer)
 		{
@@ -359,15 +373,15 @@ namespace LocationConnection
 				}
                 else if (outOfFrameY) //new distance is smaller
                 {
-					if (yDist <= 0 && newyDist > (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2) //making sure not to go out of frame the opposite end. (when the image is scaled back to 1:1, and moved fast, it can happen)
+					if (yDist <= 0 && newyDist > (intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2) //making sure not to go out of frame the opposite end. (when the image is scaled back to 1:1, and moved fast, it can happen)
                     {
-						yDist = (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
-						touchStartY += newyDist - (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2; //moving start touch position, so an opposite move will react immediately
+						yDist = (intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - (intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2; //moving start touch position, so an opposite move will react immediately
 					}
-                    else if (yDist > 0 && newyDist < -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2)
+                    else if (yDist > 0 && newyDist < -(intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2)
 					{
-						yDist = -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
-						touchStartY += newyDist - -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						yDist = -(intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - -(intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
 					}
 					else
 					{
@@ -381,15 +395,16 @@ namespace LocationConnection
                 {
 					yDist = newyDist;
 
-					if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2) //going out of frame too high
+					if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2) //going out of frame too high
 					{
-						yDist = -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
-						touchStartY += newyDist - -(ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						yDist = -(intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
+						touchStartY += newyDist - -(intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
 					}
-                    else if (yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > ImageEditor.Frame.Height / 2) //going out of frame too low
+                    else if (yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2) //going out of frame too low
                     {
-						yDist = (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
-						touchStartY += newyDist - (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2;
+						yDist = (intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
+						//yDist = (ImageEditor.Frame.Height - ImageEditorFrameBorder.Frame.Height) / 2; //old value, to reproduce the image out of frame issue on iPhone X
+						touchStartY += newyDist - (intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2;
 					}
 					// else in frame 
 					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditor.Center.X, ImageEditorFrameBorder.Center.Y + yDist);
@@ -402,15 +417,15 @@ namespace LocationConnection
 				}
                 else if (outOfFrameX)
                 {
-					if (xDist <= 0 && newxDist > (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2) //making sure not to go out of frame the opposite end. (when the image is scaled back to 1:1, and moved fast, it can happen)
+					if (xDist <= 0 && newxDist > (intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2) //making sure not to go out of frame the opposite end. (when the image is scaled back to 1:1, and moved fast, it can happen)
 					{
-						xDist = (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
-						touchStartX += newxDist - (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
+						xDist = (intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - (intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
 					}
-					else if (xDist > 0 && newxDist < -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2)
+					else if (xDist > 0 && newxDist < -(intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2)
 					{
-						xDist = -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
-						touchStartX += newxDist - -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
+						xDist = -(intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - -(intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
 					}
 					else
 					{
@@ -424,15 +439,16 @@ namespace LocationConnection
                 {
 					xDist = newxDist;
 
-					if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2) //going out of frame too left
+					if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2) //going out of frame too left
 					{
-						xDist = -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
-						touchStartX += newxDist - -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
+						xDist = -(intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2;
+						//xDist = -(ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - -(intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2; //moving start touch position, so an opposite move will react immediately
 					}
-                    else if (xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > ImageEditor.Frame.Width / 2) //going out of frame too right
+                    else if (xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2) //going out of frame too right
                     {
-						xDist = (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
-						touchStartX += newxDist - (ImageEditor.Frame.Width - ImageEditorFrameBorder.Frame.Width) / 2;
+						xDist = (intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2;
+						touchStartX += newxDist - (intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2;
 					}
 					// else in frame
 					ImageEditor.Center = new CoreGraphics.CGPoint(ImageEditorFrameBorder.Center.X + xDist, ImageEditor.Center.Y);
@@ -448,22 +464,22 @@ namespace LocationConnection
 
             if (recognizer.State == UIGestureRecognizerState.Ended)
             {
-				lastScale = recognizer.Scale * lastScale;
-                if (lastScale < 1)
+				scaleFactor = recognizer.Scale * scaleFactor;
+                if (scaleFactor < 1)
                 {
-					lastScale = 1;
+					scaleFactor = 1;
                 }
-                else if (lastScale > 3)
+                else if (scaleFactor > 3)
                 {
-					lastScale = 3;
+					scaleFactor = 3;
                 }
 				return;
             }
-            if (lastScale * recognizer.Scale >= 1 && lastScale * recognizer.Scale <= 3)
+            if (scaleFactor * recognizer.Scale >= 1 && scaleFactor * recognizer.Scale <= 3)
             {
-				recognizer.View.Transform = CGAffineTransform.MakeScale(recognizer.Scale * lastScale, recognizer.Scale * lastScale);
+				recognizer.View.Transform = CGAffineTransform.MakeScale(recognizer.Scale * scaleFactor, recognizer.Scale * scaleFactor);
 			}
-            else if (lastScale * recognizer.Scale < 1)
+            else if (scaleFactor * recognizer.Scale < 1)
             {
 				recognizer.View.Transform = CGAffineTransform.MakeScale(1, 1);
 			}
@@ -472,7 +488,7 @@ namespace LocationConnection
 				recognizer.View.Transform = CGAffineTransform.MakeScale(3, 3);
 			}
 			
-			//context.c.CW("Image pinched, state: " + recognizer.State + " " + recognizer.Scale + " " + lastScale);
+			//context.c.CW("Image pinched, state: " + recognizer.State + " " + recognizer.Scale + " " + scaleFactor);
 		}
 
 		public void CancelImageEditing(object sender, EventArgs e)
@@ -488,9 +504,15 @@ namespace LocationConnection
 
 		public async void OKImageEditing(object sender, EventArgs e)
 		{
-			
+            
+			c.CW("OKImageEditing xDist " + xDist + " yDist " + yDist + " intrW " + intrinsicWidth + " intrH " + intrinsicHeight + " scaleFactor " + scaleFactor + " img left " + ImageEditor.Frame.Left + " frame left " + ImageEditorFrameBorder.Frame.Left + " img top " + ImageEditor.Frame.Top + " frame top " + ImageEditorFrameBorder.Frame.Top);
+
+            //for device rotation, otherwise retains the set float values
 			xDist = ImageEditor.Center.X - ImageEditorFrameBorder.Center.X;
 			yDist = ImageEditor.Center.Y - ImageEditorFrameBorder.Center.Y;
+
+			c.CW("OKImageEditing new xDist " + xDist + " yDist " + yDist);
+
 			if (IsOutOfFrameX(xDist) || IsOutOfFrameY(yDist))
             {
 				context.c.Alert(LangEnglish.ImageEditorAlert);
@@ -500,12 +522,54 @@ namespace LocationConnection
 			nfloat w = ImageEditor.Image.Size.Width;
 			nfloat h = ImageEditor.Image.Size.Height;
 
-			nfloat x = (ImageEditorFrameBorder.Frame.Left - ImageEditor.Frame.Left) / ImageEditor.Frame.Width * w;
-			nfloat y = (ImageEditorFrameBorder.Frame.Top - ImageEditor.Frame.Top) / ImageEditor.Frame.Height * h;
-			nfloat cropW = ImageEditorFrameBorder.Frame.Width / ImageEditor.Frame.Width * w;
+			nfloat x = ((intrinsicWidth * scaleFactor - ImageEditorFrameBorder.Frame.Width) / 2 - xDist) * w / (intrinsicWidth * scaleFactor);
+            nfloat y = ((intrinsicHeight * scaleFactor - ImageEditorFrameBorder.Frame.Height) / 2 - yDist) * h / (intrinsicHeight * scaleFactor);
+
+			nfloat cropW = ImageEditorFrameBorder.Frame.Width * w / (intrinsicWidth * scaleFactor);
 			nfloat cropH = cropW;
 
-			//context.c.CW("OKImageEditing " + ImageEditorFrameBorder.Frame + " --- " + ImageEditor.Frame + " " + w + " " + h + " " + x + " " + y + " " + cropW + " " + cropH);
+			context.c.CW("OKImageEditing borderW " + ImageEditorFrameBorder.Frame.Width + " imageDisplayW " + ImageEditor.Frame.Width + " imgW " + w + " imgH " + h + " startX " + x + " startY " + y + " W " + cropW + " H " + cropH);
+
+			/*
+            iPhone 11 Pro display issues in landscape
+
+
+            Pink flowers
+            Right edge is 3 px to right in 3x zoom
+
+            OKImageEditing xDist -430.5 yDist 287 intrW 382.666666666667 intrH 287 scaleFactor 3 img left -598.333333333333 frame left 262.666666666667 img top 68 frame top 68
+            IsOutOfFrameX 574 574
+            IsOutOfFrameY 430.5 430.5
+            OKImageEditing borderW 287 imageDisplayW 1148 imgW 4032 imgH 3024 startX 3024 startY 0 W 1008 H 1008
+
+            img w 1148 dp
+            frame right: 549,666 dp 1649 px
+            img right = frame right, actual 1652 px
+
+
+            Pink flowers
+            Right edge 1 px to right in 1x zoom
+
+            OKImageEditing xDist -47.8333333333333 yDist 0 intrW 382.666666666667 intrH 287 scaleFactor 1 img left 167 frame left 262.666666666667 img top 68 frame top 68
+            IsOutOfFrameX 191.333333333333 191.333333333333
+            IsOutOfFrameY 143.5 143.5
+            OKImageEditing borderW 287 imageDisplayW 382.666666666667 imgW 4032 imgH 3024 startX 1008 startY 0 W 3024 H 3024
+
+            img w 382.666
+            img right 549.666 dp 1649 px actual 1650 px
+
+
+            Cactus flower / tree leaves
+            Right edge is -1 px to left in 3x zoom
+
+            OKImageEditing xDist -504.668539325843 yDist 287 intrW 432.112359550562 intrH 287 scaleFactor 3 img left -746.501872659176 frame left 262.666666666667 img top 68 frame top 68
+            IsOutOfFrameX 648.168539325843 648.168539325843
+            IsOutOfFrameY 430.5 430.5
+            OKImageEditing borderW 287 imageDisplayW 1296 imgW 4288 imgH 2848 startX 3338.66666666667 startY 0 W 949.333333333333 H 949.333333333333
+
+            img w 1296.337077 dp
+            img right 549.835205 dp 1649,505615 px actual 1648 px            
+            */
 
 			UIImage im = CropImage(ImageEditor.Image, (int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(cropW), (int)Math.Round(cropH));
 

@@ -72,7 +72,7 @@ namespace LocationConnection
 			}
 			
 			tileSize = (actualWidth - 20 - tileSpacing * (numColumns - 1)) / numColumns;
-			context.c.CW("SetTileSize dpWidth " + BaseActivity.dpWidth + " left " + BaseActivity.safeAreaLeft + " right " + BaseActivity.safeAreaRight + " actualWidth " + actualWidth +  " tileSize "  + tileSize);
+			//context.c.CW("SetTileSize dpWidth " + BaseActivity.dpWidth + " left " + BaseActivity.safeAreaLeft + " right " + BaseActivity.safeAreaRight + " actualWidth " + actualWidth +  " tileSize "  + tileSize);
 		}
 
         public override void LayoutMarginsDidChange()

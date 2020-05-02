@@ -635,7 +635,6 @@ namespace LocationConnection
 
                 GetScreenMetrics();
                 gridLayout = new GridLayout(this, 3, 2f);
-                c.CW("GridLayout: " + gridLayout);
                 UserSearchList.SetCollectionViewLayout(gridLayout, false);
                 adapter = new UserSearchListAdapter(this, 3, 2f);
                 UserSearchList.DataSource = adapter;
