@@ -1530,7 +1530,7 @@
                                         <rect key="frame" x="10" y="15.5" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleRegisterImageEditor">
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleRegisterImageEditor" misplaced="YES" ambiguous="YES">
                                         <rect key="frame" x="25" y="30" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="RippleRegisterImageEditor0"/>
@@ -3531,7 +3531,7 @@
                                         <rect key="frame" x="10" y="15.5" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleEditImageEditor">
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleEditImageEditor" misplaced="YES" ambiguous="YES">
                                         <rect key="frame" x="25" y="30" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="RippleEditImageEditor0"/>
@@ -3916,11 +3916,28 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                             </label>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="OpenTutorial">
+                                <rect key="frame" x="10" y="75" width="355" height="33"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="OpenTutorial0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="OpenTutorial">
+                                    <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                             <scrollView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QuestionsScroll" ambiguous="YES">
-                                <rect key="frame" x="0.0" y="75" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="118" width="375" height="0.0"/>
                             </scrollView>
                             <imageView contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="HelpCenterTopSeparator1">
-                                <rect key="frame" x="0.0" y="75" width="375" height="2"/>
+                                <rect key="frame" x="0.0" y="118" width="375" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="HelpCenterTopSeparator10"/>
                                 </constraints>
@@ -3982,9 +3999,126 @@
                                     <constraint id="HelpCenterMessageSend4" firstAttribute="leading" secondItem="HelpCenterMessageSend" secondAttribute="leading" constant="-10"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialTopBar">
+                                <rect key="frame" x="0.0" y="20" width="375" height="55"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleTutorial1" ambiguous="YES">
+                                        <rect key="frame" x="15" y="35" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="RippleTutorial10"/>
+                                            <constraint firstAttribute="width" constant="25" id="RippleTutorial11"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialBack">
+                                        <rect key="frame" x="10" y="10" width="35" height="35"/>
+                                        <state key="normal" backgroundImage="ic_back.png"/>
+                                        <state key="highlighted" backgroundImage="ic_back.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="TutorialBack0"/>
+                                            <constraint firstAttribute="width" constant="35" id="TutorialBack1"/>
+                                        </constraints>
+                                    </button>
+                                    <label text="TutorialText" opaque="NO" contentMode="scaleToFill" textAlignment="center" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialText">
+                                        <rect key="frame" x="55" y="10" width="310" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="RippleTutorial1" firstAttribute="centerX" secondItem="TutorialBack" secondAttribute="centerX" id="RippleTutorial12"/>
+                                    <constraint firstItem="RippleTutorial1" firstAttribute="centerY" secondItem="TutorialBack" secondAttribute="centerY" id="RippleTutorial13"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialBack" secondAttribute="top" constant="-10" priority="999" id="TutorialBack2"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialBack" secondAttribute="bottom" constant="10" priority="999" id="TutorialBack3"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialBack" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="TutorialBack4"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialBack" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="TutorialBack5"/>
+                                    <constraint firstAttribute="leading" secondItem="TutorialBack" secondAttribute="leading" constant="-10" id="TutorialBack6"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialText" secondAttribute="top" constant="-10" priority="999" id="TutorialText2"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialText" secondAttribute="bottom" constant="10" priority="999" id="TutorialText3"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialText" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="TutorialText4"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialText" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="TutorialText5"/>
+                                    <constraint firstAttribute="leading" secondItem="TutorialText" secondAttribute="leading" constant="-55" id="TutorialText6"/>
+                                    <constraint firstAttribute="trailing" secondItem="TutorialText" secondAttribute="trailing" constant="10" id="TutorialText7"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialFrame">
+                                <rect key="frame" x="0.0" y="75" width="375" height="543"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.5" alpha="1"/>
+                            </view>
+                            <imageView hidden="YES" contentMode="scaleToFill" image="separator_top_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialTopSeparator">
+                                <rect key="frame" x="0.0" y="75" width="375" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="TutorialTopSeparator0"/>
+                                </constraints>
+                            </imageView>
+                            <imageView hidden="YES" contentMode="scaleToFill" image="separator_bottom_transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialBottomSeparator">
+                                <rect key="frame" x="0.0" y="616" width="375" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="TutorialBottomSeparator0"/>
+                                </constraints>
+                            </imageView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialNavBar" misplaced="YES">
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="37"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleTutorial2" misplaced="YES" ambiguous="YES">
+                                        <rect key="frame" x="15" y="35" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="RippleTutorial20"/>
+                                            <constraint firstAttribute="width" constant="25" id="RippleTutorial21"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadPrevious">
+                                        <rect key="frame" x="105" y="10" width="35" height="29"/>
+                                        <state key="normal" backgroundImage="ic_previous_list_35x35.png"/>
+                                        <state key="highlighted" backgroundImage="ic_previous_list_35x35.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="TutorialLoadPrevious0"/>
+                                            <constraint firstAttribute="width" constant="35" id="TutorialLoadPrevious1"/>
+                                        </constraints>
+                                    </button>
+                                    <label text="TutorialText" opaque="NO" contentMode="scaleToFill" textAlignment="center" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialNavText" misplaced="YES">
+                                        <rect key="frame" x="-38" y="10" width="76" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8" alpha="1"/>
+                                    </label>
+                                    <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNext">
+                                        <rect key="frame" x="235.5" y="10" width="35" height="29"/>
+                                        <state key="normal" backgroundImage="ic_next_list_35x35.png"/>
+                                        <state key="highlighted" backgroundImage="ic_next_list_35x35.png"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="TutorialLoadNext0"/>
+                                            <constraint firstAttribute="width" constant="35" id="TutorialLoadNext1"/>
+                                        </constraints>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="top" secondItem="TutorialLoadPrevious" secondAttribute="top" constant="-5" priority="999" id="TutorialLoadPrevious2"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialLoadPrevious" secondAttribute="bottom" constant="5" priority="999" id="TutorialLoadPrevious3"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialLoadPrevious" secondAttribute="top" constant="-5" relation="lessThanOrEqual" id="TutorialLoadPrevious4"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialLoadPrevious" secondAttribute="bottom" constant="5" relation="greaterThanOrEqual" id="TutorialLoadPrevious5"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialLoadNext" secondAttribute="top" constant="-5" priority="999" id="TutorialLoadNext2"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialLoadNext" secondAttribute="bottom" constant="5" priority="999" id="TutorialLoadNext3"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialLoadNext" secondAttribute="top" constant="-5" relation="lessThanOrEqual" id="TutorialLoadNext4"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialLoadNext" secondAttribute="bottom" constant="5" relation="greaterThanOrEqual" id="TutorialLoadNext5"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialNavText" secondAttribute="top" constant="-10" priority="999" id="TutorialNavText2"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialNavText" secondAttribute="bottom" constant="10" priority="999" id="TutorialNavText3"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialNavText" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="TutorialNavText4"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialNavText" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="TutorialNavText5"/>
+                                    <constraint firstAttribute="centerX" secondItem="TutorialNavText" secondAttribute="centerX" id="TutorialNavText6"/>
+                                    <constraint firstItem="TutorialLoadPrevious" firstAttribute="trailing" secondItem="TutorialNavText" secondAttribute="leading" constant="-10" id="TutorialLoadPrevious6"/>
+                                    <constraint firstItem="TutorialLoadNext" firstAttribute="leading" secondItem="TutorialNavText" secondAttribute="trailing" constant="10" id="TutorialLoadNext6"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoundBottom9">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.95" alpha="1"/>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoundBottomTutorial">
+                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
+                                <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="Snackbar" id="Snackbar9">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
@@ -3997,7 +4131,10 @@
                             <constraint id="HelpCenterBack3" firstItem="HelpCenterBack" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading" constant="10"/>
                             <constraint id="HelpCenterHeaderText2" firstItem="HelpCenterHeaderText" firstAttribute="centerY" secondItem="HelpCenterBack" secondAttribute="centerY"/>
                             <constraint id="HelpCenterHeaderText3" firstItem="HelpCenterHeaderText" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing" constant="-20"/>
-                            <constraint id="QuestionsScroll2" firstItem="QuestionsScroll" firstAttribute="top" secondItem="HelpCenterBack" secondAttribute="bottom" constant="10"/>
+                            <constraint id="OpenTutorial2" firstItem="OpenTutorial" firstAttribute="top" secondItem="HelpCenterBack" secondAttribute="bottom" constant="10"/>
+                            <constraint id="OpenTutorial3" firstItem="OpenTutorial" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading" constant="10"/>
+                            <constraint id="OpenTutorial4" firstItem="OpenTutorial" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing" constant="-10"/>
+                            <constraint id="QuestionsScroll2" firstItem="QuestionsScroll" firstAttribute="top" secondItem="OpenTutorial" secondAttribute="bottom" constant="10"/>
                             <constraint id="QuestionsScroll3" firstItem="QuestionsScroll" firstAttribute="bottom" secondItem="HelpCenterFormCaption" secondAttribute="top"/>
                             <constraint id="QuestionsScroll4" firstItem="QuestionsScroll" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
                             <constraint id="QuestionsScroll5" firstItem="QuestionsScroll" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
@@ -4017,6 +4154,26 @@
                             <constraint id="HelpCenterMessageContainer3" firstItem="HelpCenterMessageContainer" firstAttribute="bottom" secondItem="RoundBottom9" secondAttribute="top"/>
                             <constraint id="HelpCenterMessageContainer4" firstItem="HelpCenterMessageContainer" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
                             <constraint id="HelpCenterMessageContainer5" firstItem="HelpCenterMessageContainer" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
+                            <constraint id="TutorialTopBar2" firstItem="TutorialTopBar" firstAttribute="top" secondItem="SafeArea9" secondAttribute="top"/>
+                            <constraint id="TutorialTopBar3" firstItem="TutorialTopBar" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
+                            <constraint id="TutorialTopBar4" firstItem="TutorialTopBar" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
+                            <constraint id="TutorialFrame2" firstItem="TutorialFrame" firstAttribute="top" secondItem="TutorialTopBar" secondAttribute="bottom"/>
+                            <constraint id="TutorialFrame3" firstItem="TutorialFrame" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
+                            <constraint id="TutorialFrame4" firstItem="TutorialFrame" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
+                            <constraint id="TutorialTopSeparator2" firstItem="TutorialTopSeparator" firstAttribute="top" secondItem="TutorialFrame" secondAttribute="top"/>
+                            <constraint id="TutorialTopSeparator3" firstItem="TutorialTopSeparator" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
+                            <constraint id="TutorialTopSeparator4" firstItem="TutorialTopSeparator" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
+                            <constraint id="TutorialBottomSeparator2" firstItem="TutorialBottomSeparator" firstAttribute="bottom" secondItem="TutorialFrame" secondAttribute="bottom"/>
+                            <constraint id="TutorialBottomSeparator3" firstItem="TutorialBottomSeparator" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
+                            <constraint id="TutorialBottomSeparator4" firstItem="TutorialBottomSeparator" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
+                            <constraint id="TutorialNavBar2" firstItem="TutorialNavBar" firstAttribute="top" secondItem="TutorialFrame" secondAttribute="bottom"/>
+                            <constraint id="TutorialNavBar3" firstItem="TutorialNavBar" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading"/>
+                            <constraint id="TutorialNavBar4" firstItem="TutorialNavBar" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing"/>
+                            <constraint id="TutorialNavBar5" firstItem="TutorialNavBar" firstAttribute="bottom" secondItem="RoundBottom9" secondAttribute="top"/>
+                            <constraint firstItem="RoundBottomTutorial" firstAttribute="top" secondItem="TutorialNavBar" secondAttribute="bottom" id="RoundBottomTutorial2"/>
+                            <constraint firstAttribute="bottom" secondItem="RoundBottomTutorial" secondAttribute="bottom" id="RoundBottomTutorial3"/>
+                            <constraint firstItem="RoundBottomTutorial" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading" id="RoundBottomTutorial4"/>
+                            <constraint firstItem="RoundBottomTutorial" firstAttribute="trailing" secondItem="SafeArea9" secondAttribute="trailing" id="RoundBottomTutorial5"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom9" secondAttribute="top" id="RoundBottom92"/>
                             <constraint firstAttribute="bottom" secondItem="RoundBottom9" secondAttribute="bottom" id="RoundBottom93"/>
                             <constraint firstItem="RoundBottom9" firstAttribute="leading" secondItem="SafeArea9" secondAttribute="leading" id="RoundBottom94"/>
@@ -4041,6 +4198,21 @@
                         <outlet property="MessageContainer" destination="HelpCenterMessageContainer" id="name-outlet-HelpCenterMessageContainer"/>
                         <outlet property="MessageEdit" destination="HelpCenterMessageEdit" id="name-outlet-HelpCenterMessageEdit"/>
                         <outlet property="MessageSend" destination="HelpCenterMessageSend" id="name-outlet-HelpCenterMessageSend"/>
+                        <outlet property="OpenTutorial" destination="OpenTutorial" id="name-outlet-OpenTutorial"/>
+                        <outlet property="TutorialTopBar" destination="TutorialTopBar" id="name-outlet-TutorialTopBar"/>
+                        <outlet property="TutorialBack" destination="TutorialBack" id="name-outlet-TutorialBack"/>
+                        <outlet property="TutorialText" destination="TutorialText" id="name-outlet-TutorialText"/>
+                        <outlet property="TutorialFrame" destination="TutorialFrame" id="name-outlet-TutorialFrame"/>
+                        <outlet property="TutorialTopSeparator" destination="TutorialTopSeparator" id="name-outlet-TutorialTopSeparator"/>
+                        <outlet property="TutorialBottomSeparator" destination="TutorialBottomSeparator" id="name-outlet-TutorialBottomSeparator"/>
+                        <outlet property="TutorialNavBar" destination="TutorialNavBar" id="name-outlet-TutorialNavBar"/>
+                        <outlet property="RippleTutorial2" destination="RippleTutorial" id="name-outlet-RippleTutorial"/>
+                        <outlet property="TutorialNavText" destination="TutorialNavText" id="name-outlet-TutorialNavText"/>
+                        <outlet property="TutorialLoadPrevious" destination="TutorialLoadPrevious" id="name-outlet-TutorialLoadPrevious"/>
+                        <outlet property="TutorialLoadNext" destination="TutorialLoadNext" id="name-outlet-TutorialLoadNext"/>
+                        <outlet property="RoundBottomTutorial" destination="RoundBottomTutorial" id="name-outlet-RoundBottomTutorial"/>
+                        <outlet property="RippleTutorial1" destination="RippleTutorial1" id="name-outlet-RippleTutorial1"/>
+                        <outlet property="RippleTutorial2" destination="RippleTutorial2" id="name-outlet-RippleTutorial2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="133349" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4685,9 +4857,7 @@
         <image name="ic_previous_list_highlighted.png" width="140" height="116"/>
         <image name="separator_right_transparent.png" width="8" height="8"/>
         <image name="ripple_back.png" width="200" height="200"/>
-        <image name="ic_check48_pressed.png" width="192" height="192"/>
         <image name="ic_check48.png" width="192" height="192"/>
-        <image name="ic_cross48_pressed.png" width="192" height="192"/>
         <image name="ic_cross48.png" width="192" height="192"/>
     </resources>
 </document>

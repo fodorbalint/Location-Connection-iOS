@@ -1283,7 +1283,7 @@ namespace LocationConnection
             }
         }
 
-		public void AnimateRipple(UIView view, byte zoom)
+		public void AnimateRipple(UIView view, float zoom)
 		{
 			if (!context.rippleRunning)
 			{

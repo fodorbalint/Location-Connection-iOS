@@ -335,6 +335,7 @@ namespace LocationConnection
         public const string HelpCenterFormCaption = "Ask a question or send feedback";
         public const string HelpCenterFormSend = "Send";
         public const string HelpCenterSent = "Message sent.";
+        public const string HelpCenterTutorial = "Open tutorial";
 
         // Settings
 

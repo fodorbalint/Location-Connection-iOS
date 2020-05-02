@@ -44,6 +44,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton OpenTutorial { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIScrollView QuestionsScroll { get; set; }
 
         [Outlet]
@@ -52,7 +56,19 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView RippleTutorial1 { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView RippleTutorial2 { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView RoundBottom { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView RoundBottomTutorial { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -65,6 +81,46 @@ namespace LocationConnection
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint SnackTopConstraint { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton TutorialBack { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView TutorialBottomSeparator { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView TutorialFrame { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton TutorialLoadNext { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton TutorialLoadPrevious { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView TutorialNavBar { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel TutorialNavText { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel TutorialText { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView TutorialTopBar { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView TutorialTopSeparator { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
@@ -103,6 +159,11 @@ namespace LocationConnection
                 MessageSend = null;
             }
 
+            if (OpenTutorial != null) {
+                OpenTutorial.Dispose ();
+                OpenTutorial = null;
+            }
+
             if (QuestionsScroll != null) {
                 QuestionsScroll.Dispose ();
                 QuestionsScroll = null;
@@ -113,9 +174,24 @@ namespace LocationConnection
                 RippleHelpCenter = null;
             }
 
+            if (RippleTutorial1 != null) {
+                RippleTutorial1.Dispose ();
+                RippleTutorial1 = null;
+            }
+
+            if (RippleTutorial2 != null) {
+                RippleTutorial2.Dispose ();
+                RippleTutorial2 = null;
+            }
+
             if (RoundBottom != null) {
                 RoundBottom.Dispose ();
                 RoundBottom = null;
+            }
+
+            if (RoundBottomTutorial != null) {
+                RoundBottomTutorial.Dispose ();
+                RoundBottomTutorial = null;
             }
 
             if (Snackbar != null) {
@@ -131,6 +207,56 @@ namespace LocationConnection
             if (SnackTopConstraint != null) {
                 SnackTopConstraint.Dispose ();
                 SnackTopConstraint = null;
+            }
+
+            if (TutorialBack != null) {
+                TutorialBack.Dispose ();
+                TutorialBack = null;
+            }
+
+            if (TutorialBottomSeparator != null) {
+                TutorialBottomSeparator.Dispose ();
+                TutorialBottomSeparator = null;
+            }
+
+            if (TutorialFrame != null) {
+                TutorialFrame.Dispose ();
+                TutorialFrame = null;
+            }
+
+            if (TutorialLoadNext != null) {
+                TutorialLoadNext.Dispose ();
+                TutorialLoadNext = null;
+            }
+
+            if (TutorialLoadPrevious != null) {
+                TutorialLoadPrevious.Dispose ();
+                TutorialLoadPrevious = null;
+            }
+
+            if (TutorialNavBar != null) {
+                TutorialNavBar.Dispose ();
+                TutorialNavBar = null;
+            }
+
+            if (TutorialNavText != null) {
+                TutorialNavText.Dispose ();
+                TutorialNavText = null;
+            }
+
+            if (TutorialText != null) {
+                TutorialText.Dispose ();
+                TutorialText = null;
+            }
+
+            if (TutorialTopBar != null) {
+                TutorialTopBar.Dispose ();
+                TutorialTopBar = null;
+            }
+
+            if (TutorialTopSeparator != null) {
+                TutorialTopSeparator.Dispose ();
+                TutorialTopSeparator = null;
             }
         }
     }

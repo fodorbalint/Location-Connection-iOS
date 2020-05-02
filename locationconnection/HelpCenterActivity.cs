@@ -27,6 +27,7 @@ namespace LocationConnection
                 HelpCenterHeaderText.Text = LangEnglish.MenuHelpCenter;
                 HelpCenterFormCaption.SetTitle(LangEnglish.HelpCenterFormCaption, UIControlState.Normal);
                 MessageSend.SetTitle(LangEnglish.HelpCenterFormSend, UIControlState.Normal);
+                OpenTutorial.SetTitle(LangEnglish.HelpCenterTutorial, UIControlState.Normal);
 
                 MessageSend.Layer.MasksToBounds = true;
 
@@ -35,8 +36,16 @@ namespace LocationConnection
 
                 HelpCenterBack.TouchDown += HelpCenterBack_TouchDown;
                 HelpCenterBack.TouchUpInside += HelpCenterBack_TouchUpInside;
+                OpenTutorial.TouchUpInside += OpenTutorial_TouchUpInside;
                 HelpCenterFormCaption.TouchUpInside += HelpCenterFormCaption_TouchUpInside;
                 MessageSend.TouchUpInside += MessageSend_TouchUpInside;
+
+                TutorialBack.TouchDown += TutorialBack_TouchDown;
+                TutorialBack.TouchUpInside += TutorialBack_TouchUpInside;
+                TutorialLoadNext.TouchDown += TutorialLoad_TouchDown;
+                TutorialLoadNext.TouchUpInside += TutorialLoadNext_TouchUpInside;
+                TutorialLoadPrevious.TouchDown += TutorialLoad_TouchDown;
+                TutorialLoadPrevious.TouchUpInside += TutorialLoadPrevious_TouchUpInside;
 
                 string responseString = await c.MakeRequest("action=helpcenter");
 
@@ -97,7 +106,7 @@ namespace LocationConnection
             {
                 c.ReportErrorSilent(ex.Message + Environment.NewLine + ex.StackTrace);
             }
-        }
+        }        
 
         private void HelpCenterBack_TouchDown(object sender, EventArgs e)
         {
@@ -149,6 +158,54 @@ namespace LocationConnection
                 MessageSend.Enabled = true;
                 MessageSend.Alpha = 1f;
             }
+        }
+
+        private void OpenTutorial_TouchUpInside(object sender, EventArgs e)
+        {
+            TutorialTopBar.Hidden = false;
+            TutorialFrame.Hidden = false;
+            TutorialTopSeparator.Hidden = false;
+            TutorialBottomSeparator.Hidden = false;
+            TutorialNavBar.Hidden = false;
+            RoundBottomTutorial.Hidden = false;
+        }
+
+        private void TutorialBack_TouchUpInside(object sender, EventArgs e)
+        {
+            TutorialTopBar.Hidden = true;
+            TutorialFrame.Hidden = true;
+            TutorialTopSeparator.Hidden = true;
+            TutorialBottomSeparator.Hidden = true;
+            TutorialNavBar.Hidden = true;
+            RoundBottomTutorial.Hidden = true;
+        }
+
+        private void TutorialBack_TouchDown(object sender, EventArgs e)
+        {
+            c.AnimateRipple(RippleTutorial1, 2);
+        }
+
+        private void TutorialLoad_TouchDown(object sender, EventArgs e)
+        {
+            foreach (NSLayoutConstraint constraint in TutorialNavBar.Constraints)
+            {
+                if (constraint.FirstItem == RippleTutorial2)
+                {
+                    TutorialNavBar.RemoveConstraint(constraint);
+                }
+            }
+            RippleTutorial2.CenterXAnchor.ConstraintEqualTo(((UIButton)sender).CenterXAnchor).Active = true;
+            RippleTutorial2.CenterYAnchor.ConstraintEqualTo(((UIButton)sender).CenterYAnchor).Active = true;
+            TutorialNavBar.LayoutIfNeeded();
+            c.AnimateRipple(RippleTutorial2, 1.6f);
+        }
+
+        private void TutorialLoadPrevious_TouchUpInside(object sender, EventArgs e)
+        {
+        }
+
+        private void TutorialLoadNext_TouchUpInside(object sender, EventArgs e)
+        {
         }
     }
 }
