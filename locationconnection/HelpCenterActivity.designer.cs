@@ -32,6 +32,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView LoaderCircle { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView MessageContainer { get; set; }
 
         [Outlet]
@@ -92,7 +96,11 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView TutorialFrame { get; set; }
+        UIKit.UIScrollView TutorialFrame { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView TutorialFrameBg { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -142,6 +150,11 @@ namespace LocationConnection
             if (HelpCenterHeaderText != null) {
                 HelpCenterHeaderText.Dispose ();
                 HelpCenterHeaderText = null;
+            }
+
+            if (LoaderCircle != null) {
+                LoaderCircle.Dispose ();
+                LoaderCircle = null;
             }
 
             if (MessageContainer != null) {
@@ -222,6 +235,11 @@ namespace LocationConnection
             if (TutorialFrame != null) {
                 TutorialFrame.Dispose ();
                 TutorialFrame = null;
+            }
+
+            if (TutorialFrameBg != null) {
+                TutorialFrameBg.Dispose ();
+                TutorialFrameBg = null;
             }
 
             if (TutorialLoadNext != null) {

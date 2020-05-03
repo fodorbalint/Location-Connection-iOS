@@ -284,8 +284,8 @@
       <BundleResource Include="Resources\ic_check48.png" />
       <BundleResource Include="Resources\ic_cross48.png" />
       <BundleResource Include="Resources\ic_delete_pressed.png" />
-      <BundleResource Include="Resources\ic_next_list_35x35.png" />
-      <BundleResource Include="Resources\ic_previous_list_35x35.png" />
+      <BundleResource Include="Resources\ic_previous_list_45x45.png" />
+      <BundleResource Include="Resources\ic_next_list_45x45.png" />
     </ItemGroup>
     <ItemGroup>
       <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\logo20-1.png" />

@@ -103,6 +103,10 @@ namespace LocationConnection
 							}
 						}
 					}
+					BaseActivity.firstRun = false;
+				}
+				else {
+					BaseActivity.firstRun = true;
 				}
 
 				Type typeS = typeof(Settings);
@@ -123,7 +127,7 @@ namespace LocationConnection
 					str += Environment.NewLine;
 				}
 			}
-			else //load default settings
+			else //load default settings, not used
 			{
 				Type typeS = typeof(Settings);
 				Type typeSDef = typeof(SettingsDefault);

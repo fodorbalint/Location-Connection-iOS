@@ -42,7 +42,6 @@ namespace LocationConnection
 		public List<string> uploadedImages;
 		public bool imagesUploading;
 		public bool imagesDeleting;
-		private nint loaderAnimTime = 1300;
         private WebClient client;
 
         UIImagePickerController imagePicker;
@@ -739,7 +738,7 @@ namespace LocationConnection
             CABasicAnimation rotationAnimation = CABasicAnimation.FromKeyPath("transform.rotation");
             rotationAnimation.To = NSNumber.FromDouble(Math.PI * 2);
             rotationAnimation.RepeatCount = int.MaxValue;
-            rotationAnimation.Duration = loaderAnimTime / 1000;
+			rotationAnimation.Duration = Constants.loaderAnimTime;
 
             LoaderCircle.Hidden = false;
             LoaderCircle.Layer.AddAnimation(rotationAnimation, "rotationAnimation");

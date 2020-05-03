@@ -18,6 +18,8 @@ namespace LocationConnection
 		public const string TempUploadFolder = "userimagestemp";
 		public const string UploadFolderTest = "userimagestest";
 		public const string TempUploadFolderTest = "userimagestesttemp";
+		public const string TutorialFolder = "tutorial";
+		public const int tutorialInterval = 5000;
 		public const int SmallImageSize = 480;
 		public const int LargeImageSize = 1440;
 		public const string EmailFormat = @"^\w+([.+-]?\w+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-z0-9]{2,4}$";
@@ -46,6 +48,7 @@ namespace LocationConnection
 		public const int LocationKeepTime = 60 * 60 * 24;
 		public const int SystemLogKeepTime = 60 * 5;
 		public const float tweenTime = 0.2f;
+		public const float loaderAnimTime = 1.3f;
 
 		public const bool isTestDB = false;
 		public const int MaxResultCount = 100;

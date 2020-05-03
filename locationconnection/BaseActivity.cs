@@ -61,6 +61,7 @@ namespace LocationConnection
 		public bool rippleRunning;
 		public bool active; //Set in ViewWilAppear, and changes when calling OpenPage, used for preventing a Snack to appear on a disappearing page.
 		public bool appeared; //Set in ViewDidAppear, and used in autologin to decide whether to show a snack now.
+		public static bool firstRun = false;
 
 		public BaseActivity(IntPtr handle) : base(handle)
 		{

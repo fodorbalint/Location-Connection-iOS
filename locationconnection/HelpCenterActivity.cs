@@ -1,11 +1,20 @@
+using CoreAnimation;
+using CoreGraphics;
 using Foundation;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UIKit;
 
 namespace LocationConnection
 {
-    public partial class HelpCenterActivity : BaseActivity
+    public partial class HelpCenterActivity : BaseActivity, IUIScrollViewDelegate
     {
+        private List<string> tutorialDescriptions;
+        private List<string> tutorialPictures;
+        private int currentTutorial;
+        public bool cancelImageLoading;
+
         public HelpCenterActivity (IntPtr handle) : base (handle)
         {
         }
@@ -28,6 +37,7 @@ namespace LocationConnection
                 HelpCenterFormCaption.SetTitle(LangEnglish.HelpCenterFormCaption, UIControlState.Normal);
                 MessageSend.SetTitle(LangEnglish.HelpCenterFormSend, UIControlState.Normal);
                 OpenTutorial.SetTitle(LangEnglish.HelpCenterTutorial, UIControlState.Normal);
+                TutorialFrame.Delegate = this;
 
                 MessageSend.Layer.MasksToBounds = true;
 
@@ -46,7 +56,9 @@ namespace LocationConnection
                 TutorialLoadNext.TouchUpInside += TutorialLoadNext_TouchUpInside;
                 TutorialLoadPrevious.TouchDown += TutorialLoad_TouchDown;
                 TutorialLoadPrevious.TouchUpInside += TutorialLoadPrevious_TouchUpInside;
-
+                
+                firstRun = false;
+                
                 string responseString = await c.MakeRequest("action=helpcenter");
 
                 if (responseString.Substring(0, 2) == "OK")
@@ -160,30 +172,113 @@ namespace LocationConnection
             }
         }
 
-        private void OpenTutorial_TouchUpInside(object sender, EventArgs e)
+        private async void OpenTutorial_TouchUpInside(object sender, EventArgs e)
         {
+            c.CollapseY(MessageContainer);
+            c.ExpandY(QuestionsScroll);
+            View.EndEditing(true);
+
+            foreach (UIView view in TutorialFrame.Subviews)
+            {
+                if (view is UIImageView)
+                {
+                    view.RemoveFromSuperview();
+                }
+            }
+            TutorialText.Text = "";
+            TutorialNavText.Text = "";
+
             TutorialTopBar.Hidden = false;
+            TutorialFrameBg.Hidden = false;
             TutorialFrame.Hidden = false;
             TutorialTopSeparator.Hidden = false;
             TutorialBottomSeparator.Hidden = false;
             TutorialNavBar.Hidden = false;
             RoundBottomTutorial.Hidden = false;
-        }
+            StartAnim();
 
-        private void TutorialBack_TouchUpInside(object sender, EventArgs e)
-        {
-            TutorialTopBar.Hidden = true;
-            TutorialFrame.Hidden = true;
-            TutorialTopSeparator.Hidden = true;
-            TutorialBottomSeparator.Hidden = true;
-            TutorialNavBar.Hidden = true;
-            RoundBottomTutorial.Hidden = true;
+            cancelImageLoading = false;
+                                 
+
+            string url = "action=tutorial&OS=iOS&dpWidth=" + dpWidth;
+			string responseString = await c.MakeRequest(url);
+			if (responseString.Substring(0, 2) == "OK")
+			{
+				tutorialDescriptions = new List<string>();
+				tutorialPictures = new List<string>();
+				responseString = responseString.Substring(3);
+				
+				string[] lines = responseString.Split("\t");
+				int count = 0;
+				foreach (string line in lines)
+				{
+					count++;
+					if (count % 2 == 1)
+					{
+						tutorialDescriptions.Add(line);
+					}
+					else
+					{
+						tutorialPictures.Add(line);
+					}
+				}
+				
+				currentTutorial = 0;
+				LoadTutorial(true); 
+				LoadEmptyPictures(tutorialDescriptions.Count);
+
+				await Task.Run(() =>
+				{
+					for (int i = 0; i < tutorialDescriptions.Count; i++)
+					{
+						if (cancelImageLoading)
+						{
+							break;
+						}
+						LoadPicture(i);
+					}
+				});
+			}
+			else
+			{
+				c.ReportError(responseString);
+			}
         }
 
         private void TutorialBack_TouchDown(object sender, EventArgs e)
         {
             c.AnimateRipple(RippleTutorial1, 2);
         }
+
+        private void TutorialBack_TouchUpInside(object sender, EventArgs e)
+        {
+            TutorialTopBar.Hidden = true;
+            TutorialFrameBg.Hidden = true;
+            TutorialFrame.Hidden = true;
+            TutorialTopSeparator.Hidden = true;
+            TutorialBottomSeparator.Hidden = true;
+            TutorialNavBar.Hidden = true;
+            RoundBottomTutorial.Hidden = true;
+            LoaderCircle.Hidden = true;
+            cancelImageLoading = true;
+        }
+
+        private void StartAnim()
+		{
+			LoaderCircle.Hidden = false;
+
+            CABasicAnimation rotationAnimation = CABasicAnimation.FromKeyPath("transform.rotation");
+            rotationAnimation.To = NSNumber.FromDouble(Math.PI * 2);
+            rotationAnimation.RepeatCount = int.MaxValue;
+            rotationAnimation.Duration = Constants.loaderAnimTime;
+            LoaderCircle.Layer.AddAnimation(rotationAnimation, "rotationAnimation");
+		}
+
+		private void StopAnim()
+		{
+			LoaderCircle.Hidden = true;
+            LoaderCircle.Layer.RemoveAllAnimations();
+		}
 
         private void TutorialLoad_TouchDown(object sender, EventArgs e)
         {
@@ -197,15 +292,141 @@ namespace LocationConnection
             RippleTutorial2.CenterXAnchor.ConstraintEqualTo(((UIButton)sender).CenterXAnchor).Active = true;
             RippleTutorial2.CenterYAnchor.ConstraintEqualTo(((UIButton)sender).CenterYAnchor).Active = true;
             TutorialNavBar.LayoutIfNeeded();
-            c.AnimateRipple(RippleTutorial2, 1.6f);
+            c.AnimateRipple(RippleTutorial2, 1.8f);
         }
 
         private void TutorialLoadPrevious_TouchUpInside(object sender, EventArgs e)
         {
+            currentTutorial--;
+			if (currentTutorial < 0)
+			{
+				currentTutorial = tutorialDescriptions.Count - 1;
+			}
+			LoadTutorial(true);
         }
 
         private void TutorialLoadNext_TouchUpInside(object sender, EventArgs e)
         {
+            currentTutorial++;
+			if (currentTutorial > tutorialDescriptions.Count - 1)
+			{
+				currentTutorial = 0;
+			}
+			LoadTutorial(true);
+        }
+
+        private void LoadTutorial(bool scroll)
+		{
+			TutorialText.Text = tutorialDescriptions[currentTutorial];
+			TutorialNavText.Text = currentTutorial + 1 + " / " + tutorialDescriptions.Count;
+            if (scroll)
+            {
+                TutorialFrame.ContentOffset = new CGPoint(currentTutorial * TutorialFrame.Frame.Width, 0);
+            }
+		}
+
+        private void LoadEmptyPictures(int count)
+		{
+            for (int index = 0; index < count; index++)
+            {
+				UIImageView image = new UIImageView();
+
+				TutorialFrame.AddSubview(image);
+				image.TranslatesAutoresizingMaskIntoConstraints = false;
+                image.ContentMode = UIViewContentMode.ScaleAspectFit;
+
+				image.WidthAnchor.ConstraintEqualTo(TutorialFrame.WidthAnchor).Active = true;
+				image.HeightAnchor.ConstraintEqualTo(TutorialFrame.HeightAnchor).Active = true;
+				image.TopAnchor.ConstraintEqualTo(TutorialFrame.TopAnchor).Active = true;
+				image.BottomAnchor.ConstraintEqualTo(TutorialFrame.BottomAnchor).Active = true;
+				image.RightAnchor.ConstraintEqualTo(TutorialFrame.RightAnchor).Active = true;
+
+				if (index == 0)
+				{
+					image.LeftAnchor.ConstraintEqualTo(TutorialFrame.LeftAnchor).Active = true;
+				}
+				else
+				{
+                    //there are two _UIScrollViewScrollIndicators in the ScrollView
+                    UIView prevImage = GetChildAt(index-1);
+
+					foreach (NSLayoutConstraint constraint in TutorialFrame.Constraints)
+					{
+						if (constraint.FirstItem == prevImage && constraint.FirstAttribute == NSLayoutAttribute.Right)
+						{
+							TutorialFrame.RemoveConstraint(constraint);
+						}
+					}
+					image.LeftAnchor.ConstraintEqualTo(prevImage.RightAnchor).Active = true;
+				}
+			}
+		}
+
+        private UIImageView GetChildAt(int index)
+        {
+            int indexCount = -1;
+            foreach (UIView view in TutorialFrame.Subviews)
+            {
+                if (view is UIImageView)
+                {
+                    indexCount++;
+                    if (indexCount == index)
+                    {
+                        return (UIImageView)view;
+                    }
+                }
+            }
+            return null;
+        }
+
+		private void LoadPicture(int index)
+		{
+			try {
+                UIImageView image = null;
+				InvokeOnMainThread(() => {
+					image = GetChildAt(index);
+				});
+
+				string url = Constants.HostName + Constants.TutorialFolder + "/" + tutorialPictures[index];
+
+				UIImage im = CommonMethods.LoadFromUrl(url);
+
+                if (index == 0)
+                {
+                    InvokeOnMainThread(() =>
+                    {
+                        StopAnim();
+                    });
+                }
+
+                if (im == null)
+				{
+					im = UIImage.FromBundle(Constants.noImageHD);
+				}
+
+				InvokeOnMainThread(() => {
+					image.Image = im;
+				});
+		    }
+			catch (Exception ex)
+			{
+				c.CW(ex.Message + " " + ex.StackTrace);
+			}
+		}
+
+        [Export("scrollViewDidScroll:")]
+		public void Scrolled(UIScrollView scrollView)
+        {
+            
+            int newImageIndex = (int)Math.Round(scrollView.ContentOffset.X / scrollView.Frame.Width);
+            if (newImageIndex != currentTutorial)
+            {
+                if (newImageIndex >= 0 && newImageIndex < tutorialDescriptions.Count)
+                {
+                    currentTutorial = newImageIndex;
+                    LoadTutorial(false);
+                }
+            }
         }
     }
 }

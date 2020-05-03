@@ -337,6 +337,7 @@ namespace LocationConnection
 
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
+			context.c.CW("TouchesBegan");
 			base.TouchesBegan(touches, evt);
 			if (!touchStarted)
             {
@@ -352,15 +353,16 @@ namespace LocationConnection
 
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
+			context.c.CW("TouchesEnded");
 			base.TouchesEnded(touches, evt);
-			Up(touches);
+			Up();
 		}
 
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
+			context.c.CW("TouchCancelled");
 			base.TouchesCancelled(touches, evt);
-			imageMovable = false;
-			touchStarted = false;
+			Up();
 		}
 
         public void Down(NSSet touches) //there is a system delay for detecting press, no need to define a pressTime value.
@@ -375,6 +377,8 @@ namespace LocationConnection
 			touchCurrentX = touch.LocationInView(this).X;
 			touchCurrentY = touch.LocationInView(this).Y;
 			startIndexPos = GetIndexFromPos((float)touchCurrentX, (float)touchCurrentY);
+
+			context.c.CW("Down startindexpos " + startIndexPos);
 
 			if (startIndexPos < Subviews.Length)
 			{
@@ -459,9 +463,9 @@ namespace LocationConnection
 			}
 		}
 
-		public void Up(NSSet touches)
+		public void Up()
 		{
-			UITouch touch = touches.AnyObject as UITouch;
+			context.c.CW("Up imageMovable " + imageMovable);
 
             if (imageMovable)
             {
@@ -592,8 +596,19 @@ namespace LocationConnection
 
 						LayoutIfNeeded();
 					});
+					endIndexPos = startIndexPos; //WaitToEnd will put it into place in the subview hierarchy
 				}
 				WaitToEnd();
+			}
+            else if (touchStarted)
+            {
+				context.c.CW("Image not movable, but selected.");
+				InsertSubview(currentImage, startIndexPos);
+				touchStarted = false;
+			}
+            else
+            {
+				context.c.CW("Image was out of range.");
 			}
 		}
 

@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class LangEnglish
     {
-        public const string versionInfo = "Version: 1.2 - 21 April 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories";
+        public const string versionInfo = "Version: 1.3 - 4 May 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories";
 
         public const string ConfirmAction = "Confirm action";
         public const string DialogOK = "OK";
@@ -159,6 +159,7 @@ namespace LocationConnection
 
         // List
 
+        public const string FirstRunMessage = "Are you new here?\nFind the tutorial anytime in Menu -> Help Center";
         public const string NotLoggedIn = "Not logged in.";
         public const string MenuLogOut = "Log out";
         public const string MenuLogIn = "Log in";
@@ -238,7 +239,7 @@ namespace LocationConnection
         public const string ResultCount = "1 result.";
         public const string ResultSetInterval = "[start] - [end] of";
         public const string SettingMap = "Setting map...";
-        public const string NoLocationSet = "Location was not set or acquired.";
+        public const string NoLocationSet = "Location was not set or acquired.";        
         public const string MapViewNoLocation = "Showing map requires location access, or you need to set an address.\n\nDo you want to turn on location now?";
         public const string MapViewNoUseLocation = "Do you want to enable location?";
         public const string LocationDisabledButUsingLocation = "Your setting to use location is on, but permission is not granted.\nLocation is not acquired.";

@@ -114,7 +114,6 @@ namespace LocationConnection
         private nfloat loaderHeight = 50;
         private nfloat maxY = 186;
         private nfloat diff;*/
-        private float loaderAnimTime = 1.3f;
         //private bool animPulldown;
 
         private UIRefreshControl refresh;
@@ -127,6 +126,8 @@ namespace LocationConnection
 
         public UICollectionView User_SearchList { get { return UserSearchList; } }
         public nfloat userSearchListRatio = 0;
+
+        private Timer firstRunTimer;
 
         public ListActivity(IntPtr handle) : base(handle)
         {
@@ -178,7 +179,7 @@ namespace LocationConnection
                     backgroundNotificationsSet = true;
                 }
                 
-                //c.CW("Stopwatch " + stw.ElapsedMilliseconds + " ViewDidLoad");
+                c.CW("Stopwatch " + stw.ElapsedMilliseconds + " ViewDidLoad");
 
                 thisInstance = this;
                 c.LoadSettings(false); //overwrites DisplaySize
@@ -737,6 +738,14 @@ namespace LocationConnection
                     }
                 }
 
+                if (firstRun) //if alert is not shown, will be changed next time ListActivity is recreated.
+				{
+					firstRunTimer = new Timer();
+					firstRunTimer.Interval = Constants.tutorialInterval;
+					firstRunTimer.Elapsed += FirstRunTimer_Elapsed;
+					firstRunTimer.Start();
+				}
+
                 //after logging in, ViewDidLayoutSubviews is not called, therefore the bottom is not set.
 
                 c.CW("ViewWillAppear end");
@@ -864,7 +873,21 @@ namespace LocationConnection
             c.CW("ListActivity ViewWillDisappear SaveSettings");
             c.LogActivity("ListActivity ViewWillDisappear SaveSettings");
             c.SaveSettings();
-        }       
+
+            if (firstRun && firstRunTimer.Enabled)
+			{
+				firstRunTimer.Stop();
+			}
+        }
+
+		private void FirstRunTimer_Elapsed(object sender, ElapsedEventArgs e)
+		{
+			firstRunTimer.Stop();
+			InvokeOnMainThread(() => {
+				c.SnackIndef(LangEnglish.FirstRunMessage);
+			});
+			firstRun = false;
+		}       
 
         private void LoggedInLayout()
         {
@@ -2676,7 +2699,7 @@ namespace LocationConnection
             CABasicAnimation rotationAnimation = CABasicAnimation.FromKeyPath("transform.rotation");
             rotationAnimation.To = NSNumber.FromDouble(Math.PI * 2);
             rotationAnimation.RepeatCount = int.MaxValue;
-            rotationAnimation.Duration = loaderAnimTime;
+            rotationAnimation.Duration = Constants.loaderAnimTime;
             LoaderCircle.Layer.AddAnimation(rotationAnimation, "rotationAnimation");
             RefreshDistance.Layer.AddAnimation(rotationAnimation, "rotationAnimation");
             //ReloadPulldown.Layer.AddAnimation(rotationAnimation, "rotationAnimation");
