@@ -159,7 +159,7 @@ namespace LocationConnection
 
         // List
 
-        public const string FirstRunMessage = "Are you new here?\nFind the tutorial anytime in Menu -> Help Center";
+        public const string FirstRunMessage = "Are you new here?\nFind the tutorial anytime in Menu \u2794 Help Center.";
         public const string NotLoggedIn = "Not logged in.";
         public const string MenuLogOut = "Log out";
         public const string MenuLogIn = "Log in";

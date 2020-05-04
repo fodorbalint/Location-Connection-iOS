@@ -57,8 +57,6 @@ namespace LocationConnection
                 TutorialLoadPrevious.TouchDown += TutorialLoad_TouchDown;
                 TutorialLoadPrevious.TouchUpInside += TutorialLoadPrevious_TouchUpInside;
                 
-                firstRun = false;
-                
                 string responseString = await c.MakeRequest("action=helpcenter");
 
                 if (responseString.Substring(0, 2) == "OK")
@@ -118,7 +116,14 @@ namespace LocationConnection
             {
                 c.ReportErrorSilent(ex.Message + Environment.NewLine + ex.StackTrace);
             }
-        }        
+        }
+
+        public override void ViewWillAppear(bool animated) //ViewDidLoad is called before ListActivity ViewWillDisappear
+        {
+            base.ViewWillAppear(animated);
+
+            firstRun = false;
+        }
 
         private void HelpCenterBack_TouchDown(object sender, EventArgs e)
         {
