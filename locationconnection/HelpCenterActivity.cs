@@ -15,6 +15,8 @@ namespace LocationConnection
         private int currentTutorial;
         public bool cancelImageLoading;
 
+        bool scrollValid;
+
         public HelpCenterActivity (IntPtr handle) : base (handle)
         {
         }
@@ -123,6 +125,25 @@ namespace LocationConnection
             base.ViewWillAppear(animated);
 
             firstRun = false;
+            scrollValid = true;
+        }
+
+        public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
+        {
+            base.ViewWillTransitionToSize(toSize, coordinator);
+
+            scrollValid = false;
+        }
+        public override void ViewDidLayoutSubviews()
+        {
+            base.ViewDidLayoutSubviews();
+
+            if (!scrollValid)
+            {
+                //c.CW("ViewDidLayoutSubviews " + TutorialFrame.Frame.Width + " " + TutorialFrame.ContentSize + " " + currentTutorial + " " + currentTutorial * TutorialFrame.Frame.Width);
+                TutorialFrame.ContentOffset = new CGPoint(currentTutorial * TutorialFrame.Frame.Width, 0);
+                scrollValid = true;
+            }
         }
 
         private void HelpCenterBack_TouchDown(object sender, EventArgs e)
@@ -204,7 +225,6 @@ namespace LocationConnection
 
             cancelImageLoading = false;
                                  
-
             string url = "action=tutorial&OS=iOS&dpWidth=" + dpWidth;
 			string responseString = await c.MakeRequest(url);
 			if (responseString.Substring(0, 2) == "OK")
@@ -422,7 +442,10 @@ namespace LocationConnection
         [Export("scrollViewDidScroll:")]
 		public void Scrolled(UIScrollView scrollView)
         {
-            
+            if (!scrollValid)
+            {
+                return;
+            }
             int newImageIndex = (int)Math.Round(scrollView.ContentOffset.X / scrollView.Frame.Width);
             if (newImageIndex != currentTutorial)
             {

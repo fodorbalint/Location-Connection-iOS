@@ -75,13 +75,6 @@ namespace LocationConnection
 			//context.c.CW("SetTileSize dpWidth " + BaseActivity.dpWidth + " left " + BaseActivity.safeAreaLeft + " right " + BaseActivity.safeAreaRight + " actualWidth " + actualWidth +  " tileSize "  + tileSize);
 		}
 
-        public override void LayoutMarginsDidChange()
-        {
-			context.c.CW("Layoutmarginschanged");
-
-            base.LayoutMarginsDidChange();
-        }
-
         public void Reposition()
 		{
 			for (int i = 0; i < Subviews.Length; i++)
@@ -602,14 +595,9 @@ namespace LocationConnection
 			}
             else if (touchStarted)
             {
-				context.c.CW("Image not movable, but selected.");
 				InsertSubview(currentImage, startIndexPos);
 				touchStarted = false;
-			}
-            else
-            {
-				context.c.CW("Image was out of range.");
-			}
+			}//click position out of range
 		}
 
 		private void WaitToEnd()

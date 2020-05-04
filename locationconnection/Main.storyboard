@@ -4028,12 +4028,10 @@
                                 <constraints>
                                     <constraint firstItem="RippleTutorial1" firstAttribute="centerX" secondItem="TutorialBack" secondAttribute="centerX" id="RippleTutorial12"/>
                                     <constraint firstItem="RippleTutorial1" firstAttribute="centerY" secondItem="TutorialBack" secondAttribute="centerY" id="RippleTutorial13"/>
-                                    <constraint firstAttribute="top" secondItem="TutorialBack" secondAttribute="top" constant="-10" priority="750" id="TutorialBack2"/>
+                                    <constraint firstAttribute="top" secondItem="TutorialBack" secondAttribute="top" constant="-10" id="TutorialBack2"/>
                                     <constraint firstAttribute="bottom" secondItem="TutorialBack" secondAttribute="bottom" constant="10" priority="750" id="TutorialBack3"/>
-                                    <constraint firstAttribute="top" secondItem="TutorialBack" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="TutorialBack4"/>
-                                    <constraint firstAttribute="bottom" secondItem="TutorialBack" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="TutorialBack5"/>
-                                    <constraint firstAttribute="centerY" secondItem="TutorialBack" secondAttribute="centerY" id="TutorialBack6"/>
-                                    <constraint firstAttribute="leading" secondItem="TutorialBack" secondAttribute="leading" constant="-10" id="TutorialBack7"/>
+                                    <constraint firstAttribute="bottom" secondItem="TutorialBack" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="TutorialBack4"/>
+                                    <constraint firstAttribute="leading" secondItem="TutorialBack" secondAttribute="leading" constant="-10" id="TutorialBack5"/>
                                     <constraint firstAttribute="top" secondItem="TutorialText" secondAttribute="top" constant="-10" priority="999" id="TutorialText2"/>
                                     <constraint firstAttribute="bottom" secondItem="TutorialText" secondAttribute="bottom" constant="10" priority="999" id="TutorialText3"/>
                                     <constraint firstAttribute="top" secondItem="TutorialText" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="TutorialText4"/>

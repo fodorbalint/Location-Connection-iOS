@@ -42,5 +42,6 @@ namespace LocationConnection
 
 			return base.TouchesShouldCancelInContentView(view);
         }
+        
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Timers;
 using CoreAnimation;
+using CoreGraphics;
 
 namespace LocationConnection
 {
@@ -28,7 +29,9 @@ namespace LocationConnection
 		int imageIndex;
 		UIView pressTarget;
 
-        System.Timers.Timer refreshTimer;
+		bool scrollValid;
+
+		System.Timers.Timer refreshTimer;
 		int refreshFrequency = 1000;
 		Task imageLoading;
         System.Threading.CancellationTokenSource cts;
@@ -114,26 +117,6 @@ namespace LocationConnection
 			{
 				c.ReportErrorSilent(ex.Message + Environment.NewLine + ex.StackTrace);
 			}
-		}
-
-        public override void ViewDidLayoutSubviews()
-        {
-            base.ViewDidLayoutSubviews();
-
-			c.SetShadow(MenuContainer, 0, 0, 10);
-
-			SetOvalShadow(PreviousButton, 0, 6);
-			SetOvalShadow(HideButton, 0, 6);
-			SetOvalShadow(LikeButton, 0, 6);
-			SetOvalShadow(NextButton, 0, 6);
-
-			c.SetRoundShadow(MapStreet, 1, 1, 1, 2, true);
-			c.SetRoundShadow(MapSatellite, 1, 1, 1, 2, false);
-
-			MapStreet.Layer.CornerRadius = 2;
-			MapStreet.Layer.MaskedCorners = CACornerMask.MinXMinYCorner | CACornerMask.MinXMaxYCorner;
-			MapSatellite.Layer.CornerRadius = 2;
-			MapSatellite.Layer.MaskedCorners = CACornerMask.MaxXMinYCorner | CACornerMask.MaxXMaxYCorner;
 		}
 
 		public override void ViewWillAppear(bool animated)
@@ -270,6 +253,8 @@ namespace LocationConnection
 				refreshTimer.Interval = refreshFrequency;
 				refreshTimer.Elapsed += RefreshTimer_Elapsed;
 				refreshTimer.Start();
+
+				scrollValid = true;
 			}
 			catch (Exception ex)
 			{
@@ -277,7 +262,41 @@ namespace LocationConnection
 			}
 		}
 
-        public override void ViewWillDisappear(bool animated)
+		public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
+		{
+			base.ViewWillTransitionToSize(toSize, coordinator);
+			scrollValid = false;
+		}
+
+		public override void ViewDidLayoutSubviews()
+		{
+			base.ViewDidLayoutSubviews();
+
+			ProfileImageContainer.LayoutIfNeeded();
+
+			if (!scrollValid)
+			{
+				ProfileImageScroll.ContentOffset = new CGPoint(imageIndex * ProfileImageScroll.Frame.Width, 0);
+				scrollValid = true;
+			}
+
+			c.SetShadow(MenuContainer, 0, 0, 10);
+
+			SetOvalShadow(PreviousButton, 0, 6);
+			SetOvalShadow(HideButton, 0, 6);
+			SetOvalShadow(LikeButton, 0, 6);
+			SetOvalShadow(NextButton, 0, 6);
+
+			c.SetRoundShadow(MapStreet, 1, 1, 1, 2, true);
+			c.SetRoundShadow(MapSatellite, 1, 1, 1, 2, false);
+
+			MapStreet.Layer.CornerRadius = 2;
+			MapStreet.Layer.MaskedCorners = CACornerMask.MinXMinYCorner | CACornerMask.MinXMaxYCorner;
+			MapSatellite.Layer.CornerRadius = 2;
+			MapSatellite.Layer.MaskedCorners = CACornerMask.MaxXMinYCorner | CACornerMask.MaxXMaxYCorner;
+		}
+
+		public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
 
@@ -364,6 +383,10 @@ namespace LocationConnection
 		[Export("scrollViewDidScroll:")]
 		public void Scrolled(UIScrollView scrollView)
 		{
+            if (!scrollValid)
+            {
+				return;
+            }
 			int newImageIndex = (int)Math.Round(scrollView.ContentOffset.X / scrollView.Frame.Width);
 
 			if (newImageIndex != imageIndex)
