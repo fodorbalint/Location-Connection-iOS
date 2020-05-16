@@ -43,6 +43,10 @@ namespace LocationConnection
 
                 MessageSend.Layer.MasksToBounds = true;
 
+                var tap = new UITapGestureRecognizer();
+                tap.AddTarget(() => TutorialFrame_Click(tap));
+                TutorialFrame.AddGestureRecognizer(tap);
+
                 c.DrawBorder(MessageEdit);
                 c.CollapseY(MessageContainer);
 
@@ -455,6 +459,41 @@ namespace LocationConnection
                     LoadTutorial(false);
                 }
             }
+        }
+
+        private void TutorialFrame_Click(UITapGestureRecognizer recognizer)
+        {
+            var location = recognizer.LocationInView(TutorialFrame);
+
+            int newImageIndex;
+
+            if (location.X - TutorialFrame.ContentOffset.X >= TutorialFrame.Frame.Width / 2)
+            {
+                if (currentTutorial == tutorialDescriptions.Count - 1)
+                {
+                    newImageIndex = 0;
+                }
+                else
+                {
+                    newImageIndex = currentTutorial + 1;
+                }
+            }
+            else
+            {
+                if (currentTutorial == 0)
+                {
+                    newImageIndex = tutorialDescriptions.Count - 1;
+                }
+                else
+                {
+                    newImageIndex = currentTutorial - 1;
+                }
+            }
+
+            TutorialFrame.ContentOffset = new CGPoint(TutorialFrame.Frame.Width * newImageIndex, 0);
+
+            currentTutorial = newImageIndex;
+            LoadTutorial(false);
         }
     }
 }

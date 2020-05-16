@@ -1168,6 +1168,8 @@ namespace LocationConnection
 			}
 			else if (displayUser.UserRelation != 3 && displayUser.UserRelation != 4) //not a match yet
 			{
+				LikeButton.UserInteractionEnabled = false;
+
 				long unixTimestamp = c.Now();
 				string responseString = await c.MakeRequest("action=like&ID=" + Session.ID + "&target=" + displayUser.ID
 				+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
@@ -1210,11 +1212,15 @@ namespace LocationConnection
 				{
 					c.ReportError(responseString);
 				}
+
+				LikeButton.UserInteractionEnabled = true;
 			}
 			else // already a match, opening chat window
 			{
 				if (pageType == Constants.ProfileViewType_List) //a previously gotten match, we are coming from list, not chat
 				{
+					LikeButton.UserInteractionEnabled = false;
+
 					string responseString = await c.MakeRequest("action=requestmatchid&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&target=" + displayUser.ID);
 					if (responseString.Substring(0, 2) == "OK")
 					{
@@ -1237,6 +1243,8 @@ namespace LocationConnection
 					{
 						c.ReportError(responseString);
 					}
+
+					LikeButton.UserInteractionEnabled = true;
 				}
 				else
 				{
@@ -1253,6 +1261,8 @@ namespace LocationConnection
 			long unixTimestamp = c.Now();
 			if (displayUser.UserRelation == 0 || displayUser.UserRelation == 2)
 			{
+				HideButton.UserInteractionEnabled = false;
+
 				string responseString = await c.MakeRequest("action=hide&ID=" + Session.ID + "&target=" + displayUser.ID
 				+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
 				if (responseString == "OK")
@@ -1289,9 +1299,13 @@ namespace LocationConnection
                 {
                     c.ReportError(responseString);
 				}
+
+				HideButton.UserInteractionEnabled = true;
 			}
 			else if (displayUser.UserRelation == 1) //we are in Hid list
 			{
+				HideButton.UserInteractionEnabled = false; //repeated queries are OK
+
 				string responseString = await c.MakeRequest("action=unhide&ID=" + Session.ID + "&target=" + displayUser.ID
 				+ "&time=" + unixTimestamp + "&SessionID=" + Session.SessionID);
 				if (responseString == "OK")
@@ -1306,6 +1320,8 @@ namespace LocationConnection
 				{
 					c.ReportError(responseString);
 				}
+
+				HideButton.UserInteractionEnabled = true;
 			}
 		}
 

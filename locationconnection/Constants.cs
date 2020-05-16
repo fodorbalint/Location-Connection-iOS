@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class Constants
 	{
-		//public const int LocationTimeout = 5000;
+		public const int LocationTimeout = 5000;
 		public const int DistanceLimitMax = 100;
 		public const int RequestTimeout = 10000;
 		public const int MaxNumPictures = 9;
@@ -19,7 +19,7 @@ namespace LocationConnection
 		public const string UploadFolderTest = "userimagestest";
 		public const string TempUploadFolderTest = "userimagestesttemp";
 		public const string TutorialFolder = "tutorial";
-		public const int tutorialInterval = 5000;
+		public const int TutorialInterval = 5000;
 		public const int SmallImageSize = 480;
 		public const int LargeImageSize = 1440;
 		public const string EmailFormat = @"^\w+([.+-]?\w+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-z0-9]{2,4}$";

@@ -128,6 +128,8 @@ namespace LocationConnection
         public nfloat userSearchListRatio = 0;
 
         private Timer firstRunTimer;
+        public static Timer locationTimer;
+
 
         public ListActivity(IntPtr handle) : base(handle)
         {
@@ -487,6 +489,7 @@ namespace LocationConnection
                 UseGeoNoLabel.TouchUpInside += (object sender, EventArgs e) => { UseGeoNo.Checked = true; UseGeo_Click(false); };
                 UseGeoYes.SetContext("UseGeoYes", this);
                 UseGeoYesLabel.TouchUpInside += (object sender, EventArgs e) => { UseGeoYes.Checked = true; UseGeo_Click(true); };
+                RefreshDistance.TouchDown += RefreshDistance_TouchDown;
                 RefreshDistance.TouchUpInside += RefreshDistance_Click;
                 DistanceSourceCurrent.SetContext("DistanceSourceCurrent", this);
                 DistanceSourceCurrentLabel.TouchUpInside += (object sender, EventArgs e) => { DistanceSourceCurrent.Checked = true; DistanceSource_Click(true); };
@@ -557,10 +560,12 @@ namespace LocationConnection
                 }
                 TruncateSystemLog();
 
-                c.CW("Logged in: " + c.IsLoggedIn());
-                c.LogActivity("Logged in: " + c.IsLoggedIn());
+                //Safe practice from Android: c.IsLoggedIn() true does not mean, all session variables are set. Nullable object must have a value error can occur if autologin response is at the same time as ONResume.
+                bool isLoggedIn = c.IsLoggedIn();
+                c.CW("Logged in: " + isLoggedIn);
+                c.LogActivity("Logged in: " + isLoggedIn);
 
-                if (c.IsLoggedIn())
+                if (isLoggedIn)
                 {
                     LoggedInLayout();
                     SetLoggedInMenu();
@@ -659,7 +664,7 @@ namespace LocationConnection
                 c.CW("Location permission status: " + CLLocationManager.Status);
                 c.LogActivity("Location permission status: " + CLLocationManager.Status);
 
-                if (c.IsLoggedIn())
+                if (isLoggedIn)
                 {
                     if ((bool)Session.UseLocation && !c.IsLocationEnabled())
                     {
@@ -706,11 +711,13 @@ namespace LocationConnection
                         locMgr.StartLocationUpdates();
                         ResultSet.Hidden = false;
                         ResultSet.Text = LangEnglish.GettingLocation;
+                        StartLocationTimer();
                     }
                     else if (!firstLocationAcquired) //first location will load the list
                     {
                         ResultSet.Hidden = false;
                         ResultSet.Text = LangEnglish.GettingLocation;
+                        StartLocationTimer();
                     }
                     else 
                     {
@@ -741,7 +748,7 @@ namespace LocationConnection
                 if (firstRun) //if alert is not shown, will be changed next time ListActivity is recreated.
 				{
 					firstRunTimer = new Timer();
-					firstRunTimer.Interval = Constants.tutorialInterval;
+					firstRunTimer.Interval = Constants.TutorialInterval;
 					firstRunTimer.Elapsed += FirstRunTimer_Elapsed;
 					firstRunTimer.Start();
 				}
@@ -761,6 +768,22 @@ namespace LocationConnection
         {
             userSearchListRatio = UserSearchList.Frame.Height / UserSearchList.Frame.Width;
             base.ViewWillTransitionToSize(toSize, coordinator);
+        }
+
+        public void StartLocationTimer()
+        {
+            locationTimer = new Timer();
+            locationTimer.Interval = Constants.LocationTimeout;
+            locationTimer.Elapsed += LocationTimer_Elapsed;
+            locationTimer.Start();
+        }
+
+        private void LocationTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            ((Timer)sender).Stop();
+            c.CW("Location timeout");
+            c.LogActivity("LocationTimeout");
+            LoadListStartup();
         }
 
         public void LoadListStartup () {
@@ -1716,6 +1739,11 @@ namespace LocationConnection
                     Task.Run(() => LoadList());
                 }
             }
+        }
+
+        private void RefreshDistance_TouchDown(object sender, EventArgs e)
+        {
+            c.AnimateRipple(RippleRefreshDistance, 2);
         }
 
         private void RefreshDistance_Click(object sender, EventArgs e)

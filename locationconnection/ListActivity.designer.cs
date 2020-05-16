@@ -200,6 +200,10 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView RippleRefreshDistance { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView RoundBottom { get; set; }
 
         [Outlet]
@@ -512,6 +516,11 @@ namespace LocationConnection
             if (RippleMain != null) {
                 RippleMain.Dispose ();
                 RippleMain = null;
+            }
+
+            if (RippleRefreshDistance != null) {
+                RippleRefreshDistance.Dispose ();
+                RippleRefreshDistance = null;
             }
 
             if (RoundBottom != null) {

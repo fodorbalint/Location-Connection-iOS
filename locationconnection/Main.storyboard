@@ -217,6 +217,13 @@
                                                     <color key="titleColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                                 </state>
                                             </button>
+                                            <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleRefreshDistance">
+                                                <rect key="frame" x="339.5" y="15.5" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="RippleRefreshDistance0"/>
+                                                    <constraint firstAttribute="width" constant="25" id="RippleRefreshDistance1"/>
+                                                </constraints>
+                                            </imageView>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RefreshDistance">
                                                 <rect key="frame" x="334" y="10" width="36" height="36"/>
                                                 <constraints>
@@ -325,6 +332,8 @@
                                             <constraint firstAttribute="leading" secondItem="UseGeoYes" secondAttribute="leading" constant="-12" id="UseGeoYes3"/>
                                             <constraint firstItem="UseGeoYesLabel" firstAttribute="centerY" secondItem="UseGeoYes" secondAttribute="centerY" id="UseGeoYesLabel2"/>
                                             <constraint firstItem="UseGeoYesLabel" firstAttribute="leading" secondItem="UseGeoYes" secondAttribute="trailing" id="UseGeoYesLabel3"/>
+                                            <constraint firstItem="RippleRefreshDistance" firstAttribute="centerY" secondItem="RefreshDistance" secondAttribute="centerY" id="RippleRefreshDistance2"/>
+                                            <constraint firstItem="RippleRefreshDistance" firstAttribute="centerX" secondItem="RefreshDistance" secondAttribute="centerX" id="RippleRefreshDistance3"/>
                                             <constraint firstAttribute="top" secondItem="RefreshDistance" secondAttribute="top" constant="-10" id="RefreshDistance2"/>
                                             <constraint firstAttribute="trailing" secondItem="RefreshDistance" secondAttribute="trailing" constant="5" id="RefreshDistance3"/>
                                             <constraint firstItem="UseGeoContainer" firstAttribute="top" secondItem="UseGeoYes" secondAttribute="bottom" constant="8" id="UseGeoContainer2"/>
@@ -771,6 +780,7 @@
                         <outlet property="OpenSearch" destination="OpenSearch" id="name-outlet-OpenSearch"/>
                         <outlet property="OrderBy" destination="OrderBy" id="name-outlet-OrderBy"/>
                         <outlet property="RoundBottom" destination="RoundBottom1" id="name-outlet-RoundBottom1"/>
+                        <outlet property="RippleRefreshDistance" destination="RippleRefreshDistance" id="name-outlet-RippleRefreshDistance"/>
                         <outlet property="RefreshDistance" destination="RefreshDistance" id="name-outlet-RefreshDistance"/>
                         <outlet property="ReloadPulldown" destination="ReloadPulldown" id="name-outlet-ReloadPulldown"/>
                         <outlet property="ResultSet" destination="ResultSet" id="name-outlet-ResultSet"/>
@@ -4068,7 +4078,7 @@
                                 </constraints>
                             </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialNavBar" misplaced="YES">
-                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="37"/>
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="45"/>
                                 <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleToFill" image="ripple_back.png" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleTutorial2" misplaced="YES" ambiguous="YES">
@@ -4078,32 +4088,32 @@
                                             <constraint firstAttribute="width" constant="25" id="RippleTutorial21"/>
                                         </constraints>
                                     </imageView>
-                                    
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="ic_previous_list_45x45.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadPreviousBg">
+                                        <rect key="frame" x="66.5" y="0.0" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="TutorialLoadPreviousBg0"/>
                                             <constraint firstAttribute="width" constant="45" id="TutorialLoadPreviousBg1"/>
                                         </constraints>
                                     </imageView>
-                                    <button contentMode="scaleAspectFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadPrevious" misplaced="YES" ambiguous="YES">
+                                    <button contentMode="scaleAspectFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadPrevious" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="TutorialLoadPrevious0"/>
                                         </constraints>
                                     </button>
-                                    
-                                    <label text="" opaque="NO" contentMode="scaleToFill" textAlignment="center" numberOfLines="0" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialNavText" misplaced="YES" ambiguous="YES">
+                                    <label text="" opaque="NO" contentMode="scaleToFill" textAlignment="center" numberOfLines="0" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialNavText" misplaced="YES">
                                         <rect key="frame" x="-38" y="10" width="76" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
                                     </label>
-                                    
-                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="ic_next_list_45x45.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNextBg">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="ic_next_list_45x45.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNextBg">
+                                        <rect key="frame" x="264" y="0.0" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="TutorialLoadNextBg0"/>
                                             <constraint firstAttribute="width" constant="45" id="TutorialLoadNextBg1"/>
                                         </constraints>
                                     </imageView>
-                                    <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNext" misplaced="YES" ambiguous="YES">
+                                    <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNext" misplaced="YES">
                                         <rect key="frame" x="259" y="0.0" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="TutorialLoadNext0"/>
@@ -4124,20 +4134,14 @@
                                     <constraint firstAttribute="top" secondItem="TutorialNavText" secondAttribute="top" constant="-10" relation="lessThanOrEqual" id="TutorialNavText4"/>
                                     <constraint firstAttribute="bottom" secondItem="TutorialNavText" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="TutorialNavText5"/>
                                     <constraint firstAttribute="centerX" secondItem="TutorialNavText" secondAttribute="centerX" id="TutorialNavText6"/>
-                                    
                                     <constraint firstAttribute="leading" secondItem="TutorialLoadPrevious" secondAttribute="leading" id="TutorialLoadPrevious6"/>
-                                    
                                     <constraint firstItem="TutorialLoadPreviousBg" firstAttribute="centerY" secondItem="TutorialLoadPrevious" secondAttribute="centerY" id="TutorialLoadPreviousBg2"/>
                                     <constraint firstItem="TutorialLoadPreviousBg" firstAttribute="centerX" secondItem="TutorialLoadPrevious" secondAttribute="centerX" id="TutorialLoadPreviousBg3"/>
-                                    
                                     <constraint firstItem="TutorialNavText" firstAttribute="leading" secondItem="TutorialLoadPrevious" secondAttribute="trailing" constant="10" id="TutorialNavText7"/>
-                                    
                                     <constraint firstItem="TutorialLoadNext" firstAttribute="leading" secondItem="TutorialNavText" secondAttribute="trailing" constant="10" id="TutorialLoadNext6"/>
                                     <constraint firstAttribute="trailing" secondItem="TutorialLoadNext" secondAttribute="trailing" id="TutorialLoadNext7"/>
-                                    
                                     <constraint firstItem="TutorialLoadNextBg" firstAttribute="centerY" secondItem="TutorialLoadNext" secondAttribute="centerY" id="TutorialLoadNextBg2"/>
                                     <constraint firstItem="TutorialLoadNextBg" firstAttribute="centerX" secondItem="TutorialLoadNext" secondAttribute="centerX" id="TutorialLoadNextBg3"/>
-                                    
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoundBottom9">

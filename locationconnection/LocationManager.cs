@@ -163,6 +163,11 @@ namespace LocationConnection
 
             if (!BaseActivity.firstLocationAcquired)
             {
+                if (ListActivity.locationTimer != null && ListActivity.locationTimer.Enabled)
+                {
+                    ListActivity.locationTimer.Stop();
+                }
+
                 BaseActivity.firstLocationAcquired = true;
 
                 context.c.CW("LocationManager_LocationUpdated first location");
