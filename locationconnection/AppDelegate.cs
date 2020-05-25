@@ -48,8 +48,9 @@ namespace LocationConnection
         public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
         {
             Console.WriteLine($"DidReceiveRegistrationToken: token: {fcmToken}");
+			CommonMethods.LogActivityStatic("DidReceiveRegistrationToken: token length " + fcmToken.Length);
 
-            File.WriteAllText(deviceTokenFile, fcmToken);
+			File.WriteAllText(deviceTokenFile, fcmToken);
             File.WriteAllText(tokenUptoDateFile, "False");
             // DO: If necessary send token to application server.
             // Note: This callback is fired at each app startup and whenever a new token is generated.

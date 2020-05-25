@@ -11,7 +11,6 @@ namespace LocationConnection
 {
     public class DropDownList : UIPickerViewModel
     {
-        //private UILabel label;
         private string[] entries;
         public string pickerName;
         private float width;
@@ -35,29 +34,15 @@ namespace LocationConnection
             return entries.Length;
         }
 
-        public override string GetTitle(UIPickerView pickerView, nint row, nint component)
-        {
-            if (component == 0)
-                return entries[row];
-            else
-                return row.ToString();
-        }
-
         public override void Selected(UIPickerView pickerView, nint row, nint component)
         {
-            //label.Text = $": {entries[pickerView.SelectedRowInComponent(0)]}, {pickerView.SelectedRowInComponent(1)}";
             switch(pickerName)
-            {
+            {   
                 case "SearchIn":
-                    Console.WriteLine("----------picker: searchin");
                     ((ListActivity)context).SearchIn_ItemSelected();
                     break;
                 case "ListType":
-                    Console.WriteLine("----------picker: listtype");
                     ((ListActivity)context).ListType_ItemSelected();
-                    break;
-                case "Sex":
-                    //((RegisterActivity)context).Sex_ItemSelected();
                     break;
 
             }
@@ -65,10 +50,7 @@ namespace LocationConnection
 
         public override nfloat GetComponentWidth(UIPickerView picker, nint component)
         {
-            if (component == 0)
-                return width + 5;
-            else
-                return width + 5;//repeated label shows on the right below this value.
+            return width + 5; //repeated list appears on the right side below this value. Compnent may be 0 or 1, but only component == 0 has effect.
         }
 
         public override nfloat GetRowHeight(UIPickerView picker, nint component)
@@ -76,7 +58,6 @@ namespace LocationConnection
             return 25f;
         }
 
-        
         public override UIView GetView(UIPickerView pickerView, nint row, nint component, UIView view)
         {
             UILabel label = new UILabel(new RectangleF(0, 0, width, 25f));
@@ -85,7 +66,6 @@ namespace LocationConnection
             label.Text = entries[row];
             label.TextAlignment = UITextAlignment.Left;
             return label;
-            //return base.GetView(pickerView, row, component, view);
         }
     }
 }

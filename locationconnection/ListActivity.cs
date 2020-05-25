@@ -426,7 +426,6 @@ namespace LocationConnection
                             });
                         }
                         autoLogin = false;
-                        //InitLocationUpdates();
 
                         //----- start loader circle and statustext
                     });
@@ -668,8 +667,8 @@ namespace LocationConnection
                 {
                     if ((bool)Session.UseLocation && !c.IsLocationEnabled())
                     {
-                        c.CW("ViewWillAppear LocationDisabledButUsingLocation " + Session.UseLocation + " " + c.IsLocationEnabled());
-                        c.LogActivity("ViewWillAppear LocationDisabledButUsingLocation " + Session.UseLocation + " " + c.IsLocationEnabled());
+                        c.CW("ViewWillAppear LocationDisabledButUsingLocation Session " + Session.UseLocation + " IsLocationEnabled " + c.IsLocationEnabled());
+                        c.LogActivity("ViewWillAppear LocationDisabledButUsingLocation Session" + Session.UseLocation + " IsLocationEnabled " + c.IsLocationEnabled());
                         Session.SnackMessage = LangEnglish.LocationDisabledButUsingLocation;
                         Session.SnackPermanent = true;
                     }
@@ -1011,6 +1010,7 @@ namespace LocationConnection
             DropDownList entries = new DropDownList(LangEnglish.SearchInEntries, "SearchIn", 100, this);
             SearchIn.Model = entries;
 
+            c.LogActivity("SetViews Selecting SearchIn");
             int index = LangEnglish.SearchInEntries_values.ToList().IndexOf(Session.SearchIn);
             SearchIn.Select(index, 0, false);
 
@@ -1044,6 +1044,7 @@ namespace LocationConnection
                 entries = new DropDownList(LangEnglish.ListTypeEntries, "ListType", 100, this);
                 ListType.Model = entries;
                 index = LangEnglish.ListTypeEntries_values.ToList().IndexOf(Session.ListType);
+                c.LogActivity("SetViews Selecting ListType");
                 ListType.Select(index, 0, false);
             }
             else
@@ -1051,6 +1052,7 @@ namespace LocationConnection
                 entries = new DropDownList(LangEnglish.ListTypeEntriesNotLoggedIn, "ListType", 100, this);
                 ListType.Model = entries;
                 index = LangEnglish.ListTypeEntriesNotLoggedIn_values.ToList().IndexOf(Session.ListType);
+                c.LogActivity("SetViews Selecting ListType");
                 ListType.Select(index, 0, false);
             }
 
