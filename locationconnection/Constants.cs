@@ -50,7 +50,7 @@ namespace LocationConnection
 		public const float tweenTime = 0.2f;
 		public const float loaderAnimTime = 1.3f;
 
-		public const bool isTestDB = false;
+		public const bool isTestDB = true;
 		public const int MaxResultCount = 100;
 
 		public const string TestDB = "&testDB";

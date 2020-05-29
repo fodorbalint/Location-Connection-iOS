@@ -10,7 +10,7 @@ namespace LocationConnection
 {
 	class LangEnglish
     {
-        public const string versionInfo = "Version: 1.3 - 4 May 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\nlocationconnection.me\n\nPrivacy policy:\nhttps://locationconnection.me/?page=legal#privacy\n\nSource code:\nhttps://github.com/fodorbalint?tab=repositories";
+        public const string versionInfo = "Version: 1.4 - 29 May 2020\n\nCreated by Balint Fodor\n\nContact: fodorbalint@gmail.com\n\nWebsite: locationconnection.me\n\nPrivacy policy:\nlocationconnection.me/?page=legal#privacy\n\nSource code:\ngithub.com/fodorbalint?tab=repositories";
 
         public const string ConfirmAction = "Confirm action";
         public const string DialogOK = "OK";
@@ -151,7 +151,9 @@ namespace LocationConnection
         public const string EmailExists = "Email already exists.";
         public const string WrongImageExtension = "Only jpg, jpeg and png files are allowed.";
         public const string NotAnImage = "The uploaded file is not an image.";
+        public const string OutOfMemory = "The server ran out of memory.\nTry again, or upload the image in smaller resolution.\nMaximum allowed size: 4000 x 4000 px\nRecommended: 1440 x 1440 px";
         public const string PictureTooLarge = "The uploaded image exceeds the 20 MB limit.";
+        public const string PictureSizeTooLarge = "The uploaded image exceeds the 4000 x 4000 pixel limit.";
         public const string PasswordMismatch = "Incorrect password. Log out to reset it.";
         public const string UserPassive = "[name] is not active.";
         public const string MatchNotFound = "Match not found.";
@@ -190,9 +192,9 @@ namespace LocationConnection
             "Friends",
             "Matches",
             "Liked",
-            "Liked by",
+            "Liked you",
             "Hid",
-            "Hid by"
+            "Hid you"
         };
         public static readonly string[] ListTypeEntries_values = new string[] {
             "public",
@@ -247,7 +249,7 @@ namespace LocationConnection
 
         public const string NoNetwork = "No Internet connection.";
         public const string NetworkTimeout = "Internet connection timed out.";
-        public const string ErrorEncountered = "Error encountered";
+        public const string ErrorEncountered = "Error";
         public const string ErrorNotificationSent = "Developer has been notified.";
         public const string ErrorNotificationToSend = "Developer will be notified on app restart.";
 

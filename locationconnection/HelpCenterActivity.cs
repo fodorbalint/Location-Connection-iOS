@@ -228,8 +228,9 @@ namespace LocationConnection
             StartAnim();
 
             cancelImageLoading = false;
-                                 
-            string url = "action=tutorial&OS=iOS&dpWidth=" + dpWidth;
+
+            double width = Math.Min(dpWidth, dpHeight);
+            string url = "action=tutorial&OS=iOS&dpWidth=" + width;
 			string responseString = await c.MakeRequest(url);
 			if (responseString.Substring(0, 2) == "OK")
 			{

@@ -188,7 +188,12 @@ namespace LocationConnection
         {
 			context.View.EndEditing(true);
 
-            if (uploadedImages.Count < Constants.MaxNumPictures)
+			if (c.snackVisible)
+			{
+				c.HideSnack();
+			}
+
+			if (uploadedImages.Count < Constants.MaxNumPictures)
             {
                 if (!imagesUploading && !imagesDeleting)
                 {
@@ -214,12 +219,15 @@ namespace LocationConnection
                             Console.WriteLine("imageName: " + selectedImageName);
                             if (uploadedImages.IndexOf(selectedImageName) != -1) //virtually impossible, since uploaded images are tagged with timestamp
                             {
-                                context.c.Snack(LangEnglish.ImageExists);
+                                c.Snack(LangEnglish.ImageExists);
                                 return;
                             }
 
 							UIImage image = UIImage.FromFile(e1.ImageUrl.Path);
 							nfloat sizeRatio = image.Size.Width / image.Size.Height;
+
+							c.CW("Photo width " + image.Size.Width + " height " + image.Size.Height);
+							c.LogActivity("Photo width " + image.Size.Width + " height " + image.Size.Height);
 
                             if (sizeRatio == 1)
                             {
@@ -247,8 +255,8 @@ namespace LocationConnection
 									intrinsicHeight = ImageEditorFrameBorder.Frame.Width / sizeRatio;
 									intrinsicWidth = ImageEditorFrameBorder.Frame.Width;
 								}
-								context.c.SetHeight(ImageEditor, intrinsicHeight);
-								context.c.SetWidth(ImageEditor, intrinsicWidth);
+								c.SetHeight(ImageEditor, intrinsicHeight);
+								c.SetWidth(ImageEditor, intrinsicWidth);
 							}							
 						};
                     }
@@ -264,7 +272,8 @@ namespace LocationConnection
                         imagePicker.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                     }
 
-                    context.PresentViewController(imagePicker, true, () => { });
+					c.LogActivity("Opening file selector"); //on iPhone, viewWillDisappear is called. Not on iPad
+					context.PresentViewController(imagePicker, true, () => { });
                 }
                 else
                 {
@@ -288,11 +297,11 @@ namespace LocationConnection
         {
 			if (yDist <= 0)
             {
-				context.c.CW("IsOutOfFrameY frame+dist " + (-yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new  " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
+				c.CW("IsOutOfFrameY frame+dist " + (-yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new  " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
 			}
             else
             {
-				context.c.CW("IsOutOfFrameY frame+dist " + (yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
+				c.CW("IsOutOfFrameY frame+dist " + (yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
 			}
 
 			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2 + 0.001 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2 + 0.001)
@@ -318,11 +327,11 @@ namespace LocationConnection
 		{
 			if (xDist <= 0)
 			{
-				context.c.CW("IsOutOfFrameX frame+dist " + (-xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
+				c.CW("IsOutOfFrameX frame+dist " + (-xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
 			}
 			else
 			{
-				context.c.CW("IsOutOfFrameX frame+dist " + (xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
+				c.CW("IsOutOfFrameX frame+dist " + (xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
 			}
 
 			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2 + 0.001 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2 + 0.001)
@@ -487,7 +496,7 @@ namespace LocationConnection
 				recognizer.View.Transform = CGAffineTransform.MakeScale(3, 3);
 			}
 			
-			//context.c.CW("Image pinched, state: " + recognizer.State + " " + recognizer.Scale + " " + scaleFactor);
+			//c.CW("Image pinched, state: " + recognizer.State + " " + recognizer.Scale + " " + scaleFactor);
 		}
 
 		public void CancelImageEditing(object sender, EventArgs e)
@@ -514,7 +523,7 @@ namespace LocationConnection
 
 			if (IsOutOfFrameX(xDist) || IsOutOfFrameY(yDist))
             {
-				context.c.Alert(LangEnglish.ImageEditorAlert);
+				c.Alert(LangEnglish.ImageEditorAlert);
 				return;
             }
 
@@ -527,7 +536,7 @@ namespace LocationConnection
 			nfloat cropW = ImageEditorFrameBorder.Frame.Width * w / (intrinsicWidth * scaleFactor);
 			nfloat cropH = cropW;
 
-			context.c.CW("OKImageEditing borderW " + ImageEditorFrameBorder.Frame.Width + " imageDisplayW " + ImageEditor.Frame.Width + " imgW " + w + " imgH " + h + " startX " + x + " startY " + y + " W " + cropW + " H " + cropH);
+			c.CW("OKImageEditing borderW " + ImageEditorFrameBorder.Frame.Width + " imageDisplayW " + ImageEditor.Frame.Width + " imgW " + w + " imgH " + h + " startX " + x + " startY " + y + " W " + cropW + " H " + cropH);
 
 			/*
             iPhone 11 Pro display issues in landscape
@@ -572,13 +581,16 @@ namespace LocationConnection
 
 			UIImage im = CropImage(ImageEditor.Image, (int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(cropW), (int)Math.Round(cropH));
 
+			c.CW("Cropped width " + im.Size.Width + " height " + im.Size.Height);
+			c.LogActivity("Cropped width " + im.Size.Width + " height " + im.Size.Height);
+
 			var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			string cacheDir = Path.Combine(documents, "..", "Library/Caches");
 			string fileName = Path.Combine(cacheDir, selectedImageName);
 			string ext = selectedImageName.Substring(selectedImageName.LastIndexOf(".") + 1).ToLower();
 
 			NSData data;
-			context.c.CW(selectedImageName);
+			c.CW(selectedImageName);
 
 			if (ext == "jpg" || ext == "jpeg")
 			{
@@ -591,7 +603,7 @@ namespace LocationConnection
 
 			if (!data.Save(fileName, false, out NSError error))
 			{
-				context.c.ReportError("Error while cropping image: " + error.LocalizedDescription);
+				c.ReportError("Error while cropping image: " + error.LocalizedDescription);
 			}
             else
             {
@@ -624,7 +636,9 @@ namespace LocationConnection
 		public async Task UploadFile(string fileName, string regsessionid) //use Task<int> for return value
         {
 			imagesUploading = true;
-			context.InvokeOnMainThread(() => { StartAnim(); });
+			context.InvokeOnMainThread(() => {
+				StartAnim();
+			});
 
 			try
             {
@@ -648,14 +662,17 @@ namespace LocationConnection
 
                 await client.UploadFileTaskAsync(url, fileName);
             }
-            catch (Exception ex)
+            catch (WebException ex)
             {
-				context.InvokeOnMainThread(() => { StopAnim(); });
-
-				imagesUploading = false;
-                context.InvokeOnMainThread(() => {
-                    c.ReportError(ex.Message + Environment.NewLine + ex.StackTrace);
-                });
+				//Client_UploadFileCompleted is called too which resets the views
+				if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.InternalServerError) //issue on Android, but not here as iOS resizes uploaded pictures to a max dimension of 2048 px, and stock & camera photos also do not exceed 16 M
+				{
+					c.ErrorAlert(LangEnglish.OutOfMemory);
+				}
+				else
+				{
+					c.ReportErrorSilent("Upload image error: " + ((HttpWebResponse)ex.Response).StatusCode + " " + ex.Message + System.Environment.NewLine + ex.StackTrace);
+				}
             }
         }
 
@@ -674,8 +691,6 @@ namespace LocationConnection
 
         private void Client_UploadFileCompleted(object sender, UploadFileCompletedEventArgs e)
         {
-            Console.WriteLine("Client_UploadFileCompleted " + imagesUploading);
-
 			imagesUploading = false;
 			StopAnim();
 
@@ -695,8 +710,6 @@ namespace LocationConnection
                     }
                     else
                     {
-                        Console.WriteLine("--------upload finished-----");
-
                         RegisterActivity.regsessionid = arr[1];
                         if (!File.Exists(regSessionFile))
                         {
@@ -709,7 +722,7 @@ namespace LocationConnection
                 }
                 else if (responseString.Substring(0, 6) == "ERROR_")
                 {
-				    c.Snack(c.GetLang(responseString.Substring(6)));
+				    c.SnackIndef(c.GetLang(responseString.Substring(6)));
 			    }
                 else
                 {
@@ -728,8 +741,13 @@ namespace LocationConnection
             }
             catch (Exception ex)
             {
-                c.ReportErrorSilent(ex.Message + System.Environment.NewLine + ex.StackTrace);
-            }
+				ImagesProgressText.Text = "";
+
+				if (!(ex.InnerException is WebException))
+				{
+					c.ReportErrorSilent(ex.Message + " --- " + ex.InnerException + " --- " + System.Environment.NewLine + ex.StackTrace);
+				}
+			}
         }
 
         public void StartAnim()
@@ -754,7 +772,7 @@ namespace LocationConnection
 		{
 			if (UseLocationSwitch.On)
 			{
-                if (!context.c.IsLocationEnabled())
+                if (!c.IsLocationEnabled())
                 {
 					UseLocationSwitch.On = false;
 					RequestPermissions();
@@ -790,7 +808,7 @@ namespace LocationConnection
 			}
 			else if (e.Status != CLAuthorizationStatus.NotDetermined)
 			{
-				context.c.Snack(LangEnglish.LocationNotGranted);
+				c.Snack(LangEnglish.LocationNotGranted);
 			}
 		}
 
@@ -859,6 +877,7 @@ namespace LocationConnection
 				LocationShareAll.On = false;
 				LocationShareLike.On = false;
 				LocationShareMatch.On = false;
+				LocationShareNone.On = true	;
 			}
 		}
 
@@ -927,6 +946,7 @@ namespace LocationConnection
 				DistanceShareAll.On = false;
 				DistanceShareLike.On = false;
 				DistanceShareMatch.On = false;
+				DistanceShareNone.On = true;
 			}
 		}
 

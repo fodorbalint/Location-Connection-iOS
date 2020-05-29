@@ -143,8 +143,7 @@ namespace LocationConnection
 
                 if (File.Exists(regSaveFile))
                 {
-                    string content = File.ReadAllText(regSaveFile);
-                    string[] arr = content.Split(";");
+                    string[] arr = File.ReadAllLines(regSaveFile);
                     Sex.Select(int.Parse(arr[0]), 0, false);
                     Email.Text = arr[1];
                     Password.Text = arr[2];
@@ -193,7 +192,7 @@ namespace LocationConnection
                         rc.StartAnim();
                     }
 
-                    DescriptionText.Text = arr[7];
+                    DescriptionText.Text = arr[7].Replace("[newline]", "\n");
 
                     UseLocationSwitch.On = bool.Parse(arr[8]);
                     rc.EnableLocationSwitches(UseLocationSwitch.On);
@@ -435,10 +434,7 @@ namespace LocationConnection
                         File.Delete(regSessionFile);
                     }
                     regsessionid = "";
-                    if (File.Exists(regSaveFile))
-                    {
-                        File.Delete(regSaveFile);
-                    }   
+                     
                     ResetForm();
                 }
                 else
@@ -461,14 +457,19 @@ namespace LocationConnection
 
         public void SaveRegData()
         {
-            File.WriteAllText(regSaveFile, Sex.SelectedRowInComponent(0) + ";" + Email.Text.Trim() + ";" + Password.Text.Trim() + ";" + ConfirmPassword.Text.Trim()
-                    + ";" + Username.Text.Trim() + ";" + Name.Text.Trim()
-                    + ";" + string.Join("|", rc.uploadedImages) + ";" + DescriptionText.Text.Trim()
-                    + ";" + UseLocationSwitch.On + ";" + rc.GetLocationShareLevel() + ";" + rc.GetDistanceShareLevel());
+            File.WriteAllText(regSaveFile, Sex.SelectedRowInComponent(0) + "\n" + Email.Text.Trim() + "\n" + Password.Text.Trim() + "\n" + ConfirmPassword.Text.Trim()
+                    + "\n" + Username.Text.Trim() + "\n" + Name.Text.Trim()
+                    + "\n" + string.Join("|", rc.uploadedImages) + "\n" + DescriptionText.Text.Trim().Replace("\n", "[newline]")
+                    + "\n" + UseLocationSwitch.On + "\n" + rc.GetLocationShareLevel() + "\n" + rc.GetDistanceShareLevel());
         }
 
         private void ResetForm()
         {
+            if (File.Exists(regSaveFile))
+            {
+                File.Delete(regSaveFile);
+            }
+
             Sex.Select(0, 0, true);
             Email.Text = "";
             Password.Text = "";

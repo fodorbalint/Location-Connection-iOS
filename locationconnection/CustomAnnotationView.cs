@@ -35,6 +35,9 @@ namespace LocationConnection
                 ImageCache im = new ImageCache(context);
                 im.LoadImage(imageView, ((ProfileAnnotation)annotation).UserID.ToString(), ((ProfileAnnotation)annotation).image);
 
+                //draws border inside, as opposed to Android where it is outside
+                imageView.Layer.BorderColor = UIColor.Black.CGColor;
+                imageView.Layer.BorderWidth = 0.5f;
                 imageView.Frame = new CoreGraphics.CGRect(0, 0, (double)Settings.MapIconSize, (double)Settings.MapIconSize);
 
                 return imageView;
