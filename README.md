@@ -1,5 +1,5 @@
 # Changelog - Location Connection iOS
-1.3 - 4. May
+1.3 - 4 May
 
 A tutorial has been added to the help center.
 
@@ -13,7 +13,7 @@ Bug fixes:
 - When pressing the chat button on someone's profile who just deleted their account, the app crashes.
 - When logging in on another device, and pressing on the chat list button, an empty page will appear instead of logging the user out immediately.
 
-1.2 - 21. April
+1.2 - 21 April
 
 An image editor was created for cropping images before uploading.
 
@@ -30,7 +30,7 @@ Bug fixes:
 - On the location history page when the list is empty, waiting for a first update results in a crash.
 - When receiving a message with notification permission off, and enabling it afterwards from iOS Settings, upon returning to the app an empty message will appear.
 
-1.1 - 28. March
+1.1 - 28 March
 
 Push notifications are implemented.
 

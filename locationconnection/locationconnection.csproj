@@ -85,6 +85,17 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
+        <Folder Include="Assets.xcassets\AppWhite.colorset\" />
+        <Folder Include="Assets.xcassets\ContentDarkBackground.colorset\" />
+        <Folder Include="Assets.xcassets\ContentBackground.colorset\" />
+        <Folder Include="Assets.xcassets\PrimaryDark.colorset\" />
+        <Folder Include="Assets.xcassets\Accent.colorset\" />
+        <Folder Include="Assets.xcassets\AccentLight.colorset\" />
+        <Folder Include="Assets.xcassets\ListBackground.colorset\" />
+        <Folder Include="Assets.xcassets\ButtonOnWhite.colorset\" />
+        <Folder Include="Assets.xcassets\ButtonOnContent.colorset\" />
+        <Folder Include="Assets.xcassets\ChatTimeText.colorset\" />
+        <Folder Include="Assets.xcassets\MenuLayer.colorset\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="Main.storyboard" />
@@ -307,6 +318,16 @@
       <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\logo1024-1.png" />
       <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\logo120-2.png" />
       <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\logo167-1.png" />
+      <ImageAsset Include="Assets.xcassets\ContentDarkBackground.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\ContentBackground.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\PrimaryDark.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\Accent.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\AccentLight.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\ListBackground.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\ButtonOnWhite.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\ButtonOnContent.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\ChatTimeText.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\MenuLayer.colorset\Contents.json" />
     </ItemGroup>
     <ItemGroup>
       <ITunesArtwork Include="iTunesArtwork" />
