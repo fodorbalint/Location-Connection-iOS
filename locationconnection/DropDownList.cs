@@ -61,7 +61,7 @@ namespace LocationConnection
         public override UIView GetView(UIPickerView pickerView, nint row, nint component, UIView view)
         {
             UILabel label = new UILabel(new RectangleF(0, 0, width, 25f));
-            label.TextColor = UIColor.Black;
+            label.TextColor = UIColor.FromName("PrimaryDark");
             label.Font = UIFont.SystemFontOfSize(16f);
             label.Text = entries[row];
             label.TextAlignment = UITextAlignment.Left;

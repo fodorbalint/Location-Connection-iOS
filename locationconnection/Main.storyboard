@@ -25,6 +25,7 @@
                                             <constraint firstAttribute="width" constant="47" id="StatusImage0"/>
                                             <constraint firstAttribute="height" constant="47" id="StatusImage1"/>
                                         </constraints>
+                                        <state key="normal"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StatusText">
                                         <rect key="frame" x="10" y="24" width="0.0" height="0.0"/>
@@ -37,7 +38,7 @@
                                             <constraint firstAttribute="width" constant="48" id="OpenFilters0"/>
                                             <constraint firstAttribute="height" constant="48" id="OpenFilters1"/>
                                         </constraints>
-                                        <state key="normal" backgroundImage="ic_filters.png"/>
+                                        <state key="normal" backgroundImage="IcFilters"/>
                                     </button>
                                     <button contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OpenSearch">
                                         <rect key="frame" x="183" y="0.0" width="48" height="48"/>
@@ -4847,7 +4848,6 @@
         <image name="ic_check36_pressed.png" width="144" height="144"/>
         <image name="ic_collapse.png" width="140" height="140"/>
         <image name="ic_descending.png" width="140" height="140"/>
-        <image name="ic_filters.png" width="192" height="192"/>
         <image name="ic_lightning36.png" width="144" height="144"/>
         <image name="ic_listall.png" width="192" height="192"/>
         <image name="ic_map.png" width="192" height="192"/>
@@ -4894,9 +4894,7 @@
         <image name="ic_cross48.png" width="192" height="192"/>
         <image name="ic_previous_list_45x45.png" width="180" height="180"/>
         <image name="ic_next_list_45x45.png" width="180" height="180"/>
-        <namedColor name="ContentDarkBackground">
-            <color colorSpace="custom" customColorSpace="sRGB" red="0.8509804" green="0.8509804" blue="0.8509804" alpha="1"/>
-        </namedColor>
+        <image name="IcFilters" width="48" height="48"/>
         <namedColor name="ContentBackground">
             <color colorSpace="custom" customColorSpace="sRGB" red="0.9490196" green="0.9490196" blue="0.9490196" alpha="1"/>
         </namedColor>
@@ -4914,6 +4912,9 @@
         </namedColor>
         <namedColor name="ChatTimeText">
             <color colorSpace="custom" customColorSpace="sRGB" red="0.3764706" green="0.3764706" blue="0.3764706" alpha="1"/>
+        </namedColor>
+        <namedColor name="MenuLayer">
+            <color colorSpace="custom" customColorSpace="sRGB" red="1" green="1" blue="1" alpha="0.10196078431372549"/>
         </namedColor>
     </resources>
 </document>

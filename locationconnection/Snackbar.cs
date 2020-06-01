@@ -31,6 +31,9 @@ namespace LocationConnection
 
             AddSubview(this.MainView);
 
+            MainView.BackgroundColor = UIColor.FromName("SnackBackground");
+            SnackButton.SetTitleColor(UIColor.FromName("AccentLight"), UIControlState.Normal);
+
             MainView.TopAnchor.ConstraintEqualTo(TopAnchor).Active = true;
             MainView.BottomAnchor.ConstraintEqualTo(BottomAnchor).Active = true;
             MainView.LeadingAnchor.ConstraintEqualTo(LeadingAnchor).Active = true;

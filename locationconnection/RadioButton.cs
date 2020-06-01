@@ -19,8 +19,8 @@ namespace LocationConnection
 
 		public RadioButton(IntPtr p) : base(p)
 		{
-			SetImage(UIImage.FromBundle("radio_unchecked.png"), UIControlState.Normal);
-			SetImage(UIImage.FromBundle("radio_unchecked.png"), UIControlState.Highlighted);
+			SetImage(UIImage.FromBundle("RadioUnchecked"), UIControlState.Normal);
+			SetImage(UIImage.FromBundle("RadioUnchecked"), UIControlState.Highlighted);
 		}
 
 		private void SetChecked(bool value)
@@ -28,13 +28,13 @@ namespace LocationConnection
 			_Checked = value;
 			if (value)
 			{
-				SetImage(UIImage.FromBundle("radio_checked.png"), UIControlState.Normal);
-				SetImage(UIImage.FromBundle("radio_checked.png"), UIControlState.Highlighted);
+				SetImage(UIImage.FromBundle("RadioChecked"), UIControlState.Normal);
+				SetImage(UIImage.FromBundle("RadioChecked"), UIControlState.Highlighted);
 			}
 			else
 			{
-				SetImage(UIImage.FromBundle("radio_unchecked.png"), UIControlState.Normal);
-				SetImage(UIImage.FromBundle("radio_unchecked.png"), UIControlState.Highlighted);
+				SetImage(UIImage.FromBundle("RadioUnchecked"), UIControlState.Normal);
+				SetImage(UIImage.FromBundle("RadioUnchecked"), UIControlState.Highlighted);
 			}
 		}
 
@@ -55,8 +55,8 @@ namespace LocationConnection
 			if (!_Checked)
 			{
 				_Checked = true;
-				SetImage(UIImage.FromBundle("radio_checked.png"), UIControlState.Normal);
-				SetImage(UIImage.FromBundle("radio_checked.png"), UIControlState.Highlighted);
+				SetImage(UIImage.FromBundle("RadioChecked"), UIControlState.Normal);
+				SetImage(UIImage.FromBundle("RadioChecked"), UIControlState.Highlighted);
 
 				switch (controlName)
 				{

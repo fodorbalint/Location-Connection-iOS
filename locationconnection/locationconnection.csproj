@@ -96,6 +96,22 @@
         <Folder Include="Assets.xcassets\ButtonOnContent.colorset\" />
         <Folder Include="Assets.xcassets\ChatTimeText.colorset\" />
         <Folder Include="Assets.xcassets\MenuLayer.colorset\" />
+        <Folder Include="Assets.xcassets\SnackBackground.colorset\" />
+        <Folder Include="Assets.xcassets\SnackBackground.colorset\" />
+        <Folder Include="Assets.xcassets\TestBackground.colorset\" />
+        <Folder Include="Assets.xcassets\SnackBackground.colorset\" />
+        <Folder Include="Assets.xcassets\SnackButtonLayer.imageset\" />
+        <Folder Include="Assets.xcassets\RadioChecked.imageset\" />
+        <Folder Include="Assets.xcassets\RadioUnchecked.imageset\" />
+        <Folder Include="Assets.xcassets\LoadingImage.imageset\" />
+        <Folder Include="Assets.xcassets\IcFilters.imageset\" />
+        <Folder Include="Assets.xcassets\IcSearch.imageset\" />
+        <Folder Include="Assets.xcassets\IcListall.imageset\" />
+        <Folder Include="Assets.xcassets\IcMap.imageset\" />
+        <Folder Include="Assets.xcassets\IcFiltersPressed.imageset\" />
+        <Folder Include="Assets.xcassets\IcSearchPressed.imageset\" />
+        <Folder Include="Assets.xcassets\IcListallPressed.imageset\" />
+        <Folder Include="Assets.xcassets\IcMapPressed.imageset\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="Main.storyboard" />
@@ -220,7 +236,6 @@
       <BundleResource Include="Resources\color_f6e2bb.png" />
       <BundleResource Include="Resources\color_ff5000_19.png" />
       <BundleResource Include="Resources\color_ffb3be.png" />
-      <BundleResource Include="Resources\color_ffffff_20.png" />
       <BundleResource Include="Resources\color_ffffff_31.png" />
       <BundleResource Include="Resources\color_ffffff_72.png" />
       <BundleResource Include="Resources\counterCircle_selected.png" />
@@ -236,12 +251,8 @@
       <BundleResource Include="Resources\ic_delete.png" />
       <BundleResource Include="Resources\ic_descending.png" />
       <BundleResource Include="Resources\ic_expand.png" />
-      <BundleResource Include="Resources\ic_filters_pressed.pdf" />
       <BundleResource Include="Resources\ic_filters_pressed.png" />
-      <BundleResource Include="Resources\ic_filters_pressed.svg" />
-      <BundleResource Include="Resources\ic_filters.pdf" />
       <BundleResource Include="Resources\ic_filters.png" />
-      <BundleResource Include="Resources\ic_filters.svg" />
       <BundleResource Include="Resources\ic_grid.png" />
       <BundleResource Include="Resources\ic_hide.png" />
       <BundleResource Include="Resources\ic_lightning.png" />
@@ -328,6 +339,39 @@
       <ImageAsset Include="Assets.xcassets\ButtonOnContent.colorset\Contents.json" />
       <ImageAsset Include="Assets.xcassets\ChatTimeText.colorset\Contents.json" />
       <ImageAsset Include="Assets.xcassets\MenuLayer.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\SnackBackground.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\SnackButtonLayer.imageset\color_000000_20.png" />
+      <ImageAsset Include="Assets.xcassets\SnackButtonLayer.imageset\color_ffffff_20.png" />
+      <ImageAsset Include="Assets.xcassets\SnackButtonLayer.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\RadioChecked.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\RadioUnchecked.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\RadioChecked.imageset\radio_checked_light_2x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioChecked.imageset\radio_checked_light_3x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioChecked.imageset\radio_checked_dark_2x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioChecked.imageset\radio_checked_dark_3x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioUnchecked.imageset\radio_unchecked_light_2x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioUnchecked.imageset\radio_unchecked_light_3x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioUnchecked.imageset\radio_unchecked_dark_2x.png" />
+      <ImageAsset Include="Assets.xcassets\RadioUnchecked.imageset\radio_unchecked_dark_3x.png" />
+      <ImageAsset Include="Assets.xcassets\LoadingImage.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\LoadingImage.imageset\loadingimage_light.png" />
+      <ImageAsset Include="Assets.xcassets\LoadingImage.imageset\loadingimage_dark.png" />
+      <ImageAsset Include="Assets.xcassets\IcFilters.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcSearch.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcListall.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcMap.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcFiltersPressed.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcSearchPressed.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcListallPressed.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcMapPressed.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\IcFilters.imageset\ic_filters_light_2x.png" />
+      <ImageAsset Include="Assets.xcassets\IcFilters.imageset\ic_filters_light_3x.png" />
+      <ImageAsset Include="Assets.xcassets\IcFilters.imageset\ic_filters_dark_3x.png" />
+      <ImageAsset Include="Assets.xcassets\IcFilters.imageset\ic_filters_dark_2x-1.png" />
+      <ImageAsset Include="Assets.xcassets\IcFiltersPressed.imageset\ic_filters_light_pressed_2x.png" />
+      <ImageAsset Include="Assets.xcassets\IcFiltersPressed.imageset\ic_filters_light_pressed_3x.png" />
+      <ImageAsset Include="Assets.xcassets\IcFiltersPressed.imageset\ic_filters_dark_pressed_2x.png" />
+      <ImageAsset Include="Assets.xcassets\IcFiltersPressed.imageset\ic_filters_dark_pressed_3x.png" />
     </ItemGroup>
     <ItemGroup>
       <ITunesArtwork Include="iTunesArtwork" />

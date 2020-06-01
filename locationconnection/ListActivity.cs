@@ -1017,13 +1017,13 @@ namespace LocationConnection
             if (!(bool)Settings.FiltersOpen)
             {
                 c.CollapseY(FilterLayout);
-                OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters.png"), UIControlState.Normal);
+                OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFilters"), UIControlState.Normal);
             }
             else
             {
                 Session.LastSearchType = Constants.SearchType_Filter;
                 c.ExpandY(FilterLayout);
-                OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters_pressed.png"), UIControlState.Normal);
+                OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFiltersPressed"), UIControlState.Normal);
             }
 
             if (!(bool)Settings.GeoFiltersOpen)
@@ -1148,7 +1148,7 @@ namespace LocationConnection
             View.EndEditing(true);
             if (!(bool)Settings.FiltersOpen)
             {
-                OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters_pressed.png"), UIControlState.Normal);
+                OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFiltersPressed"), UIControlState.Normal);
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search"), UIControlState.Normal);
                 c.ExpandY(FilterLayout);
                 
@@ -1172,7 +1172,7 @@ namespace LocationConnection
             }
             else
             {
-                OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters"), UIControlState.Normal);
+                OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFilters"), UIControlState.Normal);
                 c.CollapseY(FilterLayout);
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 Settings.FiltersOpen = false;
@@ -1184,7 +1184,7 @@ namespace LocationConnection
             View.EndEditing(true);
             if (!(bool)Settings.SearchOpen)
             {
-                OpenFilters.SetBackgroundImage(UIImage.FromBundle("ic_filters"), UIControlState.Normal);
+                OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFilters"), UIControlState.Normal);
                 OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search_pressed.png"), UIControlState.Normal);
                 c.ExpandY(SearchLayout);
 
