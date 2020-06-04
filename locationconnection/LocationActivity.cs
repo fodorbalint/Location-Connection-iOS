@@ -70,13 +70,13 @@ namespace LocationConnection
                 LocationHistoryMap.MapType = (MKMapType)Settings.LocationMapType;
                 if (Settings.LocationMapType == (int)MKMapType.Standard)
                 {
-                    MapStreet.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-                    MapSatellite.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
+                    MapStreet.BackgroundColor = UIColor.FromName("MapButtonActive");
+                    MapSatellite.BackgroundColor = UIColor.FromName("MapButtonPassive");
                 }
                 else
                 {
-                    MapStreet.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
-                    MapSatellite.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
+                    MapStreet.BackgroundColor = UIColor.FromName("MapButtonPassive");
+                    MapSatellite.BackgroundColor = UIColor.FromName("MapButtonActive");
                 }
                 LocationHistoryMap.Delegate = new CustomAnnotationView(this);
                 LocationHistoryMap.LayoutMargins = new UIEdgeInsets(43, 0, 0, 7); //to move the compass
@@ -281,15 +281,15 @@ namespace LocationConnection
         private void MapStreet_Click(object sender, EventArgs e)
         {
             LocationHistoryMap.MapType = MKMapType.Standard;
-            MapStreet.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-            MapSatellite.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
+            MapStreet.BackgroundColor = UIColor.FromName("MapButtonActive");
+            MapSatellite.BackgroundColor = UIColor.FromName("MapButtonPassive");
         }
 
         private void MapSatellite_Click(object sender, EventArgs e)
         {
             LocationHistoryMap.MapType = MKMapType.Satellite;
-            MapStreet.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
-            MapSatellite.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
+            MapStreet.BackgroundColor = UIColor.FromName("MapButtonPassive");
+            MapSatellite.BackgroundColor = UIColor.FromName("MapButtonActive");
         }
 
         [Export("tableView:didSelectRowAtIndexPath:")] //DismissKeyboard() would block it

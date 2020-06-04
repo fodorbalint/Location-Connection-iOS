@@ -188,10 +188,6 @@ namespace LocationConnection
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView ReloadPulldown { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel ResultSet { get; set; }
 
         [Outlet]
@@ -501,11 +497,6 @@ namespace LocationConnection
             if (RefreshDistance != null) {
                 RefreshDistance.Dispose ();
                 RefreshDistance = null;
-            }
-
-            if (ReloadPulldown != null) {
-                ReloadPulldown.Dispose ();
-                ReloadPulldown = null;
             }
 
             if (ResultSet != null) {

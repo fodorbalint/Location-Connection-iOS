@@ -369,7 +369,7 @@ namespace LocationConnection
                                 try
                                 {
                                     LoggedOutLayout();
-                                    if (!(RefreshDistance is null) && !(ReloadPulldown is null) && !(LoaderCircle is null))
+                                    if (!(RefreshDistance is null) && !(LoaderCircle is null))
                                     {
                                         StopLoaderAnim();
                                     }
@@ -409,7 +409,7 @@ namespace LocationConnection
                                 try
                                 {
                                     LoggedOutLayout();
-                                    if (!(RefreshDistance is null) && !(ReloadPulldown is null) && !(LoaderCircle is null))
+                                    if (!(RefreshDistance is null) && !(LoaderCircle is null))
                                     {
                                         StopLoaderAnim();
                                     }
@@ -445,7 +445,7 @@ namespace LocationConnection
                 LoaderCircle.Hidden = true;
                 LoadPrevious.Hidden = true;
                 LoadNext.Hidden = true;
-                ReloadPulldown.Alpha = 0;
+                //ReloadPulldown.Alpha = 0;
 
                 MenuLogOut.SetTitle(LangEnglish.MenuLogOut, UIControlState.Normal);
                 MenuLogIn.SetTitle(LangEnglish.MenuLogIn, UIControlState.Normal);
@@ -968,8 +968,8 @@ namespace LocationConnection
                 ListViewMap.Hidden = true;
                 MapStreet.Hidden = true;
                 MapSatellite.Hidden = true;
-                ListView.SetBackgroundImage(UIImage.FromBundle("ic_listall_pressed.png"), UIControlState.Normal);
-                MapView.SetBackgroundImage(UIImage.FromBundle("ic_map.png"), UIControlState.Normal);
+                ListView.SetBackgroundImage(UIImage.FromBundle("IcListallPressed"), UIControlState.Normal);
+                MapView.SetBackgroundImage(UIImage.FromBundle("IcMap"), UIControlState.Normal);
                 Settings.IsMapView = false;
             }
             else
@@ -978,31 +978,31 @@ namespace LocationConnection
                 ListViewMap.Hidden = false;
                 MapStreet.Hidden = false;
                 MapSatellite.Hidden = false;
-                ListView.SetBackgroundImage(UIImage.FromBundle("ic_listall.png"), UIControlState.Normal);
-                MapView.SetBackgroundImage(UIImage.FromBundle("ic_map_pressed.png"), UIControlState.Normal);
+                ListView.SetBackgroundImage(UIImage.FromBundle("IcListall"), UIControlState.Normal);
+                MapView.SetBackgroundImage(UIImage.FromBundle("IcMapPressed"), UIControlState.Normal);
             }
 
             if (Settings.ListMapType == (int)MKMapType.Standard)
             {
-                MapStreet.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-                MapSatellite.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
+                MapStreet.BackgroundColor = UIColor.FromName("MapButtonActive");
+                MapSatellite.BackgroundColor = UIColor.FromName("MapButtonPassive");
             }
             else
             {
-                MapStreet.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184); 
-                MapSatellite.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
+                MapStreet.BackgroundColor = UIColor.FromName("MapButtonPassive");
+                MapSatellite.BackgroundColor = UIColor.FromName("MapButtonActive");
             }
 
             if (!(bool)Settings.SearchOpen)
             {
                 c.CollapseY(SearchLayout);
-                OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search.png"), UIControlState.Normal);
+                OpenSearch.SetBackgroundImage(UIImage.FromBundle("IcSearch"), UIControlState.Normal);
             }
             else
             {
                 Session.LastSearchType = Constants.SearchType_Search;
                 c.ExpandY(SearchLayout);
-                OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search_pressed.png"), UIControlState.Normal);
+                OpenSearch.SetBackgroundImage(UIImage.FromBundle("IcSearchPressed"), UIControlState.Normal);
             }
 
             SearchTerm.Text = Session.SearchTerm;
@@ -1030,13 +1030,13 @@ namespace LocationConnection
             {
                 c.CollapseY(DistanceFilters);
                 distanceFiltersOpen = false;
-                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("ic_expand.png"), UIControlState.Normal);
+                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("IcExpand"), UIControlState.Normal);
             }
             else
             {
                 c.ExpandY(DistanceFilters);
                 distanceFiltersOpen = true;
-                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("ic_collapse.png"), UIControlState.Normal);
+                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("IcCollapse"), UIControlState.Normal);
             }
 
             if (c.IsLoggedIn())
@@ -1059,19 +1059,19 @@ namespace LocationConnection
             switch (Session.SortBy)
             {
                 case "LastActiveDate":
-                    SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("ic_lightning36_pressed.png"), UIControlState.Normal);
-                    SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("ic_chat_two36.png"), UIControlState.Normal);
-                    SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("ic_registered36.png"), UIControlState.Normal);
+                    SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("IcLightning36Pressed"), UIControlState.Normal);
+                    SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("IcChatTwo36"), UIControlState.Normal);
+                    SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("IcRegistered36"), UIControlState.Normal);
                     break;
                 case "ResponseRate":
-                    SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("ic_lightning36.png"), UIControlState.Normal);
-                    SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("ic_chat_two36_pressed.png"), UIControlState.Normal);
-                    SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("ic_registered36.png"), UIControlState.Normal);
+                    SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("IcLightning36"), UIControlState.Normal);
+                    SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("IcChatTwo36Pressed"), UIControlState.Normal);
+                    SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("IcRegistered36"), UIControlState.Normal);
                     break;
                 case "RegisterDate":
-                    SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("ic_lightning36.png"), UIControlState.Normal);
-                    SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("ic_chat_two36.png"), UIControlState.Normal);
-                    SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("ic_registered36_pressed.png"), UIControlState.Normal);
+                    SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("IcLightning36"), UIControlState.Normal);
+                    SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("IcChatTwo36"), UIControlState.Normal);
+                    SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("IcRegistered36Pressed"), UIControlState.Normal);
                     break;
             }
 
@@ -1079,13 +1079,13 @@ namespace LocationConnection
             {
                 //TooltipCompat.SetTooltipText(OrderBy, res.GetString(Resource.String.Descending));
                 //OrderBy.TooltipText = res.GetString(Resource.String.Descending); //threw an error in Google's test, found out it is not supported proir to API 26.
-                OrderBy.SetBackgroundImage(UIImage.FromBundle("ic_descending.png"), UIControlState.Normal);
+                OrderBy.SetBackgroundImage(UIImage.FromBundle("IcDescending"), UIControlState.Normal);
             }
             else
             {
                 //TooltipCompat.SetTooltipText(OrderBy, res.GetString(Resource.String.Ascending));
                 //OrderBy.TooltipText = res.GetString(Resource.String.Ascending);
-                OrderBy.SetBackgroundImage(UIImage.FromBundle("ic_ascending.png"), UIControlState.Normal);
+                OrderBy.SetBackgroundImage(UIImage.FromBundle("IcAscending"), UIControlState.Normal);
             }
 
             if (!(bool)Session.GeoFilter)
@@ -1149,7 +1149,7 @@ namespace LocationConnection
             if (!(bool)Settings.FiltersOpen)
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFiltersPressed"), UIControlState.Normal);
-                OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search"), UIControlState.Normal);
+                OpenSearch.SetBackgroundImage(UIImage.FromBundle("IcSearch"), UIControlState.Normal);
                 c.ExpandY(FilterLayout);
                 
                 if ((bool)Settings.SearchOpen)
@@ -1185,7 +1185,7 @@ namespace LocationConnection
             if (!(bool)Settings.SearchOpen)
             {
                 OpenFilters.SetBackgroundImage(UIImage.FromBundle("IcFilters"), UIControlState.Normal);
-                OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search_pressed.png"), UIControlState.Normal);
+                OpenSearch.SetBackgroundImage(UIImage.FromBundle("IcSearchPressed"), UIControlState.Normal);
                 c.ExpandY(SearchLayout);
 
                 if ((bool)Settings.FiltersOpen)
@@ -1208,7 +1208,7 @@ namespace LocationConnection
             }
             else
             {
-                OpenSearch.SetBackgroundImage(UIImage.FromBundle("ic_search.png"), UIControlState.Normal);
+                OpenSearch.SetBackgroundImage(UIImage.FromBundle("IcSearch"), UIControlState.Normal);
                 c.CollapseY(SearchLayout);
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 Settings.SearchOpen = false;
@@ -1217,8 +1217,8 @@ namespace LocationConnection
 
         private void ListView_Click(object sender, EventArgs e)
         {
-            ListView.SetBackgroundImage(UIImage.FromBundle("ic_listall_pressed.png"),UIControlState.Normal);
-            MapView.SetBackgroundImage(UIImage.FromBundle("ic_map.png"), UIControlState.Normal);
+            ListView.SetBackgroundImage(UIImage.FromBundle("IcListallPressed"),UIControlState.Normal);
+            MapView.SetBackgroundImage(UIImage.FromBundle("IcMap"), UIControlState.Normal);
 
             UserSearchList.Hidden = false;
             ListViewMap.Hidden = true;
@@ -1406,8 +1406,8 @@ namespace LocationConnection
                 {
                     mapToSet = false;
 
-                    MapView.SetBackgroundImage(UIImage.FromBundle("ic_map_pressed.png"), UIControlState.Normal);
-                    ListView.SetBackgroundImage(UIImage.FromBundle("ic_listall.png"), UIControlState.Normal);
+                    MapView.SetBackgroundImage(UIImage.FromBundle("IcMapPressed"), UIControlState.Normal);
+                    ListView.SetBackgroundImage(UIImage.FromBundle("IcListall"), UIControlState.Normal);
 
                     UserSearchList.Hidden = true;
                     ListViewMap.Hidden = false;
@@ -1644,9 +1644,9 @@ namespace LocationConnection
 
         private void SortBy_LastActiveDate_Click(object sender, EventArgs e)
         {
-            SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("ic_lightning36_pressed.png"), UIControlState.Normal);
-            SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("ic_chat_two36.png"), UIControlState.Normal);
-            SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("ic_registered36.png"), UIControlState.Normal);
+            SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("IcLightning36Pressed"), UIControlState.Normal);
+            SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("IcChatTwo36"), UIControlState.Normal);
+            SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("IcRegistered36"), UIControlState.Normal);
             Session.SortBy = "LastActiveDate";
             Session.ResultsFrom = 1;
             recenterMap = true;
@@ -1655,9 +1655,9 @@ namespace LocationConnection
 
         private void SortBy_ResponseRate_Click(object sender, EventArgs e)
         {
-            SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("ic_lightning36.png"), UIControlState.Normal);
-            SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("ic_chat_two36_pressed.png"), UIControlState.Normal);
-            SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("ic_registered36.png"), UIControlState.Normal);
+            SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("IcLightning36"), UIControlState.Normal);
+            SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("IcChatTwo36Pressed"), UIControlState.Normal);
+            SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("IcRegistered36"), UIControlState.Normal);
             Session.SortBy = "ResponseRate";
             Session.ResultsFrom = 1;
             recenterMap = true;
@@ -1666,9 +1666,9 @@ namespace LocationConnection
 
         private void SortBy_RegisterDate_Click(object sender, EventArgs e)
         {
-            SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("ic_lightning36.png"), UIControlState.Normal);
-            SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("ic_chat_two36.png"), UIControlState.Normal);
-            SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("ic_registered36_pressed.png"), UIControlState.Normal);
+            SortBy_LastActiveDate.SetBackgroundImage(UIImage.FromBundle("IcLightning36"), UIControlState.Normal);
+            SortBy_ResponseRate.SetBackgroundImage(UIImage.FromBundle("IcChatTwo36"), UIControlState.Normal);
+            SortBy_RegisterDate.SetBackgroundImage(UIImage.FromBundle("IcRegistered36Pressed"), UIControlState.Normal);
             Session.SortBy = "RegisterDate";
             Session.ResultsFrom = 1;
             recenterMap = true;
@@ -1681,13 +1681,13 @@ namespace LocationConnection
             {
                 Session.OrderBy = "asc";
                 //OrderBy.TooltipText = res.GetString(Resource.String.Ascending);
-                OrderBy.SetBackgroundImage(UIImage.FromBundle("ic_ascending.png"), UIControlState.Normal);
+                OrderBy.SetBackgroundImage(UIImage.FromBundle("IcAscending"), UIControlState.Normal);
             }
             else
             {
                 Session.OrderBy = "desc";
                 //OrderBy.TooltipText = res.GetString(Resource.String.Descending);
-                OrderBy.SetBackgroundImage(UIImage.FromBundle("ic_descending.png"), UIControlState.Normal);
+                OrderBy.SetBackgroundImage(UIImage.FromBundle("IcDescending"), UIControlState.Normal);
             }
             Session.ResultsFrom = 1;
             recenterMap = true;
@@ -1702,7 +1702,7 @@ namespace LocationConnection
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 distanceFiltersOpen = true;
                 Settings.GeoFiltersOpen = true;
-                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("ic_collapse.png"), UIControlState.Normal);
+                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("IcCollapse"), UIControlState.Normal);
                 //DistanceFiltersOpenClose.TooltipText = res.GetString(Resource.String.DistanceFiltersClose);
             }
             else
@@ -1711,7 +1711,7 @@ namespace LocationConnection
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
                 distanceFiltersOpen = false;
                 Settings.GeoFiltersOpen = false;
-                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("ic_expand.png"), UIControlState.Normal);
+                DistanceFiltersOpenClose.SetBackgroundImage(UIImage.FromBundle("IcExpand"), UIControlState.Normal);
                 //DistanceFiltersOpenClose.TooltipText = res.GetString(Resource.String.DistanceFiltersOpen);
             }
         }
@@ -2181,15 +2181,15 @@ namespace LocationConnection
         private void MapStreet_Click(object sender, EventArgs e)
         {
             ListViewMap.MapType = MKMapType.Standard;
-            MapStreet.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-            MapSatellite.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
+            MapStreet.BackgroundColor = UIColor.FromName("MapButtonActive");
+            MapSatellite.BackgroundColor = UIColor.FromName("MapButtonPassive");
         }
 
         private void MapSatellite_Click(object sender, EventArgs e)
         {
             ListViewMap.MapType = MKMapType.Satellite;
-            MapStreet.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
-            MapSatellite.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
+            MapStreet.BackgroundColor = UIColor.FromName("MapButtonPassive");
+            MapSatellite.BackgroundColor = UIColor.FromName("MapButtonActive");
         }
 
         private void LoadPrevious_Click(object sender, EventArgs e)
@@ -2544,8 +2544,8 @@ namespace LocationConnection
             }
 
             InvokeOnMainThread(() => {
-                MapView.SetBackgroundImage(UIImage.FromBundle("ic_map_pressed.png"), UIControlState.Normal);
-                ListView.SetBackgroundImage(UIImage.FromBundle("ic_listall.png"), UIControlState.Normal);
+                MapView.SetBackgroundImage(UIImage.FromBundle("IcMapPressed"), UIControlState.Normal);
+                ListView.SetBackgroundImage(UIImage.FromBundle("IcListall"), UIControlState.Normal);
 
                 UserSearchList.Hidden = true;
                 ListViewMap.Hidden = false;

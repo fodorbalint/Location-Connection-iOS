@@ -67,16 +67,16 @@ namespace LocationConnection
 			    MapStreet.SetTitle(LangEnglish.MapStreet, UIControlState.Normal);
 			    MapSatellite.SetTitle(LangEnglish.MapSatellite, UIControlState.Normal);
 			    ProfileViewMap.MapType = (MKMapType)Settings.ProfileViewMapType;
-			    if (Settings.ProfileViewMapType == (int)MKMapType.Standard)
-			    {
-				    MapStreet.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-				    MapSatellite.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
-			    }
-			    else
-			    {
-				    MapStreet.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
-				    MapSatellite.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-			    }
+				if (Settings.ProfileViewMapType == (int)MKMapType.Standard)
+				{
+					MapStreet.BackgroundColor = UIColor.FromName("MapButtonActive");
+					MapSatellite.BackgroundColor = UIColor.FromName("MapButtonPassive");
+				}
+				else
+				{
+					MapStreet.BackgroundColor = UIColor.FromName("MapButtonPassive");
+					MapSatellite.BackgroundColor = UIColor.FromName("MapButtonActive");
+				}
 			    ProfileViewMap.Delegate = new CustomAnnotationView(this);
 
 			    MapStreet.TouchUpInside += MapStreet_Click;
@@ -987,15 +987,15 @@ namespace LocationConnection
 		private void MapStreet_Click(object sender, EventArgs e)
 		{
 			ProfileViewMap.MapType = MKMapType.Standard;
-			MapStreet.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
-			MapSatellite.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
+			MapStreet.BackgroundColor = UIColor.FromName("MapButtonActive");
+			MapSatellite.BackgroundColor = UIColor.FromName("MapButtonPassive");
 		}
 
 		private void MapSatellite_Click(object sender, EventArgs e)
 		{
 			ProfileViewMap.MapType = MKMapType.Satellite;
-			MapStreet.BackgroundColor = UIColor.FromRGBA(255, 255, 255, 184);
-			MapSatellite.BackgroundColor = UIColor.FromRGBA(204, 204, 204, 184);
+			MapStreet.BackgroundColor = UIColor.FromName("MapButtonPassive");
+			MapSatellite.BackgroundColor = UIColor.FromName("MapButtonActive");
 		}
 
 		private void BackButton_Click(object sender, EventArgs e)
