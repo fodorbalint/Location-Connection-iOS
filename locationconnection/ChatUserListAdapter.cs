@@ -35,12 +35,12 @@ namespace LocationConnection
 
             if ((bool)item.Active)
             {
-                cell.ContentView.BackgroundColor = UIColor.FromRGB(246, 226, 187);
+                cell.ContentView.BackgroundColor = UIColor.FromName("ChatTarget");
                 cell.activeCell = true;
             }
             else
             {
-                cell.ContentView.BackgroundColor = UIColor.FromRGB(255, 179, 190);
+                cell.ContentView.BackgroundColor = UIColor.FromName("ChatPassive");
                 cell.activeCell = false;
             }
             
@@ -72,13 +72,13 @@ namespace LocationConnection
                 UILabel label = (UILabel)cell.ChatUserListItems.Subviews[j];
                 label.Text = message.Replace(Environment.NewLine, " ");
                 j++;
-                label.TextColor = UIColor.Black;
+                label.TextColor = UIColor.FromName("PrimaryDark");
                 if (senderID != Session.ID)
                 {
                     label.Font = UIFont.BoldSystemFontOfSize(14);
                     if (readTime == 0)
                     {
-                        label.BackgroundColor = UIColor.FromRGBA(157, 215, 251, 128);
+                        label.BackgroundColor = UIColor.FromName("ChatHighlight");
                     }
                     else
                     {

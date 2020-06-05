@@ -47,13 +47,13 @@ namespace LocationConnection
             if (item.SenderID == Session.ID)
             {
                 cell.AlignRight();
-                cell.MessageText.BackgroundColor = UIColor.FromRGB(157, 215, 251);
+                cell.MessageText.BackgroundColor = UIColor.FromName("ChatOwn");
                 cell.TimeText.TextAlignment = UITextAlignment.Right;
             }
             else
             {
                 cell.AlignLeft();
-                cell.MessageText.BackgroundColor = UIColor.FromRGB(246, 226, 187);
+                cell.MessageText.BackgroundColor = UIColor.FromName("ChatTarget");
                 cell.TimeText.TextAlignment = UITextAlignment.Left;
             }
             cell.MessageText.Text = item.Content;

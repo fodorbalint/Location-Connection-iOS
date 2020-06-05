@@ -20,7 +20,7 @@ Code to insert when creating a new page with Snackbar
 Replace 1 with page number
 
 <view contentMode="scaleToFill" id="RoundBottom1" translatesAutoresizingMaskIntoConstraints="NO"> ----- Put it before views that should go on top -----
-    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="1" alpha="1"/> ----- Use desired color -----
+    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/> ----- Use desired color -----
 </view>
 <view contentMode="scaleToFill" id="Snackbar1" customClass="Snackbar" translatesAutoresizingMaskIntoConstraints="NO" />
 
@@ -1839,8 +1839,7 @@ namespace LocationConnection
                     Session.OtherLatitude = latValue;
                     Session.OtherLongitude = longValue;
                     Session.OtherAddress = null;
-                    DistanceSourceAddressText.BackgroundColor = UIColor.FromRGB(204, 255, 204);
-                        //.Background.SetColorFilter(Color.Rgb(20, 224, 0), PorterDuff.Mode.SrcAtop);
+                    DistanceSourceAddressText.BackgroundColor = UIColor.FromName("DistanceSourceHighlight");
                     if (reformat)
                     {
                         DistanceSourceAddressText.Text = latValue + ", " + longValue;

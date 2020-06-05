@@ -61,13 +61,13 @@ namespace LocationConnection
 
         private void SetHighlighted ()
         {
-            view.BackgroundColor = UIColor.FromRGB(179, 179, 179);
+            view.BackgroundColor = UIColor.FromName("ChatBackgroundDark");
         }
 
         public void SetNormal ()
         {
 
-            view.BackgroundColor = UIColor.FromRGB(217, 217, 217);
+            view.BackgroundColor = UIColor.FromName("ContentDarkBackground");
         }
     }
 }

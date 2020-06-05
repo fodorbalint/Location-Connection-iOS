@@ -373,9 +373,9 @@ namespace LocationConnection
 			ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(ProfileImageScroll.Frame.Height * newImageIndex, 0);
 
 			var circle = counterCircles[imageIndex];
-			circle.Image = UIImage.FromBundle("counterCircle.png");
+			circle.Image = UIImage.FromBundle("CounterCircleNormal");
 			circle = counterCircles[newImageIndex];
-			circle.Image = UIImage.FromBundle("counterCircle_selected.png");
+			circle.Image = UIImage.FromBundle("CounterCircleSelected");
 
 			imageIndex = newImageIndex;
 		}
@@ -392,9 +392,9 @@ namespace LocationConnection
 			if (newImageIndex != imageIndex)
 			{
 				var circle = counterCircles[imageIndex];
-				circle.Image = UIImage.FromBundle("counterCircle.png");
+				circle.Image = UIImage.FromBundle("CounterCircleNormal");
 				circle = counterCircles[newImageIndex];
-				circle.Image = UIImage.FromBundle("counterCircle_selected.png");
+				circle.Image = UIImage.FromBundle("CounterCircleSelected");
 
 				imageIndex = newImageIndex;
 			}
@@ -588,41 +588,41 @@ namespace LocationConnection
 					switch (displayUser.UserRelation)
 					{
 						case 0: //default
-							LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_like.png"), UIControlState.Normal);
+							LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLike"), UIControlState.Normal);
 							LikeButton.UserInteractionEnabled = true;
 							c.ExpandX(LikeButton);
 
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 							c.ExpandX(HideButton);
 							break;
 						case 1: //hid
-							LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_like.png"), UIControlState.Normal);
+							LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLike"), UIControlState.Normal);
 							LikeButton.UserInteractionEnabled = true;
 							c.CollapseX(LikeButton);
 
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_reinstate.png"), UIControlState.Normal);
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_reinstate.png"), UIControlState.Highlighted);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcReinstate"), UIControlState.Normal);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcReinstate"), UIControlState.Highlighted);
 							c.ExpandX(HideButton);
 							break;
 						case 2: //liked
-							LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Normal);
+							LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
 							LikeButton.UserInteractionEnabled = false;
 							c.ExpandX(LikeButton);
 
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 							c.ExpandX(HideButton);
 							break;
 						case 3: //match
 						case 4: //friend
-							LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Normal);
-							LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Highlighted);
+							LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
+							LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
 							LikeButton.UserInteractionEnabled = true;
 							c.ExpandX(LikeButton);
 
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
-							HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+							HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 							c.CollapseX(HideButton);
 							break;
 						default:
@@ -851,12 +851,12 @@ namespace LocationConnection
 				if (i == 0)
 				{
 					v.LeftAnchor.ConstraintEqualTo(spacerLeft.RightAnchor).Active=true;
-					v.Image = UIImage.FromBundle("counterCircle_selected.png");
+					v.Image = UIImage.FromBundle("CounterCircleSelected");
 				}
 				else
 				{
 					v.LeftAnchor.ConstraintEqualTo(counterCircles[i - 1].RightAnchor, 1.5f).Active = true;
-					v.Image = UIImage.FromBundle("counterCircle.png");
+					v.Image = UIImage.FromBundle("CounterCircleNormal");
 				}
 				if (i == count - 1)
 				{
@@ -1186,8 +1186,8 @@ namespace LocationConnection
 						Session.CurrentMatch.TargetPicture = displayUser.Pictures[0];
 
 						displayUser.UserRelation = 3;
-						LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Normal);
-						LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Highlighted);
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
 
 						c.CollapseX(HideButton);
 
@@ -1199,7 +1199,7 @@ namespace LocationConnection
 					else
 					{
 						displayUser.UserRelation = 2;
-						LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Normal);
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
 						LikeButton.UserInteractionEnabled = false;
 
 						if (pageType == Constants.ProfileViewType_List)
@@ -1268,8 +1268,8 @@ namespace LocationConnection
 				if (responseString == "OK")
 				{
 					displayUser.UserRelation = 1;
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_reinstate.png"), UIControlState.Normal);
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_reinstate.png"), UIControlState.Highlighted);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcReinstate"), UIControlState.Normal);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcReinstate"), UIControlState.Highlighted);
 
 					c.CollapseX(LikeButton);
 
@@ -1313,8 +1313,8 @@ namespace LocationConnection
 					displayUser.UserRelation = 0;
 					c.ExpandX(LikeButton);
 
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 				}
 				else
 				{
@@ -1427,8 +1427,8 @@ namespace LocationConnection
 				Session.CurrentMatch = item;
 				ListActivity.viewProfiles[ListActivity.viewIndex].UserRelation = 3;
 
-				LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Normal);
-				LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Highlighted);
+				LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
+				LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
 
 				c.CollapseX(HideButton);
 			}
@@ -1449,8 +1449,8 @@ namespace LocationConnection
 
 					ListActivity.viewProfiles[ListActivity.viewIndex].UserRelation = 3;
 
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Highlighted);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
 
 					c.CollapseX(HideButton);
 				}
@@ -1458,11 +1458,11 @@ namespace LocationConnection
 				{
 					ListActivity.viewProfiles[ListActivity.viewIndex].UserRelation = 2;
 
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Highlighted);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Highlighted);
 
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 
 					c.ExpandX(HideButton);
 				}
@@ -1478,8 +1478,8 @@ namespace LocationConnection
 				{
 					displayUser.UserRelation = 3;
 
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_chat_one.png"), UIControlState.Highlighted);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
 
 					c.CollapseX(HideButton);
 				}
@@ -1487,11 +1487,11 @@ namespace LocationConnection
 				{
 					displayUser.UserRelation = 2;
 
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("ic_liked.png"), UIControlState.Highlighted);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
+					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Highlighted);
 
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Normal);
-					HideButton.SetBackgroundImage(UIImage.FromBundle("ic_hide.png"), UIControlState.Highlighted);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 
 					c.ExpandX(HideButton);
 				}

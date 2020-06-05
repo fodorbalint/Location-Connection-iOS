@@ -371,12 +371,9 @@
                                 </constraints>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchListScrollBg">
-                                <rect key="frame" x="0.0" y="427" width="375" height="211"/>
-                                <color key="backgroundColor" name="ContentBackground"/>
-                            </view>
                             <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="UserSearchListScroll" translatesAutoresizingMaskIntoConstraints="NO" ambiguous="YES">
                                 <rect key="frame" x="0.0" y="427" width="375" height="211"/>
+                                <color key="backgroundColor" name="ContentBackground"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchList">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
@@ -486,7 +483,7 @@
                                     <button clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LoadPrevious">
                                         <rect key="frame" x="121.5" y="0.0" width="35" height="29"/>
                                         <state key="normal" backgroundImage="IcPreviousList"/>
-                                        <state key="highlighted" backgroundImage="IcPreviousListHighlighted.png"/>
+                                        <state key="highlighted" backgroundImage="IcPreviousListHighlighted"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="LoadPrevious0"/>
                                             <constraint firstAttribute="width" constant="35" id="LoadPrevious1"/>
@@ -499,7 +496,7 @@
                                     <button clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LoadNext">
                                         <rect key="frame" x="218.5" y="0.0" width="35" height="29"/>
                                         <state key="normal" backgroundImage="IcNextList"/>
-                                        <state key="highlighted" backgroundImage="IcNextListHighlighted.png"/>
+                                        <state key="highlighted" backgroundImage="IcNextListHighlighted"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="LoadNext0"/>
                                             <constraint firstAttribute="width" constant="35" id="LoadNext1"/>
@@ -539,7 +536,7 @@
                                     <constraint firstAttribute="width" constant="60" id="MenuChatList1"/>
                                 </constraints>
                             </button>
-                            <!--<imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_reload_pulldown.png" translatesAutoresizingMaskIntoConstraints="NO" id="ReloadPulldown">
+                            <!--<imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IcReloadPulldown" translatesAutoresizingMaskIntoConstraints="NO" id="ReloadPulldown">
                                 <rect key="frame" x="162.5" y="43" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ReloadPulldown0"/>
@@ -691,10 +688,6 @@
                             <constraint firstItem="FilterLayout" firstAttribute="top" secondItem="SearchLayout" secondAttribute="bottom" id="FilterLayout2"/>
                             <constraint firstItem="FilterLayout" firstAttribute="leading" secondItem="SafeArea1" secondAttribute="leading" id="FilterLayout3"/>
                             <constraint firstItem="FilterLayout" firstAttribute="trailing" secondItem="SafeArea1" secondAttribute="trailing" id="FilterLayout4"/>
-                            <constraint firstItem="UserSearchListScrollBg" firstAttribute="top" secondItem="UserSearchListScroll" secondAttribute="top" id="UserSearchListScrollBg2"/>
-                            <constraint firstItem="UserSearchListScrollBg" firstAttribute="trailing" secondItem="UserSearchListScroll" secondAttribute="trailing" id="UserSearchListScrollBg3"/>
-                            <constraint firstItem="UserSearchListScrollBg" firstAttribute="leading" secondItem="UserSearchListScroll" secondAttribute="leading" id="UserSearchListScrollBg4"/>
-                            <constraint firstItem="UserSearchListScrollBg" firstAttribute="bottom" secondItem="UserSearchListScroll" secondAttribute="bottom" id="UserSearchListScrollBg5"/>
                             <constraint firstItem="UserSearchListScroll" firstAttribute="top" secondItem="FilterLayout" secondAttribute="bottom" id="UserSearchListScroll2"/>
                             <constraint firstItem="UserSearchListScroll" firstAttribute="trailing" secondItem="SafeArea1" secondAttribute="trailing" id="UserSearchListScroll3"/>
                             <constraint firstItem="UserSearchListScroll" firstAttribute="leading" secondItem="SafeArea1" secondAttribute="leading" id="UserSearchListScroll4"/>
@@ -866,11 +859,10 @@
                                             <constraint firstAttribute="height" constant="33" id="LoginDone0"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="sRGB" red="0.9647" green="0.8863" blue="0.7333" alpha="1"/>
-                                        <state key="normal" title="LoginDone">
+                                        <state key="normal" backgroundImage="Color_LoginDone">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_d7c7a5.png"/>
+                                        <state key="highlighted" backgroundImage="Color_LoginDoneHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -879,15 +871,14 @@
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ResetPassword" misplaced="YES">
                                         <rect key="frame" x="205" y="68" width="200" height="40"/>
-                                        <color key="backgroundColor" colorSpace="custom" customColorSpace="sRGB" red="1" green="0.702" blue="0.7451" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="ResetPassword0"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="ResetPassword">
+                                        <state key="normal" backgroundImage="Color_ResetPassword">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_e09ca7.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ResetPasswordHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -909,15 +900,14 @@
                                             </textField>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ResetSendButton" misplaced="YES" clipsSubviews="YES">
                                                 <rect key="frame" x="0.0" y="140" width="400" height="40"/>
-                                                <color key="backgroundColor" colorSpace="custom" customColorSpace="sRGB" red="1" green="0.702" blue="0.7451" alpha="1"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="33" id="ResetSendButton0"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="normal" title="ResetSend">
+                                                <state key="normal" backgroundImage="Color_ResetPassword">
                                                     <color key="titleColor" name="PrimaryDark"/>
                                                 </state>
-                                                <state key="highlighted" backgroundImage="color_e09ca7.png"/>
+                                                <state key="highlighted" backgroundImage="Color_ResetPasswordHighlight"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                         <real key="value" value="4"/>
@@ -966,15 +956,14 @@
                             </view>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterButton" misplaced="YES">
                                 <rect key="frame" x="0.0" y="200" width="400" height="40"/>
-                                <color key="backgroundColor" colorSpace="custom" customColorSpace="sRGB" red="0.9412" green="0.8157" blue="0.557" alpha="1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="RegisterButton0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="RegisterButton">
+                                <state key="normal" backgroundImage="Color_Register">
                                     <color key="titleColor" name="PrimaryDark"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="color_d4b77d.png"/>
+                                <state key="highlighted" backgroundImage="Color_RegisterHighlight"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                         <real key="value" value="4"/>
@@ -986,15 +975,14 @@
                             </view>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ListButton" misplaced="YES">
                                 <rect key="frame" x="0.0" y="300" width="400" height="40"/>
-                                <color key="backgroundColor" colorSpace="custom" customColorSpace="sRGB" red="0.9176" green="0.7412" blue="0.3804" alpha="1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="ListButton0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="ListButton">
+                                <state key="normal" backgroundImage="Color_List">
                                     <color key="titleColor" name="PrimaryDark"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="color_cfa656.png"/>
+                                <state key="highlighted" backgroundImage="Color_ListHighlight"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                         <real key="value" value="4"/>
@@ -1154,7 +1142,7 @@
                                         <state key="normal" title="CheckAvailability">
                                             <color key="textColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -1181,7 +1169,7 @@
                                         <state key="normal" title="Images">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -1342,7 +1330,7 @@
                                         <state key="normal" title="Register">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -1359,7 +1347,7 @@
                                         <state key="normal" title="Reset">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -1376,7 +1364,7 @@
                                         <state key="normal" title="RegisterCancel">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -1518,7 +1506,7 @@
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorFrame" hidden="YES">
                                 <rect key="frame" x="0.0" y="68" width="375" height="599"/>
-                                <color key="backgroundColor" systemColor="systemGrayColor" colorSpace="custom" customColorSpace="sRGB" red="0.556862745098039" green="0.556862745098039" blue="0.576470588235294" alpha="1"/>
+                                <color key="backgroundColor" name="ImageEditorBackground"/>
                             </view>
                             <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditor" hidden="YES" misplaced="YES">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
@@ -1551,8 +1539,8 @@
                                     </imageView>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorCancel" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_cross48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_cross48.png"/>
+                                        <state key="normal" backgroundImage="IcCross"/>
+                                        <state key="highlighted" backgroundImage="IcCross"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="RegisterImageEditorCancel0"/>
                                             <constraint firstAttribute="height" constant="48" id="RegisterImageEditorCancel1"/>
@@ -1560,8 +1548,8 @@
                                     </button>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="RegisterImageEditorOK" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_check48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_check48.png"/>
+                                        <state key="normal" backgroundImage="IcCheck"/>
+                                        <state key="highlighted" backgroundImage="IcCheck"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="RegisterImageEditorOK0"/>
                                             <constraint firstAttribute="height" constant="48" id="RegisterImageEditorOK1"/>
@@ -1760,7 +1748,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
-                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" image="ic_chat_two.png" id="ResponseRateIcon">
+                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" image="IcChatTwo24" id="ResponseRateIcon">
                                         <rect key="frame" x="246" y="50" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="ResponseRateIcon0"/>
@@ -1787,7 +1775,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
-                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" image="ic_lightning.png" id="LastActiveDateIcon">
+                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" image="IcLightning24" id="LastActiveDateIcon">
                                         <rect key="frame" x="246" y="74" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="LastActiveDateIcon0"/>
@@ -1799,7 +1787,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
-                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" image="ic_registered.png" id="RegisterDateIcon">
+                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" image="IcRegistered24" id="RegisterDateIcon">
                                         <rect key="frame" x="246" y="98" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="RegisterDateIcon0"/>
@@ -2075,7 +2063,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="EditSelfHeader0"/>
                                 </constraints>
-                                <color key="backgroundColor" name="ContentBackground" alpha="0.9"/>
+                                <color key="backgroundColor" name="ContentBackground90"/>
                             </view>
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" image="RippleBack" alpha="0" translatesAutoresizingMaskIntoConstraints="NO" id="RippleProfileView">
                                 <rect key="frame" x="25" y="30" width="25" height="25"/>
@@ -2086,8 +2074,8 @@
                             </imageView>
                             <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditSelfBack">
                                 <rect key="frame" x="20" y="25" width="35" height="35"/>
-                                <state key="normal" backgroundImage="ic_back.png"/>
-                                <state key="highlighted" backgroundImage="ic_back.png"/>
+                                <state key="normal" backgroundImage="IcBack"/>
+                                <state key="highlighted" backgroundImage="IcBack"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="EditSelfBack0"/>
                                     <constraint firstAttribute="width" constant="35" id="EditSelfBack1"/>
@@ -2101,9 +2089,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="backgroundColor" name="ButtonOnContent"/>
                                 <state key="normal" title="UpdateLocation">
-                                    <color key="titleColor" name="ButtonOnContent"/>
+                                    <color key="titleColor" name="PrimaryDark"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="color_9b9b9b.png"/>
+                                <state key="highlighted" backgroundImage="Color_ButtonOnContentHighlight"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                         <real key="value" value="4"/>
@@ -2118,9 +2106,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="backgroundColor" name="ButtonOnContent"/>
                                 <state key="normal" title="EditSelf">
-                                    <color key="titleColor" name="ButtonOnContent"/>
+                                    <color key="titleColor" name="PrimaryDark"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="color_9b9b9b.png"/>
+                                <state key="highlighted" backgroundImage="Color_ButtonOnContentHighlight"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                         <real key="value" value="4"/>
@@ -2143,8 +2131,8 @@
                             </imageView>
                             <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="BackButton" misplaced="YES">
                                 <rect key="frame" x="1" y="32" width="60" height="60"/>
-                                <state key="normal" backgroundImage="ic_profile_back.png"/>
-                                <state key="highlighted" backgroundImage="ic_profile_back.png"/>
+                                <state key="normal" backgroundImage="IcProfileBack"/>
+                                <state key="highlighted" backgroundImage="IcProfileBack"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="BackButton0"/>
                                     <constraint firstAttribute="width" constant="60" id="BackButton1"/>
@@ -2152,8 +2140,8 @@
                             </button>
                             <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="PreviousButton">
                                 <rect key="frame" x="0.0" y="607" width="60" height="60"/>
-                                <state key="normal" backgroundImage="ic_previous.png"/>
-                                <state key="highlighted" backgroundImage="ic_previous.png"/>
+                                <state key="normal" backgroundImage="IcPrevious"/>
+                                <state key="highlighted" backgroundImage="IcPrevious"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="PreviousButton0"/>
                                     <constraint firstAttribute="width" constant="60" id="PreviousButton1"/>
@@ -2164,8 +2152,8 @@
                             </view>
                             <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="HideButton">
                                 <rect key="frame" x="122.5" y="607" width="60" height="60"/>
-                                <state key="normal" backgroundImage="ic_hide.png"/>
-                                <state key="highlighted" backgroundImage="ic_hide.png"/>
+                                <state key="normal" backgroundImage="IcHide"/>
+                                <state key="highlighted" backgroundImage="IcHide"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="HideButton0"/>
                                     <constraint firstAttribute="width" constant="60" priority="999" id="HideButton1"/>
@@ -2173,8 +2161,8 @@
                             </button>
                             <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="LikeButton">
                                 <rect key="frame" x="192.5" y="607" width="60" height="60"/>
-                                <state key="normal" backgroundImage="ic_like.png"/>
-                                <state key="highlighted" backgroundImage="ic_like.png"/>
+                                <state key="normal" backgroundImage="IcLike"/>
+                                <state key="highlighted" backgroundImage="IcLike"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="LikeButton0"/>
                                     <constraint firstAttribute="width" constant="60" priority="999" id="LikeButton1"/>
@@ -2185,8 +2173,8 @@
                             </view>
                             <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="NextButton">
                                 <rect key="frame" x="315" y="607" width="60" height="60"/>
-                                <state key="normal" backgroundImage="ic_next.png"/>
-                                <state key="highlighted" backgroundImage="ic_next.png"/>
+                                <state key="normal" backgroundImage="IcNext"/>
+                                <state key="highlighted" backgroundImage="IcNext"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="NextButton0"/>
                                     <constraint firstAttribute="width" constant="60" id="NextButton1"/>
@@ -2323,7 +2311,7 @@
                                                     <rect key="frame" x="100" y="0.0" width="275" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <color key="textColor" name="PrimaryDark"/>
-                                                    <color key="backgroundColor" colorSpace="custom" customColorSpace="sRGB" red="1" green="0.314" blue="0" alpha="0.19"/>
+                                                    <color key="backgroundColor" name="ChatHeader"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="float" keyPath="TopInset" value="2">
                                                             <real key="value" value="2"/>
@@ -2563,8 +2551,8 @@
                                 <subviews>
                                     <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ChatOneBack">
                                         <rect key="frame" x="10" y="17.5" width="35" height="35"/>
-                                        <state key="normal" backgroundImage="ic_back.png"/>
-                                        <state key="highlighted" backgroundImage="ic_back.png"/>
+                                        <state key="normal" backgroundImage="IcBack"/>
+                                        <state key="highlighted" backgroundImage="IcBack"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="ChatOneBack0"/>
                                             <constraint firstAttribute="width" constant="35" id="ChatOneBack1"/>
@@ -2751,8 +2739,8 @@
                                     </textView>
                                     <button contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ChatSendMessage" misplaced="YES">
                                         <rect key="frame" x="332" y="-17" width="48" height="48"/>
-                                        <state key="normal" backgroundImage="ic_send.png"/>
-                                        <state key="highlighted" backgroundImage="ic_send.png"/>
+                                        <state key="normal" backgroundImage="IcSend"/>
+                                        <state key="highlighted" backgroundImage="IcSend"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="ChatSendMessage0"/>
                                             <constraint firstAttribute="height" constant="36" id="ChatSendMessage1"/>
@@ -2974,7 +2962,7 @@
                                         <state key="normal" title="Images">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -3077,7 +3065,7 @@
                                                 <state key="normal" title="CheckAvailability">
                                                     <color key="titleColor" name="PrimaryDark"/>
                                                 </state>
-                                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                                <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                         <real key="value" value="4"/>
@@ -3350,7 +3338,7 @@
                                         <state key="normal" title="Save">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -3367,7 +3355,7 @@
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -3394,7 +3382,7 @@
                                                 <state key="normal" title="DeactivateAccount">
                                                     <color key="titleColor" name="PrimaryDark"/>
                                                 </state>
-                                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                                <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                         <real key="value" value="4"/>
@@ -3411,7 +3399,7 @@
                                                 <state key="normal" title="DeleteAccount">
                                                     <color key="titleColor" name="PrimaryDark"/>
                                                 </state>
-                                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                                <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                         <real key="value" value="4"/>
@@ -3511,7 +3499,7 @@
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorFrame" hidden="YES">
                                 <rect key="frame" x="0.0" y="68" width="375" height="599"/>
-                                <color key="backgroundColor" systemColor="systemGrayColor" colorSpace="custom" customColorSpace="sRGB" red="0.556862745098039" green="0.556862745098039" blue="0.576470588235294" alpha="1"/>
+                                <color key="backgroundColor" name="ImageEditorBackground"/>
                             </view>
                             <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditor" hidden="YES" misplaced="YES">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
@@ -3544,8 +3532,8 @@
                                     </imageView>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorCancel" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_cross48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_cross48.png"/>
+                                        <state key="normal" backgroundImage="IcCross"/>
+                                        <state key="highlighted" backgroundImage="IcCross"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EditImageEditorCancel0"/>
                                             <constraint firstAttribute="height" constant="48" id="EditImageEditorCancel1"/>
@@ -3553,8 +3541,8 @@
                                     </button>
                                     <button contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EditImageEditorOK" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                        <state key="normal" backgroundImage="ic_check48.png"/>
-                                        <state key="highlighted" backgroundImage="ic_check48.png"/>
+                                        <state key="normal" backgroundImage="IcCheck"/>
+                                        <state key="highlighted" backgroundImage="IcCheck"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EditImageEditorOK0"/>
                                             <constraint firstAttribute="height" constant="48" id="EditImageEditorOK1"/>
@@ -3831,8 +3819,8 @@
                             </imageView>
                             <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LocationBack" misplaced="YES">
                                 <rect key="frame" x="10" y="17.5" width="35" height="35"/>
-                                <state key="normal" backgroundImage="ic_back.png"/>
-                                <state key="highlighted" backgroundImage="ic_back.png"/>
+                                <state key="normal" backgroundImage="IcBack"/>
+                                <state key="highlighted" backgroundImage="IcBack"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="LocationBack0"/>
                                     <constraint firstAttribute="width" constant="35" id="LocationBack1"/>
@@ -3908,8 +3896,8 @@
                             </imageView>
                             <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HelpCenterBack">
                                 <rect key="frame" x="10" y="30" width="35" height="35"/>
-                                <state key="normal" backgroundImage="ic_back.png"/>
-                                <state key="highlighted" backgroundImage="ic_back.png"/>
+                                <state key="normal" backgroundImage="IcBack"/>
+                                <state key="highlighted" backgroundImage="IcBack"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="HelpCenterBack0"/>
                                     <constraint firstAttribute="width" constant="35" id="HelpCenterBack1"/>
@@ -3930,7 +3918,7 @@
                                 <state key="normal" title="OpenTutorial">
                                     <color key="titleColor" name="PrimaryDark"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                         <real key="value" value="4"/>
@@ -3982,7 +3970,7 @@
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <inset key="contentEdgeInsets" minX="16" minY="0" maxX="16" maxY="0"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
@@ -4016,8 +4004,8 @@
                                     </imageView>
                                     <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialBack">
                                         <rect key="frame" x="10" y="10" width="35" height="35"/>
-                                        <state key="normal" backgroundImage="ic_back.png"/>
-                                        <state key="highlighted" backgroundImage="ic_back.png"/>
+                                        <state key="normal" backgroundImage="IcBack"/>
+                                        <state key="highlighted" backgroundImage="IcBack"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="TutorialBack0"/>
                                             <constraint firstAttribute="width" constant="35" id="TutorialBack1"/>
@@ -4082,7 +4070,7 @@
                                             <constraint firstAttribute="width" constant="25" id="RippleTutorial21"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="ic_previous_list_45x45.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadPreviousBg">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="IcPrevious45" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadPreviousBg">
                                         <rect key="frame" x="66.5" y="0.0" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="TutorialLoadPreviousBg0"/>
@@ -4100,7 +4088,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="ic_next_list_45x45.png" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNextBg">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="IcNext45" translatesAutoresizingMaskIntoConstraints="NO" id="TutorialLoadNextBg">
                                         <rect key="frame" x="264" y="0.0" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="TutorialLoadNextBg0"/>
@@ -4279,8 +4267,8 @@
                                     </imageView>
                                     <button contentMode="scaleAspectFit" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBack">
                                         <rect key="frame" x="10" y="10" width="35" height="35"/>
-                                        <state key="normal" backgroundImage="ic_back.png"/>
-                                        <state key="highlighted" backgroundImage="ic_back.png"/>
+                                        <state key="normal" backgroundImage="IcBack"/>
+                                        <state key="highlighted" backgroundImage="IcBack"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="SettingsBack0"/>
                                             <constraint firstAttribute="width" constant="35" id="SettingsBack1"/>
@@ -4542,7 +4530,7 @@
                                         <state key="normal" title="LocationHistoryButton">
                                             <color key="titleColor" name="PrimaryDark"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                        <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
                                                 <real key="value" value="4"/>
@@ -4593,7 +4581,7 @@
                                                     <color key="titleColor" name="PrimaryDark"/>
                                                 </state>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                                <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                                 <inset key="contentEdgeInsets" minX="16" minY="0" maxX="16" maxY="0"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
@@ -4611,7 +4599,7 @@
                                                     <color key="titleColor" name="PrimaryDark"/>
                                                 </state>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="highlighted" backgroundImage="color_a3a3a3.png"/>
+                                                <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                                 <inset key="contentEdgeInsets" minX="16" minY="0" maxX="16" maxY="0"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
@@ -4843,30 +4831,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_reload_pulldown.png" width="200" height="200"/>
-        <image name="color_cfa656.png" width="1" height="1"/>
-        <image name="color_d4b77d.png" width="1" height="1"/>
-        <image name="color_d7c7a5.png" width="1" height="1"/>
-        <image name="color_e09ca7.png" width="1" height="1"/>
-        <image name="color_a3a3a3.png" width="1" height="1"/>
-        <image name="ic_chat_two.png" width="96" height="96"/>
-        <image name="ic_lightning.png" width="96" height="96"/>
-        <image name="ic_registered.png" width="96" height="96"/>
-        <image name="ic_back.png" width="140" height="140"/>
-        <image name="color_9b9b9b.png" width="1" height="1"/>
-        <image name="ic_next.png" width="240" height="240"/>
-        <image name="ic_profile_back.png" width="240" height="240"/>
-        <image name="ic_previous.png" width="240" height="240"/>
-        <image name="ic_hide.png" width="240" height="240"/>
-        <image name="ic_like.png" width="240" height="240"/>
-        <image name="IcGrid" width="240" height="240"/>
-        <image name="ic_send.png" width="144" height="144"/>
-        <image name="IcNextList" width="140" height="116"/>
-        <image name="IcPreviousList" width="140" height="116"/>
-        <image name="ic_check48.png" width="192" height="192"/>
-        <image name="ic_cross48.png" width="192" height="192"/>
-        <image name="ic_previous_list_45x45.png" width="180" height="180"/>
-        <image name="ic_next_list_45x45.png" width="180" height="180"/>
         <namedColor name="ContentBackground">
             <color colorSpace="custom" customColorSpace="sRGB" red="0.9490196" green="0.9490196" blue="0.9490196" alpha="1"/>
         </namedColor>

@@ -181,11 +181,11 @@ namespace LocationConnection
 
                 if (active)
                 {
-                    view.BackgroundColor = UIColor.FromRGB(179, 146, 107);
+                    view.BackgroundColor = UIColor.FromName("ChatTargetDark");
                 }
                 else
                 {
-                    view.BackgroundColor = UIColor.FromRGB(179, 127, 135);
+                    view.BackgroundColor = UIColor.FromName("ChatPassiveDark");
                 }
                 pressed = true;
             }
@@ -202,12 +202,12 @@ namespace LocationConnection
 
                 if (active)
                 {
-                    view.BackgroundColor = UIColor.FromRGB(246, 226, 187);
+                    view.BackgroundColor = UIColor.FromName("ChatTarget");
 
                 }
                 else
                 {
-                    view.BackgroundColor = UIColor.FromRGB(255, 179, 190);
+                    view.BackgroundColor = UIColor.FromName("ChatPassive");
                 }
                 pressed = false;
             }

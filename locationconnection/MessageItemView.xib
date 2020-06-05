@@ -18,12 +18,12 @@
                 <textView text="MessageText" scrollEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MessageText" ambiguous="YES" misplaced="YES">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="722.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="1"/>
+                    <color key="textColor" name="PrimaryDark"/>
                 </textView>
                 <label text="TimeText" contentMode="scaleToFill" lineBreakMode="tailTruncation" opaque="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TimeText" ambiguous="YES" customClass="InsetLabel" misplaced="YES">
                     <rect key="frame" x="0.0" y="722.5" width="414" height="13.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                    <color key="textColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.376" alpha="1"/>
+                    <color key="textColor" name="ChatTimeText"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="TopInset">
                             <real key="value" value="3"/>
@@ -47,4 +47,12 @@
             </constraints>
         </view>
     </objects>
+    <resources>
+        <namedColor name="PrimaryDark">
+            <color colorSpace="custom" customColorSpace="sRGB" red="0" green="0" blue="0" alpha="1"/>
+        </namedColor>
+        <namedColor name="ChatTimeText">
+            <color colorSpace="custom" customColorSpace="sRGB" red="0" green="0" blue="0" alpha="1"/>
+        </namedColor>
+    </resources>
 </document>

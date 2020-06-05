@@ -15,8 +15,6 @@
         <view contentMode="scaleToFill" id="1" translatesAutoresizingMaskIntoConstraints="YES">
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <!-- #dfdfdf, loadingimage.png -->
-            <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.8745" alpha="1"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="720" translatesAutoresizingMaskIntoConstraints="NO">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
@@ -27,8 +25,8 @@
                         <constraint id="3614" firstAttribute="height" constant="28"/>
                         <constraint id="4763" firstAttribute="width" constant="28"/>
                     </constraints>
-                    <state key="normal" backgroundImage="ic_delete.png" />
-                    <state key="highlighted" backgroundImage="ic_delete_pressed.png" />
+                    <state key="normal" backgroundImage="IcDelete" />
+                    <state key="highlighted" backgroundImage="IcDeletePressed" />
                 </button>
             </subviews>
             <constraints>
@@ -42,7 +40,4 @@
             <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
         </view>
     </objects>
-    <resources>
-        <image name="ic_delete.png" width="96" height="96"/>
-    </resources>
 </document>

@@ -37,16 +37,16 @@ namespace LocationConnection
                 {
                     if (!item.sent)
                     {
-                        cell.ContentView.BackgroundColor = UIColor.FromRGB(74, 207, 140); //hsl(150, 58%, 55%)
+                        cell.ContentView.BackgroundColor = UIColor.FromName("LocationForegroundSelected"); //hsl(150, 58%, 55%)
                     }
                     else
                     {
-                        cell.ContentView.BackgroundColor = UIColor.FromRGB(234, 131, 97); //hsl(15, 77%, 65%)
+                        cell.ContentView.BackgroundColor = UIColor.FromName("LocationSentSelected"); //hsl(15, 77%, 65%)
                     }
                 }
                 else
                 {
-                    cell.ContentView.BackgroundColor = UIColor.FromRGB(229, 170, 52); //hsl(40, 77%, 55%)
+                    cell.ContentView.BackgroundColor = UIColor.FromName("LocationBackgroundSelected"); //hsl(40, 77%, 55%)
                 }
             }
             else
@@ -55,16 +55,16 @@ namespace LocationConnection
                 {
                     if (!item.sent)
                     {
-                        cell.ContentView.BackgroundColor = UIColor.FromRGB(195, 239, 217); //85%
+                        cell.ContentView.BackgroundColor = UIColor.FromName("LocationForeground"); //85%
                     }
                     else
                     {
-                        cell.ContentView.BackgroundColor = UIColor.FromRGB(246, 202, 187);
+                        cell.ContentView.BackgroundColor = UIColor.FromName("LocationSent");
                     }
                 }
                 else
                 {
-                    cell.ContentView.BackgroundColor = UIColor.FromRGB(246, 226, 187);
+                    cell.ContentView.BackgroundColor = UIColor.FromName("LocationBackground");
                 }
             }
 
