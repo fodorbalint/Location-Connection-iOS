@@ -318,7 +318,7 @@ namespace LocationConnection
         {
 			UIBezierPath path = UIBezierPath.FromOval(view.Bounds);
 			view.Layer.MasksToBounds = false;
-			view.Layer.ShadowColor = UIColor.Gray.CGColor;
+			view.Layer.ShadowColor = UIColor.FromName("ImageEditorBackground").CGColor;
 			view.Layer.ShadowOffset = new CoreGraphics.CGSize(x, y);
 			view.Layer.ShadowOpacity = 0.35f;
 			view.Layer.ShadowPath = path.CGPath;

@@ -73,6 +73,7 @@ namespace LocationConnection
                 DescriptionText.Delegate = this;
 
                 Images.Layer.MasksToBounds = true;
+                CheckUsername.Layer.MasksToBounds = true;
                 Save.Layer.MasksToBounds = true;
                 Cancel.Layer.MasksToBounds = true;
                 DeactivateAccount.Layer.MasksToBounds = true;
@@ -86,7 +87,7 @@ namespace LocationConnection
                 c.CollapseY(MoreOptionsSection);
                 LoaderCircle.Hidden = true;
 
-                ImageEditorFrameBorder.Layer.BorderColor = UIColor.Black.CGColor;
+                ImageEditorFrameBorder.Layer.BorderColor = UIColor.FromName("PrimaryDark").CGColor;
                 ImageEditorFrameBorder.Layer.BorderWidth = 1;
 
                 rc = new RegisterCommonMethods(this, c, ImagesUploaded, Email, Username, Name, DescriptionText, CheckUsername, Images,

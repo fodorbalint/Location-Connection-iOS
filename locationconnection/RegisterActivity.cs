@@ -81,7 +81,7 @@ namespace LocationConnection
 
                 LoaderCircle.Hidden = true;
 
-                ImageEditorFrameBorder.Layer.BorderColor = UIColor.Black.CGColor;
+                ImageEditorFrameBorder.Layer.BorderColor = UIColor.FromName("PrimaryDark").CGColor;
                 ImageEditorFrameBorder.Layer.BorderWidth = 1;
 
                 rc = new RegisterCommonMethods(this, c, ImagesUploaded, Email, Username, Name, DescriptionText, CheckUsername, Images,

@@ -170,12 +170,12 @@ namespace LocationConnection
                     if (BackgroundLocation.On)
                     {
                         BackgroundLocationRate.Enabled = true;
-                        BackgroundLocationRateValue.TextColor = UIColor.FromRGB(0, 0, 0);
+                        BackgroundLocationRateValue.TextColor = UIColor.FromName("PrimaryDark");
                     }
                     else
                     {
                         BackgroundLocationRate.Enabled = false;
-                        BackgroundLocationRateValue.TextColor = UIColor.FromRGB(128, 128, 128);
+                        BackgroundLocationRateValue.TextColor = UIColor.FromName("ImageEditorBackground");
                     }
                     InAppLocationRate.Value = (int)Session.InAppLocationRate;
                     InAppLocationRateValue.Text = GetTimeString((int)Session.InAppLocationRate);
@@ -349,12 +349,12 @@ namespace LocationConnection
             if (BackgroundLocation.On)
             {
                 BackgroundLocationRate.Enabled = true;
-                BackgroundLocationRateValue.TextColor = UIColor.FromRGB(0, 0, 0);
+                BackgroundLocationRateValue.TextColor = UIColor.FromName("PrimaryDark");
             }
             else
             {
                 BackgroundLocationRate.Enabled = false;
-                BackgroundLocationRateValue.TextColor = UIColor.FromRGB(128, 128, 128);
+                BackgroundLocationRateValue.TextColor = UIColor.FromName("ImageEditorBackground");
             }
         }
 

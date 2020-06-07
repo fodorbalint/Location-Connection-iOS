@@ -1322,7 +1322,7 @@ namespace LocationConnection
 		public void SetShadow(UIView view, float x, float y, float radius)
 		{
 			view.Layer.MasksToBounds = false;
-			view.Layer.ShadowColor = UIColor.Gray.CGColor;
+			view.Layer.ShadowColor = UIColor.FromName("ImageEditorBackground").CGColor;
 			view.Layer.ShadowOffset = new CoreGraphics.CGSize(x, y);
 			view.Layer.ShadowOpacity = .5f;
 			view.Layer.ShadowRadius = radius;
@@ -1341,7 +1341,7 @@ namespace LocationConnection
 			}
 			
 			view.Layer.MasksToBounds = false;
-			view.Layer.ShadowColor = UIColor.Gray.CGColor;
+			view.Layer.ShadowColor = UIColor.FromName("ImageEditorBackground").CGColor;
 			view.Layer.ShadowOffset = new CoreGraphics.CGSize(x, y);
 			view.Layer.ShadowOpacity = 0.35f;
 			view.Layer.ShadowRadius = shadowRadius;
@@ -1350,7 +1350,7 @@ namespace LocationConnection
 
 		public void DrawBorder(UITextView view)
         {
-			view.Layer.BorderColor = UIColor.FromWhiteAlpha(0.804f, 1).CGColor; //d3 = 211
+			view.Layer.BorderColor = UIColor.FromName("TextBorder").CGColor; //d3 = 211
 			view.Layer.BorderWidth = 1;
 			view.Layer.CornerRadius = 5;
 			view.TextContainerInset = new UIEdgeInsets(7, 2, 7, 2);

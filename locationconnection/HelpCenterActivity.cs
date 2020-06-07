@@ -41,6 +41,7 @@ namespace LocationConnection
                 OpenTutorial.SetTitle(LangEnglish.HelpCenterTutorial, UIControlState.Normal);
                 TutorialFrame.Delegate = this;
 
+                OpenTutorial.Layer.MasksToBounds = true;
                 MessageSend.Layer.MasksToBounds = true;
 
                 var tap = new UITapGestureRecognizer();
@@ -79,7 +80,7 @@ namespace LocationConnection
                         QuestionsScroll.AddSubview(text);
 
                         text.Text = line;
-                        text.TextColor = UIColor.Black;
+                        text.TextColor = UIColor.FromName("PrimaryDary");
                         text.Lines = 0;
                         text.LineBreakMode = UILineBreakMode.WordWrap;
 

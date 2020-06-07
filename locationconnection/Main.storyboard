@@ -1140,7 +1140,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="CheckAvailability">
-                                            <color key="textColor" name="PrimaryDark"/>
+                                            <color key="titleColor" name="PrimaryDark"/>
                                         </state>
                                         <state key="highlighted" backgroundImage="Color_ButtonOnWhiteHighlight"/>
                                         <userDefinedRuntimeAttributes>

@@ -129,7 +129,7 @@ namespace LocationConnection
                     }
                     else
                     {
-                        lineView.StrokeColor = UIColor.Black;
+                        lineView.StrokeColor = UIColor.FromName("PrimaryDark");
                         lineView.LineWidth = 3f;
                     }
                     return lineView;
@@ -144,9 +144,9 @@ namespace LocationConnection
             {
                 var circleOverlay = overlay as MKCircle;
                 var circleView = new MKCircleView(circleOverlay);
-                circleView.FillColor = UIColor.FromRGBA(0, 205, 0, 18);
+                circleView.FillColor = UIColor.FromName("MapCircle");
                 circleView.LineWidth = 0.5f;
-                circleView.StrokeColor = UIColor.Black;
+                circleView.StrokeColor = UIColor.FromName("PrimaryDark");
                 return circleView;
             }            
         }

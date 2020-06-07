@@ -107,6 +107,7 @@
       "idiom": "universal"
     },
     {
+      "filename": "ic_menu_white_2x.png",
       "appearances": [
         {
           "appearance": "luminosity",
@@ -117,6 +118,7 @@
       "idiom": "universal"
     },
     {
+      "filename": "ic_menu_white_3x.png",
       "appearances": [
         {
           "appearance": "luminosity",

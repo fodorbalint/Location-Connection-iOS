@@ -67,7 +67,7 @@ namespace LocationConnection
 
 			File.WriteAllText(deviceTokenFile, tokenString);
 
-			if (Session.Token != tokenString)
+			if (Session.Token != tokenString && !string.IsNullOrEmpty(Session.SessionID)) //when logging out, SessionID will be empty
             {
 				Console.WriteLine("Token is new.");
 				CommonMethods.LogActivityStatic("Token is new.");

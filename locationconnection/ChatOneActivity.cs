@@ -187,28 +187,33 @@ namespace LocationConnection
 
         public async void RefreshPage() //called whenever ChatOneActivity enters foreground, either from a notification tap or not.
 		{
-            if (IntentData.senderID != null) 
-            {
-				View.EndEditing(true);
-				ChatEditMessage.Text = "";
-
-				string responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + (int)IntentData.senderID);
-
+			int targetID;
+			if (IntentData.senderID != null)
+			{
+				targetID = (int)IntentData.senderID;
 				IntentData.senderID = null;
+				ChatEditMessage.Text = "";
+				View.EndEditing(true);
+			}
+            else
+            {
+				targetID = (int)currentMatch.TargetID;
+            }
 
-				if (responseString.Substring(0, 2) == "OK")
-				{
-					LoadMessages(responseString, false);
-				}
-				else if (responseString == "ERROR_MatchNotFound") //user deleted itself while the other was on its standalone page, and now loading chat. Chat remains, but userid does not exist anymore. 
-				{
-					Session.SnackMessage = LangEnglish.MatchNotFound;
-					CommonMethods.OpenPage(null, 0);
-				}
-				else
-				{
-					c.ReportError(responseString);
-				}
+			string responseString = await c.MakeRequest("action=loadmessages&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&TargetID=" + targetID);
+
+			if (responseString.Substring(0, 2) == "OK")
+			{
+				LoadMessages(responseString, false);
+			}
+			else if (responseString == "ERROR_MatchNotFound") //user deleted itself while the other was on its standalone page, and now loading chat. Chat remains, but userid does not exist anymore. 
+			{
+				Session.SnackMessage = LangEnglish.MatchNotFound;
+				CommonMethods.OpenPage(null, 0);
+			}
+			else
+			{
+				c.ReportError(responseString);
 			}
 		}
 
