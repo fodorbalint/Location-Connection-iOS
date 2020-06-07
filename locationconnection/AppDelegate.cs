@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using CoreLocation;
 using Firebase.CloudMessaging;
 using Foundation;
@@ -18,7 +19,6 @@ namespace LocationConnection
         public UIWindow Window { get; set; }
 
         private string deviceTokenFile = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "devicetoken.txt");
-        private string tokenUptoDateFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "tokenuptodate.txt");
 		private string notificationRequestFile = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "notificationrequest.txt");
 
 		[Export ("application:didFinishLaunchingWithOptions:")]
@@ -26,7 +26,7 @@ namespace LocationConnection
         {
 			Console.WriteLine("Launchoptions: " + launchOptions);
 
-            Firebase.Core.App.Configure();
+            //Firebase.Core.App.Configure();
 
             if (!File.Exists(notificationRequestFile))
             {
@@ -34,34 +34,61 @@ namespace LocationConnection
 			}
 
 			UNUserNotificationCenter.Current.Delegate = this;
-            Messaging.SharedInstance.Delegate = this;    
 
-            var token = Messaging.SharedInstance.FcmToken ?? "";
-            Console.WriteLine($"Existing FCM token: {token}");
+            //Messaging.SharedInstance.Delegate = this;    
+
+            //var token = Messaging.SharedInstance.FcmToken ?? "";
+            //Console.WriteLine($"Existing FCM token: {token}");
 
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             return true;
         }
 
-        [Export ("messaging:didReceiveRegistrationToken:")]
-        public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
-        {
-            Console.WriteLine($"DidReceiveRegistrationToken: token: {fcmToken}");
+		/*[Export("messaging:didReceiveRegistrationToken:")]
+		public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
+		{
+			Console.WriteLine($"DidReceiveRegistrationToken: token: {fcmToken}");
 			CommonMethods.LogActivityStatic("DidReceiveRegistrationToken: token length " + fcmToken.Length);
 
 			File.WriteAllText(deviceTokenFile, fcmToken);
-            File.WriteAllText(tokenUptoDateFile, "False");
-            // DO: If necessary send token to application server.
-            // Note: This callback is fired at each app startup and whenever a new token is generated.
-        }
+		}*/
 
         [Export("application:didRegisterForRemoteNotificationsWithDeviceToken:")]
         public void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
-			Console.WriteLine("RegisteredForRemoteNotifications");
+
+			//var tokenString = deviceToken.GetBase64EncodedString(NSDataBase64EncodingOptions.None);
+			byte[] bytes = deviceToken.ToArray<byte>();
+			string[] hexArray = bytes.Select(b => b.ToString("x2")).ToArray();
+			string tokenString = string.Join(string.Empty, hexArray);
+
+			Console.WriteLine("Registered	ForRemoteNotifications " + tokenString + " Session.Token " + Session.Token);
 			CommonMethods.LogActivityStatic("RegisteredForRemoteNotifications");
-        }
+
+			File.WriteAllText(deviceTokenFile, tokenString);
+
+			if (Session.Token != tokenString)
+            {
+				Console.WriteLine("Token is new.");
+				CommonMethods.LogActivityStatic("Token is new.");
+				string url = "action=updatetoken&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&token=" + CommonMethods.UrlEncode(tokenString) + "&ios=1";
+				string responseString = CommonMethods.MakeRequestSyncStatic(url);
+				if (responseString.Substring(0, 2) == "OK")
+				{
+					Session.Token = tokenString;
+				}
+				else
+				{
+					CommonMethods.ReportErrorSilentStatic(responseString);	
+				}
+			}
+			else
+            {
+				Console.WriteLine("Token is up to date.");
+				CommonMethods.LogActivityStatic("Token is up to date.");
+			}
+		}
 
 		[Export("userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:")] //does it come after autologin?
 		public void DidReceiveNotificationResponse(UNUserNotificationCenter center, UNNotificationResponse response, Action //called when app is in background, and user taps on notification

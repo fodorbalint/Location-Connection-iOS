@@ -627,7 +627,7 @@ namespace LocationConnection
 				ChatSendMessage.Enabled = false; //to prevent mulitple clicks
 				ChatSendMessage.Alpha = 0.5f;
 
-				string responseString = await c.MakeRequest("action=sendmessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + currentMatch.MatchID + "&message=" + c.UrlEncode(message));
+				string responseString = await c.MakeRequest("action=sendmessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&MatchID=" + currentMatch.MatchID + "&message=" + CommonMethods.UrlEncode(message));
 				if (responseString.Substring(0, 2) == "OK")
 				{
 					ChatEditMessage.Text = "";

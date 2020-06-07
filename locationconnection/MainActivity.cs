@@ -169,12 +169,7 @@ namespace LocationConnection
                 LoginDone.Enabled = false;
                 LoginDone.Alpha = 0.5f;
 
-                string url = "action=login&User=" + c.UrlEncode(LoginEmail.Text.Trim()) + "&Password=" + c.UrlEncode(LoginPassword.Text.Trim());
-
-                if (File.Exists(deviceTokenFile)) //sends the token whether it was already sent from this device or not
-                {
-                    url += "&token=" + File.ReadAllText(deviceTokenFile) + "&ios=1";
-                }
+                string url = "action=login&User=" + CommonMethods.UrlEncode(LoginEmail.Text.Trim()) + "&Password=" + CommonMethods.UrlEncode(LoginPassword.Text.Trim());
 
                 string responseString = await c.MakeRequest(url);
                 if (responseString.Substring(0, 2) == "OK")
@@ -186,10 +181,6 @@ namespace LocationConnection
                     if (File.Exists(regSaveFile))
                     {
                         File.Delete(regSaveFile);
-                    }
-                    if (File.Exists(deviceTokenFile))
-                    {
-                        File.WriteAllText(tokenUptoDateFile, "True");
                     }
 
                     c.LoadCurrentUser(responseString);
@@ -266,7 +257,7 @@ namespace LocationConnection
                 ResetSendButton.Enabled = false;
                 ResetSendButton.Alpha = 0.5f;
 
-                string url = "action=resetpassword&Email=" + c.UrlEncode(ResetEmail.Text.Trim());
+                string url = "action=resetpassword&Email=" + CommonMethods.UrlEncode(ResetEmail.Text.Trim());
 
                 string responseString = await c.MakeRequest(url);
                 if (responseString.Substring(0, 2) == "OK")

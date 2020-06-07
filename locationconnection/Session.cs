@@ -47,6 +47,8 @@ namespace LocationConnection
 		public static byte? DistanceShare;
 		public static bool? ActiveAccount;
 
+		public static string Token;
+
 		//------ Options stored in database / local settings 
 
 		public static string SearchTerm;

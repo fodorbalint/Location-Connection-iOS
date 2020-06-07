@@ -681,9 +681,19 @@ namespace LocationConnection
 		private void SetPercentProgress(float responseRate)
 		{
 			c.SetWidth(PercentProgress, percentProgresssWidth * responseRate);
-			byte red = (byte)(192 - (byte)Math.Round(192 * responseRate));
-			byte green = (byte)Math.Round(192 * responseRate);
-			byte blue = 0;
+			byte red, green, blue;
+			if (TraitCollection.UserInterfaceStyle == UIUserInterfaceStyle.Dark)
+            {
+				red = (byte)(255 - (byte)Math.Round(192 * responseRate));
+				green = (byte)Math.Round(63 + 192 * responseRate);
+				blue = 63;
+			}
+			else
+            {
+				red = (byte)(192 - (byte)Math.Round(192 * responseRate));
+				green = (byte)Math.Round(192 * responseRate);
+				blue = 0;
+			}
 			UIColor color = UIColor.FromRGB(red, green, blue);
 			PercentProgress.BackgroundColor = color;
 		}

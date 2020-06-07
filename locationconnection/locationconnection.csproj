@@ -197,6 +197,9 @@
         <Folder Include="Assets.xcassets\LocationSentSelected.colorset\" />
         <Folder Include="Assets.xcassets\ChatBackgroundDark.colorset\" />
         <Folder Include="Assets.xcassets\ContentBackground90.colorset\" />
+        <Folder Include="Assets.xcassets\Checkbox.imageset\" />
+        <Folder Include="Assets.xcassets\CheckboxDisabled.imageset\" />
+        <Folder Include="Assets.xcassets\CheckboxChecked.imageset\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="Main.storyboard" />
@@ -282,9 +285,6 @@
         <Compile Include="UserLocationData.cs" />
     </ItemGroup>
     <ItemGroup>
-      <BundleResource Include="Resources\check_checked.png" />
-      <BundleResource Include="Resources\check_disabled.png" />
-      <BundleResource Include="Resources\check_unchecked.png" />
       <BundleResource Include="Resources\noimage_hd.png" />
       <BundleResource Include="Resources\noimage.png" />
       <BundleResource Include="GoogleService-Info.plist" />
@@ -685,6 +685,21 @@
       <ImageAsset Include="Assets.xcassets\LocationSentSelected.colorset\Contents.json" />
       <ImageAsset Include="Assets.xcassets\ChatBackgroundDark.colorset\Contents.json" />
       <ImageAsset Include="Assets.xcassets\ContentBackground90.colorset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\Checkbox.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\CheckboxDisabled.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\CheckboxChecked.imageset\Contents.json" />
+      <ImageAsset Include="Assets.xcassets\Checkbox.imageset\checkbox_light_2x.png" />
+      <ImageAsset Include="Assets.xcassets\Checkbox.imageset\checkbox_light_3x.png" />
+      <ImageAsset Include="Assets.xcassets\Checkbox.imageset\checkbox_dark_2x.png" />
+      <ImageAsset Include="Assets.xcassets\Checkbox.imageset\checkbox_dark_3x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxChecked.imageset\checkbox_checked_light_2x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxChecked.imageset\checkbox_checked_light_3x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxChecked.imageset\checkbox_checked_dark_2x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxChecked.imageset\checkbox_checked_dark_3x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxDisabled.imageset\checkbox_disabled_light_2x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxDisabled.imageset\checkbox_disabled_light_3x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxDisabled.imageset\checkbox_disabled_dark_2x.png" />
+      <ImageAsset Include="Assets.xcassets\CheckboxDisabled.imageset\checkbox_disabled_dark_3x.png" />
     </ItemGroup>
     <ItemGroup>
       <ITunesArtwork Include="iTunesArtwork" />

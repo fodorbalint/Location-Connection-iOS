@@ -184,7 +184,7 @@ namespace LocationConnection
                 MessageSend.Enabled = false;
                 MessageSend.Alpha = 0.5f;
 
-                string url = "action=helpcentermessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&Content=" + c.UrlEncode(MessageEdit.Text);
+                string url = "action=helpcentermessage&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&Content=" + CommonMethods.UrlEncode(MessageEdit.Text);
                 string responseString = await c.MakeRequest(url);
                 if (responseString == "OK")
                 {

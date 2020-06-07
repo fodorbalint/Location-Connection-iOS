@@ -23,8 +23,8 @@ namespace LocationConnection
 
 		public CheckBox(IntPtr p) : base(p)
 		{
-			SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Normal);
-			SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Highlighted);
+			SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Normal);
+			SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Highlighted);
 		}
 
 		private void SetChecked(bool value)
@@ -35,13 +35,13 @@ namespace LocationConnection
             {
 				if (value)
 				{
-					SetImage(UIImage.FromBundle("check_checked.png"), UIControlState.Normal);
-					SetImage(UIImage.FromBundle("check_checked.png"), UIControlState.Highlighted);
+					SetImage(UIImage.FromBundle("CheckboxChecked"), UIControlState.Normal);
+					SetImage(UIImage.FromBundle("CheckboxChecked"), UIControlState.Highlighted);
 				}
 				else
 				{
-					SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Normal);
-					SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Highlighted);
+					SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Normal);
+					SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Highlighted);
 				}
 			}
 		}
@@ -58,19 +58,19 @@ namespace LocationConnection
 			{
                 if (_Checked)
                 {
-					SetImage(UIImage.FromBundle("check_checked.png"), UIControlState.Normal);
-					SetImage(UIImage.FromBundle("check_checked.png"), UIControlState.Highlighted);
+					SetImage(UIImage.FromBundle("CheckboxChecked"), UIControlState.Normal);
+					SetImage(UIImage.FromBundle("CheckboxChecked"), UIControlState.Highlighted);
 				}
                 else
                 {
-					SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Normal);
-					SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Highlighted);
+					SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Normal);
+					SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Highlighted);
 				}				
 			}
 			else
 			{
-				SetImage(UIImage.FromBundle("check_disabled.png"), UIControlState.Normal);
-				SetImage(UIImage.FromBundle("check_disabled.png"), UIControlState.Highlighted);
+				SetImage(UIImage.FromBundle("CheckboxDisabled"), UIControlState.Normal);
+				SetImage(UIImage.FromBundle("CheckboxDisabled"), UIControlState.Highlighted);
 			}
 		}
 
@@ -94,14 +94,14 @@ namespace LocationConnection
 				if (!_Checked)
 				{
 					_Checked = true;
-					SetImage(UIImage.FromBundle("check_checked.png"), UIControlState.Normal);
-					SetImage(UIImage.FromBundle("check_checked.png"), UIControlState.Highlighted);
+					SetImage(UIImage.FromBundle("CheckboxChecked"), UIControlState.Normal);
+					SetImage(UIImage.FromBundle("CheckboxChecked"), UIControlState.Highlighted);
 				}
 				else
 				{
 					_Checked = false;
-					SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Normal);
-					SetImage(UIImage.FromBundle("check_unchecked.png"), UIControlState.Highlighted);
+					SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Normal);
+					SetImage(UIImage.FromBundle("Checkbox"), UIControlState.Highlighted);
 				}
 			}
 			

@@ -211,6 +211,7 @@ namespace LocationConnection
                     string s = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: 12px\">" + responseString.Substring(3) + "</span>";
                     var htmlString = new NSAttributedString(s, new NSAttributedStringDocumentAttributes { DocumentType = NSDocumentType.HTML }, ref error);
                     EulaText.AttributedText = htmlString;
+                    EulaText.TextColor = UIColor.FromName("PrimaryDark");
                 }
                 else
                 {
@@ -282,15 +283,11 @@ namespace LocationConnection
                     distanceShare = rc.GetDistanceShareLevel();
                 }
 
-                string url = "action=register&Sex=" + (Sex.SelectedRowInComponent(0) - 1) + "&Email=" + c.UrlEncode(Email.Text.Trim()) + "&Password=" + c.UrlEncode(Password.Text.Trim())
-                    + "&Username=" + c.UrlEncode(Username.Text.Trim()) + "&Name=" + c.UrlEncode(Name.Text.Trim())
-                    + "&Pictures=" + c.UrlEncode(string.Join("|", rc.uploadedImages)) + "&Description=" + c.UrlEncode(DescriptionText.Text) + "&UseLocation=" + UseLocationSwitch.On
+                string url = "action=register&Sex=" + (Sex.SelectedRowInComponent(0) - 1) + "&Email=" + CommonMethods.UrlEncode(Email.Text.Trim()) + "&Password=" + CommonMethods.UrlEncode(Password.Text.Trim())
+                    + "&Username=" + CommonMethods.UrlEncode(Username.Text.Trim()) + "&Name=" + CommonMethods.UrlEncode(Name.Text.Trim())
+                    + "&Pictures=" + CommonMethods.UrlEncode(string.Join("|", rc.uploadedImages)) + "&Description=" + CommonMethods.UrlEncode(DescriptionText.Text) + "&UseLocation=" + UseLocationSwitch.On
                     + "&LocationShare=" + locationShare + "&DistanceShare=" + distanceShare + "&regsessionid=" + regsessionid;
 
-                if (File.Exists(deviceTokenFile)) //sends the token whether it was sent from this device or not
-                {
-                    url += "&token=" + File.ReadAllText(deviceTokenFile) + "&ios=1";
-                }
                 string responseString = await c.MakeRequest(url);
                 if (responseString.Substring(0, 2) == "OK")
                 {
@@ -304,11 +301,6 @@ namespace LocationConnection
                         File.Delete(regSaveFile);
                     }
                     registerCompleted = true; //to prevent OnPause from saving form data.
-
-                    if (File.Exists(deviceTokenFile))
-                    {
-                        File.WriteAllText(tokenUptoDateFile, "True");
-                    }
 
                     c.LoadCurrentUser(responseString);
 

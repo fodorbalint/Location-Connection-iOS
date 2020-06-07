@@ -21,7 +21,7 @@ Replace 1 with page number
 
 <view contentMode="scaleToFill" id="RoundBottom1" translatesAutoresizingMaskIntoConstraints="NO"> ----- Put it before views that should go on top -----
     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/> ----- Use desired color -----
-</view>
+</vi    ew>
 <view contentMode="scaleToFill" id="Snackbar1" customClass="Snackbar" translatesAutoresizingMaskIntoConstraints="NO" />
 
 secondItem="RoundBottom1" secondAttribute="top" ----- Link to the bottom element(s) -----
@@ -191,7 +191,7 @@ namespace LocationConnection
                 if (File.Exists(c.errorFile))
                 {
                     string url = "action=reporterror&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
-                    string content = "Content=" + c.UrlEncode(File.ReadAllText(c.errorFile) + System.Environment.NewLine
+                    string content = "Content=" + CommonMethods.UrlEncode(File.ReadAllText(c.errorFile) + System.Environment.NewLine
                         + "IOS version: " + "-----" + " " + "-----" + " " + System.Environment.NewLine + "-----" + System.Environment.NewLine + File.ReadAllText(CommonMethods.logFile));
                     string responseString = c.MakeRequestSync(url, "POST", content);
                     if (responseString == "OK")
@@ -226,14 +226,6 @@ namespace LocationConnection
 
                         string url = "action=loginsession&ID=" + strarr[0] + "&SessionID=" + strarr[1];
 
-                        if (File.Exists(deviceTokenFile))
-                        {
-                            if (bool.Parse(File.ReadAllText(tokenUptoDateFile)) == false)
-                            {
-                                url += "&token=" + File.ReadAllText(deviceTokenFile) + "&ios=1";
-                            }
-                        }
-
                         InvokeOnMainThread(() => {
                             ResultSet.Hidden = false;
                             ResultSet.Text = LangEnglish.LoggingIn;
@@ -242,10 +234,6 @@ namespace LocationConnection
                         string responseString = c.MakeRequestSync(url);
                         if (responseString.Substring(0, 2) == "OK")
                         {
-                            if (File.Exists(deviceTokenFile))
-                            {
-                                File.WriteAllText(tokenUptoDateFile, "True");
-                            }
                             c.LoadCurrentUser(responseString);
 
                             InvokeOnMainThread(() => {
@@ -2309,7 +2297,7 @@ namespace LocationConnection
                     "&Latitude=" + latitudeStr + "&Longitude=" + longitudeStr +
                     "&ListType=" + Session.ListType + "&SortBy=" + Session.SortBy + "&OrderBy=" + Session.OrderBy + "&GeoFilter=" + Session.GeoFilter +
                     "&GeoSourceOther=" + Session.GeoSourceOther + "&OtherLatitude=" + otherLatitudeStr + "&OtherLongitude=" + otherLongitudeStr +
-                    "&OtherAddress=" + c.UrlEncode(Session.OtherAddress) + "&DistanceLimit=" + Session.DistanceLimit + "&ResultsFrom=" + Session.ResultsFrom);
+                    "&OtherAddress=" + CommonMethods.UrlEncode(Session.OtherAddress) + "&DistanceLimit=" + Session.DistanceLimit + "&ResultsFrom=" + Session.ResultsFrom);
             }
             catch (Exception ex)
             {
@@ -2364,7 +2352,7 @@ namespace LocationConnection
 
                 LoadResults("action=listsearch&ID=" + Session.ID + "&SessionID=" + Session.SessionID
                     + "&Latitude=" + latitudeStr + "&Longitude=" + longitudeStr + "&ListType=" + Session.ListType
-                    + "&SortBy=" + Session.SortBy + "&OrderBy=" + Session.OrderBy + "&SearchTerm=" + c.UrlEncode(Session.SearchTerm)
+                    + "&SortBy=" + Session.SortBy + "&OrderBy=" + Session.OrderBy + "&SearchTerm=" + CommonMethods.UrlEncode(Session.SearchTerm)
                     + "&SearchIn=" + Session.SearchIn + "&ResultsFrom=" + Session.ResultsFrom);
             }
             catch (Exception ex)

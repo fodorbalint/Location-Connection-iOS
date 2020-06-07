@@ -324,7 +324,7 @@ namespace LocationConnection
                 string requestStringAdd = "";
                 if (DescriptionText.Text != Session.Description)
                 {
-                    requestStringAdd += "&Description=" + c.UrlEncode(DescriptionText.Text);
+                    requestStringAdd += "&Description=" + CommonMethods.UrlEncode(DescriptionText.Text);
                     c.CW("req-" + requestStringAdd + "-------------------");
                 }
                 if (GetSexChoice() != Session.SexChoice)
@@ -335,20 +335,20 @@ namespace LocationConnection
                 {
                     if (Email.Text.Trim() != Session.Email)
                     {
-                        requestStringAdd += "&Email=" + c.UrlEncode(Email.Text.Trim());
+                        requestStringAdd += "&Email=" + CommonMethods.UrlEncode(Email.Text.Trim());
                     }
                     if (Username.Text.Trim() != Session.Username)
                     {
-                        requestStringAdd += "&Username=" + c.UrlEncode(Username.Text.Trim());
+                        requestStringAdd += "&Username=" + CommonMethods.UrlEncode(Username.Text.Trim());
                     }
                     if (Name.Text.Trim() != Session.Name)
                     {
-                        requestStringAdd += "&Name=" + c.UrlEncode(Name.Text.Trim());
+                        requestStringAdd += "&Name=" + CommonMethods.UrlEncode(Name.Text.Trim());
                     }
                 }
                 if (ChangePasswordSection.Frame.Height != 0)
                 {
-                    requestStringAdd += "&OldPassword=" + c.UrlEncode(OldPassword.Text.Trim()) + "&Password=" + c.UrlEncode(NewPassword.Text.Trim());
+                    requestStringAdd += "&OldPassword=" + CommonMethods.UrlEncode(OldPassword.Text.Trim()) + "&Password=" + CommonMethods.UrlEncode(NewPassword.Text.Trim());
                 }
                 if (LocationSettingsSection.Frame.Height != 0)
                 {

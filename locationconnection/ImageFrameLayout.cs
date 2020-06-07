@@ -189,7 +189,7 @@ namespace LocationConnection
 
 			if (context is ProfileEditActivity)
 			{
-				string responseString = await context.c.MakeRequest("action=deleteexisting&imageName=" + context.c.UrlEncode(rc.uploadedImages[index]) + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
+				string responseString = await context.c.MakeRequest("action=deleteexisting&imageName=" + CommonMethods.UrlEncode(rc.uploadedImages[index]) + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
 				if (responseString.Substring(0, 2) == "OK")
 				{
 					rc.uploadedImages.RemoveAt(index);
@@ -212,7 +212,7 @@ namespace LocationConnection
 				context.c.LogActivity("DeleteUploadedImage_Click index: " + index + " count " + rc.uploadedImages.Count);
 				Console.WriteLine("DeleteUploadedImage_Click index: " + index + " count " + rc.uploadedImages.Count);
 
-				string responseString = await context.c.MakeRequest("action=deletetemp&imageName=" + context.c.UrlEncode(rc.uploadedImages[index]) + "&regsessionid=" + RegisterActivity.regsessionid);
+				string responseString = await context.c.MakeRequest("action=deletetemp&imageName=" + CommonMethods.UrlEncode(rc.uploadedImages[index]) + "&regsessionid=" + RegisterActivity.regsessionid);
 				if (responseString.Substring(0, 2) == "OK")
 				{
 					rc.uploadedImages.RemoveAt(index);
@@ -516,7 +516,7 @@ namespace LocationConnection
 						{
 							Task.Run(async () =>
 							{
-								string responseString = await context.c.MakeRequest("action=updatepictures&Pictures=" + context.c.UrlEncode(string.Join("|", ((ProfileEditActivity)context).rc.uploadedImages)) + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
+								string responseString = await context.c.MakeRequest("action=updatepictures&Pictures=" + CommonMethods.UrlEncode(string.Join("|", ((ProfileEditActivity)context).rc.uploadedImages)) + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
 								if (responseString.Substring(0, 2) == "OK")
 								{
 									Session.Pictures = ((ProfileEditActivity)context).rc.uploadedImages.ToArray();
@@ -563,7 +563,7 @@ namespace LocationConnection
 						{
 							Task.Run(async () =>
 							{
-								string responseString = await context.c.MakeRequest("action=updatepictures&Pictures=" + context.c.UrlEncode(string.Join("|", ((ProfileEditActivity)context).rc.uploadedImages)) + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
+								string responseString = await context.c.MakeRequest("action=updatepictures&Pictures=" + CommonMethods.UrlEncode(string.Join("|", ((ProfileEditActivity)context).rc.uploadedImages)) + "&ID=" + Session.ID + "&SessionID=" + Session.SessionID);
 								if (responseString.Substring(0, 2) == "OK")
 								{
 									Session.Pictures = ((ProfileEditActivity)context).rc.uploadedImages.ToArray();

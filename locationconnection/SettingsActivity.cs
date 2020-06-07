@@ -404,7 +404,7 @@ namespace LocationConnection
                 MessageSend.Alpha = 0.5f;
 
                 string url = "action=reporterror&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
-                string content = "Content=" + c.UrlEncode(MessageEdit.Text + Environment.NewLine
+                string content = "Content=" + CommonMethods.UrlEncode(MessageEdit.Text + Environment.NewLine
                     + "Version: " + UIDevice.CurrentDevice.SystemName + " " + UIDevice.CurrentDevice.SystemVersion + " " + Environment.NewLine + UIDevice.CurrentDevice.Model + Environment.NewLine + File.ReadAllText(CommonMethods.logFile));
                 string responseString = await c.MakeRequest(url, "POST", content);
 

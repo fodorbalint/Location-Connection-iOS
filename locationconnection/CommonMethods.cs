@@ -70,7 +70,7 @@ namespace LocationConnection
 				{
 					context.InvokeOnMainThread(() => {
 						UIApplication.SharedApplication.RegisterForRemoteNotifications();
-						Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
+						//Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
 					});
 				}
 			});
@@ -289,6 +289,75 @@ namespace LocationConnection
 						HideSnack();
 					});
 				}
+				return data;
+			}
+			catch (Exception ex)
+			{
+				stw.Stop();
+				if (ex is WebException)
+				{
+					switch (((WebException)ex).Status)
+					{
+						case WebExceptionStatus.ConnectFailure:
+						case WebExceptionStatus.NameResolutionFailure:
+						case WebExceptionStatus.SecureChannelFailure:
+							return "NoNetwork";
+						case WebExceptionStatus.Timeout:
+							if (stw.ElapsedMilliseconds > Constants.RequestTimeout)
+							{
+								return "NetworkTimeout";
+							}
+							else //app crashed, and underlying activity was called
+							{
+								return ex.Message;
+							}
+						default:
+							return ex.Message;
+					}
+				}
+				else
+				{
+					return ex.Message;
+				}
+			}
+		}
+
+		public static string MakeRequestSyncStatic(string query, string method = "GET", string postData = null)
+		{
+			Stopwatch stw = new Stopwatch();
+			stw.Start();
+			try
+			{
+				string url = Constants.HostName + "?" + query;
+				if (Constants.isTestDB)
+				{
+					url += Constants.TestDB;
+				}
+
+				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+				request.Timeout = Constants.RequestTimeout;
+
+				if (method == "GET")
+				{
+					request.Method = "GET";
+				}
+				else
+				{
+					request.Method = "POST";
+					byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+					request.ContentType = "application/x-www-form-urlencoded";
+					request.ContentLength = byteArray.Length;
+					Stream dataStream = request.GetRequestStream();
+					dataStream.Write(byteArray, 0, byteArray.Length);
+					dataStream.Close();
+				}
+				var response = request.GetResponse();
+
+				stw.Stop();
+				Console.WriteLine(stw.ElapsedMilliseconds + " " + url);
+
+				string data = new StreamReader(response.GetResponseStream()).ReadToEnd();
+				response.Close();				
 				return data;
 			}
 			catch (Exception ex)
@@ -703,7 +772,7 @@ namespace LocationConnection
 			var paragraphStyle = new NSMutableParagraphStyle();
 			paragraphStyle.Alignment = UITextAlignment.Left;
 
-			var messageText = new NSAttributedString(dialogMessage, paragraphStyle: paragraphStyle, foregroundColor: UIColor.Black, font: UIFont.SystemFontOfSize(14));
+			var messageText = new NSAttributedString(dialogMessage, paragraphStyle: paragraphStyle, foregroundColor: UIColor.FromName("PrimaryDark"), font: UIFont.SystemFontOfSize(14));
 
 			dialog.SetValueForKey(messageText, new NSString("attributedMessage"));
 			dialog.AddAction(UIAlertAction.Create(dialogNegativeBtnLabel, UIAlertActionStyle.Default, actionNegative));
@@ -713,13 +782,12 @@ namespace LocationConnection
 
 		public void ActionAlert(string dialogTitle, string dialogMessage, string action1label, string action2label, string action3label, string action4label, Action<UIAlertAction> action1, Action<UIAlertAction> action2, Action<UIAlertAction> action3, Action<UIAlertAction> action4, UIView sourceView)
 		{
-			UIAlertController dialog = UIAlertController.Create(dialogTitle, dialogMessage, UIAlertControllerStyle.ActionSheet);
+			UIAlertController dialog = UIAlertController.Create(dialogTitle, dialogMessage, UIAlertControllerStyle.Alert); //ActionSheet message color cannot be set, it is gray
 
 			var paragraphStyle = new NSMutableParagraphStyle();
 			paragraphStyle.Alignment = UITextAlignment.Left;
 
-			var messageText = new NSAttributedString(dialogMessage, paragraphStyle: paragraphStyle, foregroundColor: UIColor.Black, font: UIFont.SystemFontOfSize(14));
-				
+			var messageText = new NSAttributedString(dialogMessage, paragraphStyle: paragraphStyle, foregroundColor: UIColor.FromName("PrimaryDark"), font: UIFont.SystemFontOfSize(14));
 			dialog.SetValueForKey(messageText, new NSString("attributedMessage"));
 
 			dialog.AddAction(UIAlertAction.Create(action1label, UIAlertActionStyle.Default, action1));
@@ -926,6 +994,17 @@ namespace LocationConnection
 			}
 		}
 
+		public static void ReportErrorSilentStatic(string error)
+		{
+			if (error != "NoNetwork" && error != "NetworkTimeout")
+			{
+				string url = "action=reporterror&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
+				string content = "Content=" + UrlEncode(error + Environment.NewLine
+					+ "Version: " + UIDevice.CurrentDevice.SystemName + " " + UIDevice.CurrentDevice.SystemVersion + " " + Environment.NewLine + UIDevice.CurrentDevice.Model + Environment.NewLine + File.ReadAllText(logFile));
+				MakeRequestSyncStatic(url, "POST", content);
+			}
+		}
+
 		public void ReportErrorSnackNext(string error)
 		{
 			if (error == "AUTHORIZATION_ERROR")
@@ -980,7 +1059,7 @@ namespace LocationConnection
 			return (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 		}
 
-		public string UrlEncode(string input)
+		public static string UrlEncode(string input)
 		{
 			if (!string.IsNullOrEmpty(input))
 			{
