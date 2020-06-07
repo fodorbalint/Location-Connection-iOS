@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using CoreLocation;
-using Firebase.CloudMessaging;
 using Foundation;
 using UIKit;
 using UserNotifications;
@@ -13,7 +12,7 @@ namespace LocationConnection
     // The UIApplicationDelegate for the application. This class is responsible for launching the
     // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.
     [Register ("AppDelegate")]
-    public class AppDelegate : UIResponder, IUIApplicationDelegate, IUNUserNotificationCenterDelegate, IMessagingDelegate {
+    public class AppDelegate : UIResponder, IUIApplicationDelegate, IUNUserNotificationCenterDelegate {
     
         [Export("window")]
         public UIWindow Window { get; set; }
@@ -63,7 +62,7 @@ namespace LocationConnection
 			string[] hexArray = bytes.Select(b => b.ToString("x2")).ToArray();
 			string tokenString = string.Join(string.Empty, hexArray);
 
-			Console.WriteLine("Registered	ForRemoteNotifications " + tokenString + " Session.Token " + Session.Token);
+			Console.WriteLine("RegisteredForRemoteNotifications " + tokenString + " Session.Token " + Session.Token);
 			CommonMethods.LogActivityStatic("RegisteredForRemoteNotifications");
 
 			File.WriteAllText(deviceTokenFile, tokenString);
@@ -105,8 +104,8 @@ namespace LocationConnection
 
             if (userInfo != null && userInfo.ContainsKey(new NSString("aps")))
 			{
-				int senderID = int.Parse(userInfo.ObjectForKey(new NSString("fromuser")) as NSString);
-				int targetID = int.Parse(userInfo.ObjectForKey(new NSString("touser")) as NSString);
+				int senderID = ((NSNumber)userInfo.ObjectForKey(new NSString("fromuser"))).Int32Value;
+				int targetID = ((NSNumber)userInfo.ObjectForKey(new NSString("touser"))).Int32Value;
 
                 if (targetID != Session.ID)
                 {
@@ -122,88 +121,22 @@ namespace LocationConnection
 			}
 		}		
 
-		[Export("messaging:didReceiveMessage:")]
-		public void DidReceiveMessage(Firebase.CloudMessaging.Messaging messaging, Firebase.CloudMessaging.RemoteMessage remoteMessage)
-		{
-            try
-            {
-				//fires in-app, or when app entered foreground.
-				Console.WriteLine("DidReceiveMessage " + remoteMessage.AppData.ToString());
-				CommonMethods.LogActivityStatic("DidReceiveMessage " + remoteMessage.AppData.ToString().Replace(Environment.NewLine, " ")); //DidReceiveMessage is called after the ViewControllers's ViewDidLoad, ViewWillAppear, ViewDidLayoutSubviews, entering foreground sequence, so c cannot be null.
-
-				int senderID = int.Parse(remoteMessage.AppData["fromuser"].ToString());
-				int targetID = int.Parse(remoteMessage.AppData["touser"].ToString());
-				string type = remoteMessage.AppData["type"].ToString();
-				string meta = remoteMessage.AppData["meta"].ToString();
-				bool inApp = (remoteMessage.AppData["inapp"].ToString() == "0") ? false : true;
-				string title = "";
-				string body = "";
-				/*
-                 {
-                    body = hello8;
-                    from = 205197408276;
-                    fromuser = 4;
-                    inapp = 1;
-                    meta = "31|4|1587457419|0|0";
-                    title = "New message from Amanda";
-                    touser = 1;
-                    type = sendMessage;
-                }
-                */
-				if (remoteMessage.AppData.ContainsKey(new NSString("title")))
-                {
-					title = remoteMessage.AppData["title"].ToString();
-					body = remoteMessage.AppData["body"].ToString(); // \\ already converted to \
-				}
-				/* old message after enabling notifications from Settings (user background notification on)
-                 {
-                    "collapse_key" = "balintfodor.locationconnection";
-                    from = 205197408276;
-                    fromuser = 4;
-                    inapp = 1;
-                    meta = "29|4|1587457278|0|0";
-                    notification =     {
-                        body = hello6;
-                        e = 1;
-                        title = "New message from Amanda";
-                    };
-                    touser = 1;
-                    type = sendMessage;
-                }
-                */
-				else if (remoteMessage.AppData.ContainsKey(new NSString("notification"))) 
-                {
-					return; //message may have been already received through chatlist/chat update
-				}
-
-				HandleNotification(senderID, targetID, type, meta, inApp, title, body);
-			}
-			catch (Exception ex)
-			{
-				CommonMethods c = new CommonMethods(null);
-				c.ReportErrorSilent(ex.Message + " " + ex.StackTrace);
-			}
-		}
-
 		[Export("application:didReceiveRemoteNotification:")]
-		public void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo) //called when app is in foreground, and the message contains a notification object. Without this oject, DidReceiveMessage is called.
+		public void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo) //notification sent to the device while the notification permission was off are not received when the user turn permission on.
 		{
 			/*
             userInfo {
                 aps =     {
-                    alert =         {
-                        body = hello7;
-                        title = "New message from Amanda";
-                    };
-                };
-                fromuser = 4;
-                "gcm.message_id" = 1587457382515368;
-                "google.c.a.e" = 1;
-                "google.c.sender.id" = 205197408276;
-                inapp = 1;
-                meta = "30|4|1587457382|0|0";
-                touser = 1;
-                type = sendMessage;
+					alert =         {
+						body = S;
+						title = "New message from b";
+					};
+				};
+				fromuser = 123;
+				inapp = 1;
+				meta = "71|123|1591561106|0|0";
+				touser = 10;
+				type = sendMessage;
             }
             */
 			Console.WriteLine("ReceivedRemoteNotification userInfo " + userInfo);
@@ -211,24 +144,29 @@ namespace LocationConnection
 
 			try
 			{
-				if (userInfo != null && userInfo.ContainsKey(new NSString("aps")))
+				string title = "";
+				string body = "";
+
+				int senderID = ((NSNumber)userInfo.ObjectForKey(new NSString("fromuser"))).Int32Value;
+				int targetID = ((NSNumber)userInfo.ObjectForKey(new NSString("touser"))).Int32Value;
+				string type = userInfo.ObjectForKey(new NSString("type")) as NSString;
+				string meta = userInfo.ObjectForKey(new NSString("meta")) as NSString;
+				bool inApp = (((NSNumber)userInfo.ObjectForKey(new NSString("inapp"))).Int32Value == 0) ? false : true;
+
+				NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
+
+				if (userInfo != null && aps.ContainsKey(new NSString("alert")))
 				{
-					NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
-
-					int senderID = int.Parse(userInfo.ObjectForKey(new NSString("fromuser")) as NSString);
-					int targetID = int.Parse(userInfo.ObjectForKey(new NSString("touser")) as NSString);
-					string type = userInfo.ObjectForKey(new NSString("type")) as NSString;
-					string meta = userInfo.ObjectForKey(new NSString("meta")) as NSString;
-					bool inApp = (userInfo.ObjectForKey(new NSString("inapp")) as NSString == "0") ? false : true;
-
 					NSDictionary alert = aps.ObjectForKey(new NSString("alert")) as NSDictionary;
-					string title = alert.ObjectForKey(new NSString("title")) as NSString;
-					string body = alert.ObjectForKey(new NSString("body")) as NSString;
-
-					Console.WriteLine(title + " --- " + body);
-
-					HandleNotification(senderID, targetID, type, meta, inApp, title, body);
+					title = alert.ObjectForKey(new NSString("title")) as NSString;
+					body = alert.ObjectForKey(new NSString("body")) as NSString;
 				}
+				else if (userInfo.ContainsKey(new NSString("title")))
+				{
+					title = userInfo.ObjectForKey(new NSString("title")) as NSString;
+					body = userInfo.ObjectForKey(new NSString("body")) as NSString; // \\ already converted to \
+				}
+				HandleNotification(senderID, targetID, type, meta, inApp, title, body);
 			}
 			catch (Exception ex)
 			{
@@ -239,8 +177,6 @@ namespace LocationConnection
 
 		private void HandleNotification(int senderID, int targetID, string type, string meta, bool inApp, string title, string body)
         {
-			Console.WriteLine("HandleNotif:" + body);
-
 			int sep1Pos;
 			int sep2Pos;
 			int sep3Pos;

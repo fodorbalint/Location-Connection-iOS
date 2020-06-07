@@ -15,7 +15,6 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 using UserNotifications;
-using Firebase.CloudMessaging;
 
 namespace LocationConnection
 {
@@ -70,7 +69,6 @@ namespace LocationConnection
 				{
 					context.InvokeOnMainThread(() => {
 						UIApplication.SharedApplication.RegisterForRemoteNotifications();
-						//Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
 					});
 				}
 			});

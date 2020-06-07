@@ -1,5 +1,4 @@
 using CoreGraphics;
-using Firebase.CloudMessaging;
 using Foundation;
 using System;
 using System.Collections.Generic;
@@ -125,7 +124,6 @@ namespace LocationConnection
 					{
 						InvokeOnMainThread(() => {
 							UIApplication.SharedApplication.RegisterForRemoteNotifications();
-							Messaging.SharedInstance.ShouldEstablishDirectChannel = true;
 						});
 					}
                     else if (bool.Parse(File.ReadAllText(notificationRequestFile)) == true)
@@ -522,7 +520,7 @@ namespace LocationConnection
 
 		public void AddMessageItemOne(string messageItem)
 		{
-			c.CW("ADDMessageitemone:" + messageItem);
+			c.CW("AddMessageitemone:" + messageItem);
 			NoMessages.Hidden = true;
 			AddMessageItem(messageItem);
 
