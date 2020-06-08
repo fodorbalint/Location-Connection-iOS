@@ -64,7 +64,7 @@ namespace LocationConnection
 			var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
 			UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
 				Console.WriteLine("Notification authorization granted: " + granted);
-				CommonMethods.LogActivityStatic("Notification authorization granted: " + granted);
+				LogActivityStatic("Notification authorization granted: " + granted);
 				if (granted)
 				{
 					context.InvokeOnMainThread(() => {
@@ -446,6 +446,25 @@ namespace LocationConnection
 		{
 			return Session.OtherLatitude != null && Session.OtherLongitude != null;
 		}
+
+		public bool IsMapLocationAvailable()
+        {
+			if ((bool)Session.GeoFilter && (bool)Session.GeoSourceOther)
+            {
+				if (IsOtherLocationAvailable())
+                {
+					return true;
+                }
+            }
+			else
+            {
+				if (IsOwnLocationAvailable())
+                {
+					return true;
+                }
+            }
+			return false;
+        }
 
 		public async Task<bool> UpdateLocationSync(bool toMatch)
 		{

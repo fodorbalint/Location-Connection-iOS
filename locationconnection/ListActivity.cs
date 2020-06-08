@@ -83,10 +83,11 @@ namespace LocationConnection
         private bool mapSetting;
         private bool mapToSet;
         private bool mapSet;
+        private bool mapLoaded;
         public static nint? totalResultCount;
         public UserSearchListAdapter adapter;
         GridLayout gridLayout;
-        private bool usersLoaded;
+        private bool usersLoaded; //determines if the map can be set
         private bool recenterMap;
         private MKPointAnnotation circlePin;
         private MKCircle circle;
@@ -125,11 +126,9 @@ namespace LocationConnection
         Stopwatch stw;
 
         public UICollectionView User_SearchList { get { return UserSearchList; } }
-        public nfloat userSearchListRatio = 0;
 
         private Timer firstRunTimer;
         public static Timer locationTimer;
-
 
         public ListActivity(IntPtr handle) : base(handle)
         {
@@ -499,7 +498,7 @@ namespace LocationConnection
 
                 refresh = new UIRefreshControl();
                 refresh.ValueChanged += Refresh_ValueChanged;
-                UserSearchListScroll.RefreshControl = refresh;
+                UserSearchList.RefreshControl = refresh;
 
                 ListViewMap.Delegate = new CustomAnnotationView(this);
                 MapStreet.TouchUpInside += MapStreet_Click;
@@ -546,6 +545,8 @@ namespace LocationConnection
                     TruncateLocationLog();
                 }
                 TruncateSystemLog();
+
+                mapLoaded = false;
 
                 //Safe practice from Android: c.IsLoggedIn() true does not mean, all session variables are set. Nullable object must have a value error can occur if autologin response is at the same time as ONResume.
                 bool isLoggedIn = c.IsLoggedIn();
@@ -637,16 +638,16 @@ namespace LocationConnection
                     c.CW("listProfiles.Count " + listProfiles.Count);
 
                     adapter.items = listProfiles;
+                    usersLoaded = true;
 
                     UserSearchList.ReloadData();
                     UserSearchList.LayoutIfNeeded();
-                    c.SetHeight(UserSearchList, UserSearchList.ContentSize.Height);
                 }
                 else
                 {
                     adapter.items = new List<Profile>();
                 }
-                usersLoaded = true;
+                
 
                 c.CW("Location permission status: " + CLLocationManager.Status);
                 c.LogActivity("Location permission status: " + CLLocationManager.Status);
@@ -751,12 +752,6 @@ namespace LocationConnection
             }
         }
 
-        public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
-        {
-            userSearchListRatio = UserSearchList.Frame.Height / UserSearchList.Frame.Width;
-            base.ViewWillTransitionToSize(toSize, coordinator);
-        }
-
         public void StartLocationTimer()
         {
             locationTimer = new Timer();
@@ -813,6 +808,9 @@ namespace LocationConnection
 
                 if (Session.LastDataRefresh is null || Session.LastDataRefresh < unixTimestamp - Constants.DataRefreshInterval)
                 {
+                    c.LogActivity("LoadListStartup will load");
+                    c.CW("LoadListStartup will load");
+
                     recenterMap = true;
                     if (Session.LastSearchType == Constants.SearchType_Filter)
                     {
@@ -823,11 +821,14 @@ namespace LocationConnection
                         Task.Run(() => LoadListSearch());
                     }
                 }
-                else //show no result label only if list is not being reloaded, and set map with the results loaded while being in ProfileView / Set map after location authorization
+                else //List is not being reloaded
+                     //Would be used for setting map with the results loaded in ProfileView, but ViewDidLayoutSubviews is not called yet.
+                     //Setting map after location authorization, (ViewDidLayoutSubviews is called before, but location is not available yet.)
                 {
-                    c.CW("List not loading");
-                    c.LogActivity("List not loading");
-                    if ((bool)Settings.IsMapView || mapToSet)
+                    c.LogActivity("Setting map only mapLoaded " + mapLoaded + " mapToSet " + mapToSet);
+                    c.CW("Setting map only mapLoaded " + mapLoaded + " mapToSet " + mapToSet);
+
+                    if (mapLoaded && mapToSet)
                     {
                         StartLoaderAnim();
                         mapSet = false;
@@ -839,7 +840,7 @@ namespace LocationConnection
             }
         }
 
-        public override void ViewDidLayoutSubviews()
+        public override void ViewDidLayoutSubviews() //Setting map region before this point results in incorrect zoom
         {
             base.ViewDidLayoutSubviews();
 
@@ -853,7 +854,22 @@ namespace LocationConnection
             MapSatellite.Layer.CornerRadius = 2;
             MapSatellite.Layer.MaskedCorners = CACornerMask.MaxXMinYCorner | CACornerMask.MaxXMaxYCorner;
 
-            c.CW("ViewDidLayoutSubviews");
+            if (active) //this function is called after ViewWillDisappear when logging out, where Session has been nulled, thus throwing error in IsMapLocationAvailable()
+            {
+                c.LogActivity("ViewDidLayoutSubviews IsMapLocationAvailable " + c.IsMapLocationAvailable() + " mapToSet " + mapToSet + " Settings.IsMapView " + Settings.IsMapView + " usersLoaded " + usersLoaded + " listLoading " + listLoading);
+                c.CW("ViewDidLayoutSubviews IsMapLocationAvailable " + c.IsMapLocationAvailable() + " mapToSet " + mapToSet + " Settings.IsMapView " + Settings.IsMapView + " usersLoaded " + usersLoaded + " listLoading " + listLoading);
+
+                mapLoaded = true;
+                // Setting map with the results loaded in ProfileView
+                // After location authorization ViewDidLayoutSubviews is called, but location is not available yet
+                if (usersLoaded && mapToSet && c.IsMapLocationAvailable() && !listLoading)
+                {
+                    StartLoaderAnim();
+                    mapSet = false;
+                    recenterMap = true;
+                    Task.Run(() => SetMap());
+                }
+            }
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -2412,7 +2428,6 @@ namespace LocationConnection
                             UserSearchList.DataSource = adapter;                            
                             UserSearchList.ReloadData();
                             UserSearchList.LayoutIfNeeded();
-                            c.SetHeight(UserSearchList, UserSearchList.ContentSize.Height);
                         });
                     }
                 }
@@ -2427,8 +2442,6 @@ namespace LocationConnection
                         UserSearchList.DataSource = adapter;
                         UserSearchList.ReloadData();
                         UserSearchList.LayoutIfNeeded();
-                        c.SetHeight(UserSearchList, UserSearchList.ContentSize.Height);
-                        //((UIScrollView)UserSearchList.Superview).ContentSize = UserSearchList.ContentSize;
                     });
                 }
 
@@ -2599,7 +2612,7 @@ namespace LocationConnection
                         MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance(mapCenter, (int)Session.DistanceLimit * 1000 * 2, (int)Session.DistanceLimit * 1000 * 2);
                         ListViewMap.CenterCoordinate = mapCenter;
                         ListViewMap.Region = mapRegion;
-                            c.CW("Region: " + (int)Session.DistanceLimit * 1000 * 2 + " " + ListViewMap.Region.Span.LatitudeDelta + " " + ListViewMap.Region.Span.LongitudeDelta);
+                            c.CW("Region: " + (int)Session.DistanceLimit * 1000 * 2 + " LatitudeDelta " + ListViewMap.Region.Span.LatitudeDelta + " LongitudeDelta " + ListViewMap.Region.Span.LongitudeDelta);
                         //20000 0.20912796568598 0.317953289884542
                         //20000 0.179636395490881 0.566293030628998
 

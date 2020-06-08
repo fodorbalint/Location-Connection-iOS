@@ -94,7 +94,13 @@ namespace LocationConnection
                     {
                         Save(saveName, task.Result);
                         context.InvokeOnMainThread(() => {
-                            if (imageView is UIImageView)
+                            if (imageView is MKAnnotationView)
+                            {
+                                CoreGraphics.CGRect frame = imageView.Frame;
+                                ((MKAnnotationView)imageView).Image = UIImage.LoadFromData(task.Result); //enlarges imageView to 480 dp
+                                imageView.Frame = frame;
+                            }
+                            else if (imageView is UIImageView)
                             {
                                 ((UIImageView)imageView).Image = UIImage.LoadFromData(task.Result);
                             }

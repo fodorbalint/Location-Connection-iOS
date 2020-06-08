@@ -371,49 +371,32 @@
                                 </constraints>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" id="UserSearchListScroll" translatesAutoresizingMaskIntoConstraints="NO" ambiguous="YES">
-                                <rect key="frame" x="0.0" y="427" width="375" height="211"/>
-                                <color key="backgroundColor" name="ContentBackground"/>
-                                <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchList">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="UserSearchListLayout">
-                                            <size key="itemSize" width="100" height="100"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="UserSearchListCell" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchListCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" id="UserSearchListCellContent">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchList">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="UserSearchListLayout">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="UserSearchListCell" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchListCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" id="UserSearchListCellContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ONl-e4-dFI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ONl-e4-dFI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                </view>
-                                            </collectionViewCell>
-                                        </cells>
-                                        <color key="backgroundColor" name="ContentBackground"/>
-                                        <!-- background only extends to the rectangular area of the cells -->
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="0" id="UserSearchList0"/>
-                                        </constraints>
-                                    </collectionView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="UserSearchList" secondAttribute="width" id="UserSearchList1"/>
-                                    <constraint firstAttribute="top" secondItem="UserSearchList" secondAttribute="top" id="UserSearchList2"/>
-                                    <constraint firstAttribute="bottom" secondItem="UserSearchList" secondAttribute="bottom" id="UserSearchList3"/>
-                                    <constraint firstAttribute="leading" secondItem="UserSearchList" secondAttribute="leading" id="UserSearchList4"/>
-                                </constraints>
-                            </scrollView>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <color key="backgroundColor" name="ContentBackground"/>
+                            </collectionView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NoResult" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NoResult">
                                 <rect key="frame" x="158" y="437" width="59" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -688,10 +671,10 @@
                             <constraint firstItem="FilterLayout" firstAttribute="top" secondItem="SearchLayout" secondAttribute="bottom" id="FilterLayout2"/>
                             <constraint firstItem="FilterLayout" firstAttribute="leading" secondItem="SafeArea1" secondAttribute="leading" id="FilterLayout3"/>
                             <constraint firstItem="FilterLayout" firstAttribute="trailing" secondItem="SafeArea1" secondAttribute="trailing" id="FilterLayout4"/>
-                            <constraint firstItem="UserSearchListScroll" firstAttribute="top" secondItem="FilterLayout" secondAttribute="bottom" id="UserSearchListScroll2"/>
-                            <constraint firstItem="UserSearchListScroll" firstAttribute="trailing" secondItem="SafeArea1" secondAttribute="trailing" id="UserSearchListScroll3"/>
-                            <constraint firstItem="UserSearchListScroll" firstAttribute="leading" secondItem="SafeArea1" secondAttribute="leading" id="UserSearchListScroll4"/>
-                            <constraint firstItem="UserSearchListScroll" firstAttribute="bottom" secondItem="StatusBar" secondAttribute="top" id="UserSearchListScroll5"/>
+                            <constraint firstItem="UserSearchList" firstAttribute="top" secondItem="FilterLayout" secondAttribute="bottom" id="UserSearchList2"/>
+                            <constraint firstItem="UserSearchList" firstAttribute="trailing" secondItem="SafeArea1" secondAttribute="trailing" id="UserSearchList3"/>
+                            <constraint firstItem="UserSearchList" firstAttribute="leading" secondItem="SafeArea1" secondAttribute="leading" id="UserSearchList4"/>
+                            <constraint firstItem="UserSearchList" firstAttribute="bottom" secondItem="StatusBar" secondAttribute="top" id="UserSearchList5"/>
                             <constraint firstItem="NoResult" firstAttribute="top" secondItem="FilterLayout" secondAttribute="bottom" constant="10" id="NoResult2"/>
                             <constraint firstItem="SafeArea1" firstAttribute="centerX" secondItem="NoResult" secondAttribute="centerX" id="NoResult3"/>
                             <constraint firstItem="ListViewMap" firstAttribute="top" secondItem="FilterLayout" secondAttribute="bottom" id="ListViewMap2"/>
@@ -797,7 +780,6 @@
                         <outlet property="UseGeoYes" destination="UseGeoYes" id="name-outlet-UseGeoYes"/>
                         <outlet property="UseGeoYesLabel" destination="UseGeoYesLabel" id="name-outlet-UseGeoYesLabel"/>
                         <outlet property="UserSearchList" destination="UserSearchList" id="name-outlet-UserSearchList"/>
-                        <outlet property="UserSearchListScroll" destination="UserSearchListScroll" id="name-outlet-UserSearchListScroll"/>
                         <outlet property="BottomConstraint" destination="RoundBottom12" id="name-outlet-RoundBottom12"/>
                         <outlet property="SnackTopConstraint" destination="Snackbar12" id="name-outlet-Snackbar12"/>
                         <outlet property="SnackBottomConstraint" destination="Snackbar13" id="name-outlet-Snackbar13"/>

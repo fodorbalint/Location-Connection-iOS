@@ -40,15 +40,9 @@ namespace LocationConnection
 			BaseActivity.safeAreaLeft = window.SafeAreaInsets.Left; // values are new, after rotation.
 			BaseActivity.safeAreaRight = window.SafeAreaInsets.Right;
 
-			Console.WriteLine("-----ShouldInvalidateLayoutForBoundsChange ------------"  + newBounds + " " + BaseActivity.safeAreaLeft + " " + BaseActivity.safeAreaRight + " " + BaseActivity.dpWidth + " " + BaseActivity.dpHeight);
+			//Console.WriteLine("ShouldInvalidateLayoutForBoundsChange "  + newBounds + " " + BaseActivity.safeAreaLeft + " " + BaseActivity.safeAreaRight + " " + BaseActivity.dpWidth + " " + BaseActivity.dpHeight);
 
 			nfloat actualWidth = BaseActivity.dpWidth - BaseActivity.safeAreaLeft - BaseActivity.safeAreaRight;
-
-            if (context.userSearchListRatio != 0)
-            {
-				context.c.SetHeight(context.User_SearchList, actualWidth * context.userSearchListRatio);
-				context.userSearchListRatio = 0;
-            }
             
 			nfloat size = GetSize(actualWidth);
 			ItemSize = new CGSize(size, size);

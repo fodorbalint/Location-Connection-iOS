@@ -1,4 +1,25 @@
 # Changelog - Location Connection iOS
+1.4 - 8 June
+
+New:
+- A dark appearance is created for this display mode on iOS 13.
+- A border is placed around the thumbnails on the map.
+- The back button of the image editor is placed on the left side.
+- In the tutorial, you can now tap the left or the right side of a frame to move to the next/previous one.
+
+Bug fixes:
+- Notifications are only received if the user logs in again after enabling notifications.
+- Tapping the like and hide buttons repeatedly results in error.
+- If location cannot be acquired, the program hangs, and only manual refresh will load the list.
+- When opening a page from the start with the map visible, upon returning the map's area changes when it should not.
+- When pictures are loading on the map, they get enlarged the first time.
+- The tile list has scrollable empty space at the bottom when closing/opening the app, and when rotating the device on a profile page.
+- The chat window does not refresh when closing the app and opening it.
+- If on the registration page the description text contains ;, upon leaving the page and returning to it the text will be cut off.
+- When rearranging pictures and dragging them outside their area, they will appear under succeeding form elements.
+- If a phone is rotated to landscape, the tutorial will show iPad screenshots.
+- When unchecking location/distance sharing with friends, the "No one" option does not get checked.
+
 1.3 - 4 May
 
 A tutorial has been added to the help center.
