@@ -627,6 +627,12 @@ namespace LocationConnection
 				}
 				newListProfiles = null;
 
+                if (!usersLoaded && (bool)Settings.IsMapView) //set map only when ViewDidLoad was called: when switching from ChatList to List.
+                    //we don't want to set the map when returning from Profile View as it will reset the zoom and the position.
+                {
+                    mapToSet = true;
+                }
+
                 GetScreenMetrics();
                 gridLayout = new GridLayout(this, 3, 2f);
                 UserSearchList.SetCollectionViewLayout(gridLayout, false);
@@ -856,7 +862,6 @@ namespace LocationConnection
 
             if (active) //this function is called after ViewWillDisappear when logging out, where Session has been nulled, thus throwing error in IsMapLocationAvailable()
             {
-                c.LogActivity("ViewDidLayoutSubviews IsMapLocationAvailable " + c.IsMapLocationAvailable() + " mapToSet " + mapToSet + " Settings.IsMapView " + Settings.IsMapView + " usersLoaded " + usersLoaded + " listLoading " + listLoading);
                 c.CW("ViewDidLayoutSubviews IsMapLocationAvailable " + c.IsMapLocationAvailable() + " mapToSet " + mapToSet + " Settings.IsMapView " + Settings.IsMapView + " usersLoaded " + usersLoaded + " listLoading " + listLoading);
 
                 mapLoaded = true;
@@ -864,6 +869,7 @@ namespace LocationConnection
                 // After location authorization ViewDidLayoutSubviews is called, but location is not available yet
                 if (usersLoaded && mapToSet && c.IsMapLocationAvailable() && !listLoading)
                 {
+                    c.LogActivity("ViewDidLayoutSubviews setting map");
                     StartLoaderAnim();
                     mapSet = false;
                     recenterMap = true;
