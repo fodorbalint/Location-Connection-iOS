@@ -278,10 +278,6 @@ namespace LocationConnection
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UICollectionView UserSearchList { get; set; }
 
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIScrollView UserSearchListScroll { get; set; }
-
         void ReleaseDesignerOutlets ()
         {
             if (ActionBar != null) {
@@ -612,11 +608,6 @@ namespace LocationConnection
             if (UserSearchList != null) {
                 UserSearchList.Dispose ();
                 UserSearchList = null;
-            }
-
-            if (UserSearchListScroll != null) {
-                UserSearchListScroll.Dispose ();
-                UserSearchListScroll = null;
             }
         }
     }

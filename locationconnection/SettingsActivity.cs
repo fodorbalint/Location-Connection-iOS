@@ -383,7 +383,7 @@ namespace LocationConnection
                 c.ExpandY(MessageContainer);              
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
 
-                //c.ScrollToBottom(SettingsScroll);
+                //page will scroll to bottom automatically as the TextView gets focus
                 MessageEdit.BecomeFirstResponder();
             }
             else

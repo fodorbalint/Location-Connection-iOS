@@ -48,7 +48,6 @@ namespace LocationConnection
                         {
                             ((LocationActivity)currentController).LoadList();
                             ((LocationActivity)currentController).AddLinesToMap();
-                            ((LocationActivity)currentController).MapStreet.SetTitle(LangEnglish.MapSatellite, UIControlState.Normal);
                         }                        
                     });
 
