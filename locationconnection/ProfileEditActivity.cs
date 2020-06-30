@@ -405,13 +405,16 @@ namespace LocationConnection
                             }
                             else if (locationDisabled)
                             {
+                                c.CW("Location disabled");
                                 if (!(locMgr is null))
                                 {
                                     locMgr.StopLocationUpdates();
                                 }
                                 if (!string.IsNullOrEmpty(locationUpdatesTo))
                                 {
+                                    c.CW("Ending location share");
                                     EndLocationShare();
+                                    locationUpdatesTo = null;
                                 }
                                 Session.Latitude = null;
                                 Session.Longitude = null;

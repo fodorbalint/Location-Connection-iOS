@@ -237,12 +237,87 @@ namespace LocationConnection
 			{
 				MenuLocationUpdates.SetTitle(LangEnglish.MenuStartLocationUpdates, UIControlState.Normal);
 			}
-			
-            MenuLocationUpdates.Hidden = true;
-			MenuFriend.Hidden = true;
-			MenuUnmatch.Hidden = true;
-			MenuReport.Hidden = true;
-			MenuBlock.Hidden = true;
+
+			MenuIcon.Hidden = false;
+
+			if (!(currentMatch is null)) //not from notification
+			{ 
+				if (!(currentMatch.UnmatchDate is null))
+				{
+					MenuFriend.Hidden = true;
+
+					if (currentMatch.TargetID == IntentData.blockedID)
+					{
+						MenuUnmatch.Hidden = true;
+						MenuReport.Hidden = true;
+						MenuBlock.Hidden = true;
+
+						MenuIcon.Hidden = true;
+					}
+					else
+					{
+						MenuUnmatch.Hidden = false;
+						MenuReport.Hidden = false;
+						MenuBlock.Hidden = false;
+					}
+				}
+				else
+				{
+					UnmatchDate.Text = "";
+					MenuFriend.Hidden = false;
+					MenuUnmatch.Hidden = false;
+					MenuReport.Hidden = false;
+					MenuBlock.Hidden = false;
+				}
+
+				if (!(currentMatch.Active is null)) //if not coming from Profile View list
+				{
+					if ((bool)currentMatch.Active)
+					{
+						if ((bool)Session.UseLocation && c.IsLocationEnabled())
+						{
+							MenuLocationUpdates.Hidden = false;
+						}
+						else
+						{
+							MenuLocationUpdates.Hidden = true;
+						}
+					}
+					else
+					{
+						MenuLocationUpdates.Hidden = true;
+					}
+				}
+				else
+				{
+					MenuLocationUpdates.Hidden = true;
+				}
+
+				if (!(currentMatch.Friend is null)) //can otherwise be null or false
+				{
+					if ((bool)currentMatch.Friend)
+					{
+						MenuFriend.SetTitle(LangEnglish.MenuRemoveFriend, UIControlState.Normal);
+					}
+					else
+					{
+						MenuFriend.SetTitle(LangEnglish.MenuAddFriend, UIControlState.Normal);
+					}
+				}
+				else
+				{
+					MenuFriend.SetTitle(LangEnglish.MenuAddFriend, UIControlState.Normal);
+					MenuFriend.Hidden = true;
+				}
+			}
+			else
+            {
+				MenuLocationUpdates.Hidden = true;
+				MenuFriend.Hidden = false;
+				MenuUnmatch.Hidden = false;
+				MenuReport.Hidden = false;
+				MenuBlock.Hidden = false;
+			}
 		}
 
 		private void MenuIcon_Click(object sender, EventArgs e)
@@ -406,59 +481,34 @@ namespace LocationConnection
 				}
 			}
 
+			SetMenu();
+
 			DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.MatchDate).ToLocalTime();
 			MatchDate.Text = LangEnglish.Matched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
-
-			MenuIcon.Hidden = false;
 
 			if (!(currentMatch.UnmatchDate is null))
 			{
 				dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)currentMatch.UnmatchDate).ToLocalTime();
 				UnmatchDate.Text = LangEnglish.Unmatched + ": " + dt.ToString("dd MMMM yyyy HH:mm");
-				MenuFriend.Hidden = true;
 
 				if (currentMatch.TargetID == IntentData.blockedID)
 				{
 					IntentData.blockedID = null;
-					MenuUnmatch.Hidden = true;
-					MenuReport.Hidden = true;
-					MenuBlock.Hidden = true;
-
-					MenuIcon.Hidden = true;
-				}
-				else
-				{
-					MenuUnmatch.Hidden = false;
-					MenuReport.Hidden = false;
-					MenuBlock.Hidden = false;
 				}
 			}
 			else
 			{
 				UnmatchDate.Text = "";
-				MenuFriend.Hidden = false;
-				MenuUnmatch.Hidden = false;
-				MenuReport.Hidden = false;
-				MenuBlock.Hidden = false;
 			}
 
 			if ((bool)currentMatch.Active)
 			{
-				if ((bool)Session.UseLocation && c.IsLocationEnabled())
-				{
-					MenuLocationUpdates.Hidden = false;
-				}
-				else
-				{
-					MenuLocationUpdates.Hidden = true;
-				}
 				ChatEditMessage.UserInteractionEnabled = true;
 				ChatSendMessage.Enabled = true;
 				ChatSendMessage.Alpha = 1;
 			}
 			else
 			{
-				MenuLocationUpdates.Hidden = true;
 				ChatEditMessage.UserInteractionEnabled = false;
 				ChatSendMessage.Enabled = false;
 				ChatSendMessage.Alpha = 0.5f;
@@ -468,15 +518,6 @@ namespace LocationConnection
             {
 				tap = new CustomTapNoDelay(this, ChatViewProfile); //will work even if the acoount is inactive.
 				ChatViewProfile.AddGestureRecognizer(tap);
-			}			
-
-			if (!(bool)currentMatch.Friend)
-			{
-				MenuFriend.SetTitle(LangEnglish.MenuAddFriend, UIControlState.Normal);
-			}
-			else
-			{
-				MenuFriend.SetTitle(LangEnglish.MenuRemoveFriend, UIControlState.Normal);
 			}
 
 			messageItems = new List<MessageItem>();

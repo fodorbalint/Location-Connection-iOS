@@ -187,7 +187,7 @@ namespace LocationConnection
 
 			if (active && CommonMethods.transitionTarget == "empty") //ViewDidAppear is called before transition ends. If new activity is scheduled, active is not yet set to false, because there was no context to set it to in CommonMethods.OpenPage
 			{
-				//c.CW("ViewDidAppear Session.SnackMessage " + Session.SnackMessage);
+				c.CW("ViewDidAppear Session.SnackMessage " + Session.SnackMessage);
 				if (!(Session.SnackMessage is null))
 				{
 					if (this is ChatOneActivity)
@@ -209,6 +209,8 @@ namespace LocationConnection
 				}
 				Session.SnackPermanent = false;
 			}
+
+			c.CW("ViewDidAppear end");
 		}
 
 		public override void ViewWillDisappear(bool animated)

@@ -1266,7 +1266,7 @@ namespace LocationConnection
 			{
                 //while transition is running, GetCurrentViewController return the old activity
 				LogActivityStatic("OpenPage transitionRunning target " + target + " anim " + anim);
-				Console.WriteLine("OpenPage transitionRunning target " + target + " anim " + anim);
+				Console.WriteLine("OpenPage transitionRunning target " + target + " anim " + anim + " caller " + new StackFrame(1, true).GetMethod().Name);
 
 				transitionTarget = target;
 				transitionAnim = anim;
@@ -1277,7 +1277,7 @@ namespace LocationConnection
 			currentContext.active = false;
 
 			LogActivityStatic("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
-			Console.WriteLine("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
+			Console.WriteLine("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning + " caller " + new StackFrame(1, true).GetMethod().Name);
 
 			transitionTarget = "empty";
 			transitionRunning = true; //In ProfileView, transition will start after a http request is made, due to it is being called sync. Unless I figure out how to cancel presentation from ViewWillAppear, completing the transition is necessary.

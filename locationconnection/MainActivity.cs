@@ -81,7 +81,16 @@ namespace LocationConnection
                 }
                 if (IntentData.logout)
                 {
+                    c.Log("Logout");
                     IntentData.logout = false;
+
+                    if (!string.IsNullOrEmpty(locationUpdatesTo))
+                    {
+                        EndLocationShare();
+                        locationUpdatesTo = null;
+                    }
+                    locationUpdatesFrom = null;
+                    locationUpdatesFromData = null;
 
                     var latitude = Session.Latitude;
                     var longitude = Session.Longitude;
@@ -89,7 +98,6 @@ namespace LocationConnection
 
                     if (!Constants.SafeLocationMode)
                     {
-                        c.LogActivity("Clearing user");
                         c.ClearCurrentUser();
                     }
                     else
@@ -102,7 +110,6 @@ namespace LocationConnection
                         var latestLongitude = Session.LatestLongitude;
                         var latestLocationTime = Session.LatestLocationTime;
 
-                        c.LogActivity("Clearing user");
                         c.ClearCurrentUser();
 
                         Session.SafeLatitude = safeLatitude;

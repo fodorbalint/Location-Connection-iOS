@@ -159,7 +159,7 @@ namespace LocationConnection
                         locationUpdatesFrom = null;
                         locationUpdatesFromData = null;
 
-                        if ((!c.IsLoggedIn() || !(bool)Session.UseLocation || !(bool)Session.BackgroundLocation || !c.IsLocationEnabled()) && !(locMgr is null))
+                        if ((!c.IsLoggedIn() || !(bool)Session.UseLocation || !(bool)Session.BackgroundLocation || !c.IsLocationEnabled()) && !(locMgr is null)) //because of Session.BackgroundLocation, it will always stop.
                         {
                             locMgr.StopLocationUpdates();
                         }
@@ -245,8 +245,6 @@ namespace LocationConnection
                                 c.LogActivity("Autologin logged in views set");
                             });
 
-                            //implement notification handling
-
                             c.CW("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
                             c.LogActivity("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
 
@@ -292,7 +290,7 @@ namespace LocationConnection
                                     }
                                     else
                                     {
-                                        //first location update will load the list, otherwise the Getting location... message will remain in the status bar.
+                                        //first location update will load the list, otherwise the Getting location... message will remain in the status bar until timeout
                                         c.CW("Autologin location unavailable");
                                         c.LogActivity("Autologin location unavailable");
                                     }
@@ -413,8 +411,6 @@ namespace LocationConnection
                             });
                         }
                         autoLogin = false;
-
-                        //----- start loader circle and statustext
                     });
                 }
 
@@ -550,7 +546,7 @@ namespace LocationConnection
 
                 //Safe practice from Android: c.IsLoggedIn() true does not mean, all session variables are set. Nullable object must have a value error can occur if autologin response is at the same time as ONResume.
                 bool isLoggedIn = c.IsLoggedIn();
-                c.Log("Logged in: " + isLoggedIn + " resultset.text " + ResultSet.Text);
+                c.Log("Logged in: " + isLoggedIn);
 
                 if (isLoggedIn)
                 {
@@ -685,8 +681,6 @@ namespace LocationConnection
 
                 SetViews();
 
-                long unixTimestamp = c.Now();
-
                 if ((bool)Session.UseLocation && c.IsLocationEnabled())
                 {
                     isAppForeground = true;
@@ -694,10 +688,7 @@ namespace LocationConnection
                     if (locMgr is null)
                     {
                         locMgr = new LocationManager(this);
-                    }
-
-                    ResultSet.Hidden = false;
-                    ResultSet.Text = LangEnglish.GettingLocation;
+                    }                    
 
                     if (!locationUpdating)
                     {
@@ -814,7 +805,8 @@ namespace LocationConnection
                     c.CW("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LatestLocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
                     c.LogActivity("LoadListStartup not autologin, logged in: " + c.IsLoggedIn() + ", locationtime: " + Session.LatestLocationTime + " Settings.IsMapView " + Settings.IsMapView + " mapToSet " + mapToSet);
                 }
-
+                
+                //reloading list if it expired
                 if (Session.LastDataRefresh is null || Session.LastDataRefresh < unixTimestamp - Constants.DataRefreshInterval)
                 {
                     c.LogActivity("LoadListStartup will load");
@@ -1132,21 +1124,15 @@ namespace LocationConnection
 
             if (!string.IsNullOrEmpty(Session.OtherAddress))
             {
-                //distanceSourceAddressTextChanging = true;
                 DistanceSourceAddressText.Text = Session.OtherAddress;
-                //distanceSourceAddressTextChanging = false;
             }
             else if (!(Session.OtherLatitude is null) && !(Session.OtherLongitude is null))
             {
-                //distanceSourceAddressTextChanging = true;
                 DistanceSourceAddressText.Text = ((double)Session.OtherLatitude).ToString(CultureInfo.InvariantCulture) + ", " + ((double)Session.OtherLongitude).ToString(CultureInfo.InvariantCulture);
-                //distanceSourceAddressTextChanging = false;
             }
 
-            //distanceLimitChangedByCode = true;
             DistanceLimit.Value = (int)Session.DistanceLimit;
             DistanceLimitInput.Text = Session.DistanceLimit.ToString();
-            //distanceLimitChangedByCode = false;
         }
 
         private void StatusImage_Click(object sender, EventArgs e)
@@ -1387,6 +1373,7 @@ namespace LocationConnection
             else if (e.Status == CLAuthorizationStatus.Denied)
             {
                 mapToSet = false;
+                distanceSourceCurrentClicked = false;
                 Session.UseLocation = false;
                 SetDistanceSourceAddress();
                 c.Snack(LangEnglish.LocationNotGranted); //in the dialog the user choose to turn on location, but now denied it. Message needs to be shown.
@@ -1751,7 +1738,7 @@ namespace LocationConnection
                 UseGeoYes.Checked = false;
                 c.CollapseY(UseGeoContainer);
                 Session.GeoFilter = false;
-                if ((bool)Settings.IsMapView && !(bool)Session.UseLocation)
+                if ((bool)Settings.IsMapView && (!(bool)Session.UseLocation || !c.IsLocationEnabled()))
                 {
                     ListView_Click(null, null);
                 }
@@ -1820,6 +1807,7 @@ namespace LocationConnection
                     }, alert => {
                         SetDistanceSourceAddress();
                     });
+                    return; //wihtout returning, function would continue with DistanceSourceAddress.Checked False, and list would not load anyway because current location is not available.
                 }
             }
             else
@@ -1830,7 +1818,6 @@ namespace LocationConnection
             }
 
             Session.GeoSourceOther = DistanceSourceAddress.Checked;
-            c.CW("DistanceSource_click GeoSourceOther set " + Session.GeoSourceOther);
             if (!(bool)Session.GeoSourceOther && c.IsOwnLocationAvailable() || (bool)Session.GeoSourceOther && c.IsOtherLocationAvailable())
             {
                 Session.ResultsFrom = 1;

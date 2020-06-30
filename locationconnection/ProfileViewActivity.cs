@@ -1167,8 +1167,16 @@ namespace LocationConnection
 
 			if (pageType == Constants.ProfileViewType_Standalone)
 			{
-				IntentData.senderID = displayUser.ID; //we could have gotten on this profile page from another chat by clicking on a notification.
-				BackButton_Click(null, null);
+				IntentData.senderID = displayUser.ID;
+
+				if (Session.CurrentMatch != null) //got here from chat one, whether by clicking on a header, or from a location update notification while being in another chat. Without onBackPressed, a back click from chat one would take us back here.
+				{
+					BackButton_Click(null, null);
+					return;
+				}
+
+				CancelTask();
+				CommonMethods.OpenPage("ChatOneActivity", 1);
 				return;
 			}
 
@@ -1227,40 +1235,11 @@ namespace LocationConnection
 			}
 			else // already a match, opening chat window
 			{
-				if (pageType == Constants.ProfileViewType_List) //a previously gotten match, we are coming from list, not chat
-				{
-					LikeButton.UserInteractionEnabled = false;
+				CancelTask();
+				IntentData.senderID = displayUser.ID;
+				CommonMethods.OpenPage("ChatOneActivity", 1);
 
-					string responseString = await c.MakeRequest("action=requestmatchid&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&target=" + displayUser.ID);
-					if (responseString.Substring(0, 2) == "OK")
-					{
-                        if (responseString.Substring(3) == "") //deleted user
-                        {
-							c.Snack(LangEnglish.MatchNotFound);
-							return;
-                        }
-						Session.CurrentMatch = new MatchItem();
-						Session.CurrentMatch.MatchID = int.Parse(responseString.Substring(3));
-						Session.CurrentMatch.TargetID = displayUser.ID;
-						Session.CurrentMatch.TargetUsername = displayUser.Username;
-						Session.CurrentMatch.TargetName = displayUser.Name;
-						Session.CurrentMatch.TargetPicture = displayUser.Pictures[0];
-
-						CancelTask();
-						CommonMethods.OpenPage("ChatOneActivity", 1);
-					}
-					else
-					{
-						c.ReportError(responseString);
-					}
-
-					LikeButton.UserInteractionEnabled = true;
-				}
-				else
-				{
-					CancelTask();
-					CommonMethods.OpenPage("ChatOneActivity", 1);
-				}
+				c.Log("LikeButton_click, opening chat");
 			}
 		}
 
