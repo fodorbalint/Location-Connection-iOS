@@ -915,6 +915,17 @@ namespace LocationConnection
 			context.PresentViewController(dialog, true, null);
 		}
 
+		public void Log(string message)
+		{
+			LogActivity(message);
+			CW(message);
+		}
+
+		public void CW(object message)
+		{
+			Console.WriteLine(Environment.NewLine + "-------------------------------------------------------------- " + message + Environment.NewLine);
+		}
+
 		public void LogActivity(string message)
 		{
 			try
@@ -1049,12 +1060,7 @@ namespace LocationConnection
 			}
 		}
 
-		public void CW(object message)
-		{
-			Console.WriteLine(Environment.NewLine + "-------------------------------------------------------------- " + message + Environment.NewLine);
-		}
-
-        public static void ShowConstraint(NSLayoutConstraint constraint)
+		public static void ShowConstraint(NSLayoutConstraint constraint)
         {
 		    Console.WriteLine("Constraint: " + constraint.FirstItem + " --- " + constraint.FirstAttribute + " --- " + constraint.SecondItem + " --- " + constraint.SecondAttribute + " --- " + constraint.Constant + " --- " + constraint.Priority);
 		}

@@ -409,6 +409,10 @@ namespace LocationConnection
                                 {
                                     locMgr.StopLocationUpdates();
                                 }
+                                if (!string.IsNullOrEmpty(locationUpdatesTo))
+                                {
+                                    EndLocationShare();
+                                }
                                 Session.Latitude = null;
                                 Session.Longitude = null;
                                 Session.LocationTime = null;
@@ -423,6 +427,8 @@ namespace LocationConnection
                                     Session.LatestLongitude = null;
                                     Session.LatestLocationTime = null;
                                 }
+
+                                Session.LastDataRefresh = null; //For the situation that a logged in user is filtering by current location, and now turns off uselocation. SetDistanceSourceAddress will be called in ListActivity.OnResume
                             }
                         }
                         Session.SnackMessage = LangEnglish.SettingsUpdated;

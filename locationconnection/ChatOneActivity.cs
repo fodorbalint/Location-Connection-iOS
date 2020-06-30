@@ -732,7 +732,7 @@ namespace LocationConnection
 			}
             else
             {
-				locMgr.RestartLocationUpdates();
+				locMgr.RestartLocationUpdates(); //we need to get an update now
             }
 			c.Snack(LangEnglish.LocationUpdatesToStart);
 		}

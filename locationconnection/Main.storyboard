@@ -372,7 +372,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UserSearchList">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="427" width="375" height="211"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="UserSearchListLayout">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -4457,24 +4457,24 @@
                                             <constraint firstAttribute="height" constant="2" id="SettingsTopSeparator30"/>
                                         </constraints>
                                     </imageView>
-                                    <label text="BackgroundLocationLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationLabel">
+                                    <!--<label text="BackgroundLocationLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationLabel">
                                         <rect key="frame" x="10" y="441" width="168" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" on="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocation">
                                         <rect key="frame" x="316" y="434" width="51" height="31"/>
-                                    </switch>
+                                    </switch>-->
                                     <label text="InAppLocationRateLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateLabel">
-                                        <rect key="frame" x="10" y="475" width="157.5" height="17"/>
+                                        <rect key="frame" x="10" y="434" width="157.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRate">
-                                        <rect key="frame" x="8" y="502" width="280" height="31"/>
+                                        <rect key="frame" x="8" y="461" width="280" height="31"/>
                                     </slider>
                                     <label text="InAppLocationRateValue" textAlignment="right" opaque="NO" adjustsFontSizeToFit="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateValue">
-                                        <rect key="frame" x="296" y="508.5" width="69" height="17"/>
+                                        <rect key="frame" x="296" y="467.5" width="69" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                         <constraints>
@@ -4482,11 +4482,11 @@
                                         </constraints>
                                     </label>
                                     <label text="InAppLocationRateExplanation" opaque="NO" contentMode="scaleToFill" numberOfLines="0" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InAppLocationRateExplanation">
-                                        <rect key="frame" x="10" y="542" width="355" height="17"/>
+                                        <rect key="frame" x="10" y="501" width="355" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
                                     </label>
-                                    <label text="BackgroundLocationRateLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRateLabel">
+                                    <!--label text="BackgroundLocationRateLabel" opaque="NO" contentMode="scaleToFill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BackgroundLocationRateLabel">
                                         <rect key="frame" x="10" y="569" width="197" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
@@ -4501,9 +4501,9 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="69" id="BackgroundLocationRateValue0"/>
                                         </constraints>
-                                    </label>
+                                    </label>-->
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="LocationHistoryButton">
-                                        <rect key="frame" x="10" y="641" width="355" height="33"/>
+                                        <rect key="frame" x="10" y="533" width="355" height="33"/>
                                         <color key="backgroundColor" name="ButtonOnWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="LocationHistoryButton0"/>
@@ -4520,7 +4520,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="SeparatorBottomTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsBottomSeparator4">
-                                        <rect key="frame" x="0.0" y="722" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="614" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsBottomSeparator40"/>
                                         </constraints>
@@ -4535,7 +4535,7 @@
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                     </button>
                                     <imageView contentMode="scaleToFill" image="SeparatorTopTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="SettingsTopSeparator4">
-                                        <rect key="frame" x="0.0" y="764" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="656" width="375" height="2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="SettingsTopSeparator40"/>
                                         </constraints>
@@ -4693,11 +4693,11 @@
                                     <constraint firstItem="SettingsTopSeparator3" firstAttribute="top" secondItem="LocationLabel" secondAttribute="bottom" id="SettingsTopSeparator32"/>
                                     <constraint firstAttribute="leading" secondItem="SettingsTopSeparator3" secondAttribute="leading" id="SettingsTopSeparator33"/>
                                     <constraint firstAttribute="trailing" secondItem="SettingsTopSeparator3" secondAttribute="trailing" id="SettingsTopSeparator34"/>
-                                    <constraint firstItem="BackgroundLocationLabel" firstAttribute="centerY" secondItem="BackgroundLocation" secondAttribute="centerY" id="BackgroundLocationLabel2"/>
+                                    <!--<constraint firstItem="BackgroundLocationLabel" firstAttribute="centerY" secondItem="BackgroundLocation" secondAttribute="centerY" id="BackgroundLocationLabel2"/>
                                     <constraint firstAttribute="leading" secondItem="BackgroundLocationLabel" secondAttribute="leading" constant="-10" id="BackgroundLocationLabel3"/>
                                     <constraint firstItem="BackgroundLocation" firstAttribute="top" secondItem="LocationLabel" secondAttribute="bottom" constant="10" id="BackgroundLocation2"/>
-                                    <constraint firstAttribute="trailing" secondItem="BackgroundLocation" secondAttribute="trailing" constant="10" id="BackgroundLocation3"/>
-                                    <constraint firstItem="InAppLocationRateLabel" firstAttribute="top" secondItem="BackgroundLocation" secondAttribute="bottom" constant="10" id="InAppLocationRateLabel2"/>
+                                    <constraint firstAttribute="trailing" secondItem="BackgroundLocation" secondAttribute="trailing" constant="10" id="BackgroundLocation3"/>-->
+                                    <constraint firstItem="InAppLocationRateLabel" firstAttribute="top" secondItem="LocationLabel" secondAttribute="bottom" constant="10" id="InAppLocationRateLabel2"/>
                                     <constraint firstAttribute="leading" secondItem="InAppLocationRateLabel" secondAttribute="leading" constant="-10" id="InAppLocationRateLabel3"/>
                                     <constraint firstItem="InAppLocationRate" firstAttribute="top" secondItem="InAppLocationRateLabel" secondAttribute="bottom" constant="10" id="InAppLocationRate2"/>
                                     <constraint firstAttribute="leading" secondItem="InAppLocationRate" secondAttribute="leading" constant="-10" id="InAppLocationRate3"/>
@@ -4707,14 +4707,14 @@
                                     <constraint firstItem="InAppLocationRateExplanation" firstAttribute="top" secondItem="InAppLocationRate" secondAttribute="bottom" constant="10" id="InAppLocationRateExplanation2"/>
                                     <constraint firstAttribute="leading" secondItem="InAppLocationRateExplanation" secondAttribute="leading" constant="-10" id="InAppLocationRateExplanation3"/>
                                     <constraint firstAttribute="trailing" secondItem="InAppLocationRateExplanation" secondAttribute="trailing" constant="10" id="InAppLocationRateExplanation4"/>
-                                    <constraint firstItem="BackgroundLocationRateLabel" firstAttribute="top" secondItem="InAppLocationRateExplanation" secondAttribute="bottom" constant="10" id="BackgroundLocationRateLabel2"/>
+                                    <!--<constraint firstItem="BackgroundLocationRateLabel" firstAttribute="top" secondItem="InAppLocationRateExplanation" secondAttribute="bottom" constant="10" id="BackgroundLocationRateLabel2"/>
                                     <constraint firstAttribute="leading" secondItem="BackgroundLocationRateLabel" secondAttribute="leading" constant="-10" id="BackgroundLocationRateLabel3"/>
                                     <constraint firstItem="BackgroundLocationRate" firstAttribute="top" secondItem="BackgroundLocationRateLabel" secondAttribute="bottom" constant="10" id="BackgroundLocationRate2"/>
                                     <constraint firstAttribute="leading" secondItem="BackgroundLocationRate" secondAttribute="leading" constant="-10" id="BackgroundLocationRate3"/>
                                     <constraint firstItem="BackgroundLocationRateValue" firstAttribute="centerY" secondItem="BackgroundLocationRate" secondAttribute="centerY" id="BackgroundLocationRateValue2"/>
                                     <constraint firstItem="BackgroundLocationRateValue" firstAttribute="leading" secondItem="BackgroundLocationRate" secondAttribute="trailing" constant="10" id="BackgroundLocationRateValue3"/>
-                                    <constraint firstAttribute="trailing" secondItem="BackgroundLocationRateValue" secondAttribute="trailing" constant="10" id="BackgroundLocationRateValue4"/>
-                                    <constraint firstItem="LocationHistoryButton" firstAttribute="top" secondItem="BackgroundLocationRate" secondAttribute="bottom" constant="15" id="LocationHistoryButton2"/>
+                                    <constraint firstAttribute="trailing" secondItem="BackgroundLocationRateValue" secondAttribute="trailing" constant="10" id="BackgroundLocationRateValue4"/>-->
+                                    <constraint firstItem="LocationHistoryButton" firstAttribute="top" secondItem="InAppLocationRateExplanation" secondAttribute="bottom" constant="15" id="LocationHistoryButton2"/>
                                     <constraint firstAttribute="leading" secondItem="LocationHistoryButton" secondAttribute="leading" constant="-10" id="LocationHistoryButton3"/>
                                     <constraint firstAttribute="trailing" secondItem="LocationHistoryButton" secondAttribute="trailing" constant="10" id="LocationHistoryButton4"/>
                                     <constraint firstItem="SettingsBottomSeparator4" firstAttribute="bottom" secondItem="SettingsFormCaption" secondAttribute="top" id="SettingsBottomSeparator42"/>
@@ -4783,15 +4783,15 @@
                         <outlet property="MapIconSize" destination="MapIconSize" id="name-outlet-MapIconSize"/>
                         <outlet property="MapRatioLabel" destination="MapRatioLabel" id="name-outlet-MapRatioLabel"/>
                         <outlet property="LocationLabel" destination="LocationLabel" id="name-outlet-LocationLabel"/>
-                        <outlet property="BackgroundLocationLabel" destination="BackgroundLocationLabel" id="name-outlet-BackgroundLocationLabel"/>
-                        <outlet property="BackgroundLocation" destination="BackgroundLocation" id="name-outlet-BackgroundLocation"/>
+                        <!--<outlet property="BackgroundLocationLabel" destination="BackgroundLocationLabel" id="name-outlet-BackgroundLocationLabel"/>
+                        <outlet property="BackgroundLocation" destination="BackgroundLocation" id="name-outlet-BackgroundLocation"/>-->
                         <outlet property="InAppLocationRateLabel" destination="InAppLocationRateLabel" id="name-outlet-InAppLocationRateLabel"/>
                         <outlet property="InAppLocationRate" destination="InAppLocationRate" id="name-outlet-InAppLocationRate"/>
                         <outlet property="InAppLocationRateValue" destination="InAppLocationRateValue" id="name-outlet-InAppLocationRateValue"/>
                         <outlet property="InAppLocationRateExplanation" destination="InAppLocationRateExplanation" id="name-outlet-InAppLocationRateExplanation"/>
-                        <outlet property="BackgroundLocationRateLabel" destination="BackgroundLocationRateLabel" id="name-outlet-BackgroundLocationRateLabel"/>
+                        <!--<outlet property="BackgroundLocationRateLabel" destination="BackgroundLocationRateLabel" id="name-outlet-BackgroundLocationRateLabel"/>
                         <outlet property="BackgroundLocationRate" destination="BackgroundLocationRate" id="name-outlet-BackgroundLocationRate"/>
-                        <outlet property="BackgroundLocationRateValue" destination="BackgroundLocationRateValue" id="name-outlet-BackgroundLocationRateValue"/>
+                        <outlet property="BackgroundLocationRateValue" destination="BackgroundLocationRateValue" id="name-outlet-BackgroundLocationRateValue"/>-->
                         <outlet property="LocationHistoryButton" destination="LocationHistoryButton" id="name-outlet-LocationHistoryButton"/>
                         <outlet property="SettingsFormCaption" destination="SettingsFormCaption" id="name-outlet-SettingsFormCaption"/>
                         <outlet property="MessageContainer" destination="SettingsMessageContainer" id="name-outlet-SettingsMessageContainer"/>
@@ -4802,9 +4802,9 @@
                         <outlet property="ScrollBottomConstraint" destination="SettingsMessageContainer3" id="name-outlet-SettingsMessageContainer3"/>
                         <outlet property="ScrollBottomOuterConstraint" destination="SettingsScroll3" id="name-outlet-SettingsScroll3"/>
                         <outlet property="Settings_Scroll" destination="SettingsScroll" id="name-outlet-SettingsScroll"/>
-                        <outlet property="InAppLocationRateLabelConstraint" destination="InAppLocationRateLabel2" id="name-outlet-InAppLocationRateLabel2"/>
+                        <!--<outlet property="InAppLocationRateLabelConstraint" destination="InAppLocationRateLabel2" id="name-outlet-InAppLocationRateLabel2"/>
                         <outlet property="LocationHistoryButtonConstraint" destination="LocationHistoryButton2" id="name-outlet-LocationHistoryButton2"/>
-                        <outlet property="BackgroundLocationRateLabelConstraint" destination="BackgroundLocationRateLabel2" id="name-outlet-BackgroundLocationRateLabel2"/>
+                        <outlet property="BackgroundLocationRateLabelConstraint" destination="BackgroundLocationRateLabel2" id="name-outlet-BackgroundLocationRateLabel2"/>-->
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="136244" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -60,7 +60,7 @@ namespace LocationConnection
 
                 if (Constants.SafeLocationMode)
                 {
-                    c.CollapseY(BackgroundLocationLabel);
+                    /*c.CollapseY(BackgroundLocationLabel);
                     c.CollapseY(BackgroundLocation);
                     BackgroundLocation.Hidden = true;
                     c.CollapseY(BackgroundLocationRateLabel);
@@ -69,21 +69,21 @@ namespace LocationConnection
                     c.CollapseY(BackgroundLocationRateValue);
 
                     InAppLocationRateLabelConstraint.Constant = 0;
-                    LocationHistoryButtonConstraint.Constant = -5;
+                    LocationHistoryButtonConstraint.Constant = -5;*/
 
                     InAppLocationRateExplanation.Text = LangEnglish.InAppLocationRateExplanation;
                 }
                 else
                 {
                     c.CollapseY(InAppLocationRateExplanation);
-                    BackgroundLocationRateLabelConstraint.Constant = 0;
+                    /*BackgroundLocationRateLabelConstraint.Constant = 0;
 
                     BackgroundLocationLabel.Text = LangEnglish.BackgroundLocation;
-                    BackgroundLocationRateLabel.Text = LangEnglish.BackgroundLocationRate;
+                    BackgroundLocationRateLabel.Text = LangEnglish.BackgroundLocationRate;*/
                 }
 
-                BackgroundLocationRate.MinValue = Constants.BackgroundLocationRateMin;
-                BackgroundLocationRate.MaxValue = Constants.BackgroundLocationRateMax;
+                //BackgroundLocationRate.MinValue = Constants.BackgroundLocationRateMin;
+                //BackgroundLocationRate.MaxValue = Constants.BackgroundLocationRateMax;
 
                 LocationHistoryButton.SetTitle(LangEnglish.LocationHistory, UIControlState.Normal);
                 SettingsFormCaption.SetTitle(LangEnglish.SettingsFormCaption, UIControlState.Normal);
@@ -99,9 +99,9 @@ namespace LocationConnection
                 SettingsBack.TouchUpInside += SettingsBack_TouchUpInside;
                 MapIconSize.ValueChanged += MapIconSize_ValueChanged;
                 MapRatio.ValueChanged += MapRatio_ValueChanged;
-                BackgroundLocation.ValueChanged += BackgroundLocation_ValueChanged;
+                //BackgroundLocation.ValueChanged += BackgroundLocation_ValueChanged;
                 InAppLocationRate.ValueChanged += InAppLocationRate_ValueChanged;
-                BackgroundLocationRate.ValueChanged += BackgroundLocationRate_ValueChanged;
+                //BackgroundLocationRate.ValueChanged += BackgroundLocationRate_ValueChanged;
                 LocationHistoryButton.TouchUpInside += LocationHistoryButton_TouchUpInside;
                 SettingsFormCaption.TouchUpInside += SettingsFormCaption_TouchUpInside;
                 MessageSend.TouchUpInside += SettingsMessageSend_TouchUpInside;
@@ -127,22 +127,22 @@ namespace LocationConnection
 
                 if (!c.IsLocationEnabled() || !(bool)Session.UseLocation)
                 {
-                    BackgroundLocation.Enabled = false;
+                    //BackgroundLocation.Enabled = false;
                     InAppLocationRate.Enabled = false;
-                    BackgroundLocationRate.Enabled = false;
+                    //BackgroundLocationRate.Enabled = false;
                 }
                 else
                 {
                     InAppLocationRate.Enabled = true;
                     if (c.IsLoggedIn())
                     {
-                        BackgroundLocation.Enabled = true;
-                        BackgroundLocationRate.Enabled = true;
+                        //BackgroundLocation.Enabled = true;
+                        //BackgroundLocationRate.Enabled = true;
                     }
                     else
                     {
-                        BackgroundLocation.Enabled = false;
-                        BackgroundLocationRate.Enabled = false;
+                        //BackgroundLocation.Enabled = false;
+                        //BackgroundLocationRate.Enabled = false;
                     }
                 }
 
@@ -166,7 +166,7 @@ namespace LocationConnection
                     CheckUnmatchBackground.Checked = (bool)Session.UnmatchBackground;
                     CheckRematchBackground.Checked = (bool)Session.RematchBackground;
 
-                    BackgroundLocation.On = (bool)Session.BackgroundLocation;
+                    /*BackgroundLocation.On = (bool)Session.BackgroundLocation;
                     if (BackgroundLocation.On)
                     {
                         BackgroundLocationRate.Enabled = true;
@@ -176,11 +176,11 @@ namespace LocationConnection
                     {
                         BackgroundLocationRate.Enabled = false;
                         BackgroundLocationRateValue.TextColor = UIColor.FromName("ImageEditorBackground");
-                    }
+                    }*/
                     InAppLocationRate.Value = (int)Session.InAppLocationRate;
                     InAppLocationRateValue.Text = GetTimeString((int)Session.InAppLocationRate);
-                    BackgroundLocationRate.Value = (int)Session.BackgroundLocationRate;
-                    BackgroundLocationRateValue.Text = GetTimeString((int)Session.BackgroundLocationRate);
+                    //BackgroundLocationRate.Value = (int)Session.BackgroundLocationRate;
+                    //BackgroundLocationRateValue.Text = GetTimeString((int)Session.BackgroundLocationRate);
                 }
                 else
                 {
@@ -202,11 +202,11 @@ namespace LocationConnection
                     CheckUnmatchBackground.Checked = false;
                     CheckRematchBackground.Checked = false;
 
-                    BackgroundLocation.On = false;
+                    //BackgroundLocation.On = false;
                     InAppLocationRate.Value = (int)Settings.InAppLocationRate;
                     InAppLocationRateValue.Text = GetTimeString((int)Settings.InAppLocationRate);
-                    BackgroundLocationRate.Value = 0;
-                    BackgroundLocationRateValue.Text = "";
+                    //BackgroundLocationRate.Value = 0;
+                    //BackgroundLocationRateValue.Text = "";
                 }
             }
             catch (Exception ex)
@@ -235,7 +235,7 @@ namespace LocationConnection
 
             if (c.IsLoggedIn())
             {
-                bool backgroundLocationChanged = false;
+                //bool backgroundLocationChanged = false;
 
                 string requestStringBase = "action=updatesettings&ID=" + Session.ID + "&SessionID=" + Session.SessionID;
                 string requestStringAdd = "";
@@ -273,20 +273,20 @@ namespace LocationConnection
                     requestStringAdd += "&RematchBackground=" + CheckRematchBackground.Checked;
                 }
 
-                if (BackgroundLocation.On != Session.BackgroundLocation)
+                /*if (BackgroundLocation.On != Session.BackgroundLocation)
                 {
                     requestStringAdd += "&BackgroundLocation=" + BackgroundLocation.On;
                     backgroundLocationChanged = true;
-                }
+                }*/
 
                 if (Math.Round(InAppLocationRate.Value) != Session.InAppLocationRate)
                 {
                     requestStringAdd += "&InAppLocationRate=" + Math.Round(InAppLocationRate.Value);
                 }
-                if (Math.Round(BackgroundLocationRate.Value) != Session.BackgroundLocationRate)
+                /*if (Math.Round(BackgroundLocationRate.Value) != Session.BackgroundLocationRate)
                 {
                     requestStringAdd += "&BackgroundLocationRate=" + Math.Round(BackgroundLocationRate.Value);
-                }
+                }*/
 
                 if (requestStringAdd != "") //if the form was changed
                 {
@@ -297,10 +297,10 @@ namespace LocationConnection
                         {
                             c.LoadCurrentUser(responseString);
 
-                            if (backgroundLocationChanged && !(locMgr is null))
+                            /*if (backgroundLocationChanged && !(locMgr is null))
                             {
                                 locMgr.RestartLocationUpdates();
-                            }
+                            }*/
                         }
                     }
                     else
@@ -344,7 +344,7 @@ namespace LocationConnection
             MapRatioValue.Text = Math.Round(MapRatio.Value,2).ToString();
         }
 
-        private void BackgroundLocation_ValueChanged(object sender, EventArgs e)
+        /*private void BackgroundLocation_ValueChanged(object sender, EventArgs e)
         {
             if (BackgroundLocation.On)
             {
@@ -356,7 +356,7 @@ namespace LocationConnection
                 BackgroundLocationRate.Enabled = false;
                 BackgroundLocationRateValue.TextColor = UIColor.FromName("ImageEditorBackground");
             }
-        }
+        }*/
 
         private void InAppLocationRate_ValueChanged(object sender, EventArgs e)
         {
@@ -364,11 +364,11 @@ namespace LocationConnection
             InAppLocationRateValue.Text = GetTimeString((int)Math.Round(InAppLocationRate.Value));
         }
 
-        private void BackgroundLocationRate_ValueChanged(object sender, EventArgs e)
+        /*private void BackgroundLocationRate_ValueChanged(object sender, EventArgs e)
         {
             BackgroundLocationRate.Value = (int)Math.Round(BackgroundLocationRate.Value / 60) * 60;
             BackgroundLocationRateValue.Text = GetTimeString((int)Math.Round(BackgroundLocationRate.Value));
-        }
+        }*/
 
         private void LocationHistoryButton_TouchUpInside(object sender, EventArgs e)
         {

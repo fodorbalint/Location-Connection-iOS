@@ -550,8 +550,7 @@ namespace LocationConnection
 
                 //Safe practice from Android: c.IsLoggedIn() true does not mean, all session variables are set. Nullable object must have a value error can occur if autologin response is at the same time as ONResume.
                 bool isLoggedIn = c.IsLoggedIn();
-                c.CW("Logged in: " + isLoggedIn);
-                c.LogActivity("Logged in: " + isLoggedIn);
+                c.Log("Logged in: " + isLoggedIn + " resultset.text " + ResultSet.Text);
 
                 if (isLoggedIn)
                 {
@@ -702,6 +701,7 @@ namespace LocationConnection
 
                     if (!locationUpdating)
                     {
+                        c.Log("Location not yet updating");
                         locMgr.StartLocationUpdates();
                         ResultSet.Hidden = false;
                         ResultSet.Text = LangEnglish.GettingLocation;
@@ -709,14 +709,14 @@ namespace LocationConnection
                     }
                     else if (!firstLocationAcquired) //first location will load the list
                     {
+                        c.Log("Location updating, awaiting location");
                         ResultSet.Hidden = false;
                         ResultSet.Text = LangEnglish.GettingLocation;
                         StartLocationTimer();
                     }
                     else 
                     {
-                        c.CW("ViewWillAppear location exists");
-                        c.LogActivity("ViewWillAppear location exists");
+                        c.Log("Location exists");
                         LoadListStartup();
                     }
                     //when autologin, background location is not yet enabled at this point
@@ -760,6 +760,7 @@ namespace LocationConnection
 
         public void StartLocationTimer()
         {
+            c.Log("Starting location timer ");
             locationTimer = new Timer();
             locationTimer.Interval = Constants.LocationTimeout;
             locationTimer.Elapsed += LocationTimer_Elapsed;
@@ -769,9 +770,11 @@ namespace LocationConnection
         private void LocationTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             ((Timer)sender).Stop();
-            c.CW("Location timeout");
-            c.LogActivity("LocationTimeout");
-            LoadListStartup();
+            c.Log("Location timeout");
+            this.InvokeOnMainThread(() =>
+            {
+                LoadListStartup();
+            });
         }
 
         public void LoadListStartup () {
@@ -1276,18 +1279,19 @@ namespace LocationConnection
                     else //permission is granted, but UseLocation is off (coming from MapView_Click)
                     {
                         c.DisplayCustomDialog("", LangEnglish.MapViewNoUseLocation, LangEnglish.DialogYes, LangEnglish.DialogNo, alert => {
-                            UpdateLocationSetting();
-
-                            firstLocationAcquired = false;
-
-                            ResultSet.Hidden = false;
-                            ResultSet.Text = LangEnglish.GettingLocation;
-
-                            if (locMgr is null)
+                            if (UpdateLocationSetting(true))
                             {
-                                locMgr = new LocationManager(this);
+                                firstLocationAcquired = false;
+
+                                ResultSet.Hidden = false;
+                                ResultSet.Text = LangEnglish.GettingLocation;
+
+                                if (locMgr is null)
+                                {
+                                    locMgr = new LocationManager(this);
+                                }
+                                locMgr.StartLocationUpdates(); //will load the list or set the map only
                             }
-                            locMgr.StartLocationUpdates(); //will load the list or set the map only
                         }, alert => {
                             mapToSet = false;
                             SetDistanceSourceAddress();
@@ -1336,6 +1340,7 @@ namespace LocationConnection
 
                     if (distanceSourceCurrentClicked)
                     {
+                        c.Log("PM logged in granted distanceSourceCurrentClicked");
                         //it resets to address by itself
                         DistanceSourceCurrent.Checked = true;
                         DistanceSourceAddress.Checked = false;
@@ -1343,8 +1348,12 @@ namespace LocationConnection
                         Session.LastDataRefresh = null;
                         distanceSourceCurrentClicked = false;
                     }
+                    else
+                    {
+                        c.Log("PM logged in granted map clicked, mapToSet " + mapToSet);
+                    }
                     Session.LocationTime = null;
-                    UpdateLocationSetting();
+                    UpdateLocationSetting(true);
                 }
                 else
                 {
@@ -1353,11 +1362,14 @@ namespace LocationConnection
 
                     if (distanceSourceCurrentClicked)
                     {
-                        DistanceSourceCurrent.Checked = true;
-                        DistanceSourceAddress.Checked = false;
+                        c.Log("PM not logged in granted distanceSourceCurrentClicked");
                         Session.GeoSourceOther = Settings.GeoSourceOther = false;
                         Session.LastDataRefresh = null;
                         distanceSourceCurrentClicked = false;
+                    }
+                    else
+                    {
+                        c.Log("PM not logged in granted map clicked, mapToSet " + mapToSet);
                     }
                 }
 
@@ -1378,12 +1390,16 @@ namespace LocationConnection
                 Session.UseLocation = false;
                 SetDistanceSourceAddress();
                 c.Snack(LangEnglish.LocationNotGranted); //in the dialog the user choose to turn on location, but now denied it. Message needs to be shown.
+                if (c.IsLoggedIn())
+                {
+                    UpdateLocationSetting(false);
+                }
             }
         }
 
-        public void UpdateLocationSetting()
+        public bool UpdateLocationSetting(bool useLocation)
         {
-            string url = "action=profileedit&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&UseLocation=True";
+            string url = "action=profileedit&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&UseLocation=" + useLocation;
             string responseString = c.MakeRequestSync(url);
             if (responseString.Substring(0, 2) == "OK")
             {
@@ -1394,10 +1410,12 @@ namespace LocationConnection
                     Session.LastDataRefresh = null;
                     distanceSourceCurrentClicked = false;
                 }
+                return true;
             }
             else
             {
                 c.ReportError(responseString);
+                return false;
             }
         }
 
@@ -1770,8 +1788,8 @@ namespace LocationConnection
         {
             if (sourceCurrent)
             {
-                c.CW("DistanceSource_Click IsLocationEnabled " + c.IsLocationEnabled() + " UseLocation " + Session.UseLocation);
-                c.LogActivity("DistanceSource_Click IsLocationEnabled " + c.IsLocationEnabled() + " UseLocation " + Session.UseLocation);
+                c.Log("DistanceSource_Click current IsLocationEnabled " + c.IsLocationEnabled() + " UseLocation " + Session.UseLocation);
+
                 DistanceSourceAddress.Checked = false;
                 c.CollapseY(DistanceSourceAddressText);
                 c.CollapseY(AddressOK);
@@ -1783,24 +1801,22 @@ namespace LocationConnection
                 }
                 else if (!(bool)Session.UseLocation) //can only mean, user is logged in
                 {
-                    c.CW("DistanceSource_click UseLocation off IsMapView " + Settings.IsMapView + " IsOwnLocationAvailable " + c.IsOwnLocationAvailable());
                     c.DisplayCustomDialog("", LangEnglish.MapViewNoUseLocation, LangEnglish.DialogYes, LangEnglish.DialogNo, alert => {
-                        UpdateLocationSetting();
-
-                        c.CW("DistanceSource_click after updated location setting GeoSourceOther " + Session.GeoSourceOther);
-
-                        Session.LastDataRefresh = null;
-                        firstLocationAcquired = false;
-
-                        ResultSet.Hidden = false;
-                        ResultSet.Text = LangEnglish.GettingLocation;
-
-                        if (locMgr is null)
+                        if (UpdateLocationSetting(true))
                         {
-                            locMgr = new LocationManager(this);
-                        }
-                        locMgr.StartLocationUpdates(); //will load the list
+                            Session.GeoSourceOther = false;
+                            Session.LastDataRefresh = null;
+                            firstLocationAcquired = false;
 
+                            ResultSet.Hidden = false;
+                            ResultSet.Text = LangEnglish.GettingLocation;
+
+                            if (locMgr is null)
+                            {
+                                locMgr = new LocationManager(this);
+                            }
+                            locMgr.StartLocationUpdates(); //will load the list
+                        }
                     }, alert => {
                         SetDistanceSourceAddress();
                     });
@@ -2243,10 +2259,14 @@ namespace LocationConnection
         {
             try
             {
-                c.CW("LoadList listLoading: " + listLoading);
-                c.LogActivity("LoadList listLoading: " + listLoading);
+                c.Log("LoadList listLoading " + listLoading + " caller " + new StackFrame(1, true).GetMethod().Name);
                 //c.CW("LoadList listLoading " + listLoading);
                 if (listLoading)
+                {
+                    return;
+                }
+
+                if (Session.GeoFilter is null) //in case user logged out before location timeout
                 {
                     return;
                 }

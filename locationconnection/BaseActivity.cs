@@ -18,7 +18,7 @@ namespace LocationConnection
 		public CommonMethods c;
 
 		public static bool isAppForeground;
-		public static bool locationUpdating; //used only for logging
+		public static bool locationUpdating;
 		public static LocationManager locMgr;
 
 		public static bool firstLocationAcquired;

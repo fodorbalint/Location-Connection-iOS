@@ -16,30 +16,6 @@ namespace LocationConnection
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISwitch BackgroundLocation { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel BackgroundLocationLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISlider BackgroundLocationRate { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel BackgroundLocationRateLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.NSLayoutConstraint BackgroundLocationRateLabelConstraint { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel BackgroundLocationRateValue { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.NSLayoutConstraint BottomConstraint { get; set; }
 
         [Outlet]
@@ -228,36 +204,6 @@ namespace LocationConnection
 
         void ReleaseDesignerOutlets ()
         {
-            if (BackgroundLocation != null) {
-                BackgroundLocation.Dispose ();
-                BackgroundLocation = null;
-            }
-
-            if (BackgroundLocationLabel != null) {
-                BackgroundLocationLabel.Dispose ();
-                BackgroundLocationLabel = null;
-            }
-
-            if (BackgroundLocationRate != null) {
-                BackgroundLocationRate.Dispose ();
-                BackgroundLocationRate = null;
-            }
-
-            if (BackgroundLocationRateLabel != null) {
-                BackgroundLocationRateLabel.Dispose ();
-                BackgroundLocationRateLabel = null;
-            }
-
-            if (BackgroundLocationRateLabelConstraint != null) {
-                BackgroundLocationRateLabelConstraint.Dispose ();
-                BackgroundLocationRateLabelConstraint = null;
-            }
-
-            if (BackgroundLocationRateValue != null) {
-                BackgroundLocationRateValue.Dispose ();
-                BackgroundLocationRateValue = null;
-            }
-
             if (BottomConstraint != null) {
                 BottomConstraint.Dispose ();
                 BottomConstraint = null;

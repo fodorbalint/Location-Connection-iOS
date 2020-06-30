@@ -148,14 +148,14 @@ namespace LocationConnection
                     Session.SafeLongitude = location.Coordinate.Longitude;
                     Session.SafeLocationTime = unixTimestamp;
 
-                    LocationUpdated(this, new LocationUpdatedEventArgs(e.Locations[e.Locations.Length - 1]));
+                    context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|1");
 
+                    LocationUpdated(this, new LocationUpdatedEventArgs(e.Locations[e.Locations.Length - 1]));
+                    
                     if (context.c.IsLoggedIn())
                     {
                         await context.c.UpdateLocationSync(true); //to match
                     }
-
-                    context.c.LogLocation(unixTimestamp + "|" + location.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture) + "|" + location.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture) + "|1");
                 }
             }
 
