@@ -1423,66 +1423,43 @@ namespace LocationConnection
 			}
 		}
 
-		public void UpdateStatus(int senderID, bool isMatch, int? matchID)
+		public void UpdateStatus(int senderID, bool isMatch)
 		{
-			if (pageType == Constants.ProfileViewType_List && displayUser.ID == senderID)
+			if (displayUser.ID == senderID)
 			{
-				if (isMatch) //start userrelation 2
+				if (pageType != Constants.ProfileViewType_Self)
 				{
-					Session.CurrentMatch = new MatchItem();
-					Session.CurrentMatch.MatchID = matchID;
-					Session.CurrentMatch.TargetID = displayUser.ID;
-					Session.CurrentMatch.TargetUsername = displayUser.Username;
-					Session.CurrentMatch.TargetName = displayUser.Name;
-					Session.CurrentMatch.TargetPicture = displayUser.Pictures[0];
+					if (isMatch) //start userrelation 2
+					{
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
+						LikeButton.UserInteractionEnabled = true;
 
-					ListActivity.viewProfiles[ListActivity.viewIndex].UserRelation = 3;
+						c.CollapseX(HideButton);
+					}
+					else //start userrelation 3 or 4.
+					{
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
+						LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Highlighted);
+						LikeButton.UserInteractionEnabled = false;
 
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
+						HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
+						HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
 
-					c.CollapseX(HideButton);
+						c.ExpandX(HideButton);
+					}
 				}
-				else //start userrelation 3 or 4.
+
+				if (pageType == Constants.ProfileViewType_Standalone)
 				{
-					ListActivity.viewProfiles[ListActivity.viewIndex].UserRelation = 2;
-
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Highlighted);
-
-					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
-					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
-
-					c.ExpandX(HideButton);
-				}
-			}
-            else if (pageType == Constants.ProfileViewType_Standalone)
-            {
-				AppDelegate.AddUpdateMatch(senderID, isMatch);
-            }
-
-            if (pageType == Constants.ProfileViewType_Standalone && displayUser.ID == senderID)
-            {
-				if (isMatch) //start userrelation 2
-				{
-					displayUser.UserRelation = 3;
-
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcChatOne"), UIControlState.Highlighted);
-
-					c.CollapseX(HideButton);
-				}
-				else //start userrelation 3 or 4.
-				{
-					displayUser.UserRelation = 2;
-
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Normal);
-					LikeButton.SetBackgroundImage(UIImage.FromBundle("IcLiked"), UIControlState.Highlighted);
-
-					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Normal);
-					HideButton.SetBackgroundImage(UIImage.FromBundle("IcHide"), UIControlState.Highlighted);
-
-					c.ExpandX(HideButton);
+					if (isMatch)
+					{
+						displayUser.UserRelation = 3;
+					}
+					else
+					{
+						displayUser.UserRelation = 2;
+					}
 				}
 			}
 		}

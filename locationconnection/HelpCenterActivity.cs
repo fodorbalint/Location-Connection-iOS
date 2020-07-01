@@ -80,7 +80,7 @@ namespace LocationConnection
                         QuestionsScroll.AddSubview(text);
 
                         text.Text = line;
-                        text.TextColor = UIColor.FromName("PrimaryDary");
+                        text.TextColor = UIColor.FromName("PrimaryDark");
                         text.Lines = 0;
                         text.LineBreakMode = UILineBreakMode.WordWrap;
 

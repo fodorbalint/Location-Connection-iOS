@@ -86,7 +86,7 @@ namespace LocationConnection
         private bool mapLoaded;
         public static nint? totalResultCount;
         public UserSearchListAdapter adapter;
-        GridLayout gridLayout;
+        public GridLayout gridLayout;
         private bool usersLoaded; //determines if the map can be set
         private bool recenterMap;
         private MKPointAnnotation circlePin;
@@ -225,9 +225,12 @@ namespace LocationConnection
 
                         string url = "action=loginsession&ID=" + strarr[0] + "&SessionID=" + strarr[1];
 
-                        InvokeOnMainThread(() => {
+                        InvokeOnMainThread(() => { //called after last (third) ViewDidLayoutSubviews
                             ResultSet.Hidden = false;
-                            ResultSet.Text = LangEnglish.LoggingIn;
+                            if (ResultSet.Text == "") //only set it if "Getting location" is not being displayed already.
+                            {
+                                ResultSet.Text = LangEnglish.LoggingIn;
+                            }
                         });
 
                         string responseString = c.MakeRequestSync(url);
@@ -1807,7 +1810,7 @@ namespace LocationConnection
                     }, alert => {
                         SetDistanceSourceAddress();
                     });
-                    return; //wihtout returning, function would continue with DistanceSourceAddress.Checked False, and list would not load anyway because current location is not available.
+                    return; //wihtout returning, function would continue with DistanceSourceAddress.Checked False, and list would not load anyway because current location is unavailable.
                 }
             }
             else

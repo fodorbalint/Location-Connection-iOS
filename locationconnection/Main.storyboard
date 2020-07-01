@@ -472,7 +472,7 @@
                                             <constraint firstAttribute="width" constant="35" id="LoadPrevious1"/>
                                         </constraints>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="ResultSet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ResultSet">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ResultSet">
                                         <rect key="frame" x="156.5" y="6" width="62" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     </label>
@@ -797,7 +797,7 @@
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MainLayout2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <subviews>
-                            <label opaque="NO" contentMode="scaleToFill" text="AppName" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LogoText">
+                            <label opaque="NO" contentMode="scaleToFill" text="" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LogoText">
                                 <rect key="frame" x="176.5" y="50" width="108.5" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" name="PrimaryDark"/>
@@ -815,7 +815,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LoginSection">
                                 <rect key="frame" x="10" y="176" width="355" height="198"/>
                                 <subviews>
-                                    <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="LoginEmail" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoginEmailText">
+                                    <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoginEmailText">
                                         <rect key="frame" x="0.0" y="8.5" width="70" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
@@ -825,7 +825,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                     </textField>
-                                    <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="LoginPassword" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoginPasswordText">
+                                    <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoginPasswordText">
                                         <rect key="frame" x="0.0" y="48.5" width="97.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="PrimaryDark"/>
@@ -870,7 +870,7 @@
                                     <view contentMode="scaleToFill" clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ResetSection">
                                         <rect key="frame" x="0.0" y="119" width="355" height="79"/>
                                         <subviews>
-                                            <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="ResetEmail" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ResetEmailText">
+                                            <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ResetEmailText">
                                                 <rect key="frame" x="0.0" y="14.5" width="71.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" name="PrimaryDark"/>

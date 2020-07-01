@@ -873,12 +873,32 @@ namespace LocationConnection
 
 			try
             {
+				//if text is long, label will not display all. Creating TextView does not help much just that the last line will not be truncated in the middle.
 				UIView container = dialog.View.Subviews[0].Subviews[0].Subviews[0];
-				((UILabel)container.Subviews[0].Subviews[0].Subviews[2]).TextAlignment = UITextAlignment.Left;
+				UILabel label = (UILabel)container.Subviews[0].Subviews[0].Subviews[2];
+				label.TextAlignment = UITextAlignment.Left;
 
-				dialog.View.WidthAnchor.ConstraintEqualTo((nfloat)(context.View.Frame.Width - 44)).Active = true;
-				dialog.View.Subviews[0].WidthAnchor.ConstraintEqualTo((nfloat)(context.View.Frame.Width - 44)).Active = true;
-				container.WidthAnchor.ConstraintEqualTo((nfloat)(context.View.Frame.Width - 44)).Active = true;
+				UITextView text = new UITextView();
+				label.Hidden = true; //if removed, error would be thrown due to constraints not being activated.
+				
+				container.Subviews[0].Subviews[0].InsertSubview(text, 3);
+
+				text.Text = message;
+				text.Font = UIFont.SystemFontOfSize(13);
+
+				text.TranslatesAutoresizingMaskIntoConstraints = false;
+				text.LeftAnchor.ConstraintEqualTo(text.Superview.LeftAnchor, 11).Active = true;
+				text.TopAnchor.ConstraintEqualTo(label.TopAnchor).Active = true;
+				text.WidthAnchor.ConstraintEqualTo(text.Superview.WidthAnchor, 1, -22).Active = true;
+				label.SetContentCompressionResistancePriority(1, UILayoutConstraintAxis.Vertical);
+				label.HeightAnchor.ConstraintEqualTo(text.HeightAnchor).Active = true;
+				text.ScrollEnabled = false;
+
+				text.BackgroundColor = UIColor.Clear;
+
+				dialog.View.WidthAnchor.ConstraintEqualTo(context.View.Frame.Width - 44).Active = true;
+				dialog.View.Subviews[0].WidthAnchor.ConstraintEqualTo(context.View.Frame.Width - 44).Active = true;
+				container.WidthAnchor.ConstraintEqualTo((context.View.Frame.Width - 44)).Active = true;
 
 				dialog.View.Subviews[0].LeftAnchor.ConstraintEqualTo(dialog.View.LeftAnchor).Active = true;
 			}

@@ -99,6 +99,12 @@ namespace LocationConnection
 			ResizeWindowOnKeyboard();			
 		}
 
+		public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
+		{
+			base.ViewWillTransitionToSize(toSize, coordinator);
+			layoutSet = false;
+		}
+
 		public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
@@ -172,6 +178,10 @@ namespace LocationConnection
                     //On iPad Pro 12.9 3th gen, setting it below 10 results in the buttons being below microphone line, and page is not scrollable
 				}
 
+				if (this is ListActivity) //only important at activity start, because at rotation ShouldInvalidateLayoutForBoundsChange is called first.
+				{
+					((ListActivity)this).gridLayout.ResizeTiles();
+                }
 				layoutSet = true;
 			}
 		}
