@@ -146,7 +146,7 @@ namespace LocationConnection
             string fileName = Path.Combine(cacheDir, imageName);
             if (!data.Save(fileName, false, out NSError error))
             {
-                Console.WriteLine("Image save error: " + error.LocalizedDescription);
+                CommonMethods.LogStatic("Error saving image: " + error.LocalizedDescription);
             }
         }
 

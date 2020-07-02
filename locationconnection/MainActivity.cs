@@ -202,7 +202,6 @@ namespace LocationConnection
                 else if (responseString.Substring(0, 6) == "ERROR_")
                 {
                     c.Snack(c.GetLang(responseString.Substring(6)));
-                    c.CW("Snack: " + c.GetLang(responseString.Substring(6)));
                 }
                 else
                 {
@@ -213,7 +212,6 @@ namespace LocationConnection
             }
             else
             {
-                c.CW("Snack: " + checkFormMessage);
                 c.Snack(checkFormMessage);
             }
 
@@ -240,8 +238,6 @@ namespace LocationConnection
         {
             if (!resetSectionVisible)
             {
-                c.CW("Expanding reset section");
-
                 c.ExpandY(ResetSection);
                 resetSectionVisible = true;
                 UIView.Animate(Constants.tweenTime, () => { View.LayoutIfNeeded(); }, () => { });
@@ -256,7 +252,6 @@ namespace LocationConnection
 
         private async void ResetSendButton_Click(object sender, EventArgs e)
         {
-            c.CW("ResetSendButton_Click");
             View.EndEditing(true);
 
             if (CheckFieldsReset())

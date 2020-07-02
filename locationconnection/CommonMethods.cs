@@ -351,7 +351,7 @@ namespace LocationConnection
 				var response = request.GetResponse();
 
 				stw.Stop();
-				Console.WriteLine(stw.ElapsedMilliseconds + " " + url);
+				CWStatic(stw.ElapsedMilliseconds + " " + url);
 
 				string data = new StreamReader(response.GetResponseStream()).ReadToEnd();
 				response.Close();				
@@ -514,13 +514,6 @@ namespace LocationConnection
 						IntentData.logout = true;
 						IntentData.authError = true;
 						OpenPage("MainActivity", 1);
-					}
-					else
-					{
-						Console.WriteLine("-----------location could not be updated, responsestring-----------" + responseString);
-						/*context.RunOnUiThread(() => { //When updating from the location provider, only the caller activity can display a snack until it is paused.
-							Snack(Resource.String.LocationNoUpdate, null);
-						});*/
 					}
 				}
 				else if (responseString == "AUTHORIZATION_ERROR")
@@ -1246,17 +1239,14 @@ namespace LocationConnection
 				using (var url = new NSUrl(uri))
 				using (var data = NSData.FromUrl(url))
                 {
-					var image = UIImage.LoadFromData(data);
-                    //Console.WriteLine(DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + " ------ LoadFromUrl end --------");
-					return image;
+					return UIImage.LoadFromData(data);
 				}
 			}
             catch
             {
 				try
 				{
-					File.AppendAllLines(logFile, new string[] { DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + " Error loading image: " + uri });
-					Console.WriteLine("Error loading image: " + uri);
+					LogStatic("Error loading image: " + uri);
 				}
 				catch
 				{
@@ -1268,9 +1258,9 @@ namespace LocationConnection
 		public static Task<NSData> LoadFromUrlAsyncData(string uri)
 		{
 			return Task.Run(() => {
-				//Console.WriteLine(DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + " ----- LoadFromUrl start -----------" + uri);
+				//Console.WriteLine(DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + " ----- LoadFromUrlAsyncData start -----------" + uri);
 				try
-			    {
+				{
 				    using (var url = new NSUrl(uri))
 					    return NSData.FromUrl(url);
 
@@ -1279,9 +1269,8 @@ namespace LocationConnection
 			    {
 				    try
 				    {
-					    File.AppendAllLines(logFile, new string[] { DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + " Error loading image: " + uri });
-					    Console.WriteLine("Error loading image: " + uri);
-				    }
+						LogStatic("Error loading image: " + uri);
+					}
 				    catch
 				    {
 				    }

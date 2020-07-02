@@ -21,6 +21,7 @@ namespace LocationConnection
         List<MKPolyline> lines;
 
         int selectedPos;
+        private bool mapSet;
 
         public LocationActivity (IntPtr handle) : base (handle)
         {
@@ -61,6 +62,8 @@ namespace LocationConnection
                 LocationHistoryList.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
                 c.AddViews(Snackbar, Snackbar.SnackText, Snackbar.SnackButton);
+
+                mapSet = false;
 
                 MapStreet.SetTitle(LangEnglish.MapStreet, UIControlState.Normal);
                 MapSatellite.SetTitle(LangEnglish.MapSatellite, UIControlState.Normal);
@@ -122,6 +125,11 @@ namespace LocationConnection
             MapStreet.Layer.MaskedCorners = CACornerMask.MinXMinYCorner | CACornerMask.MinXMaxYCorner;
             MapSatellite.Layer.CornerRadius = 2;
             MapSatellite.Layer.MaskedCorners = CACornerMask.MaxXMinYCorner | CACornerMask.MaxXMaxYCorner;
+
+            if (File.Exists(c.locationLogFile)) //frame is 
+            {
+                SetMap();
+            }
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -191,8 +199,6 @@ namespace LocationConnection
                 }
                 locationList[0].isSelected = true;
                 selectedPos = 0;                
-
-                SetMap();
             }
             else
             {
@@ -207,6 +213,12 @@ namespace LocationConnection
 
         public void SetMap()
         {
+            if (mapSet)
+            {
+                return;
+            }
+            mapSet = true;
+
             double latitude = locationList[0].latitude;
             double longitude = locationList[0].longitude;
 

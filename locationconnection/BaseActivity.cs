@@ -166,7 +166,7 @@ namespace LocationConnection
 					SnackBottomConstraintConstant = -13; //Snackbar is extra padded at the bottom
 				}
 
-				c.CW("ViewDidLayoutSubviews roundBottomHeight " + roundBottomHeight + " " + BottomConstraintConstant + " " + SnackBottomConstraintConstant + " " + ScrollBottomConstraintConstant);
+				//c.CW("ViewDidLayoutSubviews roundBottomHeight " + roundBottomHeight + " " + BottomConstraintConstant + " " + SnackBottomConstraintConstant + " " + ScrollBottomConstraintConstant);
 
 				BottomConstraint_Base.Constant = BottomConstraintConstant;
 				SnackBottomConstraint_Base.Constant = SnackBottomConstraintConstant;
@@ -194,7 +194,6 @@ namespace LocationConnection
 
 			if (active && CommonMethods.transitionTarget == "empty") //ViewDidAppear is called before transition ends. If new activity is scheduled, active is not yet set to false, because there was no context to set it to in CommonMethods.OpenPage
 			{
-				c.CW("ViewDidAppear Session.SnackMessage " + Session.SnackMessage);
 				if (!(Session.SnackMessage is null))
 				{
 					if (this is ChatOneActivity)
@@ -216,8 +215,6 @@ namespace LocationConnection
 				}
 				Session.SnackPermanent = false;
 			}
-
-			c.CW("ViewDidAppear end");
 		}
 
 		public override void ViewWillDisappear(bool animated)
@@ -360,7 +357,6 @@ namespace LocationConnection
                     {
 						if (isBottom)
 						{
-							c.CW("scrolling to bottom");
 							c.ScrollToBottom(scroll);
 						}
 						else //scroll position would not remain if bottom was between bottom - 10 and bottom - uselessheight - 10
@@ -494,7 +490,6 @@ namespace LocationConnection
 
 		protected void EndLocationShare(int? targetID = null)
 		{
-			c.CW("EndLocationShare");
 			string url = "action=updatelocationend&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&LocationUpdates=";
 			if (targetID is null) //stop all
 			{

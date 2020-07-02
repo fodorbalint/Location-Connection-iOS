@@ -40,7 +40,6 @@ namespace LocationConnection
                 imageView.Layer.BorderWidth = 0.5f;
                 imageView.Frame = new CoreGraphics.CGRect(0, 0, (double)Settings.MapIconSize, (double)Settings.MapIconSize);
 
-                Console.WriteLine("GetViewForAnnotation userid " + ((ProfileAnnotation)annotation).UserID + " frame " + imageView.Frame);
                 return imageView;
             }
             else if (annotation is MKPointAnnotation) //list view circle center / profile view position marker

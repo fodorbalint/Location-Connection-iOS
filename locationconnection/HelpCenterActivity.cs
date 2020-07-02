@@ -139,13 +139,13 @@ namespace LocationConnection
 
             scrollValid = false;
         }
+
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
 
             if (!scrollValid)
             {
-                //c.CW("ViewDidLayoutSubviews " + TutorialFrame.Frame.Width + " " + TutorialFrame.ContentSize + " " + currentTutorial + " " + currentTutorial * TutorialFrame.Frame.Width);
                 TutorialFrame.ContentOffset = new CGPoint(currentTutorial * TutorialFrame.Frame.Width, 0);
                 scrollValid = true;
             }
@@ -441,7 +441,7 @@ namespace LocationConnection
 		    }
 			catch (Exception ex)
 			{
-				c.CW(ex.Message + " " + ex.StackTrace);
+				c.Log("LoadPicture error: " + ex.Message);
 			}
 		}
 

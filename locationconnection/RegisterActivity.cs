@@ -184,8 +184,6 @@ namespace LocationConnection
                         ImagesProgressText.Text = "";
                     }
 
-                    Console.WriteLine("Onresume: imagesuploading: " + rc.imagesUploading);
-
                     //works only if activity is resuming. It is recreaed when pressing cancel and coming here again.
                     if (rc.imagesUploading)
                     {
@@ -226,8 +224,6 @@ namespace LocationConnection
 
         public override void ViewDidLayoutSubviews() //called after ViewWillTransitionToSize
         {
-            c.CW("ViewDidLayoutSubviews");
-
             dpWidth = UIScreen.MainScreen.Bounds.Width;
             dpHeight = UIScreen.MainScreen.Bounds.Height;
 
@@ -246,7 +242,6 @@ namespace LocationConnection
         {
             base.ViewWillDisappear(animated);
 
-            Console.WriteLine("ViewWillDisappear");
             try
             {
                 if (!registerCompleted)

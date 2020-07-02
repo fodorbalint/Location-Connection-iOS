@@ -96,8 +96,6 @@ namespace LocationConnection
         {
             base.TouchesBegan(touches, evt);
             
-            context.c.CW("ChatList TouchesBegan " + ChatListActivity.chatListScrolling + " " + LocationInView(table));
-
             var location = LocationInView(table);
             var indexPath = table.IndexPathForRowAtPoint(location);
             startX = location.X;
@@ -126,7 +124,6 @@ namespace LocationConnection
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             base.TouchesMoved(touches, evt);
-            context.c.CW("ChatList TouchesMoved " + ChatListActivity.chatListScrolling + " " + LocationInView(table));
 
             var location = LocationInView(table);
 
@@ -135,12 +132,10 @@ namespace LocationConnection
             {
                 if (startTimer != null && startTimer.Enabled)
                 {
-                    context.c.CW("TouchesMoved stopping timer");
                     startTimer.Stop();
                 }
                 else
                 {
-                    context.c.CW("TouchesMoved restoring");
                     SetNormal();
                 }
             }
@@ -149,7 +144,6 @@ namespace LocationConnection
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
             base.TouchesEnded(touches, evt);
-            context.c.CW("TouchesEnded " + ChatListActivity.chatListScrolling + " " + LocationInView(table));
 
             if (startTimer != null && startTimer.Enabled || pressed)
             {
@@ -157,8 +151,6 @@ namespace LocationConnection
                 endTimer.Interval = timerMs;
                 endTimer.Elapsed += EndTimer_Elapsed;
                 endTimer.Start();
-
-                context.c.CW("Ended index: " + table.IndexPathForCell(selectedCell).Row);
 
                 Session.CurrentMatch = context.matchList[table.IndexPathForCell(selectedCell).Row];
                 CommonMethods.OpenPage("ChatOneActivity", 1);
@@ -173,7 +165,6 @@ namespace LocationConnection
 
         private void SetHighlighted ()
         {
-            context.c.CW("SetHighlighted");
             if (selectedCell != null)
             {
                 UIView view = selectedCell.ContentView;
@@ -193,7 +184,6 @@ namespace LocationConnection
 
         public void SetNormal ()
         {
-            context.c.CW("SetNormal");
             if (selectedCell != null)
             {
 

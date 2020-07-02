@@ -167,8 +167,7 @@ namespace LocationConnection
 
                 BaseActivity.firstLocationAcquired = true;
 
-                context.c.CW("LocationManager_LocationUpdated first location");
-                context.c.LogActivity("LocationManager_LocationUpdated first location");
+                context.c.Log("LocationManager_LocationUpdated first location");
 
                 var currentController = CommonMethods.GetCurrentViewController();
                 if (currentController is ListActivity)
@@ -181,12 +180,12 @@ namespace LocationConnection
         //are these ever called?
         private void LocMgr_LocationUpdatesPaused(object sender, EventArgs e)
         {
-            context.c.LogActivity("Location updates paused");
+            context.c.Log("Location updates paused");
         }
 
         private void LocMgr_LocationUpdatesResumed(object sender, EventArgs e)
         {
-            context.c.LogActivity("Location updates resumed");
+            context.c.Log("Location updates resumed");
         }
     }
 }

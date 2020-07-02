@@ -17,7 +17,11 @@ namespace LocationConnection
     public partial class ProfileViewActivity : BaseActivity, IUIScrollViewDelegate
     {
         public static LocationManager Manager { get; set; }
-        Profile displayUser;
+		private bool mapLoaded;
+		private bool mapSet;
+		private bool userLoaded;
+
+		Profile displayUser;
 		nint paddingSelfPage = 10;
 		nint paddingProfilePage = 64;
 		nfloat percentProgresssWidth = 75;
@@ -64,7 +68,7 @@ namespace LocationConnection
 			    tap.AddTarget(() => ProfileImageScroll_Click(tap));
 			    ProfileImageScroll.AddGestureRecognizer(tap);
 
-			    MapStreet.SetTitle(LangEnglish.MapStreet, UIControlState.Normal);
+				MapStreet.SetTitle(LangEnglish.MapStreet, UIControlState.Normal);
 			    MapSatellite.SetTitle(LangEnglish.MapSatellite, UIControlState.Normal);
 			    ProfileViewMap.MapType = (MKMapType)Settings.ProfileViewMapType;
 				if (Settings.ProfileViewMapType == (int)MKMapType.Standard)
@@ -125,14 +129,18 @@ namespace LocationConnection
 			{
 				base.ViewWillAppear(animated);
 
+				mapLoaded = false; //Map loads in ViewDidLoad, but we might change orientation in ProfileEdit, and then go back to ProfileView
+				userLoaded = false;
+				mapSet = false;
+
 				ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(0, 0);
 				imageIndex = 0;
 
-                if (pageType is null) //activity can be resumed by pressing a back button from chat one
+                if (pageType is null) //in constrast to Android, where in the sequence: List -> Profile View (list) -> Chat one -> Profile View (standalone), pressing the back button will skip Profile View (list), here it is reversed exactly, therefore an already set ProfileView should not change.
                 {
 					pageType = IntentData.profileViewPageType;
 				}
-				c.CW("ProfileViewActivity ViewWillAppear pageType " + pageType + " viewindex " + ListActivity.viewIndex + " absolutestartindex " + ListActivity.absoluteStartIndex);
+				c.Log("ViewWillAppear pageType " + pageType);
 
 				switch (pageType)
 				{
@@ -217,7 +225,7 @@ namespace LocationConnection
 
 						if (ListActivity.viewProfiles.Count > Constants.MaxResultCount)
 						{
-							c.LogActivity("Error: ListActivity.viewProfiles.Count is greater than " + Constants.MaxResultCount + ": " + ListActivity.viewProfiles.Count);
+							c.Log("Error: ListActivity.viewProfiles.Count is greater than " + Constants.MaxResultCount + ": " + ListActivity.viewProfiles.Count);
 						}						
 
                         if (ListActivity.viewIndex >= ListActivity.viewProfiles.Count) //when blocking a user from chat window, but returning to profileview list
@@ -268,7 +276,7 @@ namespace LocationConnection
 			scrollValid = false;
 		}
 
-		public override void ViewDidLayoutSubviews()
+		public override void ViewDidLayoutSubviews() //When changing orientation in ProfileEdit, and going back, map frame changes only at the 12. call. It is not important to set the map, to avoid possible drawback where user moved the map already
 		{
 			base.ViewDidLayoutSubviews();
 
@@ -528,6 +536,8 @@ namespace LocationConnection
 		{
 			try
 			{
+				userLoaded = true;
+
 				c.RemoveSubviews(ProfileImageScroll);
 
 				if (!(counterCircles is null))
@@ -581,7 +591,8 @@ namespace LocationConnection
         {
 			try
 			{
-				c.CW("Loaduser ID " + displayUser.ID);
+				c.Log("Loaduser " + displayUser.Username);
+				userLoaded = true;
 
 				if (c.IsLoggedIn())
 				{
@@ -658,7 +669,7 @@ namespace LocationConnection
 				}
 
 				LoadEmptyPictures(displayUser.Pictures.Length);
-                               				
+
 				SetMap();
 
 				AddCircles(displayUser.Pictures.Length);
@@ -702,36 +713,47 @@ namespace LocationConnection
         {
             try
             {
+				if (mapSet)
+				{
+					return;
+				}
+				mapSet = true;
+
 				if (pageType == Constants.ProfileViewType_Self)
 				{
+					c.Collapse(DistanceText);
+					HideNavigationSpacer();
+
 					if (Session.Latitude != null && Session.Longitude != null && Session.LocationTime != null) //location available
 					{
 						ProfileViewMap.ShowsUserLocation = false;
-
-						CLLocationCoordinate2D mapCenter = new CLLocationCoordinate2D((double)Session.Latitude, (double)Session.Longitude);
-						MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance(mapCenter, 1000 * 2, 1000 * 2);
-						ProfileViewMap.CenterCoordinate = mapCenter;
-						ProfileViewMap.Region = mapRegion;
 
 						if (!(thisMarker is null))
 						{
 							ProfileViewMap.RemoveAnnotation(thisMarker);
 						}
 
-						thisMarker = new MKPointAnnotation() { Title = "Center", Coordinate = mapCenter };
-						ProfileViewMap.AddAnnotation(thisMarker);
-
 						LocationTime.Text = LangEnglish.ProfileViewLocation + " " + c.GetTimeDiffStr(Session.LocationTime, false);
 						c.Expand(LocationTime);
 						ShowMap();
+
+						ProfileViewMap.LayoutIfNeeded(); //when changing orientation in Profile Edit, and going back, the map height does not change 
+
+						CLLocationCoordinate2D mapCenter = new CLLocationCoordinate2D((double)Session.Latitude, (double)Session.Longitude);
+						MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance(mapCenter, 1000 * 2, 1000 * 2);
+						ProfileViewMap.CenterCoordinate = mapCenter;
+						ProfileViewMap.Region = mapRegion;
+
+						c.CW("Region: LatitudeDelta " + ProfileViewMap.Region.Span.LatitudeDelta + " LongitudeDelta " + ProfileViewMap.Region.Span.LongitudeDelta + " frame " + ProfileViewMap.Frame);
+
+						thisMarker = new MKPointAnnotation() { Title = "Center", Coordinate = mapCenter };
+						ProfileViewMap.AddAnnotation(thisMarker);
 					}
 					else
 					{
 						c.Collapse(LocationTime); //distance is not shown on self page		
 						HideMap();
 					}
-					c.Collapse(DistanceText);
-					HideNavigationSpacer();
 				}
                 else
                 {
@@ -746,28 +768,19 @@ namespace LocationConnection
 							ProfileViewMap.ShowsUserLocation = false;
 						}
 
-
-						CLLocationCoordinate2D mapCenter = new CLLocationCoordinate2D((double)displayUser.Latitude, (double)displayUser.Longitude);
-						MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance(mapCenter, 1000 * 2, 1000 * 2);
-						ProfileViewMap.CenterCoordinate = mapCenter;
-						ProfileViewMap.Region = mapRegion;
-
 						if (!(thisMarker is null))
 						{
 							ProfileViewMap.RemoveAnnotation(thisMarker);
 						}
-
-						thisMarker = new MKPointAnnotation() { Title = "Center", Coordinate = mapCenter };
-						ProfileViewMap.AddAnnotation(thisMarker);
 
 						LocationTime.Text = LangEnglish.ProfileViewLocation + " " + c.GetTimeDiffStr(displayUser.LocationTime, false);
 						c.Expand(LocationTime);
 
 						if (!(displayUser.Distance is null))
 						{
-                            //A default text of " " was given to DistanceText, otherwise the intrinsic width would be 0, which if removed by Expand(), would make DistanceText lose its intrinsic content size. (It would be stretched to appear next to LocationText)
-                            //LocationText does not have this problem due to the TopInset and RightInset set to 10.
-                            //If DistanceText is too long, LocationText will be compressed to display smaller font, or disappear completely.
+							//A default text of " " was given to DistanceText, otherwise the intrinsic width would be 0, which if removed by Expand(), would make DistanceText lose its intrinsic content size. (It would be stretched to appear next to LocationText)
+							//LocationText does not have this problem due to the TopInset and RightInset set to 10.
+							//If DistanceText is too long, LocationText will be compressed to display smaller font, or disappear completely.
 							c.Expand(DistanceText);
 							DistanceText.Text = displayUser.Distance + " km " + LangEnglish.ProfileViewAway;
 						}
@@ -776,18 +789,29 @@ namespace LocationConnection
 							c.Collapse(DistanceText);
 						}
 						ShowMap();
+
+						ProfileViewMap.LayoutIfNeeded();
+
+						CLLocationCoordinate2D mapCenter = new CLLocationCoordinate2D((double)displayUser.Latitude, (double)displayUser.Longitude);
+						MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance(mapCenter, 1000 * 2, 1000 * 2);
+						ProfileViewMap.CenterCoordinate = mapCenter;
+						ProfileViewMap.Region = mapRegion;
+
+						c.CW("Region: LatitudeDelta " + ProfileViewMap.Region.Span.LatitudeDelta + " LongitudeDelta " + ProfileViewMap.Region.Span.LongitudeDelta + " frame " + ProfileViewMap.Frame);
+
+						thisMarker = new MKPointAnnotation() { Title = "Center", Coordinate = mapCenter };
+						ProfileViewMap.AddAnnotation(thisMarker);
 					}
 					else
 					{
+						c.Collapse(LocationTime);
 						if (!(displayUser.Distance is null))
 						{
-							c.Collapse(LocationTime);
 							c.Expand(DistanceText);
 							DistanceText.Text = LangEnglish.ProfileViewDistance + " " + c.GetTimeDiffStr(displayUser.LocationTime, false) + ": " + displayUser.Distance + " km ";
 						}
 						else
 						{
-							c.Collapse(LocationTime);
 							c.Collapse(DistanceText);
 						}
 						HideMap();
@@ -914,7 +938,6 @@ namespace LocationConnection
 
 		private void LoadPicture(string folder, string picture, int index, bool usecache)
 		{
-			//c.CW("LoadPicture " + folder + " " + picture + " " + index);
 			try {
 				UIImageView ProfileImage = null;
 				InvokeOnMainThread(() => {
@@ -955,7 +978,7 @@ namespace LocationConnection
 		    }
 			catch (Exception ex)
 			{
-				c.CW(ex.Message + " " + ex.StackTrace);
+				c.Log("LoadPicture error: " + ex.Message);
 			}
         }
 
@@ -1072,7 +1095,7 @@ namespace LocationConnection
 
 			CancelTask();
 
-			c.CW("PreviousButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
+			//c.CW("PreviousButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 
 			if (ListActivity.viewIndex >= 0)
 			{
@@ -1080,7 +1103,7 @@ namespace LocationConnection
 				displayUser = ListActivity.viewProfiles[ListActivity.viewIndex];
 				ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(0, 0);
 				imageIndex = 0;
-				c.CW("Loading previous user");
+				//c.CW("Loading previous user");
 				LoadUser();
 			}
 			else
@@ -1100,7 +1123,7 @@ namespace LocationConnection
 
             CancelTask();
 
-			c.CW("NextButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
+			//c.CW("NextButton_Click viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " listProfiles.Count " + ListActivity.listProfiles.Count);
 
 			if (ListActivity.viewIndex < ListActivity.viewProfiles.Count)
 			{
@@ -1108,7 +1131,7 @@ namespace LocationConnection
 				displayUser = ListActivity.viewProfiles[ListActivity.viewIndex];
 				ProfileImageScroll.ContentOffset = new CoreGraphics.CGPoint(0, 0);
 				imageIndex = 0;
-				c.CW("Loading next user");
+				//c.CW("Loading next user");
 				LoadUser();
 			}
 			else
@@ -1121,13 +1144,11 @@ namespace LocationConnection
 
 		private void PrevLoadAction()
 		{
-			//c.LogActivity("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
-			c.CW("PrevLoadAction viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " totalResultCount " + ListActivity.totalResultCount);
+			//c.Log("Prev viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
 			if (ListActivity.viewIndex == 0 && ListActivity.absoluteFirstIndex > 0)
 			{
 				Session.ResultsFrom = ListActivity.absoluteIndex - Constants.MaxResultCount + 1;
-				//c.LogActivity("Prev2 ResultsFrom " + Session.ResultsFrom);
-				//c.CW("Prev2 ResultsFrom " + Session.ResultsFrom);
+				//c.Log("Prev2 ResultsFrom " + Session.ResultsFrom);
 				ListActivity.addResultsBefore = true;
 				if (Session.LastSearchType == Constants.SearchType_Filter)
 				{
@@ -1142,13 +1163,11 @@ namespace LocationConnection
 
 		private void NextLoadAction()
 		{
-			//c.LogActivity("Next viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
-			c.CW("NextLoadAction viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " viewProfiles.Count " + ListActivity.viewProfiles.Count + " totalResultCount " + ListActivity.totalResultCount);
+			//c.Log("Next viewIndex " + ListActivity.viewIndex + " absoluteIndex " + ListActivity.absoluteIndex + " absoluteStartIndex " + ListActivity.absoluteStartIndex + " ResultsFrom " + Session.ResultsFrom + " view count " + ListActivity.viewProfiles.Count);
 			if (ListActivity.viewIndex == ListActivity.viewProfiles.Count - 1 && ListActivity.totalResultCount > ListActivity.absoluteIndex + 1) //list will be loaded
 			{
 				Session.ResultsFrom = ListActivity.absoluteIndex + 2;
-				//c.LogActivity("Next2 ResultsFrom " + Session.ResultsFrom);
-				//c.CW("Next2 ResultsFrom " + Session.ResultsFrom);
+				//c.Log("Next2 ResultsFrom " + Session.ResultsFrom);
 				ListActivity.addResultsAfter = true;
 				if (Session.LastSearchType == Constants.SearchType_Filter)
 				{

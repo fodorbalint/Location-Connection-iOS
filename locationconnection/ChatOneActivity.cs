@@ -153,7 +153,6 @@ namespace LocationConnection
 					}
 					else if (responseString == "ERROR_MatchNotFound") //user deleted itself while the other was on its standalone page, and now loading chat. Chat remains, but userid does not exist anymore. 
 					{
-						c.CW("Match not found");
 						Session.SnackMessage = LangEnglish.MatchNotFound;
 						CommonMethods.OpenPage(null, 0);
 					}
@@ -565,7 +564,6 @@ namespace LocationConnection
 
 		public void AddMessageItemOne(string messageItem)
 		{
-			c.CW("AddMessageitemone:" + messageItem);
 			NoMessages.Hidden = true;
 			AddMessageItem(messageItem);
 

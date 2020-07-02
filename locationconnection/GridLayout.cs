@@ -34,7 +34,6 @@ namespace LocationConnection
 
 		public override bool ShouldInvalidateLayoutForBoundsChange(CGRect newBounds)
 		{
-			context.c.CW("ShouldInvalidateLayoutForBoundsChange");
 			ResizeTiles();
 
 			return base.ShouldInvalidateLayoutForBoundsChange(newBounds);
@@ -48,8 +47,6 @@ namespace LocationConnection
 			UIWindow window = UIApplication.SharedApplication.KeyWindow;
 			BaseActivity.safeAreaLeft = window.SafeAreaInsets.Left; // values are new, after rotation.
 			BaseActivity.safeAreaRight = window.SafeAreaInsets.Right;
-
-			//Console.WriteLine("ShouldInvalidateLayoutForBoundsChange "  + newBounds + " " + BaseActivity.safeAreaLeft + " " + BaseActivity.safeAreaRight + " " + BaseActivity.dpWidth + " " + BaseActivity.dpHeight);
 
 			nfloat newActualWidth = BaseActivity.dpWidth - BaseActivity.safeAreaLeft - BaseActivity.safeAreaRight;
 			if (newActualWidth != actualWidth)

@@ -194,8 +194,6 @@ namespace LocationConnection
 
         public override void ViewDidLayoutSubviews() //called after ViewWillTransitionToSize
         {
-            c.CW("ViewDidLayoutSubviews");
-
             dpWidth = UIScreen.MainScreen.Bounds.Width;
             dpHeight = UIScreen.MainScreen.Bounds.Height;
 
@@ -326,7 +324,6 @@ namespace LocationConnection
                 if (DescriptionText.Text != Session.Description)
                 {
                     requestStringAdd += "&Description=" + CommonMethods.UrlEncode(DescriptionText.Text);
-                    c.CW("req-" + requestStringAdd + "-------------------");
                 }
                 if (GetSexChoice() != Session.SexChoice)
                 {
@@ -405,14 +402,12 @@ namespace LocationConnection
                             }
                             else if (locationDisabled)
                             {
-                                c.CW("Location disabled");
                                 if (!(locMgr is null))
                                 {
                                     locMgr.StopLocationUpdates();
                                 }
                                 if (!string.IsNullOrEmpty(locationUpdatesTo))
                                 {
-                                    c.CW("Ending location share");
                                     EndLocationShare();
                                     locationUpdatesTo = null;
                                 }

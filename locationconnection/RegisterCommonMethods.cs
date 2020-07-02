@@ -216,7 +216,6 @@ namespace LocationConnection
 							selectedImage = e1.ImageUrl.Path;
 							selectedImageName = selectedImage.Substring(selectedImage.LastIndexOf("/") + 1);
 
-                            Console.WriteLine("imageName: " + selectedImageName);
                             if (uploadedImages.IndexOf(selectedImageName) != -1) //virtually impossible, since uploaded images are tagged with timestamp
                             {
                                 c.Snack(LangEnglish.ImageExists);
@@ -226,8 +225,7 @@ namespace LocationConnection
 							UIImage image = UIImage.FromFile(e1.ImageUrl.Path);
 							nfloat sizeRatio = image.Size.Width / image.Size.Height;
 
-							c.CW("Photo width " + image.Size.Width + " height " + image.Size.Height);
-							c.LogActivity("Photo width " + image.Size.Width + " height " + image.Size.Height);
+							c.Log("Photo width " + image.Size.Width + " height " + image.Size.Height);
 
                             if (sizeRatio == 1)
                             {
@@ -272,7 +270,7 @@ namespace LocationConnection
                         imagePicker.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                     }
 
-					c.LogActivity("Opening file selector"); //on iPhone, viewWillDisappear is called. Not on iPad
+					c.Log("Opening file selector"); //on iPhone, viewWillDisappear is called. Not on iPad
 					context.PresentViewController(imagePicker, true, () => { });
                 }
                 else
@@ -295,14 +293,14 @@ namespace LocationConnection
 
         private bool IsOutOfFrameY(nfloat yDist) //0.001 is to take account for the comparison of float numbers. Touch move resolution is larger.
         {
-			if (yDist <= 0)
+			/*if (yDist <= 0)
             {
 				c.CW("IsOutOfFrameY frame+dist " + (-yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new  " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
 			}
             else
             {
 				c.CW("IsOutOfFrameY frame+dist " + (yDist + ImageEditorFrameBorder.Frame.Height / 2) + " new " + intrinsicHeight * scaleFactor / 2 + " old " + ImageEditor.Frame.Height / 2);
-			}
+			}*/
 
 			if (yDist <= 0 && (-yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2 + 0.001 || yDist > 0 && (yDist + ImageEditorFrameBorder.Frame.Height / 2) > intrinsicHeight * scaleFactor / 2 + 0.001)
 			{
@@ -325,14 +323,14 @@ namespace LocationConnection
 
 		private bool IsOutOfFrameX(nfloat xDist)
 		{
-			if (xDist <= 0)
+			/*if (xDist <= 0)
 			{
 				c.CW("IsOutOfFrameX frame+dist " + (-xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
 			}
 			else
 			{
 				c.CW("IsOutOfFrameX frame+dist " + (xDist + ImageEditorFrameBorder.Frame.Width / 2) + " new " + intrinsicWidth * scaleFactor / 2 + " old " + ImageEditor.Frame.Width / 2);
-			}
+			}*/
 
 			if (xDist <= 0 && (-xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2 + 0.001 || xDist > 0 && (xDist + ImageEditorFrameBorder.Frame.Width / 2) > intrinsicWidth * scaleFactor / 2 + 0.001)
 			{
@@ -495,8 +493,6 @@ namespace LocationConnection
             {
 				recognizer.View.Transform = CGAffineTransform.MakeScale(3, 3);
 			}
-			
-			//c.CW("Image pinched, state: " + recognizer.State + " " + recognizer.Scale + " " + scaleFactor);
 		}
 
 		public void CancelImageEditing(object sender, EventArgs e)
@@ -513,13 +509,13 @@ namespace LocationConnection
 		public async void OKImageEditing(object sender, EventArgs e)
 		{
             
-			c.CW("OKImageEditing xDist " + xDist + " yDist " + yDist + " intrW " + intrinsicWidth + " intrH " + intrinsicHeight + " scaleFactor " + scaleFactor + " img left " + ImageEditor.Frame.Left + " frame left " + ImageEditorFrameBorder.Frame.Left + " img top " + ImageEditor.Frame.Top + " frame top " + ImageEditorFrameBorder.Frame.Top);
+			//c.CW("OKImageEditing xDist " + xDist + " yDist " + yDist + " intrW " + intrinsicWidth + " intrH " + intrinsicHeight + " scaleFactor " + scaleFactor + " img left " + ImageEditor.Frame.Left + " frame left " + ImageEditorFrameBorder.Frame.Left + " img top " + ImageEditor.Frame.Top + " frame top " + ImageEditorFrameBorder.Frame.Top);
 
             //for device rotation, otherwise retains the set float values
 			xDist = ImageEditor.Center.X - ImageEditorFrameBorder.Center.X;
 			yDist = ImageEditor.Center.Y - ImageEditorFrameBorder.Center.Y;
 
-			c.CW("OKImageEditing new xDist " + xDist + " yDist " + yDist);
+			//c.CW("OKImageEditing new xDist " + xDist + " yDist " + yDist);
 
 			if (IsOutOfFrameX(xDist) || IsOutOfFrameY(yDist))
             {
@@ -536,7 +532,7 @@ namespace LocationConnection
 			nfloat cropW = ImageEditorFrameBorder.Frame.Width * w / (intrinsicWidth * scaleFactor);
 			nfloat cropH = cropW;
 
-			c.CW("OKImageEditing borderW " + ImageEditorFrameBorder.Frame.Width + " imageDisplayW " + ImageEditor.Frame.Width + " imgW " + w + " imgH " + h + " startX " + x + " startY " + y + " W " + cropW + " H " + cropH);
+			//c.CW("OKImageEditing borderW " + ImageEditorFrameBorder.Frame.Width + " imageDisplayW " + ImageEditor.Frame.Width + " imgW " + w + " imgH " + h + " startX " + x + " startY " + y + " W " + cropW + " H " + cropH);
 
 			/*
             iPhone 11 Pro display issues in landscape
@@ -581,8 +577,7 @@ namespace LocationConnection
 
 			UIImage im = CropImage(ImageEditor.Image, (int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(cropW), (int)Math.Round(cropH));
 
-			c.CW("Cropped width " + im.Size.Width + " height " + im.Size.Height);
-			c.LogActivity("Cropped width " + im.Size.Width + " height " + im.Size.Height);
+			c.Log("Cropped width " + im.Size.Width + " height " + im.Size.Height);
 
 			var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			string cacheDir = Path.Combine(documents, "..", "Library/Caches");
@@ -590,7 +585,6 @@ namespace LocationConnection
 			string ext = selectedImageName.Substring(selectedImageName.LastIndexOf(".") + 1).ToLower();
 
 			NSData data;
-			c.CW(selectedImageName);
 
 			if (ext == "jpg" || ext == "jpeg")
 			{
@@ -752,7 +746,6 @@ namespace LocationConnection
 
         public void StartAnim()
         {
-			Console.WriteLine("Anim started.");
             CABasicAnimation rotationAnimation = CABasicAnimation.FromKeyPath("transform.rotation");
             rotationAnimation.To = NSNumber.FromDouble(Math.PI * 2);
             rotationAnimation.RepeatCount = int.MaxValue;
@@ -800,7 +793,6 @@ namespace LocationConnection
 
 		private void LocationManager_AuthorizationChanged(object sender, CLAuthorizationChangedEventArgs e)
 		{
-			c.CW("LocationManager_AuthorizationChanged " + e.Status);
 			if (e.Status == CLAuthorizationStatus.AuthorizedAlways || e.Status == CLAuthorizationStatus.AuthorizedWhenInUse)
 			{
 				UseLocationSwitch.On = true;

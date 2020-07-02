@@ -72,7 +72,6 @@ namespace LocationConnection
 			}
 			
 			tileSize = (actualWidth - 20 - tileSpacing * (numColumns - 1)) / numColumns;
-			//context.c.CW("SetTileSize dpWidth " + BaseActivity.dpWidth + " left " + BaseActivity.safeAreaLeft + " right " + BaseActivity.safeAreaRight + " actualWidth " + actualWidth +  " tileSize "  + tileSize);
 		}
 
         public void Reposition()
@@ -87,7 +86,6 @@ namespace LocationConnection
 					if (constraint.FirstItem == Subviews[i]) {
 						UIView view = Subviews[i];
 
-						//Console.WriteLine("reposition constraint " + constraint.FirstItem + " --- " + constraint.FirstAttribute + " --- " + constraint.SecondItem + " --- " + constraint.SecondAttribute + " --- " + constraint.Constant);
 						if (constraint.FirstAttribute == NSLayoutAttribute.Top && constraint.Constant != top)
                         {
 							constraint.Constant = top;
@@ -329,7 +327,6 @@ namespace LocationConnection
 
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
-			context.c.CW("TouchesBegan");
 			base.TouchesBegan(touches, evt);
 			if (!touchStarted)
             {
@@ -345,14 +342,12 @@ namespace LocationConnection
 
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
-			context.c.CW("TouchesEnded");
 			base.TouchesEnded(touches, evt);
 			Up();
 		}
 
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
-			context.c.CW("TouchCancelled");
 			base.TouchesCancelled(touches, evt);
 			Up();
 		}
@@ -369,8 +364,6 @@ namespace LocationConnection
 			touchCurrentX = touch.LocationInView(this).X;
 			touchCurrentY = touch.LocationInView(this).Y;
 			startIndexPos = GetIndexFromPos((float)touchCurrentX, (float)touchCurrentY);
-
-			context.c.CW("Down startindexpos " + startIndexPos);
 
 			if (startIndexPos < Subviews.Length)
 			{
@@ -425,7 +418,6 @@ namespace LocationConnection
 					}, () => {
 						dragStartX = touchCurrentX;
 						dragStartY = touchCurrentY;
-						Console.WriteLine("dragstart: x " + dragStartX + " y " + dragStartY + " " + picStartX + " " + picStartY);
                         imageMovable = true;
                     });
 				});
@@ -457,8 +449,6 @@ namespace LocationConnection
 
 		public void Up()
 		{
-			context.c.CW("Up imageMovable " + imageMovable);
-
             if (imageMovable)
             {
 				imageMovable = false;
