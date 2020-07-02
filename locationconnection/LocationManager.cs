@@ -51,8 +51,7 @@ namespace LocationConnection
                 locMgr.StartUpdatingLocation();
                 BaseActivity.locationUpdating = true;
 
-                context.c.LogActivity("Location updates started"); //, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
-                context.c.CW("Location updates started"); //, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
+                context.c.Log("Location updates started"); //, allowBackground: " + locMgr.AllowsBackgroundLocationUpdates);
             }
         }
 
@@ -62,14 +61,12 @@ namespace LocationConnection
             BaseActivity.locationUpdating = false;
             BaseActivity.firstLocationAcquired = false;
             Session.SafeLocationTime = null;
-            context.c.LogActivity("Location updates stopped");
-            context.c.CW("Location updates stopped");
+            context.c.Log("Location updates stopped");
         }
 
         public void RestartLocationUpdates()
         {
-            context.c.LogActivity("Restarting location updates");
-            context.c.CW("Restarting location updates");
+            context.c.Log("Restarting location updates");
             StopLocationUpdates();
             StartLocationUpdates();
         }

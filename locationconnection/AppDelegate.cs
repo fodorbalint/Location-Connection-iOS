@@ -25,8 +25,6 @@ namespace LocationConnection
         {
 			Console.WriteLine("Launchoptions: " + launchOptions);
 
-            //Firebase.Core.App.Configure();
-
             if (!File.Exists(notificationRequestFile))
             {
 				File.WriteAllText(notificationRequestFile, "True");
@@ -34,43 +32,24 @@ namespace LocationConnection
 
 			UNUserNotificationCenter.Current.Delegate = this;
 
-            //Messaging.SharedInstance.Delegate = this;    
-
-            //var token = Messaging.SharedInstance.FcmToken ?? "";
-            //Console.WriteLine($"Existing FCM token: {token}");
-
-            // Override point for customization after application launch.
-            // If not required for your application you can safely delete this method
             return true;
         }
-
-		/*[Export("messaging:didReceiveRegistrationToken:")]
-		public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
-		{
-			Console.WriteLine($"DidReceiveRegistrationToken: token: {fcmToken}");
-			CommonMethods.LogActivityStatic("DidReceiveRegistrationToken: token length " + fcmToken.Length);
-
-			File.WriteAllText(deviceTokenFile, fcmToken);
-		}*/
 
         [Export("application:didRegisterForRemoteNotificationsWithDeviceToken:")]
         public void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
 
-			//var tokenString = deviceToken.GetBase64EncodedString(NSDataBase64EncodingOptions.None);
 			byte[] bytes = deviceToken.ToArray<byte>();
 			string[] hexArray = bytes.Select(b => b.ToString("x2")).ToArray();
 			string tokenString = string.Join(string.Empty, hexArray);
 
-			Console.WriteLine("RegisteredForRemoteNotifications " + tokenString + " Session.Token " + Session.Token);
-			CommonMethods.LogActivityStatic("RegisteredForRemoteNotifications");
+			CommonMethods.LogStatic("RegisteredForRemoteNotifications");
 
 			File.WriteAllText(deviceTokenFile, tokenString);
 
 			if (Session.Token != tokenString && !string.IsNullOrEmpty(Session.SessionID)) //when logging out, SessionID will be empty
             {
-				Console.WriteLine("Token is new.");
-				CommonMethods.LogActivityStatic("Token is new.");
+				CommonMethods.LogStatic("Token is new.");
 				string url = "action=updatetoken&ID=" + Session.ID + "&SessionID=" + Session.SessionID + "&token=" + CommonMethods.UrlEncode(tokenString) + "&ios=1";
 				string responseString = CommonMethods.MakeRequestSyncStatic(url);
 				if (responseString.Substring(0, 2) == "OK")
@@ -84,8 +63,7 @@ namespace LocationConnection
 			}
 			else
             {
-				Console.WriteLine("Token is up to date.");
-				CommonMethods.LogActivityStatic("Token is up to date.");
+				CommonMethods.LogStatic("Token is up to date.");
 			}
 		}
 
@@ -99,8 +77,7 @@ namespace LocationConnection
 			CommonMethods c = new CommonMethods(null);
 			BaseActivity context = CommonMethods.GetCurrentViewController();
 
-			Console.WriteLine("DidReceiveNotificationResponse " + userInfo + " logged in " + c.IsLoggedIn() + " context " + context);
-			CommonMethods.LogActivityStatic("DidReceiveNotificationResponse " + userInfo.ToString().Replace(Environment.NewLine, " ") + " logged in " + c.IsLoggedIn() + " context " + context);
+			CommonMethods.LogStatic("DidReceiveNotificationResponse " + userInfo.ToString().Replace(Environment.NewLine, " ") + " logged in " + c.IsLoggedIn() + " context " + context);
 
             if (userInfo != null && userInfo.ContainsKey(new NSString("aps")))
 			{
@@ -139,8 +116,7 @@ namespace LocationConnection
 				type = sendMessage;
             }
             */
-			Console.WriteLine("ReceivedRemoteNotification userInfo " + userInfo);
-			CommonMethods.LogActivityStatic("ReceivedRemoteNotification userInfo " + userInfo.ToString().Replace(Environment.NewLine, " "));
+			CommonMethods.LogStatic("ReceivedRemoteNotification userInfo " + userInfo.ToString().Replace(Environment.NewLine, " "));
 
 			try
 			{
@@ -460,7 +436,12 @@ namespace LocationConnection
 
 		private void GoToProfile(int targetID)
 		{
-			CommonMethods.GetCurrentViewController().c.LogActivity("GoToProfile");
+			if (!(CommonMethods.GetCurrentViewController() is ChatOneActivity)) //this condition is not necessary in iOS where the ChatOneActivity retains its currentMatch when clicking on a profile and navigating back
+			{
+				Session.CurrentMatch = null; //It must be set to null, otherwise when clicking the chat button, we are going back to the current activity if a chat was open before
+											 //currentmatch should be kept even if standing another chat, because pressing the back button from profile view should take us back to the current chat.
+			}
+
 			IntentData.profileViewPageType = Constants.ProfileViewType_Standalone;
 			IntentData.targetID = targetID;
 			CommonMethods.OpenPage("ProfileViewActivity", 1);			
@@ -510,8 +491,7 @@ namespace LocationConnection
         [Export("application:didFailToRegisterForRemoteNotificationsWithError:")]
         public void FailedToRegisterForRemoteNotifications(UIKit.UIApplication application, Foundation.NSError error)
         {
-			Console.WriteLine("FailedToRegisterForRemoteNotifications, error: " + error.Description);
-			CommonMethods.LogActivityStatic("FailedToRegisterForRemoteNotifications, error: " + error.Description);
+			CommonMethods.LogStatic("FailedToRegisterForRemoteNotifications, error: " + error.Description);
         }   
 
         // UISceneSession Lifecycle

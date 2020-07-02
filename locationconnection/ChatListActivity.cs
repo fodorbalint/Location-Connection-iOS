@@ -107,7 +107,6 @@ namespace LocationConnection
             {
                 if (matchList[i].TargetID == senderID)
                 {
-                    c.LogActivity("InsertMessage i " + i + " matchList.Count" + matchList.Count);
                     if (matchList[i].Chat.Length == 3)
                     {
                         matchList[i].Chat[0] = matchList[i].Chat[1];

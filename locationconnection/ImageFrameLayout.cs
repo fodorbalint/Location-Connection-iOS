@@ -209,8 +209,7 @@ namespace LocationConnection
 			}
 			else
 			{
-				context.c.LogActivity("DeleteUploadedImage_Click index: " + index + " count " + rc.uploadedImages.Count);
-				Console.WriteLine("DeleteUploadedImage_Click index: " + index + " count " + rc.uploadedImages.Count);
+				context.c.Log("DeleteUploadedImage_Click index: " + index + " count " + rc.uploadedImages.Count);
 
 				string responseString = await context.c.MakeRequest("action=deletetemp&imageName=" + CommonMethods.UrlEncode(rc.uploadedImages[index]) + "&regsessionid=" + RegisterActivity.regsessionid);
 				if (responseString.Substring(0, 2) == "OK")

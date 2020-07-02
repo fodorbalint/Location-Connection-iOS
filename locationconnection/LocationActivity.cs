@@ -35,13 +35,11 @@ namespace LocationConnection
                 if (!foregroundNotificationSet)
                 {
                     UIApplication.Notifications.ObserveDidEnterBackground((sender, args) => {
-                        c.CW("Entered background LocationActivity");
-                        c.LogActivity("Entered background LocationActivity");
+                        c.Log("Entered background LocationActivity");
                     });
 
                     UIApplication.Notifications.ObserveDidBecomeActive((sender, args) => { //once set, will be called when other activities go to background and foreground
-                        c.CW("Entered foreground LocationActivity");
-                        c.LogActivity("Entered foreground LocationActivity");
+                        c.Log("Entered foreground LocationActivity");
 
                         BaseActivity currentController = CommonMethods.GetCurrentViewController();
                         if (currentController is LocationActivity)

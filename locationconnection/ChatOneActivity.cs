@@ -37,8 +37,7 @@ namespace LocationConnection
 				if (!foregroundNotificationSet)
 				{
 					UIApplication.Notifications.ObserveDidBecomeActive((sender, args) => {
-						c.CW("Entered foreground, registering for notifications");
-						c.LogActivity("Entered foreground, registering for notifications");
+						c.Log("Entered foreground, registering for notifications");
 
 						c.RequestNotification();
 
@@ -119,7 +118,7 @@ namespace LocationConnection
 
 				var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
 				UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
-					CommonMethods.LogActivityStatic("ChatOne notification authorization granted: " + granted);
+					CommonMethods.LogStatic("ChatOne notification authorization granted: " + granted);
 					if (granted)
 					{
 						InvokeOnMainThread(() => {
@@ -732,7 +731,7 @@ namespace LocationConnection
 				{
 					if (responseString.Length > 2) //a change happened
 					{
-						c.LogActivity("ChatOne changed settings: " + responseString);
+						c.Log("ChatOne changed settings: " + responseString);
 						c.LoadCurrentUser(responseString);
 						StartRealTimeLocation();
 					}
@@ -871,6 +870,7 @@ namespace LocationConnection
 						}
 					}
 					currentMatch = null;
+					Session.CurrentMatch = null;
 					CommonMethods.OpenPage("ChatListActivity", 1);
 				}
 				else

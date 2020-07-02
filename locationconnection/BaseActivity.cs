@@ -83,8 +83,7 @@ namespace LocationConnection
 				View.AddGestureRecognizer(tap0);
 			}
 
-			c.CW(Class.Name + " ViewDidLoad");
-			c.LogActivity(Class.Name + " ViewDidLoad");
+			c.Log(Class.Name + " ViewDidLoad");
 		}
 
         public override void ViewWillAppear(bool animated)
@@ -93,8 +92,7 @@ namespace LocationConnection
 
 			active = true;
 
-			c.CW(Class.Name + " ViewWillAppear");
-			c.LogActivity(Class.Name + " ViewWillAppear");
+			c.Log(Class.Name + " ViewWillAppear");
 
 			ResizeWindowOnKeyboard();			
 		}
@@ -190,8 +188,7 @@ namespace LocationConnection
         {
             base.ViewDidAppear(animated);
 
-			c.CW(Class.Name + " ViewDidAppear, active " + active + " CommonMethods.transitionTarget " + CommonMethods.transitionTarget);
-			c.LogActivity(Class.Name + " ViewDidAppear, active " + active + " CommonMethods.transitionTarget " + CommonMethods.transitionTarget);
+			c.Log(Class.Name + " ViewDidAppear, active " + active + " CommonMethods.transitionTarget " + CommonMethods.transitionTarget);
 
 			appeared = true;
 
@@ -227,8 +224,7 @@ namespace LocationConnection
 		{
 			base.ViewWillDisappear(animated);
 
-			c.CW(Class.Name + " ViewWillDisappear");
-			c.LogActivity(Class.Name + " ViewWillDisappear");
+			c.Log(Class.Name + " ViewWillDisappear");
 
 			appeared = false;
 
@@ -395,7 +391,7 @@ namespace LocationConnection
             dpWidth = UIScreen.MainScreen.Bounds.Width;
 			dpHeight = UIScreen.MainScreen.Bounds.Height;
 
-			c.LogActivity("ScreenWidth " + screenWidth + " ScreenHeight " + screenHeight + " PixelDensity " + pixelDensity + " DpWidth " + dpWidth + " DpHeight " + dpHeight);
+			c.Log("ScreenWidth " + screenWidth + " ScreenHeight " + screenHeight + " PixelDensity " + pixelDensity + " DpWidth " + dpWidth + " DpHeight " + dpHeight);
 		}
 
 		public void TruncateLocationLog()
@@ -436,11 +432,11 @@ namespace LocationConnection
 			}
 			if (j == 0)
 			{
-				c.LogActivity("Location log up to date");
+				c.Log("Location log up to date");
 			}
 			else
 			{
-				c.LogActivity("Removed " + j + " items from location log");
+				c.Log("Removed " + j + " items from location log");
 			}
 		}
 
@@ -483,16 +479,15 @@ namespace LocationConnection
 				}
 				if (j == 0)
 				{
-					c.LogActivity("System log up to date");
+					c.Log("System log up to date");
 				}
 				else
 				{
-					c.LogActivity("Removed " + j + " items from system log");
+					c.Log("Removed " + j + " items from system log");
 				}
 			}
 			catch
 			{
-				c.CW("Resetting log File");
 				File.WriteAllText(CommonMethods.logFile, "");
 			}			
 		}
@@ -538,7 +533,7 @@ namespace LocationConnection
 
 		protected void AddUpdatesTo(int targetID)
 		{
-			c.LogActivity("AddUpdatesTo locationUpdatesTo:" + locationUpdatesTo);
+			c.Log("AddUpdatesTo locationUpdatesTo:" + locationUpdatesTo);
 			if (string.IsNullOrEmpty(locationUpdatesTo))
 			{
 				locationUpdatesTo = targetID.ToString();
@@ -569,7 +564,7 @@ namespace LocationConnection
 
 		public bool IsUpdatingFrom(int targetID)
 		{
-			c.LogActivity("Location update from " + targetID + ", existing: " + locationUpdatesFrom);
+			c.Log("Location update from " + targetID + ", existing: " + locationUpdatesFrom);
 			if (string.IsNullOrEmpty(locationUpdatesFrom))
 			{
 				return false;

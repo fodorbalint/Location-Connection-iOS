@@ -63,8 +63,7 @@ namespace LocationConnection
         {
 			var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
 			UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
-				Console.WriteLine("Notification authorization granted: " + granted);
-				LogActivityStatic("Notification authorization granted: " + granted);
+				LogStatic("Notification authorization granted: " + granted);
 				if (granted)
 				{
 					context.InvokeOnMainThread(() => {
@@ -941,7 +940,18 @@ namespace LocationConnection
 			CW(message);
 		}
 
+		public static void LogStatic(string message)
+		{
+			LogActivityStatic(message);
+			CWStatic(message);
+		}
+
 		public void CW(object message)
+		{
+			Console.WriteLine(Environment.NewLine + "-------------------------------------------------------------- " + message + Environment.NewLine);
+		}
+
+		public static void CWStatic(object message)
 		{
 			Console.WriteLine(Environment.NewLine + "-------------------------------------------------------------- " + message + Environment.NewLine);
 		}
@@ -1285,8 +1295,7 @@ namespace LocationConnection
 			if (transitionRunning)
 			{
                 //while transition is running, GetCurrentViewController return the old activity
-				LogActivityStatic("OpenPage transitionRunning target " + target + " anim " + anim);
-				Console.WriteLine("OpenPage transitionRunning target " + target + " anim " + anim + " caller " + new StackFrame(1, true).GetMethod().Name);
+				LogStatic("OpenPage transitionRunning target " + target + " anim " + anim);
 
 				transitionTarget = target;
 				transitionAnim = anim;
@@ -1296,8 +1305,7 @@ namespace LocationConnection
 			BaseActivity currentContext = GetCurrentViewController(); //LocationManager's context is either ListActivity or ProfileEditActivity, but in case of authorization error, we need to open a new viewcontroller.
 			currentContext.active = false;
 
-			LogActivityStatic("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
-			Console.WriteLine("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning + " caller " + new StackFrame(1, true).GetMethod().Name);
+			LogStatic("OpenPage currentContext " + currentContext + " target " + target + " anim " + anim + " transitionRunning " + transitionRunning);
 
 			transitionTarget = "empty";
 			transitionRunning = true; //In ProfileView, transition will start after a http request is made, due to it is being called sync. Unless I figure out how to cancel presentation from ViewWillAppear, completing the transition is necessary.

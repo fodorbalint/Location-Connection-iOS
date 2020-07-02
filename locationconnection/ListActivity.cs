@@ -123,8 +123,6 @@ namespace LocationConnection
         private bool distanceSourceAddressTextChanging;
         private Timer ProgressTimer;
 
-        Stopwatch stw;
-
         public UICollectionView User_SearchList { get { return UserSearchList; } }
 
         private Timer firstRunTimer;
@@ -132,8 +130,6 @@ namespace LocationConnection
 
         public ListActivity(IntPtr handle) : base(handle)
         {
-            stw = new Stopwatch();
-            stw.Start();
         }
 
         public override void ViewDidLoad()
@@ -146,8 +142,7 @@ namespace LocationConnection
                 {
                     UIApplication.Notifications.ObserveDidEnterBackground((sender, args) => {
 
-                        c.CW("Entered background");
-                        c.LogActivity("Entered background");
+                        c.Log("Entered background");
 
                         isAppForeground = false;
 
@@ -166,8 +161,7 @@ namespace LocationConnection
                     });
 
                     UIApplication.Notifications.ObserveDidBecomeActive((sender, args) => {
-                        c.CW("Entered foreground " + args.Notification);
-                        c.LogActivity("Entered foreground");
+                        c.Log("Entered foreground");
 
                         isAppForeground = true;
 
@@ -180,8 +174,6 @@ namespace LocationConnection
                     backgroundNotificationsSet = true;
                 }
                 
-                c.CW("Stopwatch " + stw.ElapsedMilliseconds + " ViewDidLoad");
-
                 thisInstance = this;
                 c.LoadSettings(false); //overwrites DisplaySize
 
@@ -213,8 +205,7 @@ namespace LocationConnection
 
                 if (autoLogin)
                 {
-                    c.CW("Autologin start");
-                    c.LogActivity("Autologin start");
+                    c.Log("Autologin start");
                     Task.Run(async () =>
                     {
                         Session.LastDataRefresh = null;
@@ -244,12 +235,10 @@ namespace LocationConnection
                                 LoggedInLayout();
                                 SetViews();
 
-                                c.CW("Autologin logged in views set");
-                                c.LogActivity("Autologin logged in views set");
+                                c.Log("Autologin logged in views set");
                             });
 
-                            c.CW("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
-                            c.LogActivity("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
+                            c.Log("Autologin uselocation " + Session.UseLocation + " enabled " + c.IsLocationEnabled());
 
 
                             if ((bool)Session.UseLocation)
@@ -268,8 +257,7 @@ namespace LocationConnection
                                     {
                                         if (!Constants.SafeLocationMode)
                                         {
-                                            c.CW("Autologin updating location");
-                                            c.LogActivity("Autologin updating location");
+                                            c.Log("Autologin updating location");
 
                                             if (Session.LocationTime is null || c.Now() - Session.LocationTime > Session.InAppLocationRate) //a location update could have happened just after login. 12 ms between views set and this point.
                                             {

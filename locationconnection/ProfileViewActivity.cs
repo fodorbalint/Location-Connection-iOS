@@ -169,7 +169,7 @@ namespace LocationConnection
 						c.SetLeftMargin(Username, paddingSelfPage);
 
 						PreviousButton.Hidden = true;
-						NextButton.Hidden = true;
+						NextButton.	Hidden = true;
 						c.CollapseX(HideButton);
 						c.CollapseX(LikeButton);
 
