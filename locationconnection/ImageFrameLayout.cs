@@ -354,7 +354,7 @@ namespace LocationConnection
 
         public void Down(NSSet touches) //there is a system delay for detecting press, no need to define a pressTime value.
 		{
-            if (Subviews.Length <= 1)
+            if (Subviews.Length <= 1 || touchStarted)
             {
 				return;
             }
@@ -457,14 +457,12 @@ namespace LocationConnection
 
 				if (newMovePos != movePos)
                 {
-					context.c.CW("not equal, moving newMovePos " + newMovePos + " movePos " + movePos);
 					movePos = newMovePos;
 
 					if (movePos < Subviews.Length && movePos >= 0)
 					{
 						if (movePos > startIndexPos)
                         {
-							context.c.CW("moved to higher place startIndexPos " + startIndexPos + " movePos " + movePos);
 							//1 2 3 4 5 6 7 8 9
 							//moving 2 to 5
 							//new subview order due to BringSubviewToFront 1 3 4 5 6 7 8 9 2
@@ -477,6 +475,7 @@ namespace LocationConnection
                                 {
 									Animate(tweenTime, () =>
 									{
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i]; //the current image was brought to front, ie. the last child.
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -500,6 +499,7 @@ namespace LocationConnection
                                 {
 									Animate(tweenTime, () =>
 									{
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i];
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -523,6 +523,7 @@ namespace LocationConnection
                                 {
 									Animate(tweenTime, () =>
 									{
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i];
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -558,6 +559,7 @@ namespace LocationConnection
 								{
 									Animate(tweenTime, () =>
 									{
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i];
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -581,6 +583,7 @@ namespace LocationConnection
                                 {
 									Animate(tweenTime, () =>
 									{
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i];
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -604,6 +607,7 @@ namespace LocationConnection
 								{
 									Animate(tweenTime, () =>
 									{
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i];
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -625,13 +629,39 @@ namespace LocationConnection
 								}
 							}
 						}
-						else //movePos = startPos
+						else //movePos = startIndexPos
                         {
 							for (int i = 0; i < Subviews.Length; i++)
 							{
-								if (i != Subviews.Length-1)
+								if (i < startIndexPos)
                                 {
-									Animate(5, () => {
+									Animate(tweenTime, () => {
+
+										UIView.SetAnimationBeginsFromCurrentState(true);
+										UIView view = Subviews[i];
+
+										foreach (NSLayoutConstraint constraint in Constraints)
+										{
+											if (constraint.FirstItem == view)
+											{
+												if (constraint.FirstAttribute == NSLayoutAttribute.Top)
+												{
+													constraint.Constant = GetPosY(i);
+												}
+												if (constraint.FirstAttribute == NSLayoutAttribute.Left)
+												{
+													constraint.Constant = GetPosX(i);
+												}
+											}
+										}
+										LayoutIfNeeded();
+									});
+								}
+								else if (i != Subviews.Length-1)
+                                {
+									Animate(tweenTime, () => {
+
+										UIView.SetAnimationBeginsFromCurrentState(true);
 										UIView view = Subviews[i];
 
 										foreach (NSLayoutConstraint constraint in Constraints)
@@ -687,27 +717,6 @@ namespace LocationConnection
 
 						for (int i = startIndexPos; i > endIndexPos; i--)
 						{
-							/*UIView.Animate(tweenTime, () => {
-								UIView view = Subviews[i - 1];
-
-								foreach (NSLayoutConstraint constraint in Constraints)
-								{
-									if (constraint.FirstItem == view)
-									{
-
-										if (constraint.FirstAttribute == NSLayoutAttribute.Top)
-										{
-											constraint.Constant = GetPosY(i);
-										}
-										if (constraint.FirstAttribute == NSLayoutAttribute.Left)
-										{
-											constraint.Constant = GetPosX(i);
-										}
-									}
-								}
-								LayoutIfNeeded();
-							});*/
-
 							rc.uploadedImages[i] = rc.uploadedImages[i - 1];
 						}
 						rc.uploadedImages[endIndexPos] = moveImage;
@@ -733,31 +742,9 @@ namespace LocationConnection
 						string moveImage = rc.uploadedImages[startIndexPos];
 						for (int i = startIndexPos; i < endIndexPos; i++)
 						{
-							/*UIView.Animate(tweenTime, () => {
-								UIView view = Subviews[i];
-
-								foreach (NSLayoutConstraint constraint in Constraints)
-								{
-									if (constraint.FirstItem == view)
-									{
-										if (constraint.FirstAttribute == NSLayoutAttribute.Top)
-										{
-											constraint.Constant = GetPosY(i);
-										}
-										if (constraint.FirstAttribute == NSLayoutAttribute.Left)
-										{
-											constraint.Constant = GetPosX(i);
-										}
-									}
-								}
-								LayoutIfNeeded();
-							});*/
-
 							rc.uploadedImages[i] = rc.uploadedImages[i + 1];
-							//drawOrder[i] = drawOrder[i + 1];
 						}
 						rc.uploadedImages[endIndexPos] = moveImage;
-						//drawOrder[endIndexPos] = moveIndex;
 
 						if (context is ProfileEditActivity)
 						{
